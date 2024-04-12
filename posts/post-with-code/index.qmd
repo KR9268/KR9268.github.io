@@ -7,3 +7,4 @@ image: "image.jpg"
 ---
 
 This is a post with executable code.
+포스팅 수정 테스트
