@@ -1,19 +1,33 @@
 ---
-title: "About"
+title: "Kibok Park"
 image: profile.jpg
 about:
-  template: jolla
+  template: trestles # jolla, trestles, solana, marquee, broadside
+  image-width: 20em
+  image-shape: round # rectangle, round, rounded
+  image-alt: '[Profile image of Kibok Park]'
+  image-title: Kibok Park
   links:
-    - icon: twitter
-      text: Twitter
-      href: https://twitter.com
-    - icon: linkedin
+    - icon: linkedin # icon name : https://icons.getbootstrap.com/
       text: LinkedIn
-      href: https://linkedin.com
+      href: https://www.linkedin.com/in/%EA%B8%B0%EB%B3%B5-%EB%B0%95-573a68268/
     - icon: github
       text: Github
-      href: https://github.com
+      href: https://github.com/KR9268
 
 ---
 
-About this blog
+## Hello
+
+I'm **`Kibok Park`**. Welcome to my blog.
+I'm not an expert in my favorites yet, but I'm working on becoming one.
+I hope you to have nice time with my blog.
+
+---
+
+## Topics
+`Python`, `Quantative trading`
+
+---
+
+<img src="https://ghchart.rshah.org/409ba5/kr9268" alt="kr9268's Github Chart" /> 

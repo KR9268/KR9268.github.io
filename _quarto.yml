@@ -3,18 +3,27 @@ project:
   output-dir: docs
 
 website:
-  title: " KR9268.github.io"
+  title: "Home"
+  site-url: https://kr9268.github.io/
   navbar:
     right:
       - about.qmd
       - icon: github
-        href: https://github.com/
-      - icon: twitter
-        href: https://twitter.com
+        href: https://github.com/KR9268
+      - icon: linkedin
+        href: https://www.linkedin.com/in/%EA%B8%B0%EB%B3%B5-%EB%B0%95-573a68268/
+      - icon: rss
+        href: index.xml
+  page-footer: <img src="https://ghchart.rshah.org/409ba5/kr9268" alt="kr9268's Github Chart" /> 
+
+
+    
+
 format:
   html:
-    theme: [flatly]
+    theme:
+      light: [flatly]
+      dark : [Darkly]
     css: styles.css
-
 
 
