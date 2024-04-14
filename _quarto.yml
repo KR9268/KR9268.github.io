@@ -9,6 +9,11 @@ website:
   site-path: "/" # 사이트맵에 필요
   google-analytics: "G-LPL499WQBH"
   navbar:
+    left:
+      - text: Blog
+        href: index.qmd
+      - text: Dashboards
+        href: dashboards.qmd
     right:
       - text: About me
         href: about.qmd

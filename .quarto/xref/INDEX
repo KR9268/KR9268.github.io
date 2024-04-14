@@ -19,5 +19,20 @@
   },
   "posts copy/welcome/index.qmd": {
     "index.html": "1abd4604"
+  },
+  "dashboards.qmd": {
+    "dashboards.html": "4687ef7a"
+  },
+  "dashboards/20240414-testdashboard/index.qmd": {
+    "index.html": "d1ff8ba7"
+  },
+  "dashboards/20240414-testpost/index.qmd": {
+    "index.html": "aadef9f1"
+  },
+  "dashboards/post-with-code/index.qmd": {
+    "index.html": "8a378b19"
+  },
+  "dashboards/welcome/index.qmd": {
+    "index.html": "ba8a35b9"
   }
 }

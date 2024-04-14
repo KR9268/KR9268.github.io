@@ -1,5 +1,8 @@
 {
   "listingMap": {
+    "dashboards.qmd": [
+      "dashboards"
+    ],
     "index.qmd": [
       "posts"
     ]

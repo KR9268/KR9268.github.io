@@ -1,5 +1,11 @@
 [
   {
+    "listing": "/dashboards.html",
+    "items": [
+      "/dashboards/20240414-testpost/index.html"
+    ]
+  },
+  {
     "listing": "/index.html",
     "items": [
       "/posts/20240414-testpost/index.html",
