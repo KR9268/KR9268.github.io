@@ -10,5 +10,14 @@
   },
   "posts/welcome/index.qmd": {
     "index.html": "2b53ee7b"
+  },
+  "posts/20240414-testpost/index.qmd": {
+    "index.html": "0662c10a"
+  },
+  "posts copy/post-with-code/index.qmd": {
+    "index.html": "9b8cff46"
+  },
+  "posts copy/welcome/index.qmd": {
+    "index.html": "1abd4604"
   }
 }

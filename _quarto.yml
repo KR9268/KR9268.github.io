@@ -3,19 +3,26 @@ project:
   output-dir: docs
 
 website:
+  favicon: profile.jpg
   title: "Home"
-  site-url: https://kr9268.github.io/
+  site-url: https://kr9268.github.io/ # 사이트맵에 필요
+  site-path: "/" # 사이트맵에 필요
+  google-analytics: "G-LPL499WQBH"
   navbar:
     right:
-      - about.qmd
+      - text: About me
+        href: about.qmd
       - icon: github
         href: https://github.com/KR9268
       - icon: linkedin
         href: https://www.linkedin.com/in/%EA%B8%B0%EB%B3%B5-%EB%B0%95-573a68268/
       - icon: rss
         href: index.xml
-  page-footer: <img src="https://ghchart.rshah.org/409ba5/kr9268" alt="kr9268's Github Chart" /> 
+  comments: 
+    giscus:
+      repo: kr9268/kr9268.github.io
 
+  
 
     
 

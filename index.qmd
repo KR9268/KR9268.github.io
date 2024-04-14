@@ -1,17 +1,19 @@
 ---
-title: "Blake" # 블로그 상단
+title: "Kibok Park's blog" # 블로그 상단
 listing:
   contents: posts
   sort: "date desc"
-  type: default
-  categories: true
+  type: grid
+  categories: numbered
   sort-ui: false # default / title / date / auther 순
   filter-ui: true # 검색창
+  date-format: iso
   feed:
     categories: [posts, news]
 page-layout: full
 title-block-banner: true # 상단 배너 표시여부
-margin-header: Blake
+margin-header: '# Kibok Park'
+
 ---
 
 
