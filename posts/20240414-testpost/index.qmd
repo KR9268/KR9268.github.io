@@ -1,5 +1,5 @@
 ---
-title: "[Python수정2] Local L/C 관리파일 - Streamlit예제"
+title: "[Python수정] Local L/C 관리파일 - Streamlit예제"
 author: "Kibok Park"
 date: "2024-04-14"
 categories: [Python]
