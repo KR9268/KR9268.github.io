@@ -26,7 +26,7 @@ website:
   comments: 
     giscus:
       repo: kr9268/kr9268.github.io
-  margin-footer: Copyright © 2024 Kibok Park All rights reserved.
+  body-footer: <br>**Copyright © 2024 Kibok Park All rights reserved.**</br>
 
   
 
