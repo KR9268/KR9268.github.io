@@ -1,5 +1,6 @@
 ---
 title: "Dashboards" # 블로그 상단
+comments: false
 listing:
   contents: dashboards
   sort: "date desc"

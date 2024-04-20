@@ -26,10 +26,9 @@ website:
   comments: 
     giscus:
       repo: kr9268/kr9268.github.io
+  margin-footer: Copyright © 2024 Kibok Park All rights reserved.
 
   
-
-    
 
 format:
   html:
@@ -37,5 +36,6 @@ format:
       light: [flatly]
       dark : [Darkly]
     css: styles.css
+    copy: false
 
 

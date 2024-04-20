@@ -10,25 +10,6 @@
 <atom:link href="https://kr9268.github.io/dashboards.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.4.553</generator>
-<lastBuildDate>Sat, 13 Apr 2024 15:00:00 GMT</lastBuildDate>
-<item>
-  <title>dashboard 예제</title>
-  <dc:creator>Kibok Park</dc:creator>
-  <link>https://kr9268.github.io/dashboards/20240414-testpost/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-
-
-
- ]]></description>
-  <category>Python</category>
-  <guid>https://kr9268.github.io/dashboards/20240414-testpost/</guid>
-  <pubDate>Sat, 13 Apr 2024 15:00:00 GMT</pubDate>
-  <media:content url="https://kr9268.github.io/dashboards/20240414-testpost/image.jpg" medium="image" type="image/jpeg"/>
-</item>
+<lastBuildDate>Sat, 20 Apr 2024 12:52:36 GMT</lastBuildDate>
 </channel>
 </rss>
