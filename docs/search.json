@@ -9,42 +9,42 @@
   {
     "objectID": "posts/20240414-testpost/index.html",
     "href": "posts/20240414-testpost/index.html",
-    "title": "[Python] Local L/C 관리파일 - Streamlit예제",
+    "title": "[Python124] Local L/C 관리파일 - Streamlit예제",
     "section": "",
     "text": "내국신용장 관련 편의기능 구현\n\n\n\n\n\nSAPGUI : SAP Scripting 활용\nSAP권한 : ZLLEI09020, ZRSDM62110\nmain파일(LocalLC_GUI.py)과 옵션저장파일(default_opt.json), db파일(LocalLC.db)를 함께 둔다\n\n\n\n\n\ncmd 명령어 실행 : streamlit run ._GUI.py\n옵션설정 탭에서 로그인정보 지정 및 저장(시스템명, ID, PW, NERP N번째창 사용)\n(필요시) 거래선 정보 추가(기존 입력분 참고)\n\n\nL/C등록(NERP) 탭\n\n\nLocal L/C 수신내역에서 연/월 지정 후 ‘입력한 연/월로 업데이트’ 버튼을 눌러 NERP내역 가져오기\n추가대상이 우측 표에 올라오면 ‘전자문서번호’를 좌측 ’Local L/C 등록’ 창에 입력 후 ENTER\n로딩된 데이터 확인\n\n좌측 텍스트박스 : EDI로 수신된 정보 (Partial 9 : 허용) (제출서류나 유효기일 등 특이사항 확인, 신규유형의 제출서류가 있을 경우 영문명칭으로 나옴)\n우측 텍스트박스 : EDI에 없는 정보, 앞서 등록한 거래선정보를 가져옴(사업자번호로 매칭)\n\n추가정보 입력 (출/도착 국가, 포트) : 사업부에서 제공한 정보 사용, POL, POD 최소 1개이상 입력\n각 텍스트박스를 필요한 정보로 수정 후 등록버튼 클릭하면, NERP에 등록됨\n\n\nL/C 현황 탭\n\n\n현재 NERP에 등록된 현황, 신용장별 네고해야하는 잔액을 볼 수 있음\n우측 ‘수동Update’\n\n’Local L/C EDI수신내역으로 불러오기’를 누르면 EDI수신내역에 있는 건들을 자동으로 불러옴\nL/C번호 입력 후 ’입력한 Local L/C 추가/업데이트’를 누르면 해당 번호내역을 불러옴\n\n좌측 ‘NERP Local L/C 등록내역’\n\n전체/잔액o보기 : 전체보기로 전체내역을, 잔액O보기로 잔액있는 건만 조회\n\n\n\n세금계산서/물품수령증 탭\n\n\n입력한 연/월로 세금계산서 버튼 : NERP에서 SEC가 발행한 세금계산서 조회 후 불러옴\n입력한 연/월로 물품수령증 버튼 : EDI수신내역에서 물품수령증 조회 후 불러옴\n가운데 표를 확인하여 필요한 정보, 조치해야할 사항을 알 수 있다\n\n[기본사항] 인수/발급일Chk, 금액Chk 등 육안대조하지 않도록 수령증과 세금계산서를 대조해줌\n[기본사항2] 참고사항에서 현재 상태, 필요한 사항을 가이드하며 NegoDueDate이내에 네고 필요 (NegoDueDate기준 : 기본은 신용장 유효기간, 수령증이 나오면 수령증 발급 후 5일 이내)\n[상태1] 세금계산서 정보는 있지만, 수령증 없는 상태(수령증발급 란 체크해제되어있음) : 거래선의 수령증 발급이 필요함\n\n\n참고사항 → 신용장 유효기간 만료\n\n사업부 요청하여 신용장 유효기간 연장\n\n\n\n참고사항 → 세금계산서가 발행되었으니 10일 이내 물품수령증 발행 필요(중소기업이 구매하는 경우는 예외)\n\n사업부 요청하여 거래선에 물품수령증 발행요청\n\n\n\n[상태2] 세금계산서, 수령증 모두 있는 상태 : 두 서류가 동일한 내용을 갖고 있는지 확인 필요\n\n\n참고사항 → 물품수령증 날짜가 오늘 이후이므로 재발행 필요\n\n사업부 요청하여 물품수령증 재발행(오늘 발행했는데 내일이 발행일일 수 없음)\n\n\n\n참고사항 → 물품수령증 발급일자로부터 5일 경과, 재발급필요\n\n물품수령증 발급 후 5일이내에 네고해야함, 지났다면 재발급받아서 네고해야함(NERP에서부터 막힘)\n\n\n\n참고사항 → DueDate이내에 네고필요\n\n표기된 날짜 이내에 네고진행\n\n\n\n네고일 등록란\n\n네고완료한 건에 대해 표에 있는 빌링번호를 입력 후 네고일자 지정(기본값:오늘) 후 등록하면 ’네고완료’로 바뀜\n\n수령증 미발급건 클립보드 복사 버튼\n\n세금계산서만 발행된 건을 한번에 복사해주는 버튼, 사업부 요청시 사용\n\n\n\n\n옵션설정 탭\n\n\n로그인정보 : 정보를 가져온 시스템명이나 로그인에 필요한 정보를 수정한다\n거래선정보 : 등록되어있는 거래선정보를 보여준다\n거래선정보 수정 : 거래선의 사업자번호로 조회하여 기존값 수정하거나, 새로운 정보를 입력하여 추가한다\n\n\n세금계산서 내역삭제 탭\n\n\n세금계산서 삭제 : 삭제가능한 세금계산서 내역을 보여준다\n세금계산서 삭제메뉴 : 삭제할 세금계산서 번호를 넣고 버튼을 누르면 삭제처리\n\n\n물품수령증 내역삭제 탭\n\n\n물품수령증 삭제 : 삭제가능한 물품수령증 내역을 보여준다 세금계산서 기준 중복인 건을 ’중복건 보기’를 선택하여 확인 가능\n물품수령증 삭제메뉴 : 삭제할 전자문서번호(물품수령증)를 입력하고 버튼을 누르면 삭제처리\n\n\n참고사항 탭\n\n\n참고사이트 : 관련 규정이나 절차 등을 확인할 수 있는 KTNET 내국신용장 사이트로 이동\n\n\n\n\n\n\n특이사항1 (제출대상 서류가 영어로 나오는 경우)\n\n새로운 유형의 서류가 나온 것으로, 딕셔너리 convert_table에 값을 추가한다\n\n\n\n\n\n\n\nopen_nerp_session : SAP을 켜서 session 반환\nexist_lc_ZSDP10200_C : L/C 등록여부를 확인하여 bool 반환\ncrawl_lc_ZSDP10200_C : 등록된 L/C의 내역을 가져와 dict 반환\ninput_and_search_xml_ZLLEI09020 : 특정 조건의 xml문서내역 조회\nloop_get_xml_ZLLEI09020 : 조회된 xml문서들을 db에 추가\ninput_and_search_taxinv_ZRSDM62110 : 특정 조건의 세금계산서 내역 조회\nloop_get_taxinv_ZRSDM62110 : 조회된 세금계산서들을 db에 추가\nregister_localLC : 입력한 정보로 NERP에 등록\nfirst_and_end_of_month : 입력한 연/월로 월의 시작/끝을 datetime으로 반환\ncheck_NegoDueDate, check_progress_localnego : DataFrame 데이터 처리용(row기준)\nchk_and_change_df, merge_for_locallc_df : Viewer용 DataFrame 작성(row기준 함수 등 적용)"
   },
   {
     "objectID": "posts/20240414-testpost/index.html#개요",
     "href": "posts/20240414-testpost/index.html#개요",
-    "title": "[Python] Local L/C 관리파일 - Streamlit예제",
+    "title": "[Python124] Local L/C 관리파일 - Streamlit예제",
     "section": "",
     "text": "내국신용장 관련 편의기능 구현"
   },
   {
     "objectID": "posts/20240414-testpost/index.html#필수사항",
     "href": "posts/20240414-testpost/index.html#필수사항",
-    "title": "[Python] Local L/C 관리파일 - Streamlit예제",
+    "title": "[Python124] Local L/C 관리파일 - Streamlit예제",
     "section": "",
     "text": "SAPGUI : SAP Scripting 활용\nSAP권한 : ZLLEI09020, ZRSDM62110\nmain파일(LocalLC_GUI.py)과 옵션저장파일(default_opt.json), db파일(LocalLC.db)를 함께 둔다"
   },
   {
     "objectID": "posts/20240414-testpost/index.html#사용법",
     "href": "posts/20240414-testpost/index.html#사용법",
-    "title": "[Python] Local L/C 관리파일 - Streamlit예제",
+    "title": "[Python124] Local L/C 관리파일 - Streamlit예제",
     "section": "",
     "text": "cmd 명령어 실행 : streamlit run ._GUI.py\n옵션설정 탭에서 로그인정보 지정 및 저장(시스템명, ID, PW, NERP N번째창 사용)\n(필요시) 거래선 정보 추가(기존 입력분 참고)\n\n\nL/C등록(NERP) 탭\n\n\nLocal L/C 수신내역에서 연/월 지정 후 ‘입력한 연/월로 업데이트’ 버튼을 눌러 NERP내역 가져오기\n추가대상이 우측 표에 올라오면 ‘전자문서번호’를 좌측 ’Local L/C 등록’ 창에 입력 후 ENTER\n로딩된 데이터 확인\n\n좌측 텍스트박스 : EDI로 수신된 정보 (Partial 9 : 허용) (제출서류나 유효기일 등 특이사항 확인, 신규유형의 제출서류가 있을 경우 영문명칭으로 나옴)\n우측 텍스트박스 : EDI에 없는 정보, 앞서 등록한 거래선정보를 가져옴(사업자번호로 매칭)\n\n추가정보 입력 (출/도착 국가, 포트) : 사업부에서 제공한 정보 사용, POL, POD 최소 1개이상 입력\n각 텍스트박스를 필요한 정보로 수정 후 등록버튼 클릭하면, NERP에 등록됨\n\n\nL/C 현황 탭\n\n\n현재 NERP에 등록된 현황, 신용장별 네고해야하는 잔액을 볼 수 있음\n우측 ‘수동Update’\n\n’Local L/C EDI수신내역으로 불러오기’를 누르면 EDI수신내역에 있는 건들을 자동으로 불러옴\nL/C번호 입력 후 ’입력한 Local L/C 추가/업데이트’를 누르면 해당 번호내역을 불러옴\n\n좌측 ‘NERP Local L/C 등록내역’\n\n전체/잔액o보기 : 전체보기로 전체내역을, 잔액O보기로 잔액있는 건만 조회\n\n\n\n세금계산서/물품수령증 탭\n\n\n입력한 연/월로 세금계산서 버튼 : NERP에서 SEC가 발행한 세금계산서 조회 후 불러옴\n입력한 연/월로 물품수령증 버튼 : EDI수신내역에서 물품수령증 조회 후 불러옴\n가운데 표를 확인하여 필요한 정보, 조치해야할 사항을 알 수 있다\n\n[기본사항] 인수/발급일Chk, 금액Chk 등 육안대조하지 않도록 수령증과 세금계산서를 대조해줌\n[기본사항2] 참고사항에서 현재 상태, 필요한 사항을 가이드하며 NegoDueDate이내에 네고 필요 (NegoDueDate기준 : 기본은 신용장 유효기간, 수령증이 나오면 수령증 발급 후 5일 이내)\n[상태1] 세금계산서 정보는 있지만, 수령증 없는 상태(수령증발급 란 체크해제되어있음) : 거래선의 수령증 발급이 필요함\n\n\n참고사항 → 신용장 유효기간 만료\n\n사업부 요청하여 신용장 유효기간 연장\n\n\n\n참고사항 → 세금계산서가 발행되었으니 10일 이내 물품수령증 발행 필요(중소기업이 구매하는 경우는 예외)\n\n사업부 요청하여 거래선에 물품수령증 발행요청\n\n\n\n[상태2] 세금계산서, 수령증 모두 있는 상태 : 두 서류가 동일한 내용을 갖고 있는지 확인 필요\n\n\n참고사항 → 물품수령증 날짜가 오늘 이후이므로 재발행 필요\n\n사업부 요청하여 물품수령증 재발행(오늘 발행했는데 내일이 발행일일 수 없음)\n\n\n\n참고사항 → 물품수령증 발급일자로부터 5일 경과, 재발급필요\n\n물품수령증 발급 후 5일이내에 네고해야함, 지났다면 재발급받아서 네고해야함(NERP에서부터 막힘)\n\n\n\n참고사항 → DueDate이내에 네고필요\n\n표기된 날짜 이내에 네고진행\n\n\n\n네고일 등록란\n\n네고완료한 건에 대해 표에 있는 빌링번호를 입력 후 네고일자 지정(기본값:오늘) 후 등록하면 ’네고완료’로 바뀜\n\n수령증 미발급건 클립보드 복사 버튼\n\n세금계산서만 발행된 건을 한번에 복사해주는 버튼, 사업부 요청시 사용\n\n\n\n\n옵션설정 탭\n\n\n로그인정보 : 정보를 가져온 시스템명이나 로그인에 필요한 정보를 수정한다\n거래선정보 : 등록되어있는 거래선정보를 보여준다\n거래선정보 수정 : 거래선의 사업자번호로 조회하여 기존값 수정하거나, 새로운 정보를 입력하여 추가한다\n\n\n세금계산서 내역삭제 탭\n\n\n세금계산서 삭제 : 삭제가능한 세금계산서 내역을 보여준다\n세금계산서 삭제메뉴 : 삭제할 세금계산서 번호를 넣고 버튼을 누르면 삭제처리\n\n\n물품수령증 내역삭제 탭\n\n\n물품수령증 삭제 : 삭제가능한 물품수령증 내역을 보여준다 세금계산서 기준 중복인 건을 ’중복건 보기’를 선택하여 확인 가능\n물품수령증 삭제메뉴 : 삭제할 전자문서번호(물품수령증)를 입력하고 버튼을 누르면 삭제처리\n\n\n참고사항 탭\n\n\n참고사이트 : 관련 규정이나 절차 등을 확인할 수 있는 KTNET 내국신용장 사이트로 이동"
   },
   {
     "objectID": "posts/20240414-testpost/index.html#특이사항",
     "href": "posts/20240414-testpost/index.html#특이사항",
-    "title": "[Python] Local L/C 관리파일 - Streamlit예제",
+    "title": "[Python124] Local L/C 관리파일 - Streamlit예제",
     "section": "",
     "text": "특이사항1 (제출대상 서류가 영어로 나오는 경우)\n\n새로운 유형의 서류가 나온 것으로, 딕셔너리 convert_table에 값을 추가한다"
   },
   {
     "objectID": "posts/20240414-testpost/index.html#기능",
     "href": "posts/20240414-testpost/index.html#기능",
-    "title": "[Python] Local L/C 관리파일 - Streamlit예제",
+    "title": "[Python124] Local L/C 관리파일 - Streamlit예제",
     "section": "",
     "text": "open_nerp_session : SAP을 켜서 session 반환\nexist_lc_ZSDP10200_C : L/C 등록여부를 확인하여 bool 반환\ncrawl_lc_ZSDP10200_C : 등록된 L/C의 내역을 가져와 dict 반환\ninput_and_search_xml_ZLLEI09020 : 특정 조건의 xml문서내역 조회\nloop_get_xml_ZLLEI09020 : 조회된 xml문서들을 db에 추가\ninput_and_search_taxinv_ZRSDM62110 : 특정 조건의 세금계산서 내역 조회\nloop_get_taxinv_ZRSDM62110 : 조회된 세금계산서들을 db에 추가\nregister_localLC : 입력한 정보로 NERP에 등록\nfirst_and_end_of_month : 입력한 연/월로 월의 시작/끝을 datetime으로 반환\ncheck_NegoDueDate, check_progress_localnego : DataFrame 데이터 처리용(row기준)\nchk_and_change_df, merge_for_locallc_df : Viewer용 DataFrame 작성(row기준 함수 등 적용)"
   },
@@ -81,7 +81,7 @@
     "href": "index.html",
     "title": "Blog",
     "section": "",
-    "text": "[Python] Local L/C 관리파일 - Streamlit예제\n\n\n\nPython\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-14\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPost With Code\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\nHarlow Malloc\n\n\n2024-04-11\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\nnews\n\n\n\n\n\n\n\nTristan O’Malley\n\n\n2024-04-08\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "[Python124] Local L/C 관리파일 - Streamlit예제\n\n\n\nPython\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-14\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPost With Code\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\nHarlow Malloc\n\n\n2024-04-11\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\nnews\n\n\n\n\n\n\n\nTristan O’Malley\n\n\n2024-04-08\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/post-with-code/index.html",
