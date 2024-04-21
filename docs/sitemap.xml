@@ -1,31 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://kr9268.github.io/posts/welcome/index.html</loc>
-    <lastmod>2024-04-20T12:52:30.928Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/dashboards.html</loc>
-    <lastmod>2024-04-20T12:52:31.915Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/about.html</loc>
-    <lastmod>2024-04-20T12:52:29.726Z</lastmod>
+    <loc>https://kr9268.github.io/index_dashboards.html</loc>
+    <lastmod>2024-04-21T06:42:31.795Z</lastmod>
   </url>
   <url>
     <loc>https://kr9268.github.io/index.html</loc>
     <lastmod>2024-04-20T12:52:32.140Z</lastmod>
   </url>
   <url>
-    <loc>https://kr9268.github.io/posts/post-with-code/index.html</loc>
-    <lastmod>2024-04-20T12:52:30.900Z</lastmod>
-  </url>
-  <url>
     <loc>https://kr9268.github.io/index_miniprojects.html</loc>
     <lastmod>2024-04-21T06:42:29.536Z</lastmod>
   </url>
   <url>
-    <loc>https://kr9268.github.io/index_dashboards.html</loc>
-    <lastmod>2024-04-21T06:42:31.795Z</lastmod>
+    <loc>https://kr9268.github.io/about.html</loc>
+    <lastmod>2024-04-20T12:52:29.726Z</lastmod>
   </url>
 </urlset>

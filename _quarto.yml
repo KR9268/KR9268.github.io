@@ -11,7 +11,9 @@ website:
   navbar:
     left:
       - text: Dashboards
-        href: dashboards.qmd
+        href: index_dashboards.qmd
+      - text: Mini Projects
+        href: index_miniprojects.qmd
     right:
       - text: About me
         href: about.qmd

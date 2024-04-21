@@ -1,6 +1,6 @@
 [
   {
-    "listing": "/dashboards.html",
+    "listing": "/index_dashboards.html",
     "items": []
   },
   {
@@ -9,10 +9,6 @@
   },
   {
     "listing": "/index_miniprojects.html",
-    "items": []
-  },
-  {
-    "listing": "/index_dashboards.html",
     "items": []
   }
 ]
