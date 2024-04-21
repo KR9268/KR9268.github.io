@@ -4,14 +4,12 @@ project:
 
 website:
   favicon: profile.jpg
-  title: "Home"
+  title: "Blog"
   site-url: https://kr9268.github.io/ # 사이트맵에 필요
   site-path: "/" # 사이트맵에 필요
   google-analytics: "G-LPL499WQBH"
   navbar:
     left:
-      - text: Blog
-        href: index.qmd
       - text: Dashboards
         href: dashboards.qmd
     right:
@@ -28,14 +26,18 @@ website:
       repo: kr9268/kr9268.github.io
   body-footer: <br>**Copyright © 2024 Kibok Park All rights reserved.**</br>
 
-  
+filters:
+  - watermark # 배경 워터마크
 
+watermark: # 배경 워터마크 https://github.com/leovan/quarto-watermark
+  text: "Kibok Park"
+  
 format:
   html:
     theme:
       light: [flatly]
       dark : [Darkly]
     css: styles.css
-    copy: false
+    link-external-newwindow: true
 
 
