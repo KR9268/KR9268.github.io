@@ -5,11 +5,11 @@
       xmlns:dc="http://purl.org/dc/elements/1.1/" 
       version="2.0">
 <channel>
-<title>Home</title>
+<title>Blog</title>
 <link>https://kr9268.github.io/dashboards.html#category=news</link>
 <atom:link href="https://kr9268.github.io/dashboards-news.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.4.553</generator>
-<lastBuildDate>Sat, 20 Apr 2024 13:34:57 GMT</lastBuildDate>
+<lastBuildDate>Sun, 21 Apr 2024 03:56:42 GMT</lastBuildDate>
 </channel>
 </rss>
