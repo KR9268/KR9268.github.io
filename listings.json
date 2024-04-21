@@ -4,7 +4,11 @@
     "items": []
   },
   {
-    "listing": "/dashboards.html",
+    "listing": "/index_miniprojects.html",
+    "items": []
+  },
+  {
+    "listing": "/index_dashboards.html",
     "items": []
   }
 ]
