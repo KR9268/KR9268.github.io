@@ -6,6 +6,8 @@ categories: [Python]
 image: "image.jpg"
 toc: true
 
+draft: true
+
 comments: 
     giscus:
       repo: kr9268/kr9268.github.io
