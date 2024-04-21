@@ -1,10 +1,13 @@
 {
   "listingMap": {
-    "dashboards.qmd": [
-      "dashboards"
-    ],
     "index.qmd": [
       "posts"
+    ],
+    "index_dashboards.qmd": [
+      "posts_dashboards"
+    ],
+    "index_miniprojects.qmd": [
+      "posts_miniprojects"
     ]
   }
 }

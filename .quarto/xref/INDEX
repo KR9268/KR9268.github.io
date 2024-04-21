@@ -34,5 +34,17 @@
   },
   "dashboards/welcome/index.qmd": {
     "index.html": "ba8a35b9"
+  },
+  "index_dashboards.qmd": {
+    "index_dashboards.html": "dc4b1cdf"
+  },
+  "index_miniprojects.qmd": {
+    "index_miniprojects.html": "e20b0a79"
+  },
+  "posts_dashboards/20240416-testdashboard/index.qmd": {
+    "index.html": "e72fcd1e"
+  },
+  "posts_miniprojects/20240414-testpost/index.qmd": {
+    "index.html": "950d6df4"
   }
 }

@@ -1,8 +1,8 @@
 ---
-title: "Dashboards" # 블로그 상단
+title: "Mini Projects" # 블로그 상단
 comments: false
 listing:
-  contents: dashboards
+  contents: posts_miniprojects
   sort: "date desc"
   type: grid
   categories: numbered
