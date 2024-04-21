@@ -4,7 +4,7 @@
     "href": "posts/welcome/index.html",
     "title": "Welcome To My Blog",
     "section": "",
-    "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
+    "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts.\n\n\n\nCopyright © 2024 Kibok Park All rights reserved."
   },
   {
     "objectID": "posts/20240414-testpost/index.html",
@@ -88,6 +88,6 @@
     "href": "posts/post-with-code/index.html",
     "title": "Post With Code",
     "section": "",
-    "text": "This is a post with executable code. 포스팅 수정 테스트"
+    "text": "This is a post with executable code. 포스팅 수정 테스트\n\n\n\nCopyright © 2024 Kibok Park All rights reserved."
   }
 ]
