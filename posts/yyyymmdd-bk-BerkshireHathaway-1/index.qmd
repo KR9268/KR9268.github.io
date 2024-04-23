@@ -1,0 +1,45 @@
+---
+title: "[도서 버크셔 해서웨이의 재탄생] 용어 정리 - 1"
+author: "Kibok Park"
+date: "2024-04-23"
+categories: [경제/금융공부] 
+# 경제/금융공부
+image: "image.jpg"
+toc: true
+
+draft: true
+
+comments: 
+    giscus:
+      repo: kr9268/kr9268.github.io
+---
+
+## 프롤로그
+* 경제적 해자(enonomic moat)
+* 자본배분(capital allocation) > 자본배분을 알면 캐피털시티를 이해할 수 있다
+* 플로트(float) > 플로트를 알면 가이코를 이해할 수 있다
+  + 내셔널 인뎀너티와 블루칩스탬프의 플로트를 활용한 투자법 등
+* 재보험
+* 연간 영업활동 순이익(operating earnings)
+* 일반 회계기준(GAAP)
+* 잠재세액 반영
+* 영업이익(operating income)
+
+## 1장. 섬유공장
+* 총자산이익률(ROA, Return on assets) : 순이익 / 총자산
+* 자기자본이익률(ROE, return on equity)
+* 운전자본(유동자본)
+* 순운전자본(운전자본-총부채) : 
+  (클럽 설명)
+  벤자민 그레이엄이 '현명한 투자자'에서 주창한 투자 전략
+  즉시 현금화할 수 있는 자산과 비교함으로써 보수적인 기준에서 주가의 저(고)평가 여부를 판단하는 척도로 사용
+* 장부가치
+* 주가순자산배수(PBR, price to book value)
+* 주주환원
+* 자사주 매입
+* 감가상각비
+* 자산 대체원가
+* 무형자산상각비 차감 전 이익(EBITDA)
+* 투하자본이익률(ROIC, return on invested capital)
+* 배당의 이중과세 : 연간이익에 대한 기업의 법인세 + 배당금에 대한 주주의 소득세
+* 자사주 매입을 통한 주주의 세금 이연(은 주주이익에 도움)
