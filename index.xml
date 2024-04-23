@@ -10,6 +10,60 @@
 <atom:link href="https://kr9268.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.4.553</generator>
-<lastBuildDate>Tue, 23 Apr 2024 15:02:15 GMT</lastBuildDate>
+<lastBuildDate>Tue, 23 Apr 2024 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>[도서 버크셔 해서웨이의 재탄생] 용어 정리 - 1</title>
+  <dc:creator>Kibok Park</dc:creator>
+  <link>https://kr9268.github.io/posts/yyyymmdd-bk-BerkshireHathaway-1/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="프롤로그" class="level2">
+<h2 class="anchored" data-anchor-id="프롤로그">프롤로그</h2>
+<ul>
+<li>경제적 해자(enonomic moat)</li>
+<li>자본배분(capital allocation) &gt; 자본배분을 알면 캐피털시티를 이해할 수 있다</li>
+<li>플로트(float) &gt; 플로트를 알면 가이코를 이해할 수 있다
+<ul>
+<li>내셔널 인뎀너티와 블루칩스탬프의 플로트를 활용한 투자법 등</li>
+</ul></li>
+<li>재보험</li>
+<li>연간 영업활동 순이익(operating earnings)</li>
+<li>일반 회계기준(GAAP)</li>
+<li>잠재세액 반영</li>
+<li>영업이익(operating income)</li>
+</ul>
+</section>
+<section id="장.-섬유공장" class="level2">
+<h2 class="anchored" data-anchor-id="장.-섬유공장">1장. 섬유공장</h2>
+<ul>
+<li>총자산이익률(ROA, Return on assets) : 순이익 / 총자산</li>
+<li>자기자본이익률(ROE, return on equity)</li>
+<li>운전자본(유동자본)</li>
+<li>순운전자본(운전자본-총부채) : (클럽 설명) 벤자민 그레이엄이 ’현명한 투자자’에서 주창한 투자 전략 즉시 현금화할 수 있는 자산과 비교함으로써 보수적인 기준에서 주가의 저(고)평가 여부를 판단하는 척도로 사용</li>
+<li>장부가치</li>
+<li>주가순자산배수(PBR, price to book value)</li>
+<li>주주환원</li>
+<li>자사주 매입</li>
+<li>감가상각비</li>
+<li>자산 대체원가</li>
+<li>무형자산상각비 차감 전 이익(EBITDA)</li>
+<li>투하자본이익률(ROIC, return on invested capital)</li>
+<li>배당의 이중과세 : 연간이익에 대한 기업의 법인세 + 배당금에 대한 주주의 소득세</li>
+<li>자사주 매입을 통한 주주의 세금 이연(은 주주이익에 도움)</li>
+</ul>
+
+
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
+  <category>경제/금융공부</category>
+  <guid>https://kr9268.github.io/posts/yyyymmdd-bk-BerkshireHathaway-1/</guid>
+  <pubDate>Tue, 23 Apr 2024 00:00:00 GMT</pubDate>
+  <media:content url="https://kr9268.github.io/posts/yyyymmdd-bk-BerkshireHathaway-1/image.jpg" medium="image" type="image/jpeg"/>
+</item>
 </channel>
 </rss>
