@@ -1,7 +1,7 @@
 ---
-title: "[버크셔 해서웨이의 재탄생 읽고] 용어 정리 - 1"
+title: "[버크셔 해서웨이의 재탄생 읽고] 용어 정리 - 2"
 author: "Kibok Park"
-date: "2024-04-23"
+date: "2024-04-24"
 categories: [경제/금융공부] 
 # 경제/금융공부
 image: "image.jpg"
@@ -29,7 +29,7 @@ comments:
     (내셔널 인뎀너티와 블루칩스탬프의 플로트를 활용한 투자법 등)
 * **재보험** : 보험계약상 책임의 전부 또는 일부를 다른 보험자에게 인수시킴
             (위험의 분산과 인수능력의 극대화를 위해 필요, 위험 대비 자산이 충분치 않은 경우 재보험으로 보험금액의 전부 인수가능)
-* **영업이익(operating income/earnings) : 기업의 핵심사업(영업활동)으로 얻은 이익
+* **영업이익(operating income/earnings)** : 기업의 핵심사업(영업활동)으로 얻은 이익
                                         (a measure of the amount of profit realized from a business's core operations)
 * **연간 영업활동 순이익(operating earnings)** : 영업활동에 필요한 차입금 등 부채의 이자비용도 차감한 이익(영업활동에서 발생한 순이익)
                                          
@@ -38,10 +38,10 @@ comments:
 > GAAP관련 추가로 알아보기
 * **IFRS(International Financial Reporting Standards) : 국제회계기준위원회에서 공표한 회계기준. 
                                                         IFRS를 공부하면 IFRS를 차용한 국가의 회사 재무제표는 같은 형식으로 이해 가능
-* ** 규칙기반의 GAAP vs 원칙기반의 IFRS
+* **규칙기반의 GAAP vs 원칙기반의 IFRS**
 : IFRS는 원칙에 따라 작성해 형태 차이가 거의 없으나, GAAP는 세부적인 사안에 대해 자세히 기술(IFRS도 주석 부분에 기술)
 : 내용을 세세하게 다루거나, 공정가치를 계산하지않아 IFRS보다 현재가치를 크게 하고 싶을때 GAAP사용
-* ** Non-GAAP
+* **Non-GAAP**
 : 반복적으로 발생하지 않는 1회적 비용은 제외하고 회계처리. 비용이 줄어 순수익이 늘어남
 : 미국의 경우 Non-GAAP로 다양한 비용을 제외시켜 표시하는 것이 불법은 아님(기업에 유리)
 [참고한 링크](https://muroyallife.tistory.com/entry/GAAP%EA%B3%BC-IFRS%EC%9D%98-%EC%B0%A8%EC%9D%B4-%EA%B7%B8%EB%9F%AC%EB%A9%B4-Non-GAAP%EC%9D%80-%EB%AD%90%EC%95%BC)
