@@ -14,6 +14,8 @@ comments:
       repo: kr9268/kr9268.github.io
 ---
 
+**공부할 겸 혼자서 구글링하면서 용어 정리해보는 포스팅입니다**
+
 ## 프롤로그
 * **경제적 해자(enonomic moat)** : 성 외곽에서 성을 보호해주는 해자처럼 경쟁우위를 갖게 해주는 요소
                               (a business's ability to maintain a competitive edge over its competitors)
@@ -45,19 +47,20 @@ comments:
 [참고한 링크](https://muroyallife.tistory.com/entry/GAAP%EA%B3%BC-IFRS%EC%9D%98-%EC%B0%A8%EC%9D%B4-%EA%B7%B8%EB%9F%AC%EB%A9%B4-Non-GAAP%EC%9D%80-%EB%AD%90%EC%95%BC)
                                               
 ## 1장. 섬유공장
-> * 총자산이익률(ROA, Return on assets) : 순이익 / 총자산(자기자본 + 타인자본). 얼마나 순이익이 창출되는지 판단할 수 있음.
+> * **총자산이익률(ROA, Return on assets)** : 순이익 / 총자산(자기자본 + 타인자본). 얼마나 순이익이 창출되는지 판단할 수 있음.
                                          ROA의 높고 낮음에 따라 주가의 높낮이도 따를 가능성이 큼
                                          산업의 성숙기[성장/성숙/사양 등]에 따라 ROA는 달라질 수 있음
-* 자기자본이익률(ROE, Return on equity) : 순이익 / 자본총계(자산-부채)
+* **자기자본이익률(ROE, Return on equity)** : 순이익 / 자본총계(자산-부채)
                                          ROA가 높은 경우 적정 수준으로 부채확대를 통해 총자산 자체를 늘리면 ROE를 높일 수 있음
 [참고한 링크](https://m.itooza.com/view.php?ud=2011052715374391424)
 [참고한 링크](https://support.stockplus.com/hc/ko/articles/5059590236057-%EA%B8%B0%EC%97%85%EC%9D%B4-%EB%8F%88%EC%9D%84-%EC%9E%98-%EB%B2%8C%EA%B9%8C-ROE-%EA%B8%B0%EC%B4%88)
 
-* 운전자본(유동자본)
-* 순운전자본(운전자본-총부채) : 
+* **운전자본(Working Capital, =유동자본?)** : 회사를 운영하는데 들어가는 돈(매출채권, 선급금, 재고자산 등 유동자산과 매입채무, 선수금 등 유동부채가 해당함)
+* 순운전자본(Net Working Capital, 운전자본-총부채) : ??
   (클럽 설명)
   벤자민 그레이엄이 '현명한 투자자'에서 주창한 투자 전략
   즉시 현금화할 수 있는 자산과 비교함으로써 보수적인 기준에서 주가의 저(고)평가 여부를 판단하는 척도로 사용
+
 * 장부가치
 * 주가순자산배수(PBR, price to book value)
 * 주주환원
