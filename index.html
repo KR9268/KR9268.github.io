@@ -82,9 +82,9 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-title','listing-author','listing-date','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
-      searchColumns: ["listing-categories"],
+      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description","listing-categories"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -222,7 +222,7 @@ window.Quarto = {
 <h1>Kibok Park</h1>
 </section></div>
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(0)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(1)</span></div><div class="category" data-category="경제/금융공부">경제/금융공부 <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
 <main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
@@ -242,7 +242,36 @@ window.Quarto = {
     </div>
 </div>
 <div class="list grid quarto-listing-cols-3">
-
+<div class="g-col-1" data-index="0" data-categories="경제/금융공부" data-listing-date-sort="1713916800000" data-listing-file-modified-sort="1714292240857" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1127">
+<a href="./posts/yyyymmdd-bk-BerkshireHathaway-1/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./posts/yyyymmdd-bk-BerkshireHathaway-1/image.jpg" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+[버크셔 해서웨이의 재탄생 읽고] 용어 정리
+</h5>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('경제/금융공부'); return false;">
+경제/금융공부
+</div>
+</div>
+<div class="card-text listing-description">
+<strong>공부할 겸 혼자서 구글링하면서 용어 정리해보는 포스팅입니다</strong>
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Kibok Park
+</div>
+<div class="listing-date">
+2024-04-24
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
 </div>
 <div class="listing-no-matching d-none">
 No matching items
