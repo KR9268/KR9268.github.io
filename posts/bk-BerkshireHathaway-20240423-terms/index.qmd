@@ -1,50 +1,137 @@
 ---
-title: "NH투자증권 Trading직무인터뷰를 읽고"
+title: "[버크셔 해서웨이의 재탄생 읽고] 용어 정리"
 author: "Kibok Park"
-date: "2024-04-28"
-categories: [직무분석] 
+date: "2024-04-23"
+categories: [경제/금융공부] 
 # 경제/금융공부
-image: false #image.jpg"
+image: "image.jpg"
 toc: true
 
-draft: false
+draft: true
 
 comments: 
     giscus:
       repo: kr9268/giscus_for_blog
 ---
 
-## 서론
-관심이 생겨서 관련 공고 등을 보고 있는데, 직무이해 겸 모르는 단어를 정리해봅니다.
+**공부할 겸 혼자서 구글링하면서 용어 정리해보는 포스팅입니다**
 
-::: {.callout collapse="true"}
-# 참고한 공고
-[채용공고-Trading](https://nhqv-recruit2024.com/NH1.html)
-[채용공고-빅데이터 분석](https://nhqv-recruit2024.com/interview_u_08.html)
-[직무인터뷰](https://nhqv-recruit2024.com/interview_u_04.html)
-::: 
+## 프롤로그
+* **경제적 해자(enonomic moat)** : 성 외곽에서 성을 보호해주는 해자처럼 경쟁우위를 갖게 해주는 요소
+                              (a business's ability to maintain a competitive edge over its competitors)
+* **자본배분(capital allocation)** : 경제적 자원들을 효율증대/이익극대화를 위해 분배/투자 하는 것
+                              (distributing and investing a company's financial resources in ways that will increase its efficiency, and maximize its profits)
+  > 자본배분을 알면 워런버핏 사례의 캐피털시티를 이해할 수 있다
+* **플로트(float, 책임준비금)** : 보험회사가 보험금을 지급하기 위해 적립시키는 돈(은행과 달리 자산운용준칙에 따라 자율적으로 사용 가능)
+  - 플로트라는 단어의 다른 뜻 : 일반 대중이 거래할 수 있게 발행한 보통주
+                            (the regular shares a company has issued to the public that are available for investors to trade)
+  > 플로트를 알면 워런버핏 사례의 가이코를 이해할 수 있다
+    (내셔널 인뎀너티와 블루칩스탬프의 플로트를 활용한 투자법 등)
+* **재보험** : 보험계약상 책임의 전부 또는 일부를 다른 보험자에게 인수시킴
+            (위험의 분산과 인수능력의 극대화를 위해 필요, 위험 대비 자산이 충분치 않은 경우 재보험으로 보험금액의 전부 인수가능)
+* **영업이익(operating income/earnings)** : 기업의 핵심사업(영업활동)으로 얻은 이익
+                                        (a measure of the amount of profit realized from a business's core operations)
+* **연간 영업활동 순이익(operating earnings)** : 영업활동에 필요한 차입금 등 부채의 이자비용도 차감한 이익(영업활동에서 발생한 순이익)
+                                         
+* **일반 회계기준(GAAP, Generally Accepted Accounting Principles, GAAP)** 
+: 일반적으로 인정된 회계원칙. 회계규정 자체 또는 회계실무 지침 등 광범위하게 인정되는 회계기준
+> GAAP관련 추가로 알아보기
+* **IFRS(International Financial Reporting Standards) : 국제회계기준위원회에서 공표한 회계기준. 
+                                                        IFRS를 공부하면 IFRS를 차용한 국가의 회사 재무제표는 같은 형식으로 이해 가능
+* **규칙기반의 GAAP vs 원칙기반의 IFRS**
+: IFRS는 원칙에 따라 작성해 형태 차이가 거의 없으나, GAAP는 세부적인 사안에 대해 자세히 기술(IFRS도 주석 부분에 기술)
+: 내용을 세세하게 다루거나, 공정가치를 계산하지않아 IFRS보다 현재가치를 크게 하고 싶을때 GAAP사용
+* **Non-GAAP**
+: 반복적으로 발생하지 않는 1회적 비용은 제외하고 회계처리. 비용이 줄어 순수익이 늘어남
+: 미국의 경우 Non-GAAP로 다양한 비용을 제외시켜 표시하는 것이 불법은 아님(기업에 유리)
+[참고한 링크](https://muroyallife.tistory.com/entry/GAAP%EA%B3%BC-IFRS%EC%9D%98-%EC%B0%A8%EC%9D%B4-%EA%B7%B8%EB%9F%AC%EB%A9%B4-Non-GAAP%EC%9D%80-%EB%AD%90%EC%95%BC)
+                                              
+## 1장. 섬유공장
+> * **총자산이익률(ROA, Return on assets)** : 순이익 / 총자산(자기자본 + 타인자본). 얼마나 순이익이 창출되는지 판단할 수 있음.
+                                         ROA의 높고 낮음에 따라 주가의 높낮이도 따를 가능성이 큼
+                                         산업의 성숙기[성장/성숙/사양 등]에 따라 ROA는 달라질 수 있음
+* **자기자본이익률(ROE, Return on equity)** : 순이익 / 자본총계(자산-부채)
+                                         ROA가 높은 경우 적정 수준으로 부채확대를 통해 총자산 자체를 늘리면 ROE를 높일 수 있음
+[참고한 링크](https://m.itooza.com/view.php?ud=2011052715374391424)
+[참고한 링크](https://support.stockplus.com/hc/ko/articles/5059590236057-%EA%B8%B0%EC%97%85%EC%9D%B4-%EB%8F%88%EC%9D%84-%EC%9E%98-%EB%B2%8C%EA%B9%8C-ROE-%EA%B8%B0%EC%B4%88)
 
-## 트레이딩 직무 / 단어정리
-* 프랍 트레이딩(Proprietary Trading) : 고객이 아닌 금융회사의 돈으로 주식이나 파생상품 등 금융상품을 거래하는 것
-                                     (=자기계정거래, 자기계좌거래, 고유계정거래, 고유계좌거래)
+* **운전자본(Working Capital, =유동자본?)** : 회사를 운영하는데 들어가는 돈(매출채권, 선급금, 재고자산 등 유동자산과 매입채무, 선수금 등 유동부채가 해당함)
+* 순운전자본(Net Working Capital, 운전자본-총부채) : ??
+  (클럽 설명)
+  벤자민 그레이엄이 '현명한 투자자'에서 주창한 투자 전략
+  즉시 현금화할 수 있는 자산과 비교함으로써 보수적인 기준에서 주가의 저(고)평가 여부를 판단하는 척도로 사용
 
-> [서울경제 관련기사](https://www.sedaily.com/NewsView/1HLP1AH6UG) <br>
- **`프랍트레이딩`**은 통상 선물·옵션 등 `파생상품 부문`, 일반적 주식투자 같은 `방향성 매매`, 알고리즘에 따라 투자하는  `시스템 매매`, `채권투자`, 부동산이나 인프라 등의 `대체투자` 등으로 나뉜다. 보통 [자기매매 비중이 높은 중소형 증권사]{.underline}에는 많게는 50여명에 이르는 프랍트레이더들이 있다. 이 가운데 [80% 이상이 파생 트레이더다.]{.underline}<br>[중소형 증권사들의 파생상품투자 비중이 높은 것은 비용이 싸기 때문이다.]{.underline} 증권사의 경우 선물·옵션 거래시 `사후 증거금 제도`가 적용된다. 장중 거래에는 증거금이 따로 필요 없고 장 마감 후 포지션 규모에 따라 증거금을 마련하면 된다. 따라서 [장중에는 활발히 거래하고 장 마감 직전 파생상품을 보유하지 않았으면 증거금 부담은 없다.]{.underline} [하루 단위로 청산하는 경우 사실상 금융비용은 없다.]{.underline}
->
-> [거래증거금vs위탁증거금 내용 참고할 수 있는 블로그](https://blog.naver.com/vvvtg/223231778959)
+* 장부가치
+* 주가순자산배수(PBR, price to book value)
+* 주주환원
+* 자사주 매입
+* 감가상각비
+* 자산 대체원가
+* 무형자산상각비 차감 전 이익(EBITDA)
+* 투하자본
+* 투하자본이익률(ROIC, return on invested capital)
+* 배당의 이중과세 : 연간이익에 대한 기업의 법인세 + 배당금에 대한 주주의 소득세
+* 자사주 매입을 통한 주주의 세금 이연(은 주주이익에 도움)
 
-* 장내거래 vs 장외거래 : 정규시장 외 체결되는 거래
-* 매크로 지식 : Macroeconomics지식 (↔ Microeconomics)
-* 서킷브레이커(일시매매정지) : 가격 변동이 지나치게 심한 경우 일시적으로 거래를 중단하는 것(=Trading Curb)
-* 틱 : 체결량에 따른 단위 (5틱 = 체결 5회 기준)
+## 2장. 투자: 1962-1965년
+* **무한책임 파트너(general partner)** : 펀드 운용에 관한 무한책임을 지는 출자자, 보통 운용자를 말함
+* **헤지펀드** :
+* **환매** : 
+* **이월결손금**
+* **손익계산서**
+* **유동성소요**
+* **내재 사업가치(intrinsic business value)
+* **유한책임조합**
 
-* 셀사이드(Sell-side|은행, 증권사 등) : 금융 서비스 등을 제공하여 수익 창출
-* 바이사이드(Buy-side|자산운용사, 연기금, 보험사, 헤지펀드 등) : 투자를 하여 수익 창출
-> [참고글:셀사이드와 바이사이드의 금융공학](https://brunch.co.kr/@quantdaddy/34)
+## 3장. 전환: 1965-1967년
 
-* 하우스 : 증권사, 금융사 등 단체를 칭함
+* **자본배분**
+* **투하자본이익률**
+* **매출원가**
+* **특별항목 ('특별항목 반영 전 순이익'에서 사용된 의미, '1964년 특별항목은 유휴설비비용 22만 달러를 포함했다'와 같이 사용)**
+* **유휴설비비용(idle plant expense)**: 비영업용 제조설비의 유지보수 및 감가상각비
+* **기대손실
+* 손상차손 write-down
+* 유형자산 손상차손
+* 이익잉여금
+* 총포괄손익
+* 총창출자본(total capital generated)
 
-## 빅데이터 직무 / 단어정리
-* MTS : Mobile Trading System (HTS : Home Trading System)
-* 원장 : 증권사가 고객계좌나 거래내역, 매매 등을 관리하는 프로그램
+## 4장. 인수: 1967-1969년
 
+* 완전 소유 기업(wholly-owned-subsidiary) : 1개 기업이 단독 투자하여 100% 소유 지문을 가지는것
+* 상환청구권 : 
+
+>플로트(책임준비금) :
+  + 지급준비금(lost reserve) 
+  + 손해사정비 준비금(lost adjustment expense reserve)
+  + 미경과보험료 적립금(unearned premium reserve)
+  - 대리점 미수금(agents' balance)
+  - 선급 신계약비(prepaid acquisition cost)
+  - 출재보험 준비금(deferred charges applicable to assumed reinsurance)
+  * 플로트 계산법은 분석대상 기업과 애널리스트에 따라 다름
+    * 기타자산과 기타부채를 처리하는 방법에서 차이가 발생함
+  * 정확한 플로트 값이 중요하지 않음(소수점 마지막까지 계산X)
+  * 
+
+* 합산비율(combined ratio) : 손해율 + 사업비율. 100%를 기준으로 높으면 손해 낮으면 이익
+* 손해율(loss ratio) : 보험료 수입 대비 보험금 지급 비율
+* 사업비율(expense ratio) : 보험료 수입 중 인건비, 마케팅비, 모집수수료, 중개비 등 비중
+* 경과보험료(earned premiums) : 1년단위/일시납이 기본인 손해보험업에서 더 유의미한 기준. 보험사의 회계연도 말을 기준으로 가입자의 전체 보험기간을 경과/미경과 기간으로 구분, 받은 보험료를 경과/미경과 보험료로 구분함
+* 레버리지 : 
+* 영업 레버리지(operating leverage)
+* 재무 레버리지(financial leverage)
+
+* 유형순자산(tangible net worth)
+* 영업권(goodwill)
+
+* 원수보험료
+* 순원수보험료(net premiums written) : 원수보험료에서 수/출재보험료와 환급보험료를 가감한 값
+* 비연결자회사
+* 연결납세제도(consolidated tax return) : 모회사의 자회사 지분율이 80%이상이고 경제적으로 결합되어있을 때 하나의 과세단위로 해석함. 이에 따라 모회사-자회사간 배당을 과세하지 않을때가 있음. 한국에도 도입되어있지만 연결 요건이 엄격함
+
+* 예수부채
+* 요구불예금
+* 스핀오프 : 자회사 주식을 모회사 주주에게 배당(인적분할) + 기존 회사의 자회사화
+* 투자 영업이익 : 이자 및 배당수익 + 유가증권 추분이익
+* 
