@@ -11,7 +11,7 @@
     "href": "index.html",
     "title": "Blog",
     "section": "",
-    "text": "No matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
+    "text": "[버크셔 해서웨이의 재탄생 읽고] 용어 정리\n\n\n\n경제/금융공부\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-24\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
   },
   {
     "objectID": "index_miniprojects.html",
@@ -40,5 +40,47 @@
     "title": "Kibok Park",
     "section": "Topics",
     "text": "Topics\nPython, Quantative trading"
+  },
+  {
+    "objectID": "posts/yyyymmdd-bk-BerkshireHathaway-1/index.html",
+    "href": "posts/yyyymmdd-bk-BerkshireHathaway-1/index.html",
+    "title": "[버크셔 해서웨이의 재탄생 읽고] 용어 정리",
+    "section": "",
+    "text": "공부할 겸 혼자서 구글링하면서 용어 정리해보는 포스팅입니다\nCopyright © 2024 Kibok Park All rights reserved."
+  },
+  {
+    "objectID": "posts/yyyymmdd-bk-BerkshireHathaway-1/index.html#프롤로그",
+    "href": "posts/yyyymmdd-bk-BerkshireHathaway-1/index.html#프롤로그",
+    "title": "[버크셔 해서웨이의 재탄생 읽고] 용어 정리",
+    "section": "프롤로그",
+    "text": "프롤로그\n\n경제적 해자(enonomic moat) : 성 외곽에서 성을 보호해주는 해자처럼 경쟁우위를 갖게 해주는 요소 (a business’s ability to maintain a competitive edge over its competitors)\n자본배분(capital allocation) : 경제적 자원들을 효율증대/이익극대화를 위해 분배/투자 하는 것 (distributing and investing a company’s financial resources in ways that will increase its efficiency, and maximize its profits) &gt; 자본배분을 알면 워런버핏 사례의 캐피털시티를 이해할 수 있다\n플로트(float, 책임준비금) : 보험회사가 보험금을 지급하기 위해 적립시키는 돈(은행과 달리 자산운용준칙에 따라 자율적으로 사용 가능)\n\n플로트라는 단어의 다른 뜻 : 일반 대중이 거래할 수 있게 발행한 보통주 (the regular shares a company has issued to the public that are available for investors to trade) &gt; 플로트를 알면 워런버핏 사례의 가이코를 이해할 수 있다 (내셔널 인뎀너티와 블루칩스탬프의 플로트를 활용한 투자법 등)\n\n재보험 : 보험계약상 책임의 전부 또는 일부를 다른 보험자에게 인수시킴 (위험의 분산과 인수능력의 극대화를 위해 필요, 위험 대비 자산이 충분치 않은 경우 재보험으로 보험금액의 전부 인수가능)\n영업이익(operating income/earnings) : 기업의 핵심사업(영업활동)으로 얻은 이익 (a measure of the amount of profit realized from a business’s core operations)\n연간 영업활동 순이익(operating earnings) : 영업활동에 필요한 차입금 등 부채의 이자비용도 차감한 이익(영업활동에서 발생한 순이익)\n\n일반 회계기준(GAAP, Generally Accepted Accounting Principles, GAAP)\n\n일반적으로 인정된 회계원칙. 회계규정 자체 또는 회계실무 지침 등 광범위하게 인정되는 회계기준 &gt; GAAP관련 추가로 알아보기\n\n\n**IFRS(International Financial Reporting Standards) : 국제회계기준위원회에서 공표한 회계기준. IFRS를 공부하면 IFRS를 차용한 국가의 회사 재무제표는 같은 형식으로 이해 가능\n\n규칙기반의 GAAP vs 원칙기반의 IFRS\n\nIFRS는 원칙에 따라 작성해 형태 차이가 거의 없으나, GAAP는 세부적인 사안에 대해 자세히 기술(IFRS도 주석 부분에 기술)\n\n\n내용을 세세하게 다루거나, 공정가치를 계산하지않아 IFRS보다 현재가치를 크게 하고 싶을때 GAAP사용\n\n\n\nNon-GAAP\n\n반복적으로 발생하지 않는 1회적 비용은 제외하고 회계처리. 비용이 줄어 순수익이 늘어남\n\n\n미국의 경우 Non-GAAP로 다양한 비용을 제외시켜 표시하는 것이 불법은 아님(기업에 유리) 참고한 링크"
+  },
+  {
+    "objectID": "posts/yyyymmdd-bk-BerkshireHathaway-1/index.html#장.-섬유공장",
+    "href": "posts/yyyymmdd-bk-BerkshireHathaway-1/index.html#장.-섬유공장",
+    "title": "[버크셔 해서웨이의 재탄생 읽고] 용어 정리",
+    "section": "1장. 섬유공장",
+    "text": "1장. 섬유공장\n\n\n총자산이익률(ROA, Return on assets) : 순이익 / 총자산(자기자본 + 타인자본). 얼마나 순이익이 창출되는지 판단할 수 있음. ROA의 높고 낮음에 따라 주가의 높낮이도 따를 가능성이 큼 산업의 성숙기[성장/성숙/사양 등]에 따라 ROA는 달라질 수 있음\n자기자본이익률(ROE, Return on equity) : 순이익 / 자본총계(자산-부채) ROA가 높은 경우 적정 수준으로 부채확대를 통해 총자산 자체를 늘리면 ROE를 높일 수 있음 참고한 링크 참고한 링크\n\n\n\n운전자본(Working Capital, =유동자본?) : 회사를 운영하는데 들어가는 돈(매출채권, 선급금, 재고자산 등 유동자산과 매입채무, 선수금 등 유동부채가 해당함)\n순운전자본(Net Working Capital, 운전자본-총부채) : ?? (클럽 설명) 벤자민 그레이엄이 ’현명한 투자자’에서 주창한 투자 전략 즉시 현금화할 수 있는 자산과 비교함으로써 보수적인 기준에서 주가의 저(고)평가 여부를 판단하는 척도로 사용\n장부가치\n주가순자산배수(PBR, price to book value)\n주주환원\n자사주 매입\n감가상각비\n자산 대체원가\n무형자산상각비 차감 전 이익(EBITDA)\n투하자본이익률(ROIC, return on invested capital)\n배당의 이중과세 : 연간이익에 대한 기업의 법인세 + 배당금에 대한 주주의 소득세\n자사주 매입을 통한 주주의 세금 이연(은 주주이익에 도움)"
+  },
+  {
+    "objectID": "posts/yyyymmdd-bk-BerkshireHathaway-1/index.html#장.-투자-1962-1965년",
+    "href": "posts/yyyymmdd-bk-BerkshireHathaway-1/index.html#장.-투자-1962-1965년",
+    "title": "[버크셔 해서웨이의 재탄생 읽고] 용어 정리",
+    "section": "2장. 투자: 1962-1965년",
+    "text": "2장. 투자: 1962-1965년\n\n무한책임 파트너(general partner) : 펀드 운용에 관한 무한책임을 지는 출자자, 보통 운용자를 말함\n헤지펀드 :\n환매 :\n이월결손금\n손익계산서\n유동성소요\n**내재 사업가치(intrinsic business value)\n유한책임조합"
+  },
+  {
+    "objectID": "posts/yyyymmdd-bk-BerkshireHathaway-1/index.html#장.-전환-1965-1967년",
+    "href": "posts/yyyymmdd-bk-BerkshireHathaway-1/index.html#장.-전환-1965-1967년",
+    "title": "[버크셔 해서웨이의 재탄생 읽고] 용어 정리",
+    "section": "3장. 전환: 1965-1967년",
+    "text": "3장. 전환: 1965-1967년\n\n자본배분\n투하자본이익률\n매출원가\n특별항목 (’특별항목 반영 전 순이익’에서 사용된 의미, ’1964년 특별항목은 유휴설비비용 22만 달러를 포함했다’와 같이 사용)\n유휴설비비용(idle plant expense): 비영업용 제조설비의 유지보수 및 감가상각비\n**기대손실\n손상차손 write-down\n유형자산 손상차손\n이익잉여금\n총포괄손익\n총창출자본(total capital generated)"
+  },
+  {
+    "objectID": "posts/yyyymmdd-bk-BerkshireHathaway-1/index.html#장.-인수-1967-1969년",
+    "href": "posts/yyyymmdd-bk-BerkshireHathaway-1/index.html#장.-인수-1967-1969년",
+    "title": "[버크셔 해서웨이의 재탄생 읽고] 용어 정리",
+    "section": "4장. 인수: 1967-1969년",
+    "text": "4장. 인수: 1967-1969년\n\n완전 소유 기업(wholly-owned-subsidiary) : 1개 기업이 단독 투자하여 100% 소유 지문을 가지는것\n상환청구권 :\n\n\n플로트(책임준비금) : + 지급준비금(lost reserve) + 손해사정비 준비금(lost adjustment expense reserve) + 미경과보험료 적립금(unearned premium reserve) - 대리점 미수금(agents’ balance) - 선급 신계약비(prepaid acquisition cost) - 출재보험 준비금(deferred charges applicable to assumed reinsurance)"
   }
 ]

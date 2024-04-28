@@ -5,7 +5,9 @@
   },
   {
     "listing": "/index.html",
-    "items": []
+    "items": [
+      "/posts/yyyymmdd-bk-BerkshireHathaway-1/index.html"
+    ]
   },
   {
     "listing": "/index_miniprojects.html",
