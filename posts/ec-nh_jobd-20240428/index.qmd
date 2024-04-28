@@ -1,5 +1,5 @@
 ---
-title: "NH투자증권 Trading직무인터뷰를 읽고"
+title: "NH증권 직무인터뷰를 읽고<br>(트레이딩&빅데이터)"
 author: "Kibok Park"
 date: "2024-04-28"
 categories: [직무분석] 
