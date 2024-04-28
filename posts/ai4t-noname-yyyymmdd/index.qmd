@@ -6,7 +6,7 @@ categories: [직무분석]
 # 경제/금융공부
 toc: true
 
-draft: true
+draft: false
 
 comments: 
     giscus:
