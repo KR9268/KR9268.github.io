@@ -1,7 +1,7 @@
 ---
 title: "[버크셔 해서웨이의 재탄생 읽고] 용어 정리"
 author: "Kibok Park"
-date: "2024-04-24"
+date: "2024-04-23"
 categories: [경제/금융공부] 
 # 경제/금융공부
 image: "image.jpg"
@@ -11,7 +11,7 @@ draft: false
 
 comments: 
     giscus:
-      repo: kr9268/kr9268.github.io
+      repo: kr9268/giscus_for_blog
 ---
 
 **공부할 겸 혼자서 구글링하면서 용어 정리해보는 포스팅입니다**
