@@ -4,7 +4,6 @@ author: "Kibok Park"
 date: "2024-04-28"
 categories: [직무분석] 
 # 경제/금융공부
-image: image.jpg"
 toc: true
 
 draft: false
