@@ -142,5 +142,9 @@ comments:
 * 표면이자율
 * 일반사채(debenture:무담보회사채)
 * 이자비용 및 법인세 차감 전 이익(EBIT)
-* 
 
+* 주가매출액배수(price to sales, PSR) : 기업의 주가와 매출을 비교하는 가치평가 지표
+* 예상손해율(loss expectancy)
+* 보험영업 손실/이익
+* 듀레이션(duration, 듀레이션이 긴 재보험에서의 용례)
+* 
