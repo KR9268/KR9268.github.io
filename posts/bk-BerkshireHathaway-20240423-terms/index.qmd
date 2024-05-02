@@ -147,4 +147,9 @@ comments:
 * 예상손해율(loss expectancy)
 * 보험영업 손실/이익
 * 듀레이션(duration, 듀레이션이 긴 재보험에서의 용례)
+
+## 6장. 다른 기업들
+* 공모채 : 불특정다수에게 발행하는 채권
+* 사용자본이익률(ROCE)
+* 최초 이익수익률(initial earnings yield)
 * 
