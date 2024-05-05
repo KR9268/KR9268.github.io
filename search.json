@@ -4,7 +4,105 @@
     "href": "index.html",
     "title": "Blog",
     "section": "",
-    "text": "NH증권 직무인터뷰를 읽고(트레이딩&빅데이터)\n\n\n\n직무분석\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-28\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
+    "text": "NH증권 직무인터뷰를 읽고(트레이딩&빅데이터)\n\n\n\n직무분석\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-28\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n[버크셔 해서웨이의 재탄생 읽고] 용어 정리\n\n\n\n경제/금융공부\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-23\n\n\n\n\n\n\n\n\n\n\n\n\n[Pytorch] MNIST 실습\n\n\n\n파이썬, 머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-02-19\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
+  },
+  {
+    "objectID": "posts/coach-ml-20240505/index.html",
+    "href": "posts/coach-ml-20240505/index.html",
+    "title": "[Pytorch] MNIST 실습",
+    "section": "",
+    "text": "import torch\nimport torch.nn as nn\nfrom torch.utils.data import DataLoader\nimport torchvision\nimport torchvision.datasets as dset\nimport torchvision.transforms as transforms\n\nroot = './data'\nmnist_train = dset.MNIST (root=root, train=True, transform=transforms.ToTensor(), download=True )\nmnist_test = dset.MNIST (root=root, train=False, transform=transforms.ToTensor(), download=True)\n\n# Train용 / Test용 데이터셋\ntrain_loader = DataLoader(mnist_train, batch_size=10, shuffle=True)\ntest_loader = DataLoader(mnist_test, batch_size=10, shuffle=True)\n\n\nFigure 1\nCopyright © 2024 Kibok Park All rights reserved."
+  },
+  {
+    "objectID": "posts/coach-ml-20240505/index.html#pytorch활용한-mnist-데이터셋-로딩",
+    "href": "posts/coach-ml-20240505/index.html#pytorch활용한-mnist-데이터셋-로딩",
+    "title": "[Pytorch] MNIST 실습",
+    "section": "",
+    "text": "import torch\nimport torch.nn as nn\nfrom torch.utils.data import DataLoader\nimport torchvision\nimport torchvision.datasets as dset\nimport torchvision.transforms as transforms\n\nroot = './data'\nmnist_train = dset.MNIST (root=root, train=True, transform=transforms.ToTensor(), download=True )\nmnist_test = dset.MNIST (root=root, train=False, transform=transforms.ToTensor(), download=True)\n\n# Train용 / Test용 데이터셋\ntrain_loader = DataLoader(mnist_train, batch_size=10, shuffle=True)\ntest_loader = DataLoader(mnist_test, batch_size=10, shuffle=True)\n\n\nFigure 1"
+  },
+  {
+    "objectID": "posts/coach-ml-20240505/index.html#학습준비가중치-초기화-등",
+    "href": "posts/coach-ml-20240505/index.html#학습준비가중치-초기화-등",
+    "title": "[Pytorch] MNIST 실습",
+    "section": "학습준비(가중치 초기화 등)",
+    "text": "학습준비(가중치 초기화 등)\n\nMNIST의 크기 : 28 * 28\nLoss : Cross Entropy\nOptimizer - SGD(Stochastic Gradient Descent)\nLearning rate = 0.1\n\n\ndevice = torch.device('cuda' if torch.cuda.is_available() else 'cpu')\n\n# 모델 구현 (28*28 = 784 / 0~9라서 10개 / 가중치 사용하므로 bias)\nlinear = torch.nn.Linear(784, 10, bias=True).to(device) \n\n# weight init 가중치 초기화\ntorch.nn.init.normal_(linear.weight)\n\n# Loss fn - Cross Entropy Loss\ncriterion = torch.nn.CrossEntropyLoss().to(device)\n\n# optimizer - SGD\noptimizer = torch.optim.SGD(linear.parameters(), lr=0.1)"
+  },
+  {
+    "objectID": "posts/coach-ml-20240505/index.html#모델-학습",
+    "href": "posts/coach-ml-20240505/index.html#모델-학습",
+    "title": "[Pytorch] MNIST 실습",
+    "section": "모델 학습",
+    "text": "모델 학습\n\ntraining_epochs = 20 # training 반복 횟수\n\nfor epoch in range(training_epochs):\n  for i, (imgs, labels) in enumerate(train_loader):\n    labels = labels.to(device)\n    imgs = imgs.view(-1, 28 * 28).to(device)\n\n    outputs = linear(imgs) \n    loss = criterion(outputs, labels) \n\n    optimizer.zero_grad()# optimzier zero grad\n\n    loss.backward() # loss backward\n    optimizer.step() # optimzier step\n\n    _,argmax = torch.max(outputs, 1)\n    accuracy = (labels == argmax).float().mean()\n\n  if (i+1) % 100 == 0:\n    print('Epoch [{}/{}], Step [{}/{}], Loss: {: .4f}, Accuracy: {: .2f}%'.format(\n    epoch+1, training_epochs, i+1, len(train_loader), loss.item(), accuracy.item()* 100))\n\nEpoch [1/20], Step [6000/6000], Loss:  0.0273, Accuracy:  100.00%\nEpoch [2/20], Step [6000/6000], Loss:  0.0762, Accuracy:  100.00%\nEpoch [3/20], Step [6000/6000], Loss:  0.5928, Accuracy:  80.00%\nEpoch [4/20], Step [6000/6000], Loss:  0.2854, Accuracy:  90.00%\nEpoch [5/20], Step [6000/6000], Loss:  0.1373, Accuracy:  90.00%\nEpoch [6/20], Step [6000/6000], Loss:  0.0668, Accuracy:  100.00%\nEpoch [7/20], Step [6000/6000], Loss:  0.0253, Accuracy:  100.00%\nEpoch [8/20], Step [6000/6000], Loss:  0.0542, Accuracy:  100.00%\nEpoch [9/20], Step [6000/6000], Loss:  0.9203, Accuracy:  80.00%\nEpoch [10/20], Step [6000/6000], Loss:  0.1244, Accuracy:  90.00%\nEpoch [11/20], Step [6000/6000], Loss:  0.6108, Accuracy:  90.00%\nEpoch [12/20], Step [6000/6000], Loss:  0.1312, Accuracy:  100.00%\nEpoch [13/20], Step [6000/6000], Loss:  0.0705, Accuracy:  100.00%\nEpoch [14/20], Step [6000/6000], Loss:  1.6259, Accuracy:  70.00%\nEpoch [15/20], Step [6000/6000], Loss:  0.0538, Accuracy:  100.00%\nEpoch [16/20], Step [6000/6000], Loss:  0.2435, Accuracy:  80.00%\nEpoch [17/20], Step [6000/6000], Loss:  0.0061, Accuracy:  100.00%\nEpoch [18/20], Step [6000/6000], Loss:  0.1091, Accuracy:  100.00%\nEpoch [19/20], Step [6000/6000], Loss:  0.0157, Accuracy:  100.00%\nEpoch [20/20], Step [6000/6000], Loss:  0.1413, Accuracy:  90.00%"
+  },
+  {
+    "objectID": "posts/coach-ml-20240505/index.html#학습된-모델-테스트",
+    "href": "posts/coach-ml-20240505/index.html#학습된-모델-테스트",
+    "title": "[Pytorch] MNIST 실습",
+    "section": "학습된 모델 테스트",
+    "text": "학습된 모델 테스트\n\nlinear.eval()\nwith torch.no_grad():\n    correct = 0\n    total = 0\n    for i, (imgs, labels) in enumerate(test_loader):\n        imgs, labels = imgs.to(device), labels.to(device)\n        imgs = imgs.view(-1, 28 * 28)\n\n        outputs = linear(imgs) # 구현\n\n        _, argmax = torch.max(outputs, 1) # max()를 통해 최종 출력이 가장 높은 class 선택\n        total += imgs.size(0)\n        correct += (labels == argmax). sum().item()\n\n    print('Test accuracy for {} images: {: .2f}%'.format(total, correct / total * 100))\n\nTest accuracy for 10000 images:  91.99%"
+  },
+  {
+    "objectID": "posts/bk-BerkshireHathaway-20240423-terms/index.html",
+    "href": "posts/bk-BerkshireHathaway-20240423-terms/index.html",
+    "title": "[버크셔 해서웨이의 재탄생 읽고] 용어 정리",
+    "section": "",
+    "text": "공부할 겸 혼자서 구글링하면서 용어 정리해보는 포스팅입니다\nCopyright © 2024 Kibok Park All rights reserved."
+  },
+  {
+    "objectID": "posts/bk-BerkshireHathaway-20240423-terms/index.html#프롤로그",
+    "href": "posts/bk-BerkshireHathaway-20240423-terms/index.html#프롤로그",
+    "title": "[버크셔 해서웨이의 재탄생 읽고] 용어 정리",
+    "section": "프롤로그",
+    "text": "프롤로그\n\n경제적 해자(enonomic moat) : 성 외곽에서 성을 보호해주는 해자처럼 경쟁우위를 갖게 해주는 요소 (a business’s ability to maintain a competitive edge over its competitors)\n자본배분(capital allocation) : 경제적 자원들을 효율증대/이익극대화를 위해 분배/투자 하는 것 (distributing and investing a company’s financial resources in ways that will increase its efficiency, and maximize its profits) &gt; 자본배분을 알면 워런버핏 사례의 캐피털시티를 이해할 수 있다\n플로트(float, 책임준비금) : 보험회사가 보험금을 지급하기 위해 적립시키는 돈(은행과 달리 자산운용준칙에 따라 자율적으로 사용 가능)\n\n플로트라는 단어의 다른 뜻 : 일반 대중이 거래할 수 있게 발행한 보통주 (the regular shares a company has issued to the public that are available for investors to trade) &gt; 플로트를 알면 워런버핏 사례의 가이코를 이해할 수 있다 (내셔널 인뎀너티와 블루칩스탬프의 플로트를 활용한 투자법 등)\n\n재보험 : 보험계약상 책임의 전부 또는 일부를 다른 보험자에게 인수시킴 (위험의 분산과 인수능력의 극대화를 위해 필요, 위험 대비 자산이 충분치 않은 경우 재보험으로 보험금액의 전부 인수가능)\n영업이익(operating income/earnings) : 기업의 핵심사업(영업활동)으로 얻은 이익 (a measure of the amount of profit realized from a business’s core operations)\n연간 영업활동 순이익(operating earnings) : 영업활동에 필요한 차입금 등 부채의 이자비용도 차감한 이익(영업활동에서 발생한 순이익)\n\n일반 회계기준(GAAP, Generally Accepted Accounting Principles, GAAP)\n\n일반적으로 인정된 회계원칙. 회계규정 자체 또는 회계실무 지침 등 광범위하게 인정되는 회계기준 &gt; GAAP관련 추가로 알아보기\n\n\n**IFRS(International Financial Reporting Standards) : 국제회계기준위원회에서 공표한 회계기준. IFRS를 공부하면 IFRS를 차용한 국가의 회사 재무제표는 같은 형식으로 이해 가능\n\n규칙기반의 GAAP vs 원칙기반의 IFRS\n\nIFRS는 원칙에 따라 작성해 형태 차이가 거의 없으나, GAAP는 세부적인 사안에 대해 자세히 기술(IFRS도 주석 부분에 기술)\n\n\n내용을 세세하게 다루거나, 공정가치를 계산하지않아 IFRS보다 현재가치를 크게 하고 싶을때 GAAP사용\n\n\n\nNon-GAAP\n\n반복적으로 발생하지 않는 1회적 비용은 제외하고 회계처리. 비용이 줄어 순수익이 늘어남\n\n\n미국의 경우 Non-GAAP로 다양한 비용을 제외시켜 표시하는 것이 불법은 아님(기업에 유리) 참고한 링크"
+  },
+  {
+    "objectID": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-섬유공장",
+    "href": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-섬유공장",
+    "title": "[버크셔 해서웨이의 재탄생 읽고] 용어 정리",
+    "section": "1장. 섬유공장",
+    "text": "1장. 섬유공장\n\n\n총자산이익률(ROA, Return on assets) : 순이익 / 총자산(자기자본 + 타인자본). 얼마나 순이익이 창출되는지 판단할 수 있음. ROA의 높고 낮음에 따라 주가의 높낮이도 따를 가능성이 큼 산업의 성숙기[성장/성숙/사양 등]에 따라 ROA는 달라질 수 있음\n자기자본이익률(ROE, Return on equity) : 순이익 / 자본총계(자산-부채) ROA가 높은 경우 적정 수준으로 부채확대를 통해 총자산 자체를 늘리면 ROE를 높일 수 있음 참고한 링크 참고한 링크\n\n\n\n운전자본(Working Capital, =유동자본?) : 회사를 운영하는데 들어가는 돈(매출채권, 선급금, 재고자산 등 유동자산과 매입채무, 선수금 등 유동부채가 해당함)\n순운전자본(Net Working Capital, 운전자본-총부채) : ?? (클럽 설명) 벤자민 그레이엄이 ’현명한 투자자’에서 주창한 투자 전략 즉시 현금화할 수 있는 자산과 비교함으로써 보수적인 기준에서 주가의 저(고)평가 여부를 판단하는 척도로 사용\n장부가치\n주가순자산배수(PBR, price to book value)\n주주환원\n자사주 매입\n감가상각비\n자산 대체원가\n무형자산상각비 차감 전 이익(EBITDA)\n투하자본\n투하자본이익률(ROIC, return on invested capital)\n배당의 이중과세 : 연간이익에 대한 기업의 법인세 + 배당금에 대한 주주의 소득세\n자사주 매입을 통한 주주의 세금 이연(은 주주이익에 도움)"
+  },
+  {
+    "objectID": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-투자-1962-1965년",
+    "href": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-투자-1962-1965년",
+    "title": "[버크셔 해서웨이의 재탄생 읽고] 용어 정리",
+    "section": "2장. 투자: 1962-1965년",
+    "text": "2장. 투자: 1962-1965년\n\n무한책임 파트너(general partner) : 펀드 운용에 관한 무한책임을 지는 출자자, 보통 운용자를 말함\n헤지펀드 :\n환매 :\n이월결손금\n손익계산서\n유동성소요\n**내재 사업가치(intrinsic business value)\n유한책임조합"
+  },
+  {
+    "objectID": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-전환-1965-1967년",
+    "href": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-전환-1965-1967년",
+    "title": "[버크셔 해서웨이의 재탄생 읽고] 용어 정리",
+    "section": "3장. 전환: 1965-1967년",
+    "text": "3장. 전환: 1965-1967년\n\n자본배분\n투하자본이익률\n매출원가\n특별항목 (’특별항목 반영 전 순이익’에서 사용된 의미, ’1964년 특별항목은 유휴설비비용 22만 달러를 포함했다’와 같이 사용)\n유휴설비비용(idle plant expense): 비영업용 제조설비의 유지보수 및 감가상각비\n**기대손실\n손상차손 write-down\n유형자산 손상차손\n이익잉여금\n총포괄손익\n총창출자본(total capital generated)"
+  },
+  {
+    "objectID": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-인수-1967-1969년",
+    "href": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-인수-1967-1969년",
+    "title": "[버크셔 해서웨이의 재탄생 읽고] 용어 정리",
+    "section": "4장. 인수: 1967-1969년",
+    "text": "4장. 인수: 1967-1969년\n\n완전 소유 기업(wholly-owned-subsidiary) : 1개 기업이 단독 투자하여 100% 소유 지문을 가지는것\n상환청구권 :\n\n\n플로트(책임준비금) : + 지급준비금(lost reserve) + 손해사정비 준비금(lost adjustment expense reserve) + 미경과보험료 적립금(unearned premium reserve) - 대리점 미수금(agents’ balance) - 선급 신계약비(prepaid acquisition cost) - 출재보험 준비금(deferred charges applicable to assumed reinsurance) * 플로트 계산법은 분석대상 기업과 애널리스트에 따라 다름 * 기타자산과 기타부채를 처리하는 방법에서 차이가 발생함 * 정확한 플로트 값이 중요하지 않음(소수점 마지막까지 계산X) *\n\n\n합산비율(combined ratio) : 손해율 + 사업비율. 100%를 기준으로 높으면 손해 낮으면 이익\n손해율(loss ratio) : 보험료 수입 대비 보험금 지급 비율\n사업비율(expense ratio) : 보험료 수입 중 인건비, 마케팅비, 모집수수료, 중개비 등 비중\n경과보험료(earned premiums) : 1년단위/일시납이 기본인 손해보험업에서 더 유의미한 기준. 보험사의 회계연도 말을 기준으로 가입자의 전체 보험기간을 경과/미경과 기간으로 구분, 받은 보험료를 경과/미경과 보험료로 구분함\n레버리지 :\n영업 레버리지(operating leverage)\n재무 레버리지(financial leverage)\n유형순자산(tangible net worth)\n영업권(goodwill)\n원수보험료\n순원수보험료(net premiums written) : 원수보험료에서 수/출재보험료와 환급보험료를 가감한 값\n비연결자회사\n연결납세제도(consolidated tax return) : 모회사의 자회사 지분율이 80%이상이고 경제적으로 결합되어있을 때 하나의 과세단위로 해석함. 이에 따라 모회사-자회사간 배당을 과세하지 않을때가 있음. 한국에도 도입되어있지만 연결 요건이 엄격함\n예수부채\n요구불예금\n스핀오프 : 자회사 주식을 모회사 주주에게 배당(인적분할) + 기존 회사의 자회사화\n투자 영업이익 : 이자 및 배당수익 + 유가증권 추분이익"
+  },
+  {
+    "objectID": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-확장-1970년대",
+    "href": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-확장-1970년대",
+    "title": "[버크셔 해서웨이의 재탄생 읽고] 용어 정리",
+    "section": "5장. 확장: 1970년대",
+    "text": "5장. 확장: 1970년대\n\n투하자본\n매출채권\n부채자기자본비율(debt to equity)\n표면이자율\n일반사채(debenture:무담보회사채)\n이자비용 및 법인세 차감 전 이익(EBIT)\n주가매출액배수(price to sales, PSR) : 기업의 주가와 매출을 비교하는 가치평가 지표\n예상손해율(loss expectancy)\n보험영업 손실/이익\n듀레이션(duration, 듀레이션이 긴 재보험에서의 용례)"
+  },
+  {
+    "objectID": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-다른-기업들",
+    "href": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-다른-기업들",
+    "title": "[버크셔 해서웨이의 재탄생 읽고] 용어 정리",
+    "section": "6장. 다른 기업들",
+    "text": "6장. 다른 기업들\n\n공모채 : 불특정다수에게 발행하는 채권\n사용자본이익률(ROCE)\n최초 이익수익률(initial earnings yield)\n모기지(mortgate) : 주택 구매 등을 위해 돈을 빌리고, 갚지 못하는 경우 해당 주택을 대출 업체가 소유\n예대마진(spread) : 예금이자와 대출이자간 차이\n예수부채 : 불특정 다수를 상대로 조달한 자금\n차입인수(LBO, leverage buyout) : 인수할 회사의 자본 등을 담보로 자금을 확보하여 기업을 인수"
+  },
+  {
+    "objectID": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-복합기업",
+    "href": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-복합기업",
+    "title": "[버크셔 해서웨이의 재탄생 읽고] 용어 정리",
+    "section": "7장. 복합기업",
+    "text": "7장. 복합기업"
   },
   {
     "objectID": "posts/vba-noname-yyyymmdd/index.html",
