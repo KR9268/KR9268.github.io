@@ -286,8 +286,10 @@ Error   (1)
 <section id="파일-다운로드-및-알아보기" class="level2">
 <h2 class="anchored" data-anchor-id="파일-다운로드-및-알아보기">파일 다운로드 및 알아보기</h2>
 <p><strong>File descriptions</strong></p>
-<pre><code>train.csv - 예측 모델을 만들기 위해 사용하는 학습 데이터입니다. 집의 정보와 예측할 변수인 가격(Price) 변수를 가지고 있습니다.
-test.csv - 학습셋으로 만든 모델을 가지고 예측할 가격(Price) 변수를 제외한 집의 정보가 담긴 테스트 데이터 입니다.
+<pre><code>train.csv - 예측 모델을 만들기 위해 사용하는 학습 데이터입니다. 
+    집의 정보와 예측할 변수인 가격(Price) 변수를 가지고 있습니다.
+test.csv - 학습셋으로 만든 모델을 가지고 예측할 가격(Price) 변수를 제외한 집의 정보가
+    담긴 테스트 데이터 입니다.
 sample_submission.csv - 제출시 사용할 수 있는 예시 submission.csv 파일입니다.</code></pre>
 <p><strong>Data fields</strong></p>
 <pre><code>ID : 집을 구분하는 번호
