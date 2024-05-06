@@ -14,6 +14,8 @@
   },
   {
     "listing": "/index_miniprojects.html",
-    "items": []
+    "items": [
+      "/posts_miniprojects/sel-py-local-20240122/index.html"
+    ]
   }
 ]
