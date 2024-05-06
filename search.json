@@ -11,14 +11,14 @@
     "href": "posts/coach-ml-20240505/index.html",
     "title": "[Pytorch] MNIST 실습",
     "section": "",
-    "text": "import torch\nimport torch.nn as nn\nfrom torch.utils.data import DataLoader\nimport torchvision\nimport torchvision.datasets as dset\nimport torchvision.transforms as transforms\n\nroot = './data'\nmnist_train = dset.MNIST (root=root, train=True, transform=transforms.ToTensor(), download=True )\nmnist_test = dset.MNIST (root=root, train=False, transform=transforms.ToTensor(), download=True)\n\n# Train용 / Test용 데이터셋\ntrain_loader = DataLoader(mnist_train, batch_size=10, shuffle=True)\ntest_loader = DataLoader(mnist_test, batch_size=10, shuffle=True)\n\n\nFigure 1\nCopyright © 2024 Kibok Park All rights reserved."
+    "text": "파이토치로 MNIST 머신러닝 실습해본 코드 기록용\nCopyright © 2024 Kibok Park All rights reserved."
   },
   {
     "objectID": "posts/coach-ml-20240505/index.html#pytorch활용한-mnist-데이터셋-로딩",
     "href": "posts/coach-ml-20240505/index.html#pytorch활용한-mnist-데이터셋-로딩",
     "title": "[Pytorch] MNIST 실습",
-    "section": "",
-    "text": "import torch\nimport torch.nn as nn\nfrom torch.utils.data import DataLoader\nimport torchvision\nimport torchvision.datasets as dset\nimport torchvision.transforms as transforms\n\nroot = './data'\nmnist_train = dset.MNIST (root=root, train=True, transform=transforms.ToTensor(), download=True )\nmnist_test = dset.MNIST (root=root, train=False, transform=transforms.ToTensor(), download=True)\n\n# Train용 / Test용 데이터셋\ntrain_loader = DataLoader(mnist_train, batch_size=10, shuffle=True)\ntest_loader = DataLoader(mnist_test, batch_size=10, shuffle=True)\n\n\nFigure 1"
+    "section": "Pytorch활용한 MNIST 데이터셋 로딩",
+    "text": "Pytorch활용한 MNIST 데이터셋 로딩\n\n\n\nimport torch\nimport torch.nn as nn\nfrom torch.utils.data import DataLoader\nimport torchvision\nimport torchvision.datasets as dset\nimport torchvision.transforms as transforms\n\nroot = './data'\nmnist_train = dset.MNIST (root=root, train=True, transform=transforms.ToTensor(), download=True )\nmnist_test = dset.MNIST (root=root, train=False, transform=transforms.ToTensor(), download=True)\n\n# Train용 / Test용 데이터셋\ntrain_loader = DataLoader(mnist_train, batch_size=10, shuffle=True)\ntest_loader = DataLoader(mnist_test, batch_size=10, shuffle=True)\n\n\nFigure 1"
   },
   {
     "objectID": "posts/coach-ml-20240505/index.html#학습준비가중치-초기화-등",

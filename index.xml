@@ -266,6 +266,7 @@ IFRS는 원칙에 따라 작성해 형태 차이가 거의 없으나, GAAP는 �
 
 
 
+<p>파이토치로 MNIST 머신러닝 실습해본 코드 기록용</p>
 <section id="pytorch활용한-mnist-데이터셋-로딩" class="level2">
 <h2 class="anchored" data-anchor-id="pytorch활용한-mnist-데이터셋-로딩">Pytorch활용한 MNIST 데이터셋 로딩</h2>
 <div id="fig-polar" class="cell quarto-figure quarto-figure-center quarto-float anchored">
