@@ -18,7 +18,7 @@
     "href": "index_miniprojects.html",
     "title": "Mini Projects",
     "section": "",
-    "text": "[Python] Shipping request내 주요정보 크롤링 & 정리용 파일\n\n\n\nPython\n\n\nSAP Scripting\n\n\n\nPython, win32를 활용한 SAP Scripting\n\n\n\nKibok Park\n\n\n2024-03-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] LocalL/C 관리용 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\nStreamlit\n\n\nsqlite3\n\n\nBeautifulSoup\n\n\n\nPython, Streamlit을 활용한 업무자동화\n\n\n\nKibok Park\n\n\n2024-01-22\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
+    "text": "[Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 & 정리 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\n\nPython, win32를 활용한 SAP Scripting\n\n\n\nKibok Park\n\n\n2024-03-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] LocalL/C 관리용 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\nStreamlit\n\n\nsqlite3\n\n\nBeautifulSoup\n\n\n\nPython, Streamlit을 활용한 업무자동화\n\n\n\nKibok Park\n\n\n2024-01-22\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
   },
   {
     "objectID": "about.html",
@@ -102,7 +102,7 @@
     "href": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-섬유공장",
     "title": "[버크셔 해서웨이의 재탄생 읽고] 용어 정리",
     "section": "1장. 섬유공장",
-    "text": "1장. 섬유공장\n\n\n총자산이익률(ROA, Return on assets) : 순이익 / 총자산(자기자본 + 타인자본). 얼마나 순이익이 창출되는지 판단할 수 있음. ROA의 높고 낮음에 따라 주가의 높낮이도 따를 가능성이 큼 산업의 성숙기[성장/성숙/사양 등]에 따라 ROA는 달라질 수 있음\n자기자본이익률(ROE, Return on equity) : 순이익 / 자본총계(자산-부채) ROA가 높은 경우 적정 수준으로 부채확대를 통해 총자산 자체를 늘리면 ROE를 높일 수 있음 참고한 링크 참고한 링크\n\n\n\n운전자본(Working Capital, =유동자본?) : 회사를 운영하는데 들어가는 돈(매출채권, 선급금, 재고자산 등 유동자산과 매입채무, 선수금 등 유동부채가 해당함)\n순운전자본(Net Working Capital, 운전자본-총부채) : ?? (클럽 설명) 벤자민 그레이엄이 ’현명한 투자자’에서 주창한 투자 전략 즉시 현금화할 수 있는 자산과 비교함으로써 보수적인 기준에서 주가의 저(고)평가 여부를 판단하는 척도로 사용\n장부가치\n주가순자산배수(PBR, price to book value)\n주주환원\n자사주 매입\n감가상각비\n자산 대체원가\n무형자산상각비 차감 전 이익(EBITDA)\n투하자본\n투하자본이익률(ROIC, return on invested capital)\n배당의 이중과세 : 연간이익에 대한 기업의 법인세 + 배당금에 대한 주주의 소득세\n자사주 매입을 통한 주주의 세금 이연(은 주주이익에 도움)"
+    "text": "1장. 섬유공장\n\n\n총자산이익률(ROA, Return on assets) : 순이익 / 총자산(자기자본 + 타인자본). 얼마나 순이익이 창출되는지 판단할 수 있음. ROA의 높고 낮음에 따라 주가의 높낮이도 따를 가능성이 큼 산업의 성숙기[성장/성숙/사양 등]에 따라 ROA는 달라질 수 있음\n자기자본이익률(ROE, Return on equity) : 순이익 / 자본총계(자산-부채) ROA가 높은 경우 적정 수준으로 부채확대를 통해 총자산 자체를 늘리면 ROE를 높일 수 있음 참고한 링크 참고한 링크\n\n\n\n운전자본(Working Capital, =유동자본?) : 회사를 운영하는데 들어가는 돈(매출채권, 선급금, 재고자산 등 유동자산과 매입채무, 선수금 등 유동부채가 해당함)\n순운전자본(Net Working Capital, 운전자본-총부채) : ?? (클럽 설명) 벤자민 그레이엄이 ’현명한 투자자’에서 주창한 투자 전략 즉시 현금화할 수 있는 자산과 비교함으로써 보수적인 기준에서 주가의 저(고)평가 여부를 판단하는 척도로 사용\n장부가치\n주가순자산배수(PBR, price to book value)\n주주환원\n자사주 매입\n감가상각비\n자산 대체원가\n무형자산상각비 차감 전 이익(EBITDA)\n투하자본 : 영업활동(수익활동)에 투입한 자산\n투하자본이익률(ROIC, return on invested capital) : 영업활동(수익활동)에 투입한 자산으로 얻은 영업이익의 비율\n배당의 이중과세 : 연간이익에 대한 기업의 법인세 + 배당금에 대한 주주의 소득세\n자사주 매입을 통한 주주의 세금 이연(은 주주이익에 도움)"
   },
   {
     "objectID": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-투자-1962-1965년",
@@ -144,7 +144,7 @@
     "href": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-복합기업",
     "title": "[버크셔 해서웨이의 재탄생 읽고] 용어 정리",
     "section": "7장. 복합기업",
-    "text": "7장. 복합기업\n\n자본잉여금(paid-in surplus) : 주식 발행 등으로 발생하는 잉여금. 돈을 받고 주식을 발행하는 유상증자시 늘어나게 됨"
+    "text": "7장. 복합기업\n\n자본잉여금(paid-in surplus) : 주식 발행 등으로 발생하는 잉여금. 돈을 받고 주식을 발행하는 유상증자시 늘어나게 됨\n지배지분이익 : 지배 기업의 순이익에서 지분율만큼 반영한 이익\n매출총이익률 : 매출액 대비 매출총이익 비율\n\n매출총이익 : 매출액에서 (매출과 직접적으로 관계된)비용 차감"
   },
   {
     "objectID": "posts/vba-noname-yyyymmdd/index.html",
@@ -352,21 +352,21 @@
   {
     "objectID": "posts_miniprojects/sel-py-crawl_sr-20240306/index.html",
     "href": "posts_miniprojects/sel-py-crawl_sr-20240306/index.html",
-    "title": "[Python] Shipping request내 주요정보 크롤링 & 정리용 파일",
+    "title": "[Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 & 정리 Tool",
     "section": "",
     "text": "필요한 정보가 여러 탭에 산재되어있거나, 줄 글로 뭉쳐져있어 별도의 가공/복사과정없이 주요정보를 바로 사용하게 해주는 Tool\n확인가능한 정보 : Sales Org, Plant(Code,Name), POL, POD, HSCODE, Description\nCopyright © 2024 Kibok Park All rights reserved."
   },
   {
     "objectID": "posts_miniprojects/sel-py-crawl_sr-20240306/index.html#개요",
     "href": "posts_miniprojects/sel-py-crawl_sr-20240306/index.html#개요",
-    "title": "[Python] Shipping request내 주요정보 크롤링 & 정리용 파일",
+    "title": "[Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 & 정리 Tool",
     "section": "",
     "text": "필요한 정보가 여러 탭에 산재되어있거나, 줄 글로 뭉쳐져있어 별도의 가공/복사과정없이 주요정보를 바로 사용하게 해주는 Tool\n확인가능한 정보 : Sales Org, Plant(Code,Name), POL, POD, HSCODE, Description"
   },
   {
     "objectID": "posts_miniprojects/sel-py-crawl_sr-20240306/index.html#github-repository",
     "href": "posts_miniprojects/sel-py-crawl_sr-20240306/index.html#github-repository",
-    "title": "[Python] Shipping request내 주요정보 크롤링 & 정리용 파일",
+    "title": "[Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 & 정리 Tool",
     "section": "github repository",
     "text": "github repository\n관련 github레포"
   },
@@ -376,5 +376,12 @@
     "title": "[Python] Shipping request내 주요정보 크롤링 & 정리용 파일",
     "section": "사용법",
     "text": "사용법\n\n1건 확인 * 두번째 박스 sr_no 변수에 SR번호 1개를 입력하면 주요 정보 확인\n여러 건 확인 * 세번째 박스 sr_no 변수의 ’‘’와’’’사이에 모든 SR번호 입력 (, 즉 엔터를 기준으로 구분한다) (엑셀 등에서 표 형태로 붙여넣는 경우가 많기때문에 사용성을 고려한 옵션)\n엑셀로 저장 * 확인한 내용을 엑셀로 저장하고 싶은 경우, 네번째 박스 실행, 지정된 파일명+오늘날짜를 기준으로 다운로드 함 (몇번이나 쓸까 싶긴 하지만, 언제나 의외의 상황때문에 필요해질 수 있으니 미리 구현해두는 기능)"
+  },
+  {
+    "objectID": "posts_miniprojects/sel-py-crawl_sr-20240306/index.html#사용법-및-설계의도",
+    "href": "posts_miniprojects/sel-py-crawl_sr-20240306/index.html#사용법-및-설계의도",
+    "title": "[Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 & 정리 Tool",
+    "section": "사용법 및 설계의도",
+    "text": "사용법 및 설계의도\n\n1건 확인 * 두번째 박스 sr_no 변수에 SR번호 1개를 입력하면 주요 정보 확인\n여러 건 확인 * 세번째 박스 sr_no 변수의 ’‘’와’’’사이에 모든 SR번호 입력 (, 즉 엔터를 기준으로 구분한다) (엑셀 등에서 표 형태로 붙여넣는 경우가 많기때문에 사용성을 고려한 옵션)\n엑셀로 저장 * 확인한 내용을 엑셀로 저장하고 싶은 경우, 네번째 박스 실행, 지정된 파일명+오늘날짜를 기준으로 다운로드 함 (몇번이나 쓸까 싶긴 하지만, 언제나 의외의 상황때문에 필요해질 수 있으니 미리 구현해두는 기능)"
   }
 ]
