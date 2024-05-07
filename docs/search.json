@@ -18,7 +18,7 @@
     "href": "index_miniprojects.html",
     "title": "Mini Projects",
     "section": "",
-    "text": "[Python] LocalL/C 관리용 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\nStreamlit\n\n\nsqlite3\n\n\nBeautifulSoup\n\n\n\nPython, Streamlit을 활용한 업무자동화\n\n\n\nKibok Park\n\n\n2024-01-22\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
+    "text": "[Python] Shipping request내 주요정보 크롤링 & 정리용 파일\n\n\n\nPython\n\n\nSAP Scripting\n\n\n\nPython, win32를 활용한 SAP Scripting\n\n\n\nKibok Park\n\n\n2024-03-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] LocalL/C 관리용 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\nStreamlit\n\n\nsqlite3\n\n\nBeautifulSoup\n\n\n\nPython, Streamlit을 활용한 업무자동화\n\n\n\nKibok Park\n\n\n2024-01-22\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
   },
   {
     "objectID": "about.html",
@@ -348,5 +348,33 @@
     "title": "[Python] LocalL/C 관리용 Tool",
     "section": "github repository",
     "text": "github repository\n관련 github레포"
+  },
+  {
+    "objectID": "posts_miniprojects/sel-py-crawl_sr-20240306/index.html",
+    "href": "posts_miniprojects/sel-py-crawl_sr-20240306/index.html",
+    "title": "[Python] Shipping request내 주요정보 크롤링 & 정리용 파일",
+    "section": "",
+    "text": "필요한 정보가 여러 탭에 산재되어있거나, 줄 글로 뭉쳐져있어 별도의 가공/복사과정없이 주요정보를 바로 사용하게 해주는 Tool\n확인가능한 정보 : Sales Org, Plant(Code,Name), POL, POD, HSCODE, Description\nCopyright © 2024 Kibok Park All rights reserved."
+  },
+  {
+    "objectID": "posts_miniprojects/sel-py-crawl_sr-20240306/index.html#개요",
+    "href": "posts_miniprojects/sel-py-crawl_sr-20240306/index.html#개요",
+    "title": "[Python] Shipping request내 주요정보 크롤링 & 정리용 파일",
+    "section": "",
+    "text": "필요한 정보가 여러 탭에 산재되어있거나, 줄 글로 뭉쳐져있어 별도의 가공/복사과정없이 주요정보를 바로 사용하게 해주는 Tool\n확인가능한 정보 : Sales Org, Plant(Code,Name), POL, POD, HSCODE, Description"
+  },
+  {
+    "objectID": "posts_miniprojects/sel-py-crawl_sr-20240306/index.html#github-repository",
+    "href": "posts_miniprojects/sel-py-crawl_sr-20240306/index.html#github-repository",
+    "title": "[Python] Shipping request내 주요정보 크롤링 & 정리용 파일",
+    "section": "github repository",
+    "text": "github repository\n관련 github레포"
+  },
+  {
+    "objectID": "posts_miniprojects/sel-py-crawl_sr-20240306/index.html#사용법",
+    "href": "posts_miniprojects/sel-py-crawl_sr-20240306/index.html#사용법",
+    "title": "[Python] Shipping request내 주요정보 크롤링 & 정리용 파일",
+    "section": "사용법",
+    "text": "사용법\n\n1건 확인 * 두번째 박스 sr_no 변수에 SR번호 1개를 입력하면 주요 정보 확인\n여러 건 확인 * 세번째 박스 sr_no 변수의 ’‘’와’’’사이에 모든 SR번호 입력 (, 즉 엔터를 기준으로 구분한다) (엑셀 등에서 표 형태로 붙여넣는 경우가 많기때문에 사용성을 고려한 옵션)\n엑셀로 저장 * 확인한 내용을 엑셀로 저장하고 싶은 경우, 네번째 박스 실행, 지정된 파일명+오늘날짜를 기준으로 다운로드 함 (몇번이나 쓸까 싶긴 하지만, 언제나 의외의 상황때문에 필요해질 수 있으니 미리 구현해두는 기능)"
   }
 ]

@@ -10,7 +10,45 @@
 <atom:link href="https://kr9268.github.io/index_miniprojects.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.4.553</generator>
-<lastBuildDate>Sun, 21 Jan 2024 15:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 05 Mar 2024 15:00:00 GMT</lastBuildDate>
+<item>
+  <title>[Python] Shipping request내 주요정보 크롤링 &amp; 정리용 파일</title>
+  <dc:creator>Kibok Park</dc:creator>
+  <link>https://kr9268.github.io/posts_miniprojects/sel-py-crawl_sr-20240306/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="개요" class="level2">
+<h2 class="anchored" data-anchor-id="개요">개요</h2>
+<ul>
+<li>필요한 정보가 여러 탭에 산재되어있거나, 줄 글로 뭉쳐져있어 별도의 가공/복사과정없이 주요정보를 바로 사용하게 해주는 Tool</li>
+<li>확인가능한 정보 : Sales Org, Plant(Code,Name), POL, POD, HSCODE, Description</li>
+</ul>
+</section>
+<section id="사용법" class="level2">
+<h2 class="anchored" data-anchor-id="사용법">사용법</h2>
+<ol type="1">
+<li><p>1건 확인 * 두번째 박스 sr_no 변수에 SR번호 1개를 입력하면 주요 정보 확인</p></li>
+<li><p>여러 건 확인 * 세번째 박스 sr_no 변수의 ’‘’와’’’사이에 모든 SR번호 입력 (, 즉 엔터를 기준으로 구분한다) (엑셀 등에서 표 형태로 붙여넣는 경우가 많기때문에 사용성을 고려한 옵션)</p></li>
+<li><p>엑셀로 저장 * 확인한 내용을 엑셀로 저장하고 싶은 경우, 네번째 박스 실행, 지정된 파일명+오늘날짜를 기준으로 다운로드 함 (몇번이나 쓸까 싶긴 하지만, 언제나 의외의 상황때문에 필요해질 수 있으니 미리 구현해두는 기능)</p></li>
+</ol>
+</section>
+<section id="github-repository" class="level2">
+<h2 class="anchored" data-anchor-id="github-repository">github repository</h2>
+<p><a href="https://github.com/KR9268/-P-Crawl_data_from_SRDisplay">관련 github레포</a></p>
+
+
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
+  <category>Python</category>
+  <category>SAP Scripting</category>
+  <guid>https://kr9268.github.io/posts_miniprojects/sel-py-crawl_sr-20240306/</guid>
+  <pubDate>Tue, 05 Mar 2024 15:00:00 GMT</pubDate>
+</item>
 <item>
   <title>[Python] LocalL/C 관리용 Tool</title>
   <dc:creator>Kibok Park</dc:creator>
