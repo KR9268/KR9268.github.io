@@ -9,7 +9,7 @@
 <meta name="author" content="Kibok Park">
 <meta name="dcterms.date" content="2024-03-06">
 
-<title>Blog - [Python] Shipping request내 주요정보 크롤링 &amp; 정리용 파일</title>
+<title>Blog - [Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 &amp; 정리 Tool</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -144,7 +144,7 @@ gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">[Python] Shipping request내 주요정보 크롤링 &amp; 정리용 파일</h1>
+      <h1 class="title">[Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 &amp; 정리 Tool</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">Python</div>
                 <div class="quarto-category">SAP Scripting</div>
@@ -188,7 +188,7 @@ gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
    
   <ul>
   <li><a href="#개요" id="toc-개요" class="nav-link active" data-scroll-target="#개요">개요</a></li>
-  <li><a href="#사용법" id="toc-사용법" class="nav-link" data-scroll-target="#사용법">사용법</a></li>
+  <li><a href="#사용법-및-설계의도" id="toc-사용법-및-설계의도" class="nav-link" data-scroll-target="#사용법-및-설계의도">사용법 및 설계의도</a></li>
   <li><a href="#github-repository" id="toc-github-repository" class="nav-link" data-scroll-target="#github-repository">github repository</a></li>
   </ul>
 </nav>
@@ -207,8 +207,8 @@ gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
 <li>확인가능한 정보 : Sales Org, Plant(Code,Name), POL, POD, HSCODE, Description</li>
 </ul>
 </section>
-<section id="사용법" class="level2">
-<h2 class="anchored" data-anchor-id="사용법">사용법</h2>
+<section id="사용법-및-설계의도" class="level2">
+<h2 class="anchored" data-anchor-id="사용법-및-설계의도">사용법 및 설계의도</h2>
 <ol type="1">
 <li><p>1건 확인 * 두번째 박스 sr_no 변수에 SR번호 1개를 입력하면 주요 정보 확인</p></li>
 <li><p>여러 건 확인 * 세번째 박스 sr_no 변수의 ’‘’와’’’사이에 모든 SR번호 입력 (, 즉 엔터를 기준으로 구분한다) (엑셀 등에서 표 형태로 붙여넣는 경우가 많기때문에 사용성을 고려한 옵션)</p></li>
