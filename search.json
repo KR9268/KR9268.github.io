@@ -182,6 +182,20 @@
     "text": "7장. 복합기업\n\n자본잉여금(paid-in surplus) : 주식 발행 등으로 발생하는 잉여금. 돈을 받고 주식을 발행하는 유상증자시 늘어나게 됨\n지배지분이익 : 지배 기업의 순이익에서 지분율만큼 반영한 이익\n매출총이익률 : 매출액 대비 매출총이익 비율\n\n매출총이익 : 매출액에서 (매출과 직접적으로 관계된)비용 차감"
   },
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Blog",
+    "section": "",
+    "text": "[프로그래머스SQL] 평균 일일 대여 요금 구하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-05-16\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 평균 일일 대여 요금 구하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-05-16\n\n\n\n\n\n\n\n\n\n\n\n\nNH증권 직무인터뷰를 읽고(트레이딩&빅데이터)\n\n\n\n직무분석\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-28\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n[버크셔 해서웨이의 재탄생 읽고] 용어 정리\n\n\n\n경제/금융공부\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-23\n\n\n\n\n\n\n\n\n\n\n\n\n[Scikit-learn] Kaggle 집값예측 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-05-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Pytorch] MNIST 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-02-19\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
+  },
+  {
+    "objectID": "index_miniprojects.html",
+    "href": "index_miniprojects.html",
+    "title": "Mini Projects",
+    "section": "",
+    "text": "[Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 & 정리 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\n\nPython, win32를 활용한 SAP Scripting\n\n\n\nKibok Park\n\n\n2024-03-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] LocalL/C 관리용 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\nStreamlit\n\n\nsqlite3\n\n\nBeautifulSoup\n\n\n\nPython, Streamlit을 활용한 업무자동화\n\n\n\nKibok Park\n\n\n2024-01-22\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
+  },
+  {
     "objectID": "about.html",
     "href": "about.html",
     "title": "Kibok Park",
@@ -203,18 +217,39 @@
     "text": "Topics\nPython, Quantative trading"
   },
   {
-    "objectID": "index_miniprojects.html",
-    "href": "index_miniprojects.html",
-    "title": "Mini Projects",
+    "objectID": "posts/prgms-sql-20240517/index.html",
+    "href": "posts/prgms-sql-20240517/index.html",
+    "title": "[프로그래머스SQL] 평균 일일 대여 요금 구하기",
     "section": "",
-    "text": "[Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 & 정리 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\n\nPython, win32를 활용한 SAP Scripting\n\n\n\nKibok Park\n\n\n2024-03-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] LocalL/C 관리용 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\nStreamlit\n\n\nsqlite3\n\n\nBeautifulSoup\n\n\n\nPython, Streamlit을 활용한 업무자동화\n\n\n\nKibok Park\n\n\n2024-01-22\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
+    "text": "프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다  (비상업적, 비영리적 용도)\n문제링크\nCopyright © 2024 Kibok Park All rights reserved."
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Blog",
+    "objectID": "posts/prgms-sql-20240517/index.html#개요",
+    "href": "posts/prgms-sql-20240517/index.html#개요",
+    "title": "[프로그래머스SQL] 평균 일일 대여 요금 구하기",
     "section": "",
-    "text": "[프로그래머스SQL] 평균 일일 대여 요금 구하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-05-16\n\n\n\n\n\n\n\n\n\n\n\n\nNH증권 직무인터뷰를 읽고(트레이딩&빅데이터)\n\n\n\n직무분석\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-28\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n[버크셔 해서웨이의 재탄생 읽고] 용어 정리\n\n\n\n경제/금융공부\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-23\n\n\n\n\n\n\n\n\n\n\n\n\n[Scikit-learn] Kaggle 집값예측 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-05-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Pytorch] MNIST 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-02-19\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
+    "text": "프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다  (비상업적, 비영리적 용도)\n문제링크"
+  },
+  {
+    "objectID": "posts/prgms-sql-20240517/index.html#문제-평균-일일-대여-요금-구하기",
+    "href": "posts/prgms-sql-20240517/index.html#문제-평균-일일-대여-요금-구하기",
+    "title": "[프로그래머스SQL] 평균 일일 대여 요금 구하기",
+    "section": "문제 : 평균 일일 대여 요금 구하기",
+    "text": "문제 : 평균 일일 대여 요금 구하기\n\n\n\n문제 이미지"
+  },
+  {
+    "objectID": "posts/prgms-sql-20240517/index.html#작성답안",
+    "href": "posts/prgms-sql-20240517/index.html#작성답안",
+    "title": "[프로그래머스SQL] 평균 일일 대여 요금 구하기",
+    "section": "작성답안",
+    "text": "작성답안\n\n\n\nSELECT ROUND(AVG(DAILY_FEE)) AS AVERAGE_FEE\nFROM CAR_RENTAL_COMPANY_CAR\nWHERE CAR_TYPE = 'SUV'\n\n\nFigure 1"
+  },
+  {
+    "objectID": "posts/prgms-sql-20240517/index.html#정리",
+    "href": "posts/prgms-sql-20240517/index.html#정리",
+    "title": "[프로그래머스SQL] 평균 일일 대여 요금 구하기",
+    "section": "정리",
+    "text": "정리\n\nROUND : 반올림\nAVG : 평균\nAS ??? : 컬럼명을 ???으로 가져온다\nWHERE : 작성한 조건을 기준으로 가져온다\n\nWHERE의 여러 형태예시\n\nWHERE CAR_TYPE = 'SUV'\nWHERE CAR_TYPE != 'SUV'\nWHERE DAILY_FEE &gt; 14000\nWHERE DAILY_FEE BETWEEN 14000 AND 16000\nWHERE DAILY_FEE IN (14000, 16000)\nWHERE CAR_TYPE IN ('SUV', '세단')"
   },
   {
     "objectID": "posts/vba-noname-yyyymmdd/index.html",
