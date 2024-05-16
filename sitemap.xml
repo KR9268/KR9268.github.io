@@ -1,43 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://kr9268.github.io/index.html</loc>
-    <lastmod>2024-05-07T11:19:30.211Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/posts/coach-ml-20240505/index.html</loc>
-    <lastmod>2024-05-07T11:19:30.451Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/posts/bk-BerkshireHathaway-20240423-terms/index.html</loc>
-    <lastmod>2024-05-07T11:19:30.215Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/index_miniprojects.html</loc>
-    <lastmod>2024-05-07T11:19:30.211Z</lastmod>
-  </url>
-  <url>
     <loc>https://kr9268.github.io/posts_miniprojects/sel-py-crawl_sr-20240306/index.html</loc>
-    <lastmod>2024-05-07T11:19:30.467Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/posts_miniprojects/sel-py-local-20240122/index.html</loc>
-    <lastmod>2024-05-07T11:19:30.471Z</lastmod>
+    <lastmod>2024-05-16T14:03:16.713Z</lastmod>
   </url>
   <url>
     <loc>https://kr9268.github.io/index_dashboards.html</loc>
-    <lastmod>2024-05-07T11:19:30.211Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/about.html</loc>
-    <lastmod>2024-05-07T11:19:30.191Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/posts/vba-noname-yyyymmdd/index.html</loc>
-    <lastmod>2024-05-07T11:19:30.467Z</lastmod>
+    <lastmod>2024-05-16T14:03:16.461Z</lastmod>
   </url>
   <url>
     <loc>https://kr9268.github.io/posts/coach-ml-kaggle-20230506/index.html</loc>
-    <lastmod>2024-05-07T11:19:30.467Z</lastmod>
+    <lastmod>2024-05-16T14:03:16.713Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/posts/prgms-sql-20240516/index.html</loc>
+    <lastmod>2024-05-16T14:03:16.713Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/posts/bk-BerkshireHathaway-20240423-terms/index.html</loc>
+    <lastmod>2024-05-16T14:03:16.461Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/about.html</loc>
+    <lastmod>2024-05-16T14:03:16.441Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/index_miniprojects.html</loc>
+    <lastmod>2024-05-16T14:03:16.461Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/index.html</loc>
+    <lastmod>2024-05-16T14:03:16.461Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/posts/vba-noname-yyyymmdd/index.html</loc>
+    <lastmod>2024-05-16T14:03:16.713Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/posts/coach-ml-20240505/index.html</loc>
+    <lastmod>2024-05-16T14:03:16.697Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/posts_miniprojects/sel-py-local-20240122/index.html</loc>
+    <lastmod>2024-05-16T14:03:16.713Z</lastmod>
   </url>
 </urlset>
