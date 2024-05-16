@@ -11,7 +11,7 @@
     "href": "index.html",
     "title": "Blog",
     "section": "",
-    "text": "NH증권 직무인터뷰를 읽고(트레이딩&빅데이터)\n\n\n\n직무분석\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-28\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n[버크셔 해서웨이의 재탄생 읽고] 용어 정리\n\n\n\n경제/금융공부\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-23\n\n\n\n\n\n\n\n\n\n\n\n\n[Scikit-learn] Kaggle 집값예측 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-05-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Pytorch] MNIST 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-02-19\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
+    "text": "[프로그래머스SQL] 평균 일일 대여 요금 구하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-05-16\n\n\n\n\n\n\n\n\n\n\n\n\nNH증권 직무인터뷰를 읽고(트레이딩&빅데이터)\n\n\n\n직무분석\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-28\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n[버크셔 해서웨이의 재탄생 읽고] 용어 정리\n\n\n\n경제/금융공부\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-23\n\n\n\n\n\n\n\n\n\n\n\n\n[Scikit-learn] Kaggle 집값예측 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-05-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Pytorch] MNIST 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-02-19\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
   },
   {
     "objectID": "index_miniprojects.html",
@@ -383,5 +383,68 @@
     "title": "[Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 & 정리 Tool",
     "section": "사용법 및 설계의도",
     "text": "사용법 및 설계의도\n\n1건 확인 * 두번째 박스 sr_no 변수에 SR번호 1개를 입력하면 주요 정보 확인\n여러 건 확인 * 세번째 박스 sr_no 변수의 ’‘’와’’’사이에 모든 SR번호 입력 (, 즉 엔터를 기준으로 구분한다) (엑셀 등에서 표 형태로 붙여넣는 경우가 많기때문에 사용성을 고려한 옵션)\n엑셀로 저장 * 확인한 내용을 엑셀로 저장하고 싶은 경우, 네번째 박스 실행, 지정된 파일명+오늘날짜를 기준으로 다운로드 함 (몇번이나 쓸까 싶긴 하지만, 언제나 의외의 상황때문에 필요해질 수 있으니 미리 구현해두는 기능)"
+  },
+  {
+    "objectID": "posts/prgms-sql-20240516/index.html",
+    "href": "posts/prgms-sql-20240516/index.html",
+    "title": "[프로그래머스SQL] 평균 일일 대여 요금 구하기",
+    "section": "",
+    "text": "프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다  (비상업적, 비영리적 용도)\n문제링크\nCopyright © 2024 Kibok Park All rights reserved."
+  },
+  {
+    "objectID": "posts/prgms-sql-20240516/index.html#개요",
+    "href": "posts/prgms-sql-20240516/index.html#개요",
+    "title": "[프로그래머스SQL] 평균 일일 대여 요금 구하기",
+    "section": "",
+    "text": "프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다  (비상업적, 비영리적 용도)\n문제링크"
+  },
+  {
+    "objectID": "posts/prgms-sql-20240516/index.html#pytorch활용한-mnist-데이터셋-로딩",
+    "href": "posts/prgms-sql-20240516/index.html#pytorch활용한-mnist-데이터셋-로딩",
+    "title": "[Pytorch] MNIST 실습",
+    "section": "Pytorch활용한 MNIST 데이터셋 로딩",
+    "text": "Pytorch활용한 MNIST 데이터셋 로딩\n\n\n\nimport torch\nimport torch.nn as nn\nfrom torch.utils.data import DataLoader\nimport torchvision\nimport torchvision.datasets as dset\nimport torchvision.transforms as transforms\n\nroot = './data'\nmnist_train = dset.MNIST (root=root, train=True, transform=transforms.ToTensor(), download=True )\nmnist_test = dset.MNIST (root=root, train=False, transform=transforms.ToTensor(), download=True)\n\n# Train용 / Test용 데이터셋\ntrain_loader = DataLoader(mnist_train, batch_size=10, shuffle=True)\ntest_loader = DataLoader(mnist_test, batch_size=10, shuffle=True)\n\n\nFigure 1"
+  },
+  {
+    "objectID": "posts/prgms-sql-20240516/index.html#학습준비가중치-초기화-등",
+    "href": "posts/prgms-sql-20240516/index.html#학습준비가중치-초기화-등",
+    "title": "[Pytorch] MNIST 실습",
+    "section": "학습준비(가중치 초기화 등)",
+    "text": "학습준비(가중치 초기화 등)\n\nMNIST의 크기 : 28 * 28\nLoss : Cross Entropy\nOptimizer - SGD(Stochastic Gradient Descent)\nLearning rate = 0.1\n\n\ndevice = torch.device('cuda' if torch.cuda.is_available() else 'cpu')\n\n# 모델 구현 (28*28 = 784 / 0~9라서 10개 / 가중치 사용하므로 bias)\nlinear = torch.nn.Linear(784, 10, bias=True).to(device) \n\n# weight init 가중치 초기화\ntorch.nn.init.normal_(linear.weight)\n\n# Loss fn - Cross Entropy Loss\ncriterion = torch.nn.CrossEntropyLoss().to(device)\n\n# optimizer - SGD\noptimizer = torch.optim.SGD(linear.parameters(), lr=0.1)"
+  },
+  {
+    "objectID": "posts/prgms-sql-20240516/index.html#모델-학습",
+    "href": "posts/prgms-sql-20240516/index.html#모델-학습",
+    "title": "[Pytorch] MNIST 실습",
+    "section": "모델 학습",
+    "text": "모델 학습\n\ntraining_epochs = 20 # training 반복 횟수\n\nfor epoch in range(training_epochs):\n  for i, (imgs, labels) in enumerate(train_loader):\n    labels = labels.to(device)\n    imgs = imgs.view(-1, 28 * 28).to(device)\n\n    outputs = linear(imgs) \n    loss = criterion(outputs, labels) \n\n    optimizer.zero_grad()# optimzier zero grad\n\n    loss.backward() # loss backward\n    optimizer.step() # optimzier step\n\n    _,argmax = torch.max(outputs, 1)\n    accuracy = (labels == argmax).float().mean()\n\n  if (i+1) % 100 == 0:\n    print('Epoch [{}/{}], Step [{}/{}], Loss: {: .4f}, Accuracy: {: .2f}%'.format(\n    epoch+1, training_epochs, i+1, len(train_loader), loss.item(), accuracy.item()* 100))\n\nEpoch [1/20], Step [6000/6000], Loss:  0.0273, Accuracy:  100.00%\nEpoch [2/20], Step [6000/6000], Loss:  0.0762, Accuracy:  100.00%\nEpoch [3/20], Step [6000/6000], Loss:  0.5928, Accuracy:  80.00%\nEpoch [4/20], Step [6000/6000], Loss:  0.2854, Accuracy:  90.00%\nEpoch [5/20], Step [6000/6000], Loss:  0.1373, Accuracy:  90.00%\nEpoch [6/20], Step [6000/6000], Loss:  0.0668, Accuracy:  100.00%\nEpoch [7/20], Step [6000/6000], Loss:  0.0253, Accuracy:  100.00%\nEpoch [8/20], Step [6000/6000], Loss:  0.0542, Accuracy:  100.00%\nEpoch [9/20], Step [6000/6000], Loss:  0.9203, Accuracy:  80.00%\nEpoch [10/20], Step [6000/6000], Loss:  0.1244, Accuracy:  90.00%\nEpoch [11/20], Step [6000/6000], Loss:  0.6108, Accuracy:  90.00%\nEpoch [12/20], Step [6000/6000], Loss:  0.1312, Accuracy:  100.00%\nEpoch [13/20], Step [6000/6000], Loss:  0.0705, Accuracy:  100.00%\nEpoch [14/20], Step [6000/6000], Loss:  1.6259, Accuracy:  70.00%\nEpoch [15/20], Step [6000/6000], Loss:  0.0538, Accuracy:  100.00%\nEpoch [16/20], Step [6000/6000], Loss:  0.2435, Accuracy:  80.00%\nEpoch [17/20], Step [6000/6000], Loss:  0.0061, Accuracy:  100.00%\nEpoch [18/20], Step [6000/6000], Loss:  0.1091, Accuracy:  100.00%\nEpoch [19/20], Step [6000/6000], Loss:  0.0157, Accuracy:  100.00%\nEpoch [20/20], Step [6000/6000], Loss:  0.1413, Accuracy:  90.00%"
+  },
+  {
+    "objectID": "posts/prgms-sql-20240516/index.html#학습된-모델-테스트",
+    "href": "posts/prgms-sql-20240516/index.html#학습된-모델-테스트",
+    "title": "[Pytorch] MNIST 실습",
+    "section": "학습된 모델 테스트",
+    "text": "학습된 모델 테스트\n\nlinear.eval()\nwith torch.no_grad():\n    correct = 0\n    total = 0\n    for i, (imgs, labels) in enumerate(test_loader):\n        imgs, labels = imgs.to(device), labels.to(device)\n        imgs = imgs.view(-1, 28 * 28)\n\n        outputs = linear(imgs) # 구현\n\n        _, argmax = torch.max(outputs, 1) # max()를 통해 최종 출력이 가장 높은 class 선택\n        total += imgs.size(0)\n        correct += (labels == argmax). sum().item()\n\n    print('Test accuracy for {} images: {: .2f}%'.format(total, correct / total * 100))\n\nTest accuracy for 10000 images:  91.99%"
+  },
+  {
+    "objectID": "posts/prgms-sql-20240516/index.html#문제-평균-일일-대여-요금-구하기",
+    "href": "posts/prgms-sql-20240516/index.html#문제-평균-일일-대여-요금-구하기",
+    "title": "[프로그래머스SQL] 평균 일일 대여 요금 구하기",
+    "section": "문제 : 평균 일일 대여 요금 구하기",
+    "text": "문제 : 평균 일일 대여 요금 구하기\n\n\n\n문제 이미지"
+  },
+  {
+    "objectID": "posts/prgms-sql-20240516/index.html#작성답안",
+    "href": "posts/prgms-sql-20240516/index.html#작성답안",
+    "title": "[프로그래머스SQL] 평균 일일 대여 요금 구하기",
+    "section": "작성답안",
+    "text": "작성답안\n\n\n\nSELECT ROUND(AVG(DAILY_FEE)) AS AVERAGE_FEE\nFROM CAR_RENTAL_COMPANY_CAR\nWHERE CAR_TYPE = 'SUV'\n\n\nFigure 1"
+  },
+  {
+    "objectID": "posts/prgms-sql-20240516/index.html#정리",
+    "href": "posts/prgms-sql-20240516/index.html#정리",
+    "title": "[프로그래머스SQL] 평균 일일 대여 요금 구하기",
+    "section": "정리",
+    "text": "정리\n\nROUND : 반올림\nAVG : 평균\nAS ??? : 컬럼명을 ???으로 가져온다\nWHERE : 작성한 조건을 기준으로 가져온다\n\nWHERE의 여러 형태예시\n\nWHERE CAR_TYPE = 'SUV'\nWHERE CAR_TYPE != 'SUV'\nWHERE DAILY_FEE &gt; 14000\nWHERE DAILY_FEE BETWEEN 14000 AND 16000\nWHERE DAILY_FEE IN (14000, 16000)\nWHERE CAR_TYPE IN ('SUV', '세단')"
   }
 ]
