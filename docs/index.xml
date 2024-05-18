@@ -24,7 +24,7 @@
 <section id="개요" class="level2">
 <h2 class="anchored" data-anchor-id="개요">개요</h2>
 <p>프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다 <br> (비상업적, 비영리적 용도)</p>
-<p><a href="https://school.programmers.co.kr/learn/courses/30/parts/17042">문제링크</a></p>
+<p><a href="https://school.programmers.co.kr/learn/courses/30/lessons/151136">문제링크</a><br> <a href="https://programmers.zendesk.com/hc/ko/articles/360034546572-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4%EC%9D%98-%EB%AC%B8%EC%A0%9C%EB%A5%BC-%EC%99%B8%EB%B6%80%EC%97%90-%EA%B2%8C%EC%8B%9C%ED%95%A0-%EC%88%98-%EC%9E%88%EB%82%98%EC%9A%94">게시가능여부</a></p>
 </section>
 <section id="문제-평균-일일-대여-요금-구하기" class="level2">
 <h2 class="anchored" data-anchor-id="문제-평균-일일-대여-요금-구하기">문제 : 평균 일일 대여 요금 구하기</h2>
