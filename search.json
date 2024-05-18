@@ -4,21 +4,21 @@
     "href": "posts_miniprojects/sel-py-crawl_sr-20240306/index.html",
     "title": "[Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 & 정리 Tool",
     "section": "",
-    "text": "필요한 정보가 여러 탭에 산재되어있거나, 줄 글로 뭉쳐져있어 별도의 가공/복사과정없이 주요정보를 바로 사용하게 해주는 Tool\n확인가능한 정보 : Sales Org, Plant(Code,Name), POL, POD, HSCODE, Description\nCopyright © 2024 Kibok Park All rights reserved."
+    "text": "사용빈도가 높은 정보가 여러 탭에 나뉘어 있고, 이러한 정보들을 주문(SR)별로 각각 조회하는 불편함이 있음\n유저 화면에서 보여줄 수 있는 행(row)이 4줄로 적고, 필요한 정보를 각각 복사하여 정리하는 불편함이 있음\n\n한번에 많은 물품이 포함된 경우, 수십건의 같거나 다른 HSCODE들을 하나의 줄 글로 정리함\n출발지와 도착지, 제품의 품명 등을 요약하여 요구받는 경우 작업시간이 소요됨\n\n각 탭 정보를 일괄 크롤링하고, 필요할 때 별도의 가공/복사작업 없이 바로 사용가능한 정보로 제공하도록 함\n\n확인가능한 정보 : Sales Org, Plant(Code,Name), POL(출발지), POD(도착지), HSCODE, Description(물품명세)\n\n\n\n[용어설명] SR : 하나의 기본 선적 단위, Shipping request HSCODE : 해외로 물건을 보내기 위해 수출신고할 때, (의약품, 전자기기 등)물품 종류를 알 수 있는 제품 코드\nCopyright © 2024 Kibok Park All rights reserved."
   },
   {
-    "objectID": "posts_miniprojects/sel-py-crawl_sr-20240306/index.html#개요",
-    "href": "posts_miniprojects/sel-py-crawl_sr-20240306/index.html#개요",
+    "objectID": "posts_miniprojects/sel-py-crawl_sr-20240306/index.html#추진배경",
+    "href": "posts_miniprojects/sel-py-crawl_sr-20240306/index.html#추진배경",
     "title": "[Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 & 정리 Tool",
     "section": "",
-    "text": "필요한 정보가 여러 탭에 산재되어있거나, 줄 글로 뭉쳐져있어 별도의 가공/복사과정없이 주요정보를 바로 사용하게 해주는 Tool\n확인가능한 정보 : Sales Org, Plant(Code,Name), POL, POD, HSCODE, Description"
+    "text": "사용빈도가 높은 정보가 여러 탭에 나뉘어 있고, 이러한 정보들을 주문(SR)별로 각각 조회하는 불편함이 있음\n유저 화면에서 보여줄 수 있는 행(row)이 4줄로 적고, 필요한 정보를 각각 복사하여 정리하는 불편함이 있음\n\n한번에 많은 물품이 포함된 경우, 수십건의 같거나 다른 HSCODE들을 하나의 줄 글로 정리함\n출발지와 도착지, 제품의 품명 등을 요약하여 요구받는 경우 작업시간이 소요됨\n\n각 탭 정보를 일괄 크롤링하고, 필요할 때 별도의 가공/복사작업 없이 바로 사용가능한 정보로 제공하도록 함\n\n확인가능한 정보 : Sales Org, Plant(Code,Name), POL(출발지), POD(도착지), HSCODE, Description(물품명세)\n\n\n\n[용어설명] SR : 하나의 기본 선적 단위, Shipping request HSCODE : 해외로 물건을 보내기 위해 수출신고할 때, (의약품, 전자기기 등)물품 종류를 알 수 있는 제품 코드"
   },
   {
-    "objectID": "posts_miniprojects/sel-py-crawl_sr-20240306/index.html#사용법-및-설계의도",
-    "href": "posts_miniprojects/sel-py-crawl_sr-20240306/index.html#사용법-및-설계의도",
+    "objectID": "posts_miniprojects/sel-py-crawl_sr-20240306/index.html#효과",
+    "href": "posts_miniprojects/sel-py-crawl_sr-20240306/index.html#효과",
     "title": "[Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 & 정리 Tool",
-    "section": "사용법 및 설계의도",
-    "text": "사용법 및 설계의도\n\n1건 확인 * 두번째 박스 sr_no 변수에 SR번호 1개를 입력하면 주요 정보 확인\n여러 건 확인 * 세번째 박스 sr_no 변수의 ’‘’와’’’사이에 모든 SR번호 입력 (, 즉 엔터를 기준으로 구분한다) (엑셀 등에서 표 형태로 붙여넣는 경우가 많기때문에 사용성을 고려한 옵션)\n엑셀로 저장 * 확인한 내용을 엑셀로 저장하고 싶은 경우, 네번째 박스 실행, 지정된 파일명+오늘날짜를 기준으로 다운로드 함 (몇번이나 쓸까 싶긴 하지만, 언제나 의외의 상황때문에 필요해질 수 있으니 미리 구현해두는 기능)"
+    "section": "효과",
+    "text": "효과\n\n단건 또는 여러건의 주문(SR)에 대해 건당 1~2초 이내로 필요한 정보 수집\n클립보드 복사가 가능한 텍스트, 엑셀형태로 제공하여 요구사항에 대해 즉시대응 가능"
   },
   {
     "objectID": "posts_miniprojects/sel-py-crawl_sr-20240306/index.html#github-repository",
@@ -26,6 +26,13 @@
     "title": "[Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 & 정리 Tool",
     "section": "github repository",
     "text": "github repository\n관련 github레포"
+  },
+  {
+    "objectID": "posts_miniprojects/sel-py-crawl_sr-20240306/index.html#세부내용-구현내용-사용한-언어패키지-등",
+    "href": "posts_miniprojects/sel-py-crawl_sr-20240306/index.html#세부내용-구현내용-사용한-언어패키지-등",
+    "title": "[Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 & 정리 Tool",
+    "section": "[세부내용] 구현내용 & 사용한 언어/패키지 등",
+    "text": "[세부내용] 구현내용 & 사용한 언어/패키지 등\n\n단건 확인시, 코드셀에 붙여넣기 후 실행, 텍스트로 출력하며 pandas dataframe으로도 저장하여 필요시 엑셀도 제공\n여러건 확인시, 엑셀 등에서 복사한 표를 코드셀에 바로 붙여넣도록 설계(자동 분할, 편의성 고려함) 이후 작업은 단건 확인과 동일\n필요시 엑셀로 저장 (기존 업무유형상 출력텍스트가 더 많이 활용될 것으로 보여 별도 기능으로 추가함)"
   },
   {
     "objectID": "index_dashboards.html",
