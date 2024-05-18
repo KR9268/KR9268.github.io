@@ -190,8 +190,10 @@ gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#개요" id="toc-개요" class="nav-link active" data-scroll-target="#개요">개요</a></li>
+  <li><a href="#추진배경" id="toc-추진배경" class="nav-link active" data-scroll-target="#추진배경">추진배경</a></li>
+  <li><a href="#효과" id="toc-효과" class="nav-link" data-scroll-target="#효과">효과</a></li>
   <li><a href="#github-repository" id="toc-github-repository" class="nav-link" data-scroll-target="#github-repository">github repository</a></li>
+  <li><a href="#세부내용-구현내용-사용한-언어패키지-등" id="toc-세부내용-구현내용-사용한-언어패키지-등" class="nav-link" data-scroll-target="#세부내용-구현내용-사용한-언어패키지-등">[세부내용] 구현내용 &amp; 사용한 언어/패키지 등</a></li>
   </ul>
 </nav>
     </div>
@@ -202,17 +204,49 @@ gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
 
 
 
-<section id="개요" class="level2">
-<h2 class="anchored" data-anchor-id="개요">개요</h2>
+<section id="추진배경" class="level2">
+<h2 class="anchored" data-anchor-id="추진배경">추진배경</h2>
+<ul>
+<li>모든 정보가 하나의 ERP에 있음에도, 기능 별로 메뉴가 구분되어 있어 <strong>비효율/불편함</strong>
+<ul>
+<li>주요기능 : L/C수신, L/C등록, 세금계산서 조회, 물품수령증 조회, 은행네고</li>
+</ul></li>
+<li>모든 정보가 전자화되어있으나, 각 서류의 내용(주문번호 등)이 일치하는지 <strong>눈으로 확인중</strong>
+<ul>
+<li>24자리 영문/숫자 혼합 등이 있으며, 틀리면 <strong>물품대금을 받지 못하므로 확인이 매우 중요함</strong></li>
+</ul></li>
+<li>각 서류, 행위마다 관련된 <strong>법 조항이 있어 준수해야 함</strong>
+<ul>
+<li>ex) XX서류가 발행되고 N일 내에 YY서류 제출</li>
+</ul></li>
+<li><strong>Dashboard</strong>형태로 구성하여 한번에 정보조회를 하고, 주요정보 일치여부 확인을 자동화</li>
+</ul>
+<blockquote class="blockquote">
+<p><strong>[용어설명]</strong><br> <strong>L/C</strong> : <strong>물품주문서</strong>이자 <strong>대금청구시 사용될 은행계좌</strong>와 비슷한 역할<br> (Letter of Credit, 신용장)<br> <strong>물품수령증</strong> : 고객이 물건을 정상수령하였다는 서류, 대금청구에 사용할 수 있다<br> <strong>은행네고</strong> : 정상수령했다는 서류 등을 제출하여, 은행에 준비되어있는 물품대금을 받을 수 있다</p>
+</blockquote>
+</section>
+<section id="효과" class="level2">
+<h2 class="anchored" data-anchor-id="효과">효과</h2>
+<ul>
+<li>유저가 각 메뉴코드를 기억/저장할 필요없이 한번에 정보를 확인하여 소요시간 및 불편사항 제거</li>
+<li>시스템 검증을 통한 Human error제거, 육안확인시간 감소 &amp; 물품대금 정상입수</li>
+</ul>
+</section>
+<section id="github-repository" class="level2">
+<h2 class="anchored" data-anchor-id="github-repository">github repository</h2>
+<p><a href="https://github.com/KR9268/LocalLC_GUI">관련 github레포</a></p>
+</section>
+<section id="세부내용-구현내용-사용한-언어패키지-등" class="level2">
+<h2 class="anchored" data-anchor-id="세부내용-구현내용-사용한-언어패키지-등">[세부내용] 구현내용 &amp; 사용한 언어/패키지 등</h2>
 <ol type="1">
-<li>정보가 파편화되어있어 하나의 Tool로써 확인하고 관리하기 위해서 Streamlit 기반으로 만듦</li>
+<li>정보가 파편화되어있어 하나의 Tool로써 확인하고 관리하기 위해서 <code>Streamlit</code> 기반으로 만듦</li>
 </ol>
 <ul>
 <li>정보 저장 및 조회
 <ul>
-<li>내부정보는 ERP에서 가져와서 db에 적재(SAP Scripting, win32com 사용)</li>
-<li>외부정보는 xml을 읽어서 Tag로 필요한 정보를 찾아 db에 적재(Beautifulsoup 사용) (외부정보라고는 하나, ERP에 저장되어있는 xml을 불러들여서 사용함)</li>
-<li>데이터 저장 및 최초 쿼리는 SQL문으로 가져오나, join등 필요한 사후처리는 pandas를 활용</li>
+<li>내부정보는 ERP에서 가져와서 db에 적재(SAP Scripting활용을 위한 <code>win32com</code> 사용)</li>
+<li>외부정보는 xml을 읽어서 Tag로 필요한 정보를 찾아 db에 적재(<code>Beautifulsoup</code>, <code>sqlite3</code> 사용) (외부정보라고는 하나, ERP에 저장되어있는 xml을 불러들여서 사용함)</li>
+<li>데이터 저장 및 최초 쿼리는 SQL문으로 가져오나, join등 필요한 사후처리는 <code>pandas</code>를 활용</li>
 </ul></li>
 </ul>
 <ol start="2" type="1">
@@ -245,8 +279,8 @@ gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
 </ul></li>
 <li>ERP관련 기능은 SAP메뉴(T-code)기준으로 함수화하여 관리</li>
 <li>정보조회 관련 기능은 기능별 dataframe 생성/변환하는 방향으로 함수화하여 관리</li>
-<li>ERP제어(SAP Scripting) 주요기능을 구현한 ’NERP_PI_LC’는 자체제작한 것으로 정리하여 업로드 예정(pip 미등록)</li>
-<li>수익자기준 주요 EDI코드 : 내국신용장(LOCADV), 물품수령증(LOCRCT)
+<li>ERP제어(SAP Scripting) <strong>주요기능을 구현한 ’NERP_PI_LC’는 자체제작한 것</strong>으로 정리하여 업로드 예정<strong>(pip 미등록)</strong></li>
+<li>수익자기준 주요 EDI코드(참고용 기록) : 내국신용장(LOCADV), 물품수령증(LOCRCT)
 <ul>
 <li>BeautifulSoup를 위해 정리해둔 딕셔너리(locrct_id, locadv_id)는 표준규격일 것으로 예상하여 재사용가능할 것으로 예상</li>
 </ul></li>
@@ -255,10 +289,6 @@ gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
 <li>Local L/C에 대한 세부정보 참고가능한 사이트</li>
 </ol>
 <p><a href="https://ulocallc.utradehub.or.kr/LocalCredit/index.jsp?sso=ok">KTNET - 이용안내 - 상세업무절차</a></p>
-</section>
-<section id="github-repository" class="level2">
-<h2 class="anchored" data-anchor-id="github-repository">github repository</h2>
-<p><a href="https://github.com/KR9268/LocalLC_GUI">관련 github레포</a></p>
 
 
 </section>
