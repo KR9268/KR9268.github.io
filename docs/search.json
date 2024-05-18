@@ -298,14 +298,14 @@
     "href": "posts_miniprojects/sel-py-local-20240122/index.html",
     "title": "[Python] LocalL/C 관리용 Tool",
     "section": "",
-    "text": "정보가 파편화되어있어 하나의 Tool로써 확인하고 관리하기 위해서 Streamlit 기반으로 만듦\n\n\n정보 저장 및 조회\n\n내부정보는 ERP에서 가져와서 db에 적재(SAP Scripting, win32com 사용)\n외부정보는 xml을 읽어서 Tag로 필요한 정보를 찾아 db에 적재(Beautifulsoup 사용) (외부정보라고는 하나, ERP에 저장되어있는 xml을 불러들여서 사용함)\n데이터 저장 및 최초 쿼리는 SQL문으로 가져오나, join등 필요한 사후처리는 pandas를 활용\n\n\n\nERP에 직접 입력하는 등의 수작업을 자동으로 수행\n\n\n자동화 기능\n\nERP 수주내역 등록(고정정보는 Master화, 변동정보는 Streamlit 텍스트박스 활용)\n준수사항(법령 등)의 자동체크\n\n특정 날짜 내에 완료해야한다던가, 일치해야하는 내용 등을 자동으로 검수\nStreamlit의 table내 체크박스표기(True,False)를 활용하여 이상여부를 직관적으로 확인 가능\n사용자가 어떤 행동을 해야하는지 참고사항란을 통해 지시(연장요청, 수령증발행요청 등)\n\n보유내역 및 관리대상(작업이 완료되지 않은 건)의 Filter 기능 제공(드롭박스로 선택)\nERP의 ID, PW를 입력해두어 작업 자동화 수행\n\n개인PC에서만 사용하는 Tool이며, 표기는 ***과 같이 암호화 표기되어 관리\n\n\n\n\n설계시 고려사항, 특이사항, 참고사항\n\n\n추가/삭제/변경 등 변동될 수 있는 정보는 Hardcoding이 아닌 db형태로 저장\n\n오류 등 상황에 대비하여 실행시 기존 db를 복사해두는 로직 구현해두었으나, 자주 실행시 과생성되어 향후 수정 예정\n\nERP관련 기능은 SAP메뉴(T-code)기준으로 함수화하여 관리\n정보조회 관련 기능은 기능별 dataframe 생성/변환하는 방향으로 함수화하여 관리\nERP제어(SAP Scripting) 주요기능을 구현한 ’NERP_PI_LC’는 자체제작한 것으로 정리하여 업로드 예정(pip 미등록)\n수익자기준 주요 EDI코드 : 내국신용장(LOCADV), 물품수령증(LOCRCT)\n\nBeautifulSoup를 위해 정리해둔 딕셔너리(locrct_id, locadv_id)는 표준규격일 것으로 예상하여 재사용가능할 것으로 예상\n\n\n\nLocal L/C에 대한 세부정보 참고가능한 사이트\n\nKTNET - 이용안내 - 상세업무절차\nCopyright © 2024 Kibok Park All rights reserved."
+    "text": "모든 정보가 하나의 ERP에 있음에도, 기능 별로 메뉴가 구분되어 있어 비효율/불편함\n\n주요기능 : L/C수신, L/C등록, 세금계산서 조회, 물품수령증 조회, 은행네고\n\n모든 정보가 전자화되어있으나, 각 서류의 내용(주문번호 등)이 일치하는지 눈으로 확인중\n\n24자리 영문/숫자 혼합 등이 있으며, 틀리면 물품대금을 받지 못하므로 확인이 매우 중요함\n\n각 서류, 행위마다 관련된 법 조항이 있어 준수해야 함\n\nex) XX서류가 발행되고 N일 내에 YY서류 제출\n\nDashboard형태로 구성하여 한번에 정보조회를 하고, 주요정보 일치여부 확인을 자동화\n\n\n[용어설명] L/C : 물품주문서이자 대금청구시 사용될 은행계좌와 비슷한 역할 (Letter of Credit, 신용장) 물품수령증 : 고객이 물건을 정상수령하였다는 서류, 대금청구에 사용할 수 있다 은행네고 : 정상수령했다는 서류 등을 제출하여, 은행에 준비되어있는 물품대금을 받을 수 있다\nCopyright © 2024 Kibok Park All rights reserved."
   },
   {
     "objectID": "posts_miniprojects/sel-py-local-20240122/index.html#개요",
     "href": "posts_miniprojects/sel-py-local-20240122/index.html#개요",
     "title": "[Python] LocalL/C 관리용 Tool",
     "section": "",
-    "text": "정보가 파편화되어있어 하나의 Tool로써 확인하고 관리하기 위해서 Streamlit 기반으로 만듦\n\n\n정보 저장 및 조회\n\n내부정보는 ERP에서 가져와서 db에 적재(SAP Scripting, win32com 사용)\n외부정보는 xml을 읽어서 Tag로 필요한 정보를 찾아 db에 적재(Beautifulsoup 사용) (외부정보라고는 하나, ERP에 저장되어있는 xml을 불러들여서 사용함)\n데이터 저장 및 최초 쿼리는 SQL문으로 가져오나, join등 필요한 사후처리는 pandas를 활용\n\n\n\nERP에 직접 입력하는 등의 수작업을 자동으로 수행\n\n\n자동화 기능\n\nERP 수주내역 등록(고정정보는 Master화, 변동정보는 Streamlit 텍스트박스 활용)\n준수사항(법령 등)의 자동체크\n\n특정 날짜 내에 완료해야한다던가, 일치해야하는 내용 등을 자동으로 검수\nStreamlit의 table내 체크박스표기(True,False)를 활용하여 이상여부를 직관적으로 확인 가능\n사용자가 어떤 행동을 해야하는지 참고사항란을 통해 지시(연장요청, 수령증발행요청 등)\n\n보유내역 및 관리대상(작업이 완료되지 않은 건)의 Filter 기능 제공(드롭박스로 선택)\nERP의 ID, PW를 입력해두어 작업 자동화 수행\n\n개인PC에서만 사용하는 Tool이며, 표기는 ***과 같이 암호화 표기되어 관리\n\n\n\n\n설계시 고려사항, 특이사항, 참고사항\n\n\n추가/삭제/변경 등 변동될 수 있는 정보는 Hardcoding이 아닌 db형태로 저장\n\n오류 등 상황에 대비하여 실행시 기존 db를 복사해두는 로직 구현해두었으나, 자주 실행시 과생성되어 향후 수정 예정\n\nERP관련 기능은 SAP메뉴(T-code)기준으로 함수화하여 관리\n정보조회 관련 기능은 기능별 dataframe 생성/변환하는 방향으로 함수화하여 관리\nERP제어(SAP Scripting) 주요기능을 구현한 ’NERP_PI_LC’는 자체제작한 것으로 정리하여 업로드 예정(pip 미등록)\n수익자기준 주요 EDI코드 : 내국신용장(LOCADV), 물품수령증(LOCRCT)\n\nBeautifulSoup를 위해 정리해둔 딕셔너리(locrct_id, locadv_id)는 표준규격일 것으로 예상하여 재사용가능할 것으로 예상\n\n\n\nLocal L/C에 대한 세부정보 참고가능한 사이트\n\nKTNET - 이용안내 - 상세업무절차"
+    "text": "추진배경\n\n\n모든 정보가 하나의 ERP에 있음에도, 기능 별로 메뉴가 구분되어 있어 비효율/불편함 ↑\n\nL/C수신, L/C등록, 세금계산서 조회, 물품수령증 조회, 은행네고\n\n모든 정보가 전자화되어있으나, 각 서류의 내용(주문번호 등)이 일치하는지 눈으로 확인중\n\n24자리 영문/숫자 혼합 등이 있으며, 틀리면 물품대금을 받지 못하므로 확인이 매우 중요함\n\n[용어설명]\n**L/C** : **물품주문서**이자 **대금청구시 사용될 은행계좌**와 비슷한 역할\n    (Letter of Credit, 신용장)\n**물품수령증** : 고객이 물건을 정상수령하였다는 서류, 대금청구에 사용할 수 있다\n**은행네고** : 정상수령했다는 서류 등을 제출하여, 은행에서 물품대금을 받을 수 있다\n\n\n정보가 파편화되어있어 하나의 Tool로써 확인하고 관리하기 위해서 Streamlit 기반으로 만듦\n\n\n정보 저장 및 조회\n\n내부정보는 ERP에서 가져와서 db에 적재(SAP Scripting, win32com 사용)\n외부정보는 xml을 읽어서 Tag로 필요한 정보를 찾아 db에 적재(Beautifulsoup 사용) (외부정보라고는 하나, ERP에 저장되어있는 xml을 불러들여서 사용함)\n데이터 저장 및 최초 쿼리는 SQL문으로 가져오나, join등 필요한 사후처리는 pandas를 활용\n\n\n\nERP에 직접 입력하는 등의 수작업을 자동으로 수행\n\n\n자동화 기능\n\nERP 수주내역 등록(고정정보는 Master화, 변동정보는 Streamlit 텍스트박스 활용)\n준수사항(법령 등)의 자동체크\n\n특정 날짜 내에 완료해야한다던가, 일치해야하는 내용 등을 자동으로 검수\nStreamlit의 table내 체크박스표기(True,False)를 활용하여 이상여부를 직관적으로 확인 가능\n사용자가 어떤 행동을 해야하는지 참고사항란을 통해 지시(연장요청, 수령증발행요청 등)\n\n보유내역 및 관리대상(작업이 완료되지 않은 건)의 Filter 기능 제공(드롭박스로 선택)\nERP의 ID, PW를 입력해두어 작업 자동화 수행\n\n개인PC에서만 사용하는 Tool이며, 표기는 ***과 같이 암호화 표기되어 관리\n\n\n\n\n설계시 고려사항, 특이사항, 참고사항\n\n\n추가/삭제/변경 등 변동될 수 있는 정보는 Hardcoding이 아닌 db형태로 저장\n\n오류 등 상황에 대비하여 실행시 기존 db를 복사해두는 로직 구현해두었으나, 자주 실행시 과생성되어 향후 수정 예정\n\nERP관련 기능은 SAP메뉴(T-code)기준으로 함수화하여 관리\n정보조회 관련 기능은 기능별 dataframe 생성/변환하는 방향으로 함수화하여 관리\nERP제어(SAP Scripting) 주요기능을 구현한 ’NERP_PI_LC’는 자체제작한 것으로 정리하여 업로드 예정(pip 미등록)\n수익자기준 주요 EDI코드 : 내국신용장(LOCADV), 물품수령증(LOCRCT)\n\nBeautifulSoup를 위해 정리해둔 딕셔너리(locrct_id, locadv_id)는 표준규격일 것으로 예상하여 재사용가능할 것으로 예상\n\n\n\nLocal L/C에 대한 세부정보 참고가능한 사이트\n\nKTNET - 이용안내 - 상세업무절차"
   },
   {
     "objectID": "posts_miniprojects/sel-py-local-20240122/index.html#개념",
@@ -446,5 +446,54 @@
     "title": "[프로그래머스SQL] 평균 일일 대여 요금 구하기",
     "section": "정리",
     "text": "정리\n\nROUND : 반올림\nAVG : 평균\nAS ??? : 컬럼명을 ???으로 가져온다\nWHERE : 작성한 조건을 기준으로 가져온다\n\nWHERE의 여러 형태예시\n\nWHERE CAR_TYPE = 'SUV'\nWHERE CAR_TYPE != 'SUV'\nWHERE DAILY_FEE &gt; 14000\nWHERE DAILY_FEE BETWEEN 14000 AND 16000\nWHERE DAILY_FEE IN (14000, 16000)\nWHERE CAR_TYPE IN ('SUV', '세단')"
+  },
+  {
+    "objectID": "posts_miniprojects/sel-py-local-20240122/index.html#추진배경",
+    "href": "posts_miniprojects/sel-py-local-20240122/index.html#추진배경",
+    "title": "[Python] LocalL/C 관리용 Tool",
+    "section": "",
+    "text": "모든 정보가 하나의 ERP에 있음에도, 기능 별로 메뉴가 구분되어 있어 비효율/불편함\n\n주요기능 : L/C수신, L/C등록, 세금계산서 조회, 물품수령증 조회, 은행네고\n\n모든 정보가 전자화되어있으나, 각 서류의 내용(주문번호 등)이 일치하는지 눈으로 확인중\n\n24자리 영문/숫자 혼합 등이 있으며, 틀리면 물품대금을 받지 못하므로 확인이 매우 중요함\n\n각 서류, 행위마다 관련된 법 조항이 있어 준수해야 함\n\nex) XX서류가 발행되고 N일 내에 YY서류 제출\n\nDashboard형태로 구성하여 한번에 정보조회를 하고, 주요정보 일치여부 확인을 자동화\n\n\n[용어설명] L/C : 물품주문서이자 대금청구시 사용될 은행계좌와 비슷한 역할 (Letter of Credit, 신용장) 물품수령증 : 고객이 물건을 정상수령하였다는 서류, 대금청구에 사용할 수 있다 은행네고 : 정상수령했다는 서류 등을 제출하여, 은행에 준비되어있는 물품대금을 받을 수 있다"
+  },
+  {
+    "objectID": "posts_miniprojects/sel-py-local-20240122/index.html#구현-목적내용-및-사용한-언어패키지",
+    "href": "posts_miniprojects/sel-py-local-20240122/index.html#구현-목적내용-및-사용한-언어패키지",
+    "title": "[Python] LocalL/C 관리용 Tool",
+    "section": "구현 목적/내용 및 사용한 언어/패키지",
+    "text": "구현 목적/내용 및 사용한 언어/패키지\n\n정보가 파편화되어있어 하나의 Tool로써 확인하고 관리하기 위해서 Streamlit 기반으로 만듦\n\n\n정보 저장 및 조회\n\n내부정보는 ERP에서 가져와서 db에 적재(SAP Scripting, win32com 사용)\n외부정보는 xml을 읽어서 Tag로 필요한 정보를 찾아 db에 적재(Beautifulsoup 사용) (외부정보라고는 하나, ERP에 저장되어있는 xml을 불러들여서 사용함)\n데이터 저장 및 최초 쿼리는 SQL문으로 가져오나, join등 필요한 사후처리는 pandas를 활용\n\n\n\nERP에 직접 입력하는 등의 수작업을 자동으로 수행\n\n\n자동화 기능\n\nERP 수주내역 등록(고정정보는 Master화, 변동정보는 Streamlit 텍스트박스 활용)\n준수사항(법령 등)의 자동체크\n\n특정 날짜 내에 완료해야한다던가, 일치해야하는 내용 등을 자동으로 검수\nStreamlit의 table내 체크박스표기(True,False)를 활용하여 이상여부를 직관적으로 확인 가능\n사용자가 어떤 행동을 해야하는지 참고사항란을 통해 지시(연장요청, 수령증발행요청 등)\n\n보유내역 및 관리대상(작업이 완료되지 않은 건)의 Filter 기능 제공(드롭박스로 선택)\nERP의 ID, PW를 입력해두어 작업 자동화 수행\n\n개인PC에서만 사용하는 Tool이며, 표기는 ***과 같이 암호화 표기되어 관리\n\n\n\n\n설계시 고려사항, 특이사항, 참고사항\n\n\n추가/삭제/변경 등 변동될 수 있는 정보는 Hardcoding이 아닌 db형태로 저장\n\n오류 등 상황에 대비하여 실행시 기존 db를 복사해두는 로직 구현해두었으나, 자주 실행시 과생성되어 향후 수정 예정\n\nERP관련 기능은 SAP메뉴(T-code)기준으로 함수화하여 관리\n정보조회 관련 기능은 기능별 dataframe 생성/변환하는 방향으로 함수화하여 관리\nERP제어(SAP Scripting) 주요기능을 구현한 ’NERP_PI_LC’는 자체제작한 것으로 정리하여 업로드 예정(pip 미등록)\n수익자기준 주요 EDI코드 : 내국신용장(LOCADV), 물품수령증(LOCRCT)\n\nBeautifulSoup를 위해 정리해둔 딕셔너리(locrct_id, locadv_id)는 표준규격일 것으로 예상하여 재사용가능할 것으로 예상\n\n\n\nLocal L/C에 대한 세부정보 참고가능한 사이트\n\nKTNET - 이용안내 - 상세업무절차"
+  },
+  {
+    "objectID": "posts_miniprojects/sel-py-local-20240122/index.html#구현-목적내용-사용한-언어패키지",
+    "href": "posts_miniprojects/sel-py-local-20240122/index.html#구현-목적내용-사용한-언어패키지",
+    "title": "[Python] LocalL/C 관리용 Tool",
+    "section": "구현 목적/내용 & 사용한 언어/패키지",
+    "text": "구현 목적/내용 & 사용한 언어/패키지\n\n정보가 파편화되어있어 하나의 Tool로써 확인하고 관리하기 위해서 Streamlit 기반으로 만듦\n\n\n정보 저장 및 조회\n\n내부정보는 ERP에서 가져와서 db에 적재(SAP Scripting, win32com 사용)\n외부정보는 xml을 읽어서 Tag로 필요한 정보를 찾아 db에 적재(Beautifulsoup 사용) (외부정보라고는 하나, ERP에 저장되어있는 xml을 불러들여서 사용함)\n데이터 저장 및 최초 쿼리는 SQL문으로 가져오나, join등 필요한 사후처리는 pandas를 활용\n\n\n\nERP에 직접 입력하는 등의 수작업을 자동으로 수행\n\n\n자동화 기능\n\nERP 수주내역 등록(고정정보는 Master화, 변동정보는 Streamlit 텍스트박스 활용)\n준수사항(법령 등)의 자동체크\n\n특정 날짜 내에 완료해야한다던가, 일치해야하는 내용 등을 자동으로 검수\nStreamlit의 table내 체크박스표기(True,False)를 활용하여 이상여부를 직관적으로 확인 가능\n사용자가 어떤 행동을 해야하는지 참고사항란을 통해 지시(연장요청, 수령증발행요청 등)\n\n보유내역 및 관리대상(작업이 완료되지 않은 건)의 Filter 기능 제공(드롭박스로 선택)\nERP의 ID, PW를 입력해두어 작업 자동화 수행\n\n개인PC에서만 사용하는 Tool이며, 표기는 ***과 같이 암호화 표기되어 관리\n\n\n\n\n설계시 고려사항, 특이사항, 참고사항\n\n\n추가/삭제/변경 등 변동될 수 있는 정보는 Hardcoding이 아닌 db형태로 저장\n\n오류 등 상황에 대비하여 실행시 기존 db를 복사해두는 로직 구현해두었으나, 자주 실행시 과생성되어 향후 수정 예정\n\nERP관련 기능은 SAP메뉴(T-code)기준으로 함수화하여 관리\n정보조회 관련 기능은 기능별 dataframe 생성/변환하는 방향으로 함수화하여 관리\nERP제어(SAP Scripting) 주요기능을 구현한 ’NERP_PI_LC’는 자체제작한 것으로 정리하여 업로드 예정(pip 미등록)\n수익자기준 주요 EDI코드 : 내국신용장(LOCADV), 물품수령증(LOCRCT)\n\nBeautifulSoup를 위해 정리해둔 딕셔너리(locrct_id, locadv_id)는 표준규격일 것으로 예상하여 재사용가능할 것으로 예상\n\n\n\nLocal L/C에 대한 세부정보 참고가능한 사이트\n\nKTNET - 이용안내 - 상세업무절차"
+  },
+  {
+    "objectID": "posts_miniprojects/sel-py-local-20240122/index.html#구현-내용-사용한-언어패키지",
+    "href": "posts_miniprojects/sel-py-local-20240122/index.html#구현-내용-사용한-언어패키지",
+    "title": "[Python] LocalL/C 관리용 Tool",
+    "section": "구현 내용 & 사용한 언어/패키지",
+    "text": "구현 내용 & 사용한 언어/패키지\n\n정보가 파편화되어있어 하나의 Tool로써 확인하고 관리하기 위해서 Streamlit 기반으로 만듦\n\n\n정보 저장 및 조회\n\n내부정보는 ERP에서 가져와서 db에 적재(SAP Scripting활용을 위한 win32com 사용)\n외부정보는 xml을 읽어서 Tag로 필요한 정보를 찾아 db에 적재(Beautifulsoup, sqlite3 사용) (외부정보라고는 하나, ERP에 저장되어있는 xml을 불러들여서 사용함)\n데이터 저장 및 최초 쿼리는 SQL문으로 가져오나, join등 필요한 사후처리는 pandas를 활용\n\n\n\nERP에 직접 입력하는 등의 수작업을 자동으로 수행\n\n\n자동화 기능\n\nERP 수주내역 등록(고정정보는 Master화, 변동정보는 Streamlit 텍스트박스 활용)\n준수사항(법령 등)의 자동체크\n\n특정 날짜 내에 완료해야한다던가, 일치해야하는 내용 등을 자동으로 검수\nStreamlit의 table내 체크박스표기(True,False)를 활용하여 이상여부를 직관적으로 확인 가능\n사용자가 어떤 행동을 해야하는지 참고사항란을 통해 지시(연장요청, 수령증발행요청 등)\n\n보유내역 및 관리대상(작업이 완료되지 않은 건)의 Filter 기능 제공(드롭박스로 선택)\nERP의 ID, PW를 입력해두어 작업 자동화 수행\n\n개인PC에서만 사용하는 Tool이며, 표기는 ***과 같이 암호화 표기되어 관리\n\n\n\n\n설계시 고려사항, 특이사항, 참고사항\n\n\n추가/삭제/변경 등 변동될 수 있는 정보는 Hardcoding이 아닌 db형태로 저장\n\n오류 등 상황에 대비하여 실행시 기존 db를 복사해두는 로직 구현해두었으나, 자주 실행시 과생성되어 향후 수정 예정\n\nERP관련 기능은 SAP메뉴(T-code)기준으로 함수화하여 관리\n정보조회 관련 기능은 기능별 dataframe 생성/변환하는 방향으로 함수화하여 관리\nERP제어(SAP Scripting) 주요기능을 구현한 ’NERP_PI_LC’는 자체제작한 것으로 정리하여 업로드 예정(pip 미등록)\n수익자기준 주요 EDI코드(참고용 기록) : 내국신용장(LOCADV), 물품수령증(LOCRCT)\n\nBeautifulSoup를 위해 정리해둔 딕셔너리(locrct_id, locadv_id)는 표준규격일 것으로 예상하여 재사용가능할 것으로 예상\n\n\n\nLocal L/C에 대한 세부정보 참고가능한 사이트\n\nKTNET - 이용안내 - 상세업무절차"
+  },
+  {
+    "objectID": "posts_miniprojects/sel-py-local-20240122/index.html#효과",
+    "href": "posts_miniprojects/sel-py-local-20240122/index.html#효과",
+    "title": "[Python] LocalL/C 관리용 Tool",
+    "section": "효과",
+    "text": "효과\n\n유저가 각 메뉴코드를 기억/저장할 필요없이 한번에 정보를 확인하여 소요시간 및 불편사항 제거\n시스템 검증을 통한 Human error제거, 육안확인시간 감소 & 물품대금 정상입수"
+  },
+  {
+    "objectID": "posts_miniprojects/sel-py-local-20240122/index.html#구현내용-사용한-언어패키지-등-세부내용",
+    "href": "posts_miniprojects/sel-py-local-20240122/index.html#구현내용-사용한-언어패키지-등-세부내용",
+    "title": "[Python] LocalL/C 관리용 Tool",
+    "section": "구현내용 & 사용한 언어/패키지 등 세부내용",
+    "text": "구현내용 & 사용한 언어/패키지 등 세부내용\n\n정보가 파편화되어있어 하나의 Tool로써 확인하고 관리하기 위해서 Streamlit 기반으로 만듦\n\n\n정보 저장 및 조회\n\n내부정보는 ERP에서 가져와서 db에 적재(SAP Scripting활용을 위한 win32com 사용)\n외부정보는 xml을 읽어서 Tag로 필요한 정보를 찾아 db에 적재(Beautifulsoup, sqlite3 사용) (외부정보라고는 하나, ERP에 저장되어있는 xml을 불러들여서 사용함)\n데이터 저장 및 최초 쿼리는 SQL문으로 가져오나, join등 필요한 사후처리는 pandas를 활용\n\n\n\nERP에 직접 입력하는 등의 수작업을 자동으로 수행\n\n\n자동화 기능\n\nERP 수주내역 등록(고정정보는 Master화, 변동정보는 Streamlit 텍스트박스 활용)\n준수사항(법령 등)의 자동체크\n\n특정 날짜 내에 완료해야한다던가, 일치해야하는 내용 등을 자동으로 검수\nStreamlit의 table내 체크박스표기(True,False)를 활용하여 이상여부를 직관적으로 확인 가능\n사용자가 어떤 행동을 해야하는지 참고사항란을 통해 지시(연장요청, 수령증발행요청 등)\n\n보유내역 및 관리대상(작업이 완료되지 않은 건)의 Filter 기능 제공(드롭박스로 선택)\nERP의 ID, PW를 입력해두어 작업 자동화 수행\n\n개인PC에서만 사용하는 Tool이며, 표기는 ***과 같이 암호화 표기되어 관리\n\n\n\n\n설계시 고려사항, 특이사항, 참고사항\n\n\n추가/삭제/변경 등 변동될 수 있는 정보는 Hardcoding이 아닌 db형태로 저장\n\n오류 등 상황에 대비하여 실행시 기존 db를 복사해두는 로직 구현해두었으나, 자주 실행시 과생성되어 향후 수정 예정\n\nERP관련 기능은 SAP메뉴(T-code)기준으로 함수화하여 관리\n정보조회 관련 기능은 기능별 dataframe 생성/변환하는 방향으로 함수화하여 관리\nERP제어(SAP Scripting) 주요기능을 구현한 ’NERP_PI_LC’는 자체제작한 것으로 정리하여 업로드 예정(pip 미등록)\n수익자기준 주요 EDI코드(참고용 기록) : 내국신용장(LOCADV), 물품수령증(LOCRCT)\n\nBeautifulSoup를 위해 정리해둔 딕셔너리(locrct_id, locadv_id)는 표준규격일 것으로 예상하여 재사용가능할 것으로 예상\n\n\n\nLocal L/C에 대한 세부정보 참고가능한 사이트\n\nKTNET - 이용안내 - 상세업무절차"
+  },
+  {
+    "objectID": "posts_miniprojects/sel-py-local-20240122/index.html#세부내용-구현내용-사용한-언어패키지-등",
+    "href": "posts_miniprojects/sel-py-local-20240122/index.html#세부내용-구현내용-사용한-언어패키지-등",
+    "title": "[Python] LocalL/C 관리용 Tool",
+    "section": "[세부내용] 구현내용 & 사용한 언어/패키지 등",
+    "text": "[세부내용] 구현내용 & 사용한 언어/패키지 등\n\n정보가 파편화되어있어 하나의 Tool로써 확인하고 관리하기 위해서 Streamlit 기반으로 만듦\n\n\n정보 저장 및 조회\n\n내부정보는 ERP에서 가져와서 db에 적재(SAP Scripting활용을 위한 win32com 사용)\n외부정보는 xml을 읽어서 Tag로 필요한 정보를 찾아 db에 적재(Beautifulsoup, sqlite3 사용) (외부정보라고는 하나, ERP에 저장되어있는 xml을 불러들여서 사용함)\n데이터 저장 및 최초 쿼리는 SQL문으로 가져오나, join등 필요한 사후처리는 pandas를 활용\n\n\n\nERP에 직접 입력하는 등의 수작업을 자동으로 수행\n\n\n자동화 기능\n\nERP 수주내역 등록(고정정보는 Master화, 변동정보는 Streamlit 텍스트박스 활용)\n준수사항(법령 등)의 자동체크\n\n특정 날짜 내에 완료해야한다던가, 일치해야하는 내용 등을 자동으로 검수\nStreamlit의 table내 체크박스표기(True,False)를 활용하여 이상여부를 직관적으로 확인 가능\n사용자가 어떤 행동을 해야하는지 참고사항란을 통해 지시(연장요청, 수령증발행요청 등)\n\n보유내역 및 관리대상(작업이 완료되지 않은 건)의 Filter 기능 제공(드롭박스로 선택)\nERP의 ID, PW를 입력해두어 작업 자동화 수행\n\n개인PC에서만 사용하는 Tool이며, 표기는 ***과 같이 암호화 표기되어 관리\n\n\n\n\n설계시 고려사항, 특이사항, 참고사항\n\n\n추가/삭제/변경 등 변동될 수 있는 정보는 Hardcoding이 아닌 db형태로 저장\n\n오류 등 상황에 대비하여 실행시 기존 db를 복사해두는 로직 구현해두었으나, 자주 실행시 과생성되어 향후 수정 예정\n\nERP관련 기능은 SAP메뉴(T-code)기준으로 함수화하여 관리\n정보조회 관련 기능은 기능별 dataframe 생성/변환하는 방향으로 함수화하여 관리\nERP제어(SAP Scripting) 주요기능을 구현한 ’NERP_PI_LC’는 자체제작한 것으로 정리하여 업로드 예정(pip 미등록)\n수익자기준 주요 EDI코드(참고용 기록) : 내국신용장(LOCADV), 물품수령증(LOCRCT)\n\nBeautifulSoup를 위해 정리해둔 딕셔너리(locrct_id, locadv_id)는 표준규격일 것으로 예상하여 재사용가능할 것으로 예상\n\n\n\nLocal L/C에 대한 세부정보 참고가능한 사이트\n\nKTNET - 이용안내 - 상세업무절차"
   }
 ]
