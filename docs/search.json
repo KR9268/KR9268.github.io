@@ -354,7 +354,7 @@
     "href": "posts_miniprojects/sel-py-crawl_sr-20240306/index.html",
     "title": "[Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 & 정리 Tool",
     "section": "",
-    "text": "필요한 정보가 여러 탭에 산재되어있거나, 줄 글로 뭉쳐져있어 별도의 가공/복사과정없이 주요정보를 바로 사용하게 해주는 Tool\n확인가능한 정보 : Sales Org, Plant(Code,Name), POL, POD, HSCODE, Description\nCopyright © 2024 Kibok Park All rights reserved."
+    "text": "사용빈도가 높은 정보가 여러 탭에 나뉘어 있고, 이러한 정보들을 주문(SR)별로 각각 조회하는 불편함이 있음\n유저 화면에서 보여줄 수 있는 행(row)이 4줄로 적고, 필요한 정보를 각각 복사하여 정리하는 불편함이 있음\n\n한번에 많은 물품이 포함된 경우, 수십건의 같거나 다른 HSCODE들을 하나의 줄 글로 정리함\n출발지와 도착지, 제품의 품명 등을 요약하여 요구받는 경우 작업시간이 소요됨\n\n각 탭 정보를 일괄 크롤링하고, 필요할 때 별도의 가공/복사작업 없이 바로 사용가능한 정보로 제공하도록 함\n\n확인가능한 정보 : Sales Org, Plant(Code,Name), POL(출발지), POD(도착지), HSCODE, Description(물품명세)\n\n\n\n[용어설명] SR : 하나의 기본 선적 단위, Shipping request HSCODE : 해외로 물건을 보내기 위해 수출신고할 때, (의약품, 전자기기 등)물품 종류를 알 수 있는 제품 코드\nCopyright © 2024 Kibok Park All rights reserved."
   },
   {
     "objectID": "posts_miniprojects/sel-py-crawl_sr-20240306/index.html#개요",
@@ -495,5 +495,26 @@
     "title": "[Python] LocalL/C 관리용 Tool",
     "section": "[세부내용] 구현내용 & 사용한 언어/패키지 등",
     "text": "[세부내용] 구현내용 & 사용한 언어/패키지 등\n\n정보가 파편화되어있어 하나의 Tool로써 확인하고 관리하기 위해서 Streamlit 기반으로 만듦\n\n\n정보 저장 및 조회\n\n내부정보는 ERP에서 가져와서 db에 적재(SAP Scripting활용을 위한 win32com 사용)\n외부정보는 xml을 읽어서 Tag로 필요한 정보를 찾아 db에 적재(Beautifulsoup, sqlite3 사용) (외부정보라고는 하나, ERP에 저장되어있는 xml을 불러들여서 사용함)\n데이터 저장 및 최초 쿼리는 SQL문으로 가져오나, join등 필요한 사후처리는 pandas를 활용\n\n\n\nERP에 직접 입력하는 등의 수작업을 자동으로 수행\n\n\n자동화 기능\n\nERP 수주내역 등록(고정정보는 Master화, 변동정보는 Streamlit 텍스트박스 활용)\n준수사항(법령 등)의 자동체크\n\n특정 날짜 내에 완료해야한다던가, 일치해야하는 내용 등을 자동으로 검수\nStreamlit의 table내 체크박스표기(True,False)를 활용하여 이상여부를 직관적으로 확인 가능\n사용자가 어떤 행동을 해야하는지 참고사항란을 통해 지시(연장요청, 수령증발행요청 등)\n\n보유내역 및 관리대상(작업이 완료되지 않은 건)의 Filter 기능 제공(드롭박스로 선택)\nERP의 ID, PW를 입력해두어 작업 자동화 수행\n\n개인PC에서만 사용하는 Tool이며, 표기는 ***과 같이 암호화 표기되어 관리\n\n\n\n\n설계시 고려사항, 특이사항, 참고사항\n\n\n추가/삭제/변경 등 변동될 수 있는 정보는 Hardcoding이 아닌 db형태로 저장\n\n오류 등 상황에 대비하여 실행시 기존 db를 복사해두는 로직 구현해두었으나, 자주 실행시 과생성되어 향후 수정 예정\n\nERP관련 기능은 SAP메뉴(T-code)기준으로 함수화하여 관리\n정보조회 관련 기능은 기능별 dataframe 생성/변환하는 방향으로 함수화하여 관리\nERP제어(SAP Scripting) 주요기능을 구현한 ’NERP_PI_LC’는 자체제작한 것으로 정리하여 업로드 예정(pip 미등록)\n수익자기준 주요 EDI코드(참고용 기록) : 내국신용장(LOCADV), 물품수령증(LOCRCT)\n\nBeautifulSoup를 위해 정리해둔 딕셔너리(locrct_id, locadv_id)는 표준규격일 것으로 예상하여 재사용가능할 것으로 예상\n\n\n\nLocal L/C에 대한 세부정보 참고가능한 사이트\n\nKTNET - 이용안내 - 상세업무절차"
+  },
+  {
+    "objectID": "posts_miniprojects/sel-py-crawl_sr-20240306/index.html#추진배경",
+    "href": "posts_miniprojects/sel-py-crawl_sr-20240306/index.html#추진배경",
+    "title": "[Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 & 정리 Tool",
+    "section": "",
+    "text": "사용빈도가 높은 정보가 여러 탭에 나뉘어 있고, 이러한 정보들을 주문(SR)별로 각각 조회하는 불편함이 있음\n유저 화면에서 보여줄 수 있는 행(row)이 4줄로 적고, 필요한 정보를 각각 복사하여 정리하는 불편함이 있음\n\n한번에 많은 물품이 포함된 경우, 수십건의 같거나 다른 HSCODE들을 하나의 줄 글로 정리함\n출발지와 도착지, 제품의 품명 등을 요약하여 요구받는 경우 작업시간이 소요됨\n\n각 탭 정보를 일괄 크롤링하고, 필요할 때 별도의 가공/복사작업 없이 바로 사용가능한 정보로 제공하도록 함\n\n확인가능한 정보 : Sales Org, Plant(Code,Name), POL(출발지), POD(도착지), HSCODE, Description(물품명세)\n\n\n\n[용어설명] SR : 하나의 기본 선적 단위, Shipping request HSCODE : 해외로 물건을 보내기 위해 수출신고할 때, (의약품, 전자기기 등)물품 종류를 알 수 있는 제품 코드"
+  },
+  {
+    "objectID": "posts_miniprojects/sel-py-crawl_sr-20240306/index.html#효과",
+    "href": "posts_miniprojects/sel-py-crawl_sr-20240306/index.html#효과",
+    "title": "[Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 & 정리 Tool",
+    "section": "효과",
+    "text": "효과\n\n단건 또는 여러건의 주문(SR)에 대해 건당 1~2초 이내로 필요한 정보 수집\n클립보드 복사가 가능한 텍스트, 엑셀형태로 제공하여 요구사항에 대해 즉시대응 가능"
+  },
+  {
+    "objectID": "posts_miniprojects/sel-py-crawl_sr-20240306/index.html#세부내용-구현내용-사용한-언어패키지-등",
+    "href": "posts_miniprojects/sel-py-crawl_sr-20240306/index.html#세부내용-구현내용-사용한-언어패키지-등",
+    "title": "[Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 & 정리 Tool",
+    "section": "[세부내용] 구현내용 & 사용한 언어/패키지 등",
+    "text": "[세부내용] 구현내용 & 사용한 언어/패키지 등\n\n단건 확인시, 코드셀에 붙여넣기 후 실행, 텍스트로 출력하며 pandas dataframe으로도 저장하여 필요시 엑셀도 제공\n여러건 확인시, 엑셀 등에서 복사한 표를 코드셀에 바로 붙여넣도록 설계(자동 분할, 편의성 고려함) 이후 작업은 단건 확인과 동일\n필요시 엑셀로 저장 (기존 업무유형상 출력텍스트가 더 많이 활용될 것으로 보여 별도 기능으로 추가함)"
   }
 ]
