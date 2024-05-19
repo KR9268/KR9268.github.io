@@ -126,32 +126,39 @@
     "text": "Scikit-learn 등 관련 패키지 불러오기\n\n본래 사용하는 패키지는 모두 최상단에서 불러오는게 맞음!\n\n\nfrom sklearn.ensemble import GradientBoostingRegressor\nfrom sklearn.model_selection import KFold, cross_val_score\nimport xgboost as xgb\nimport lightgbm as lgb\n\n\n모델 불러오고 Cross Validation으로 모델성능 측청\n\ngboost = GradientBoostingRegressor(random_state=1210)\nxgboost = xgb.XGBRegressor(random_state=1210)\nlightgbm = lgb.LGBMRegressor(random_state=1210)\n\nmodel_dict = {'GradientBoosting':gboost,\n              'XGBoost':xgboost,\n              'LigntGBM':lightgbm}\n\n# LightGBM의 메시지가 나오지 않도록 별도로 저장 후 출력\nmodel_cv_score = dict()\nfor model in model_dict.keys():\n    model_cv_score[model] = np.mean(cross_val_score(model_dict[model], X=preprocessed_train, y=price_train))\n\n\nfor model in model_dict.keys():\n    print(f'{model} : {model_cv_score[model]}')\n\nGradientBoosting : 0.8613647608814923\nXGBoost : 0.8762617283884332\nLigntGBM : 0.8818569800403846\n\n\n\n\n모델학습 및 예측\n\nScore가 가장 높았던 lightGBM으로 진행해보기\n\n\nmodel_dict['LigntGBM'].fit(preprocessed_train.values, y)\nprediction = model_dict['LigntGBM'].predict(preprocessed_test.values)\nprediction\n\n[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000583 seconds.\nYou can set `force_col_wise=true` to remove the overhead.\n[LightGBM] [Info] Total Bins 2338\n[LightGBM] [Info] Number of data points in the train set: 15035, number of used features: 19\n[LightGBM] [Info] Start training from score 540682.653143\n\n\narray([1296687.09405506,  311847.90404507,  806735.28228208, ...,\n       1726006.82963994,  395020.94053356,  333594.29000994])\n\n\n\n\n제출용 DataFrame 및 csv파일 생성\n\ndf_submission = pd.DataFrame({'id' : test_id, \n                              'price' : prediction})\ndf_submission\n\n\n\n\n\n\n\n\n\nid\nprice\n\n\n\n\n0\n15208\n1.296687e+06\n\n\n1\n15209\n3.118479e+05\n\n\n2\n15210\n8.067353e+05\n\n\n3\n15211\n2.098083e+05\n\n\n4\n15212\n4.343237e+05\n\n\n...\n...\n...\n\n\n6550\n21758\n4.230647e+05\n\n\n6551\n21759\n5.111171e+05\n\n\n6552\n21760\n1.726007e+06\n\n\n6553\n21761\n3.950209e+05\n\n\n6554\n21762\n3.335943e+05\n\n\n\n\n6555 rows × 2 columns\n\n\n\n\n\ndf_submission.to_csv('submission.csv', index=False)"
   },
   {
-    "objectID": "posts/vba-noname-yyyymmdd/index.html",
-    "href": "posts/vba-noname-yyyymmdd/index.html",
-    "title": "NH증권 직무인터뷰를 읽고(트레이딩&빅데이터)",
+    "objectID": "posts/prgms-sql-20240317/index.html",
+    "href": "posts/prgms-sql-20240317/index.html",
+    "title": "[프로그래머스SQL] 평균 일일 대여 요금 구하기",
     "section": "",
-    "text": "관심이 생겨서 관련 공고 등을 보고 있는데, 직무이해 겸 모르는 단어를 정리해봅니다.\n\n\n\n\n\n\n참고한 공고 (클릭해서 펼치기)\n\n\n\n\n\nNH투자증권 채용공고-Trading\nNH투자증권 채용공고-빅데이터 분석\nNH투자증권 직무인터뷰\nCopyright © 2024 Kibok Park All rights reserved."
+    "text": "프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다  (비상업적, 비영리적 용도)\n문제링크\nCopyright © 2024 Kibok Park All rights reserved."
   },
   {
-    "objectID": "posts/vba-noname-yyyymmdd/index.html#참고한-공고-인터뷰-자료",
-    "href": "posts/vba-noname-yyyymmdd/index.html#참고한-공고-인터뷰-자료",
-    "title": "NH증권 직무인터뷰를 읽고(트레이딩&빅데이터)",
+    "objectID": "posts/prgms-sql-20240317/index.html#개요",
+    "href": "posts/prgms-sql-20240317/index.html#개요",
+    "title": "[프로그래머스SQL] 평균 일일 대여 요금 구하기",
     "section": "",
-    "text": "관심이 생겨서 관련 공고 등을 보고 있는데, 직무이해 겸 모르는 단어를 정리해봅니다.\n\n\n\n\n\n\n참고한 공고 (클릭해서 펼치기)\n\n\n\n\n\nNH투자증권 채용공고-Trading\nNH투자증권 채용공고-빅데이터 분석\nNH투자증권 직무인터뷰"
+    "text": "프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다  (비상업적, 비영리적 용도)\n문제링크"
   },
   {
-    "objectID": "posts/vba-noname-yyyymmdd/index.html#트레이딩-직무-단어정리",
-    "href": "posts/vba-noname-yyyymmdd/index.html#트레이딩-직무-단어정리",
-    "title": "NH증권 직무인터뷰를 읽고(트레이딩&빅데이터)",
-    "section": "트레이딩 직무 단어정리",
-    "text": "트레이딩 직무 단어정리\n\n프랍 트레이딩(Proprietary Trading) : 고객이 아닌 금융회사의 돈으로 주식이나 파생상품 등 금융상품을 거래하는 것 (=자기계정거래, 자기계좌거래, 고유계정거래, 고유계좌거래)\n\n\n프랍트레이딩은 통상 선물·옵션 등 파생상품 부문, 일반적 주식투자 같은 방향성 매매, 알고리즘에 따라 투자하는 시스템 매매, 채권투자, 부동산이나 인프라 등의 대체투자 등으로 나뉜다. 보통 자기매매 비중이 높은 중소형 증권사에는 많게는 50여명에 이르는 프랍트레이더들이 있다. 이 가운데 80% 이상이 파생 트레이더다.중소형 증권사들의 파생상품투자 비중이 높은 것은 비용이 싸기 때문이다. 증권사의 경우 선물·옵션 거래시 사후 증거금 제도가 적용된다. 장중 거래에는 증거금이 따로 필요 없고 장 마감 후 포지션 규모에 따라 증거금을 마련하면 된다. 따라서 장중에는 활발히 거래하고 장 마감 직전 파생상품을 보유하지 않았으면 증거금 부담은 없다. 하루 단위로 청산하는 경우 사실상 금융비용은 없다.\n상기내용 참고한 서울경제 기사링크 거래증거금vs위탁증거금 내용 참고할 수 있는 블로그\n\n\n장내거래 vs 장외거래 : 정규시장 외 체결되는 거래\n매크로 지식 : Macro economics지식 (↔︎ Micro economics)\n서킷브레이커(일시매매정지, Trading Curb) : 가격 변동이 지나친 경우 일시적으로 거래를 중단하는 것\n틱 : 체결량에 따른 단위 (5틱 = 체결 5회 기준)\n셀사이드(Sell-side|은행, 증권사 등) : 금융 서비스 등을 제공하여 수익 창출\n바이사이드(Buy-side|자산운용사, 연기금, 보험사, 헤지펀드 등) : 투자를 하여 수익 창출\n\n\n참고글:셀사이드와 바이사이드의 금융공학\n\n\n하우스 : 증권사, 금융사 등 단체를 칭함"
+    "objectID": "posts/prgms-sql-20240317/index.html#문제-평균-일일-대여-요금-구하기",
+    "href": "posts/prgms-sql-20240317/index.html#문제-평균-일일-대여-요금-구하기",
+    "title": "[프로그래머스SQL] 평균 일일 대여 요금 구하기",
+    "section": "문제 : 평균 일일 대여 요금 구하기",
+    "text": "문제 : 평균 일일 대여 요금 구하기\n\n\n\n문제 이미지"
   },
   {
-    "objectID": "posts/vba-noname-yyyymmdd/index.html#빅데이터-직무-단어정리",
-    "href": "posts/vba-noname-yyyymmdd/index.html#빅데이터-직무-단어정리",
-    "title": "NH증권 직무인터뷰를 읽고(트레이딩&빅데이터)",
-    "section": "빅데이터 직무 단어정리",
-    "text": "빅데이터 직무 단어정리\n\nMTS : Mobile Trading System (HTS : Home Trading System)\n원장 : 증권사가 고객계좌나 거래내역, 매매 등을 관리하는 프로그램"
+    "objectID": "posts/prgms-sql-20240317/index.html#작성답안",
+    "href": "posts/prgms-sql-20240317/index.html#작성답안",
+    "title": "[프로그래머스SQL] 평균 일일 대여 요금 구하기",
+    "section": "작성답안",
+    "text": "작성답안\n\n\n\nSELECT ROUND(AVG(DAILY_FEE)) AS AVERAGE_FEE\nFROM CAR_RENTAL_COMPANY_CAR\nWHERE CAR_TYPE = 'SUV'\n\n\nFigure 1"
+  },
+  {
+    "objectID": "posts/prgms-sql-20240317/index.html#정리",
+    "href": "posts/prgms-sql-20240317/index.html#정리",
+    "title": "[프로그래머스SQL] 평균 일일 대여 요금 구하기",
+    "section": "정리",
+    "text": "정리\n\nROUND : 반올림\nAVG : 평균\nAS ??? : 컬럼명을 ???으로 가져온다 (Alias 라고 함)\nWHERE : 작성한 조건을 기준으로 가져온다\n\nWHERE의 여러 형태예시\n\nWHERE CAR_TYPE = 'SUV'\nWHERE CAR_TYPE != 'SUV'\nWHERE DAILY_FEE &gt; 14000\nWHERE DAILY_FEE BETWEEN 14000 AND 16000\nWHERE DAILY_FEE IN (14000, 16000)\nWHERE CAR_TYPE IN ('SUV', '세단')"
   },
   {
     "objectID": "posts/bk-BerkshireHathaway-20240423-terms/index.html",
@@ -221,7 +228,7 @@
     "href": "index.html",
     "title": "Blog",
     "section": "",
-    "text": "[프로그래머스SQL] 가장 비싼 상품 구하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-05-18\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 평균 일일 대여 요금 구하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-05-16\n\n\n\n\n\n\n\n\n\n\n\n\nNH증권 직무인터뷰를 읽고(트레이딩&빅데이터)\n\n\n\n직무분석\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-28\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n[버크셔 해서웨이의 재탄생 읽고] 용어 정리\n\n\n\n경제/금융공부\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-23\n\n\n\n\n\n\n\n\n\n\n\n\n[Scikit-learn] Kaggle 집값예측 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-05-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Pytorch] MNIST 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-02-19\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
+    "text": "NH증권 직무인터뷰를 읽고(트레이딩&빅데이터)\n\n\n\n직무분석\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-28\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n[버크셔 해서웨이의 재탄생 읽고] 용어 정리\n\n\n\n경제/금융공부\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-23\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 가장 비싼 상품 구하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-18\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 평균 일일 대여 요금 구하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-17\n\n\n\n\n\n\n\n\n\n\n\n\n[Scikit-learn] Kaggle 집값예측 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-05-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Pytorch] MNIST 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-02-19\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
   },
   {
     "objectID": "index_miniprojects.html",
@@ -252,74 +259,67 @@
     "text": "Topics\nPython, Quantative trading"
   },
   {
-    "objectID": "posts/prgms-sql-20240517/index.html",
-    "href": "posts/prgms-sql-20240517/index.html",
-    "title": "[프로그래머스SQL] 평균 일일 대여 요금 구하기",
-    "section": "",
-    "text": "프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다  (비상업적, 비영리적 용도)\n문제링크\nCopyright © 2024 Kibok Park All rights reserved."
-  },
-  {
-    "objectID": "posts/prgms-sql-20240517/index.html#개요",
-    "href": "posts/prgms-sql-20240517/index.html#개요",
-    "title": "[프로그래머스SQL] 평균 일일 대여 요금 구하기",
-    "section": "",
-    "text": "프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다  (비상업적, 비영리적 용도)\n문제링크"
-  },
-  {
-    "objectID": "posts/prgms-sql-20240517/index.html#문제-평균-일일-대여-요금-구하기",
-    "href": "posts/prgms-sql-20240517/index.html#문제-평균-일일-대여-요금-구하기",
-    "title": "[프로그래머스SQL] 평균 일일 대여 요금 구하기",
-    "section": "문제 : 평균 일일 대여 요금 구하기",
-    "text": "문제 : 평균 일일 대여 요금 구하기\n\n\n\n문제 이미지"
-  },
-  {
-    "objectID": "posts/prgms-sql-20240517/index.html#작성답안",
-    "href": "posts/prgms-sql-20240517/index.html#작성답안",
-    "title": "[프로그래머스SQL] 평균 일일 대여 요금 구하기",
-    "section": "작성답안",
-    "text": "작성답안\n\n\n\nSELECT ROUND(AVG(DAILY_FEE)) AS AVERAGE_FEE\nFROM CAR_RENTAL_COMPANY_CAR\nWHERE CAR_TYPE = 'SUV'\n\n\nFigure 1"
-  },
-  {
-    "objectID": "posts/prgms-sql-20240517/index.html#정리",
-    "href": "posts/prgms-sql-20240517/index.html#정리",
-    "title": "[프로그래머스SQL] 평균 일일 대여 요금 구하기",
-    "section": "정리",
-    "text": "정리\n\nROUND : 반올림\nAVG : 평균\nAS ??? : 컬럼명을 ???으로 가져온다 (Alias 라고 함)\nWHERE : 작성한 조건을 기준으로 가져온다\n\nWHERE의 여러 형태예시\n\nWHERE CAR_TYPE = 'SUV'\nWHERE CAR_TYPE != 'SUV'\nWHERE DAILY_FEE &gt; 14000\nWHERE DAILY_FEE BETWEEN 14000 AND 16000\nWHERE DAILY_FEE IN (14000, 16000)\nWHERE CAR_TYPE IN ('SUV', '세단')"
-  },
-  {
-    "objectID": "posts/prgms-sql-20240518/index.html",
-    "href": "posts/prgms-sql-20240518/index.html",
+    "objectID": "posts/prgms-sql-20240318/index.html",
+    "href": "posts/prgms-sql-20240318/index.html",
     "title": "[프로그래머스SQL] 가장 비싼 상품 구하기",
     "section": "",
     "text": "프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다  (비상업적, 비영리적 용도)\n문제링크 게시가능여부\nCopyright © 2024 Kibok Park All rights reserved."
   },
   {
-    "objectID": "posts/prgms-sql-20240518/index.html#개요",
-    "href": "posts/prgms-sql-20240518/index.html#개요",
+    "objectID": "posts/prgms-sql-20240318/index.html#개요",
+    "href": "posts/prgms-sql-20240318/index.html#개요",
     "title": "[프로그래머스SQL] 가장 비싼 상품 구하기",
     "section": "",
     "text": "프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다  (비상업적, 비영리적 용도)\n문제링크 게시가능여부"
   },
   {
-    "objectID": "posts/prgms-sql-20240518/index.html#문제-가장-비싼-상품-구하기",
-    "href": "posts/prgms-sql-20240518/index.html#문제-가장-비싼-상품-구하기",
+    "objectID": "posts/prgms-sql-20240318/index.html#문제-가장-비싼-상품-구하기",
+    "href": "posts/prgms-sql-20240318/index.html#문제-가장-비싼-상품-구하기",
     "title": "[프로그래머스SQL] 가장 비싼 상품 구하기",
     "section": "문제 : 가장 비싼 상품 구하기",
     "text": "문제 : 가장 비싼 상품 구하기\n\n\n\n문제 이미지"
   },
   {
-    "objectID": "posts/prgms-sql-20240518/index.html#작성답안",
-    "href": "posts/prgms-sql-20240518/index.html#작성답안",
+    "objectID": "posts/prgms-sql-20240318/index.html#작성답안",
+    "href": "posts/prgms-sql-20240318/index.html#작성답안",
     "title": "[프로그래머스SQL] 가장 비싼 상품 구하기",
     "section": "작성답안",
     "text": "작성답안\n\n\n\nSELECT MAX(PRICE) AS MAX_PRICE\nFROM PRODUCT\n\n\nFigure 1"
   },
   {
-    "objectID": "posts/prgms-sql-20240518/index.html#정리",
-    "href": "posts/prgms-sql-20240518/index.html#정리",
+    "objectID": "posts/prgms-sql-20240318/index.html#정리",
+    "href": "posts/prgms-sql-20240318/index.html#정리",
     "title": "[프로그래머스SQL] 가장 비싼 상품 구하기",
     "section": "정리",
     "text": "정리\n\nMAX(컬럼명) : 최대값\nMIN(컬럼명) : 최소값"
+  },
+  {
+    "objectID": "posts/vba-noname-yyyymmdd/index.html",
+    "href": "posts/vba-noname-yyyymmdd/index.html",
+    "title": "NH증권 직무인터뷰를 읽고(트레이딩&빅데이터)",
+    "section": "",
+    "text": "관심이 생겨서 관련 공고 등을 보고 있는데, 직무이해 겸 모르는 단어를 정리해봅니다.\n\n\n\n\n\n\n참고한 공고 (클릭해서 펼치기)\n\n\n\n\n\nNH투자증권 채용공고-Trading\nNH투자증권 채용공고-빅데이터 분석\nNH투자증권 직무인터뷰\nCopyright © 2024 Kibok Park All rights reserved."
+  },
+  {
+    "objectID": "posts/vba-noname-yyyymmdd/index.html#참고한-공고-인터뷰-자료",
+    "href": "posts/vba-noname-yyyymmdd/index.html#참고한-공고-인터뷰-자료",
+    "title": "NH증권 직무인터뷰를 읽고(트레이딩&빅데이터)",
+    "section": "",
+    "text": "관심이 생겨서 관련 공고 등을 보고 있는데, 직무이해 겸 모르는 단어를 정리해봅니다.\n\n\n\n\n\n\n참고한 공고 (클릭해서 펼치기)\n\n\n\n\n\nNH투자증권 채용공고-Trading\nNH투자증권 채용공고-빅데이터 분석\nNH투자증권 직무인터뷰"
+  },
+  {
+    "objectID": "posts/vba-noname-yyyymmdd/index.html#트레이딩-직무-단어정리",
+    "href": "posts/vba-noname-yyyymmdd/index.html#트레이딩-직무-단어정리",
+    "title": "NH증권 직무인터뷰를 읽고(트레이딩&빅데이터)",
+    "section": "트레이딩 직무 단어정리",
+    "text": "트레이딩 직무 단어정리\n\n프랍 트레이딩(Proprietary Trading) : 고객이 아닌 금융회사의 돈으로 주식이나 파생상품 등 금융상품을 거래하는 것 (=자기계정거래, 자기계좌거래, 고유계정거래, 고유계좌거래)\n\n\n프랍트레이딩은 통상 선물·옵션 등 파생상품 부문, 일반적 주식투자 같은 방향성 매매, 알고리즘에 따라 투자하는 시스템 매매, 채권투자, 부동산이나 인프라 등의 대체투자 등으로 나뉜다. 보통 자기매매 비중이 높은 중소형 증권사에는 많게는 50여명에 이르는 프랍트레이더들이 있다. 이 가운데 80% 이상이 파생 트레이더다.중소형 증권사들의 파생상품투자 비중이 높은 것은 비용이 싸기 때문이다. 증권사의 경우 선물·옵션 거래시 사후 증거금 제도가 적용된다. 장중 거래에는 증거금이 따로 필요 없고 장 마감 후 포지션 규모에 따라 증거금을 마련하면 된다. 따라서 장중에는 활발히 거래하고 장 마감 직전 파생상품을 보유하지 않았으면 증거금 부담은 없다. 하루 단위로 청산하는 경우 사실상 금융비용은 없다.\n상기내용 참고한 서울경제 기사링크 거래증거금vs위탁증거금 내용 참고할 수 있는 블로그\n\n\n장내거래 vs 장외거래 : 정규시장 외 체결되는 거래\n매크로 지식 : Macro economics지식 (↔︎ Micro economics)\n서킷브레이커(일시매매정지, Trading Curb) : 가격 변동이 지나친 경우 일시적으로 거래를 중단하는 것\n틱 : 체결량에 따른 단위 (5틱 = 체결 5회 기준)\n셀사이드(Sell-side|은행, 증권사 등) : 금융 서비스 등을 제공하여 수익 창출\n바이사이드(Buy-side|자산운용사, 연기금, 보험사, 헤지펀드 등) : 투자를 하여 수익 창출\n\n\n참고글:셀사이드와 바이사이드의 금융공학\n\n\n하우스 : 증권사, 금융사 등 단체를 칭함"
+  },
+  {
+    "objectID": "posts/vba-noname-yyyymmdd/index.html#빅데이터-직무-단어정리",
+    "href": "posts/vba-noname-yyyymmdd/index.html#빅데이터-직무-단어정리",
+    "title": "NH증권 직무인터뷰를 읽고(트레이딩&빅데이터)",
+    "section": "빅데이터 직무 단어정리",
+    "text": "빅데이터 직무 단어정리\n\nMTS : Mobile Trading System (HTS : Home Trading System)\n원장 : 증권사가 고객계좌나 거래내역, 매매 등을 관리하는 프로그램"
   },
   {
     "objectID": "posts/coach-ml-20240505/index.html",

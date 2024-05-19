@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Kibok Park">
+<meta name="dcterms.date" content="2024-03-17">
 
-<title>Blog</title>
+<title>Blog - [프로그래머스SQL] 평균 일일 대여 요금 구하기</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,31 +22,63 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./profile.jpg" rel="icon" type="image/jpeg">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<script src="site_libs/quarto-contrib/watermark-1.0.11/watermark.min.js"></script>
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.jpg" rel="icon" type="image/jpeg">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/watermark-1.0.11/watermark.min.js"></script>
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -72,35 +106,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-title','listing-author','listing-date','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-LPL499WQBH"></script>
 
 <script type="text/javascript">
@@ -111,38 +116,9 @@ gtag('js', new Date());
 gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
 </script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="styles.css">
-<link rel="alternate" type="application/rss+xml" title="Blog" href="index.xml" data-external="1"></head>
+<link rel="stylesheet" href="../../styles.css">
+</head>
 
 <body class="nav-fixed">
 
@@ -151,7 +127,7 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Blog</span>
     </a>
   </div>
@@ -162,17 +138,17 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index_dashboards.html"> 
+    <a class="nav-link" href="../../index_dashboards.html"> 
 <span class="menu-text">Dashboards</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./index_miniprojects.html"> 
+    <a class="nav-link" href="../../index_miniprojects.html"> 
 <span class="menu-text">Mini Projects</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About me</span></a>
   </li>  
   <li class="nav-item compact">
@@ -186,7 +162,7 @@ window.Quarto = {
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="./index.xml"> <i class="bi bi-rss" role="img">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -201,228 +177,108 @@ window.Quarto = {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">Blog</h1>
-                      </div>
+    <div class="quarto-title column-body">
+      <h1 class="title">[프로그래머스SQL] 평균 일일 대여 요금 구하기</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">프로그래머스/SQL</div>
+              </div>
+                  </div>
   </div>
     
   
-  <div class="quarto-title-meta column-page-left">
+  <div class="quarto-title-meta">
 
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Kibok Park </p>
+            </div>
+    </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">March 17, 2024</p>
+      </div>
+    </div>
     
       
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar"><div class="quarto-margin-header"><section id="kibok-park" class="level1 margin-header-item">
-<h1>Kibok Park</h1>
-</section></div>
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(6)</span></div><div class="category" data-category="경제/금융공부">경제/금융공부 <span class="quarto-category-count">(1)</span></div><div class="category" data-category="머신러닝">머신러닝 <span class="quarto-category-count">(2)</span></div><div class="category" data-category="직무분석">직무분석 <span class="quarto-category-count">(1)</span></div><div class="category" data-category="파이썬">파이썬 <span class="quarto-category-count">(2)</span></div><div class="category" data-category="프로그래머스/SQL">프로그래머스/SQL <span class="quarto-category-count">(2)</span></div></div></div>
-<!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
-
-
-
-
-
-
-
-
-
-<div class="quarto-listing quarto-listing-container-grid" id="listing-listing">
-<div class="listing-actions-group">
-    <div class="input-group input-group-sm quarto-listing-filter">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input type="text" class="search form-control" placeholder="Filter">
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#개요" id="toc-개요" class="nav-link active" data-scroll-target="#개요">개요</a></li>
+  <li><a href="#문제-평균-일일-대여-요금-구하기" id="toc-문제-평균-일일-대여-요금-구하기" class="nav-link" data-scroll-target="#문제-평균-일일-대여-요금-구하기">문제 : 평균 일일 대여 요금 구하기</a></li>
+  <li><a href="#작성답안" id="toc-작성답안" class="nav-link" data-scroll-target="#작성답안">작성답안</a></li>
+  <li><a href="#정리" id="toc-정리" class="nav-link" data-scroll-target="#정리">정리</a></li>
+  </ul>
+</nav>
     </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="개요" class="level2">
+<h2 class="anchored" data-anchor-id="개요">개요</h2>
+<p>프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다 <br> (비상업적, 비영리적 용도)</p>
+<p><a href="https://school.programmers.co.kr/learn/courses/30/parts/17042">문제링크</a></p>
+</section>
+<section id="문제-평균-일일-대여-요금-구하기" class="level2">
+<h2 class="anchored" data-anchor-id="문제-평균-일일-대여-요금-구하기">문제 : 평균 일일 대여 요금 구하기</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="question.png" class="img-fluid figure-img"></p>
+<figcaption>문제 이미지</figcaption>
+</figure>
 </div>
-<div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="직무분석" data-listing-date-sort="1714262400000" data-listing-file-modified-sort="1716111597887" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="271">
-<a href="./posts/vba-noname-yyyymmdd/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<div class="listing-item-img-placeholder card-img-top" style="height: 150px;">&nbsp;</div>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-NH증권 직무인터뷰를 읽고<br>(트레이딩&amp;빅데이터)
-</h5>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('직무분석'); return false;">
-직무분석
+</section>
+<section id="작성답안" class="level2">
+<h2 class="anchored" data-anchor-id="작성답안">작성답안</h2>
+<div id="fig-polar" class="cell quarto-figure quarto-figure-center quarto-float anchored" data-vscode="{&quot;languageId&quot;:&quot;sql&quot;}">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-polar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode cell-code" id="fig-polar" data-vscode="{&quot;languageId&quot;:&quot;sql&quot;}"><pre class="sourceCode python cell code-with-copy"><code class="sourceCode python"><span id="fig-polar-1"><a href="#fig-polar-1" aria-hidden="true" tabindex="-1"></a>SELECT ROUND(AVG(DAILY_FEE)) AS AVERAGE_FEE</span>
+<span id="fig-polar-2"><a href="#fig-polar-2" aria-hidden="true" tabindex="-1"></a>FROM CAR_RENTAL_COMPANY_CAR</span>
+<span id="fig-polar-3"><a href="#fig-polar-3" aria-hidden="true" tabindex="-1"></a>WHERE CAR_TYPE <span class="op">=</span> <span class="st">'SUV'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-polar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1
+</figcaption>
+</figure>
 </div>
-<div class="card-text listing-description">
-관심이 생겨서 관련 공고 등을 보고 있는데, 직무이해 겸 모르는 단어를 정리해봅니다.
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Kibok Park
-</div>
-<div class="listing-date">
-2024-04-28
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="1" data-categories="경제/금융공부" data-listing-date-sort="1713830400000" data-listing-file-modified-sort="1716111597639" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1329">
-<a href="./posts/bk-BerkshireHathaway-20240423-terms/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="./posts/bk-BerkshireHathaway-20240423-terms/image.jpg" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-[버크셔 해서웨이의 재탄생 읽고] 용어 정리
-</h5>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('경제/금융공부'); return false;">
-경제/금융공부
-</div>
-</div>
-<div class="card-text listing-description">
-<strong>공부할 겸 혼자서 구글링하면서 용어 정리해보는 포스팅입니다</strong>
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Kibok Park
-</div>
-<div class="listing-date">
-2024-04-23
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="2" data-categories="프로그래머스/SQL" data-listing-date-sort="1710720000000" data-listing-file-modified-sort="1716111597887" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="23">
-<a href="./posts/prgms-sql-20240318/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top"><img src="posts/prgms-sql-20240318/question.png" style="height: 150px;"  class="thumbnail-image card-img"/></p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-[프로그래머스SQL] 가장 비싼 상품 구하기
-</h5>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('프로그래머스/SQL'); return false;">
-프로그래머스/SQL
-</div>
-</div>
-<div class="card-text listing-description">
-프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다 <br> (비상업적, 비영리적 용도)
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Kibok Park
-</div>
-<div class="listing-date">
-2024-03-18
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="3" data-categories="프로그래머스/SQL" data-listing-date-sort="1710633600000" data-listing-file-modified-sort="1716111597887" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="100">
-<a href="./posts/prgms-sql-20240317/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top"><img src="posts/prgms-sql-20240317/question.png" style="height: 150px;"  class="thumbnail-image card-img"/></p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-[프로그래머스SQL] 평균 일일 대여 요금 구하기
-</h5>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('프로그래머스/SQL'); return false;">
-프로그래머스/SQL
-</div>
-</div>
-<div class="card-text listing-description">
-프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다 <br> (비상업적, 비영리적 용도)
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Kibok Park
-</div>
-<div class="listing-date">
-2024-03-17
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="4" data-categories="파이썬,머신러닝" data-listing-date-sort="1683331200000" data-listing-file-modified-sort="1716111597887" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="387">
-<a href="./posts/coach-ml-kaggle-20230506/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top"><img src="posts/coach-ml-kaggle-20230506/index_files/figure-html/cell-8-output-1.png" style="height: 150px;"  class="thumbnail-image card-img"/></p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-[Scikit-learn] Kaggle 집값예측 실습
-</h5>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('파이썬'); return false;">
-파이썬
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('머신러닝'); return false;">
-머신러닝
-</div>
-</div>
-<div class="card-text listing-description">
-Kaggle Korea - House price prediction 실습 기록용으로 남깁니다.
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Kibok Park
-</div>
-<div class="listing-date">
-2023-05-06
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="5" data-categories="파이썬,머신러닝" data-listing-date-sort="1676764800000" data-listing-file-modified-sort="1716111597871" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="42">
-<a href="./posts/coach-ml-20240505/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<div class="listing-item-img-placeholder card-img-top" style="height: 150px;">&nbsp;</div>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-[Pytorch] MNIST 실습
-</h5>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('파이썬'); return false;">
-파이썬
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('머신러닝'); return false;">
-머신러닝
-</div>
-</div>
-<div class="card-text listing-description">
-파이토치로 MNIST 머신러닝 실습해본 코드 기록용으로 남깁니다.
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Kibok Park
-</div>
-<div class="listing-date">
-2023-02-19
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div><p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p></main> <!-- /main -->
+</section>
+<section id="정리" class="level2">
+<h2 class="anchored" data-anchor-id="정리">정리</h2>
+<ul>
+<li>ROUND : 반올림</li>
+<li>AVG : 평균</li>
+<li>AS ??? : 컬럼명을 ???으로 가져온다 (Alias 라고 함)</li>
+<li>WHERE : 작성한 조건을 기준으로 가져온다<br>
+<ul>
+<li><strong>WHERE</strong>의 여러 형태예시</li>
+</ul>
+<pre><code>WHERE CAR_TYPE = 'SUV'
+WHERE CAR_TYPE != 'SUV'
+WHERE DAILY_FEE &gt; 14000
+WHERE DAILY_FEE BETWEEN 14000 AND 16000
+WHERE DAILY_FEE IN (14000, 16000)
+WHERE CAR_TYPE IN ('SUV', '세단')</code></pre></li>
+</ul>
+
+
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -981,6 +837,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<script src="https://giscus.app/client.js" data-repo="kr9268/giscus_for_blog" data-repo-id="R_kgDOL0Sthw" data-category="General" data-category-id="DIC_kwDOL0Sth84Ce_5h" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
 </div> <!-- /content -->
 <script>
     const baseFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
