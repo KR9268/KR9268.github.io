@@ -332,7 +332,7 @@
 <item>
   <title>[Python] Peak타임 대응용 수출계약서(pdf) tabula리딩</title>
   <dc:creator>Kibok Park</dc:creator>
-  <link>https://kr9268.github.io/posts_miniprojects/sel-py-readPIAR-20231101/</link>
+  <link>https://kr9268.github.io/posts_miniprojects/sel-py-readPIAR-20231102/</link>
   <description><![CDATA[ 
 
 
@@ -384,8 +384,8 @@
   <category>xlwings</category>
   <category>pathlib</category>
   <category>pandas</category>
-  <guid>https://kr9268.github.io/posts_miniprojects/sel-py-readPIAR-20231101/</guid>
-  <pubDate>Tue, 31 Oct 2023 15:00:00 GMT</pubDate>
+  <guid>https://kr9268.github.io/posts_miniprojects/sel-py-readPIAR-20231102/</guid>
+  <pubDate>Wed, 01 Nov 2023 15:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
