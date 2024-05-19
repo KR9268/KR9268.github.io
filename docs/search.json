@@ -18,7 +18,7 @@
     "href": "index_miniprojects.html",
     "title": "Mini Projects",
     "section": "",
-    "text": "[Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 & 정리 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\n\nPython, win32를 활용한 SAP Scripting\n\n\n\nKibok Park\n\n\n2024-03-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] COO발급현황 조회용 Tool\n\n\n\nPython\n\n\nwin11toast\n\n\nsqlite3\n\n\nstreamlit\n\n\npandas\n\n\nselenium\n\n\n\n[Python] selenium(웹스크레핑), sqlite3(db), win11toast(알림), streamlit(UI)\n\n\n\nKibok Park\n\n\n2024-02-20\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] LocalL/C 관리용 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\nStreamlit\n\n\nsqlite3\n\n\nBeautifulSoup\n\n\n\nPython, Streamlit을 활용한 업무자동화\n\n\n\nKibok Park\n\n\n2024-01-22\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
+    "text": "[Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 & 정리 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\n\nPython, win32를 활용한 SAP Scripting\n\n\n\nKibok Park\n\n\n2024-03-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] COO발급관리용 Tool\n\n\n\nPython\n\n\nwin11toast\n\n\nsqlite3\n\n\nstreamlit\n\n\npandas\n\n\nselenium\n\n\n\n[Python] selenium(웹스크레핑), sqlite3(db), win11toast(알림), streamlit(UI)\n\n\n\nKibok Park\n\n\n2024-02-20\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] LocalL/C 관리용 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\nStreamlit\n\n\nsqlite3\n\n\nBeautifulSoup\n\n\n\nPython, Streamlit을 활용한 업무자동화\n\n\n\nKibok Park\n\n\n2024-01-22\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
   },
   {
     "objectID": "about.html",
@@ -520,35 +520,35 @@
   {
     "objectID": "posts_miniprojects/sel-py-monitoringCOO-20240220/index.html",
     "href": "posts_miniprojects/sel-py-monitoringCOO-20240220/index.html",
-    "title": "[Python] COO발급현황 조회용 Tool",
+    "title": "[Python] COO발급관리용 Tool",
     "section": "",
     "text": "업무상 공용ID가 3개로 나뉘어있으나, 모두 공동인증서 로그인으로 접속에 불편함이 있음 (ID, PW, 공동인증서PW)\n\n발급현황확인, 발급거절시 사유확인 후 보완 등 진행\n\n발급거절(오류통보) 사유확인시, 건별로 클릭하여 메뉴진입 필요\n월마다 20여개 페이지의 표를 복사해서 가공하는 작업 수행중(데이터 Merge, 필터링 등)\n각 포인트에 대해 대응할 수 있는 여러 기능을 탑재한 통합관리 Tool 제작\n\n주기적으로 3개 ID로 접속하여, 주요정보를, ID에 대응되는 테이블에 db형태로 저장(공용PC)\n유저는 streamlit으로 제작한 사이트에 접속해서 필요한 내용 확인/검색\n희망하는 경우, 대표Invoice번호를 등록해두면 발급완료/발급거절(보완) 상황발생시 toast알림\n월마다 가공하는 데이터에 대해서는, 별도버튼으로 db추출 후 가공완료한 데이터 제공\nID에 대응하는 로그인 버튼을 누르면 자동로그인 후 작업창을 띄워주는 기능 제공\n\n\n\n[용어설명] COO : 원산지증명서, Country of Origin\nCopyright © 2024 Kibok Park All rights reserved."
   },
   {
     "objectID": "posts_miniprojects/sel-py-monitoringCOO-20240220/index.html#추진배경",
     "href": "posts_miniprojects/sel-py-monitoringCOO-20240220/index.html#추진배경",
-    "title": "[Python] COO발급현황 조회용 Tool",
+    "title": "[Python] COO발급관리용 Tool",
     "section": "",
     "text": "업무상 공용ID가 3개로 나뉘어있으나, 모두 공동인증서 로그인으로 접속에 불편함이 있음 (ID, PW, 공동인증서PW)\n\n발급현황확인, 발급거절시 사유확인 후 보완 등 진행\n\n발급거절(오류통보) 사유확인시, 건별로 클릭하여 메뉴진입 필요\n월마다 20여개 페이지의 표를 복사해서 가공하는 작업 수행중(데이터 Merge, 필터링 등)\n각 포인트에 대해 대응할 수 있는 여러 기능을 탑재한 통합관리 Tool 제작\n\n주기적으로 3개 ID로 접속하여, 주요정보를, ID에 대응되는 테이블에 db형태로 저장(공용PC)\n유저는 streamlit으로 제작한 사이트에 접속해서 필요한 내용 확인/검색\n희망하는 경우, 대표Invoice번호를 등록해두면 발급완료/발급거절(보완) 상황발생시 toast알림\n월마다 가공하는 데이터에 대해서는, 별도버튼으로 db추출 후 가공완료한 데이터 제공\nID에 대응하는 로그인 버튼을 누르면 자동로그인 후 작업창을 띄워주는 기능 제공\n\n\n\n[용어설명] COO : 원산지증명서, Country of Origin"
   },
   {
     "objectID": "posts_miniprojects/sel-py-monitoringCOO-20240220/index.html#효과",
     "href": "posts_miniprojects/sel-py-monitoringCOO-20240220/index.html#효과",
-    "title": "[Python] COO발급현황 조회용 Tool",
+    "title": "[Python] COO발급관리용 Tool",
     "section": "효과",
     "text": "효과\n\n불편했던 로그인 작업 수요감소(필요 데이터의 streamlit 대시보드 제공, toast알림 제공), 로그인 편의성 증가\n월 가공작업 삭제(sql query로 추출시 원하는 형태로 저장, streamlit에서 query문 조건변경 가능[날짜조건, 파일경로 등])"
   },
   {
     "objectID": "posts_miniprojects/sel-py-monitoringCOO-20240220/index.html#github-repository",
     "href": "posts_miniprojects/sel-py-monitoringCOO-20240220/index.html#github-repository",
-    "title": "[Python] COO발급현황 조회용 Tool",
+    "title": "[Python] COO발급관리용 Tool",
     "section": "github repository",
     "text": "github repository\n관련 github레포"
   },
   {
     "objectID": "posts_miniprojects/sel-py-monitoringCOO-20240220/index.html#세부내용-구현내용-사용한-언어패키지-등",
     "href": "posts_miniprojects/sel-py-monitoringCOO-20240220/index.html#세부내용-구현내용-사용한-언어패키지-등",
-    "title": "[Python] COO발급현황 조회용 Tool",
+    "title": "[Python] COO발급관리용 Tool",
     "section": "[세부내용] 구현내용 & 사용한 언어/패키지 등",
     "text": "[세부내용] 구현내용 & 사용한 언어/패키지 등\n\n저장할 db는 sqlite3으로 테이블 생성, 컬럼지정 등을 수행함 (컬럼별 조건은 하단 참조)\n\n\n접수번호 varchar PRIMARY KEY , → 대표Invoice와 고민했는데, 100% 유일값이라 Primary로 지정 증명서종류 varchar,  대표Invoice varchar(10), 접수일시 datetime,  처리상태 varchar,  Remark varchar\n\n\n각 기능은 아래의 파일로 나누어 개인/공용PC에서 실행\n\n\nMonitoringCOO(기본파일) : streamlit활용한 UI, json/pickle파일 읽기, 유저의 자동로그인, 월추출 데이터 저장 등\n\n마지막 스크레핑 시점을 표기하여 얼마나 최신화된 데이터인지 유저에게 공유\n\nMonitoringCOO_crawler : selenium으로 스크레핑, 스크레핑작업에 필요한 로그인 기능(pyautogui, pywin32로 이미지/키/윈도우 인식)\n\n유저가 기본파일에서 로그인기능을 사용하는 경우, 이 파일에서 import해서 사용하고 코드는 여기서 통합관리\n스크레핑작업은 기본적으로 Scheduler파일에서 실행되지만, 필요시 이 파일을 실행하여 수동 스크레핑 (코드는 여기서 통합관리)\n\nMonitoringCOO_push : 기본파일에서 유저가 등록해둔 대표Invoice번호를 db에서 조회하여, win11toast로 알림 (처음에는 파이썬과 호환성/속도가 좋은 pickle/list로 관리하고자 했으나, 사용자ID등 추가정보 관리가 필요하여 json/dict로 관리)\nScheduler : 스크레핑 주기/시간을 관리하는 파일. 주로 공용PC에서 작업 (9~17시 이후엔 데이터변경이 없으므로 이 시간대에만 작동하도록 설정, 서버설정 등을 고려하여 작업주기 반영 예정)"
   }
