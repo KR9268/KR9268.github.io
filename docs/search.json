@@ -18,7 +18,7 @@
     "href": "index_miniprojects.html",
     "title": "Mini Projects",
     "section": "",
-    "text": "[Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 & 정리 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\n\nPython, win32를 활용한 SAP Scripting\n\n\n\nKibok Park\n\n\n2024-03-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] COO발급관리용 Tool\n\n\n\nPython\n\n\nwin11toast\n\n\nsqlite3\n\n\nstreamlit\n\n\npandas\n\n\nselenium\n\n\n\n[Python] selenium(웹스크레핑), sqlite3(db), win11toast(알림), streamlit(UI)\n\n\n\nKibok Park\n\n\n2024-02-20\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] LocalL/C 관리용 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\nStreamlit\n\n\nsqlite3\n\n\nBeautifulSoup\n\n\n\nPython, Streamlit을 활용한 업무자동화\n\n\n\nKibok Park\n\n\n2024-01-22\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] 아웃룩 메일열람 & pdf regex리딩 & 시스템 자동등록\n\n\n\nPython\n\n\nre\n\n\nxlwings\n\n\npandas\n\n\npdfminer\n\n\n\n[Python] re(regex), xlwings(암호화 Excel리딩), pdfminer(pdf리딩), pywin32(outlook)\n\n\n\nKibok Park\n\n\n2023-12-15\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] Peak타임 대응용 수출계약서(pdf) tabula리딩\n\n\n\nPython\n\n\ntabula\n\n\nxlwings\n\n\npathlib\n\n\npandas\n\n\n\n[Python] tabula(pdf리딩[표 형태], xlwings(암호화 Excel리딩)\n\n\n\nKibok Park\n\n\n2023-11-02\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
+    "text": "[Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 & 정리 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\n\nPython, win32를 활용한 SAP Scripting\n\n\n\nKibok Park\n\n\n2024-03-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] COO발급관리용 Tool\n\n\n\nPython\n\n\nwin11toast\n\n\nsqlite3\n\n\nstreamlit\n\n\npandas\n\n\nselenium\n\n\n\n[Python] selenium(웹스크레핑), sqlite3(db), win11toast(알림), streamlit(UI)\n\n\n\nKibok Park\n\n\n2024-02-20\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] LocalL/C 관리용 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\nStreamlit\n\n\nsqlite3\n\n\nBeautifulSoup\n\n\n\nPython, Streamlit을 활용한 업무자동화\n\n\n\nKibok Park\n\n\n2024-01-22\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] 아웃룩 메일열람 & pdf regex리딩 & 시스템 자동등록\n\n\n\nPython\n\n\nre\n\n\nxlwings\n\n\npandas\n\n\npdfminer\n\n\n\n[Python] re(regex), xlwings(암호화 Excel리딩), pdfminer(pdf리딩), pywin32(outlook)\n\n\n\nKibok Park\n\n\n2023-12-15\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] Peak타임 대응용 수출계약서pdf tabula리딩\n\n\n\nPython\n\n\ntabula\n\n\nxlwings\n\n\npathlib\n\n\npandas\n\n\n\n[Python] tabula(pdf리딩[표 형태], xlwings(암호화 Excel리딩)\n\n\n\nKibok Park\n\n\n2023-11-02\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
   },
   {
     "objectID": "about.html",
@@ -632,35 +632,35 @@
   {
     "objectID": "posts_miniprojects/sel-py-readPIAR-20231102/index.html",
     "href": "posts_miniprojects/sel-py-readPIAR-20231102/index.html",
-    "title": "[Python] Peak타임 대응용 수출계약서(pdf) tabula리딩",
+    "title": "[Python] Peak타임 대응용 수출계약서pdf tabula리딩",
     "section": "",
     "text": "50~120건의 서류를 아침제공 후 오전 내 입력하도록 요청받아 다른 업무가 불가능할 정도의 피크타임 발생\n\n시차, 주문접수, 생산계획 등이 맞물려 조정이 불가능한 상황\n\n동일 양식의 내용이 다른 서류 50~120건이며, 일부 내용은 별도의 수주시스템에 시스템화되어 올려져 있음\n시스템 제약으로 글자수 제한이 있어, 주문번호를 줄이는 등 별도의 작업 수행\n정확도가 높은 수주시스템의 내용(엑셀로 저장)을 기반으로, pdf로 보완하여 자동화 추진\nCopyright © 2024 Kibok Park All rights reserved."
   },
   {
     "objectID": "posts_miniprojects/sel-py-readPIAR-20231102/index.html#추진배경",
     "href": "posts_miniprojects/sel-py-readPIAR-20231102/index.html#추진배경",
-    "title": "[Python] Peak타임 대응용 수출계약서(pdf) tabula리딩",
+    "title": "[Python] Peak타임 대응용 수출계약서pdf tabula리딩",
     "section": "",
     "text": "50~120건의 서류를 아침제공 후 오전 내 입력하도록 요청받아 다른 업무가 불가능할 정도의 피크타임 발생\n\n시차, 주문접수, 생산계획 등이 맞물려 조정이 불가능한 상황\n\n동일 양식의 내용이 다른 서류 50~120건이며, 일부 내용은 별도의 수주시스템에 시스템화되어 올려져 있음\n시스템 제약으로 글자수 제한이 있어, 주문번호를 줄이는 등 별도의 작업 수행\n정확도가 높은 수주시스템의 내용(엑셀로 저장)을 기반으로, pdf로 보완하여 자동화 추진"
   },
   {
     "objectID": "posts_miniprojects/sel-py-readPIAR-20231102/index.html#효과",
     "href": "posts_miniprojects/sel-py-readPIAR-20231102/index.html#효과",
-    "title": "[Python] Peak타임 대응용 수출계약서(pdf) tabula리딩",
+    "title": "[Python] Peak타임 대응용 수출계약서pdf tabula리딩",
     "section": "효과",
     "text": "효과\n\nTool활용을 위한 기초작업(엑셀 다운로드, pdf저장)에 5~10분 정도 소요되어, 기존 작업시간(~4시간)대비 투입시간 감소\n피크타임 감소 및 생산계획 마감시간 단축"
   },
   {
     "objectID": "posts_miniprojects/sel-py-readPIAR-20231102/index.html#github-repository",
     "href": "posts_miniprojects/sel-py-readPIAR-20231102/index.html#github-repository",
-    "title": "[Python] Peak타임 대응용 수출계약서(pdf) tabula리딩",
+    "title": "[Python] Peak타임 대응용 수출계약서pdf tabula리딩",
     "section": "github repository",
     "text": "github repository\n관련 github레포"
   },
   {
     "objectID": "posts_miniprojects/sel-py-readPIAR-20231102/index.html#세부내용-구현내용-사용한-언어패키지-등",
     "href": "posts_miniprojects/sel-py-readPIAR-20231102/index.html#세부내용-구현내용-사용한-언어패키지-등",
-    "title": "[Python] Peak타임 대응용 수출계약서(pdf) tabula리딩",
+    "title": "[Python] Peak타임 대응용 수출계약서pdf tabula리딩",
     "section": "[세부내용] 구현내용 & 사용한 언어/패키지 등",
     "text": "[세부내용] 구현내용 & 사용한 언어/패키지 등\n\njson으로 파일을 저장할 경로정보 및 변환할 코드정보를 관리\nxlwings로 Excel로 저장해둔 기본정보를 열람\n\nDRM암호화와 관계없이 파일을 읽을 수 있기 때문에 xlwings를 채택\n\ntabula로 pdf를 표 형태로 읽어, 지정된 자리의 정보를 읽고 json형태로 저장\njson형태로 저장된 정보를 pandas DataFrame으로 concat처리 후 저장\n시스템 등록을 위해 사용중인 별도의 VBA Tool에 저장된 Excel을 넘기면 업무 완료"
   }
