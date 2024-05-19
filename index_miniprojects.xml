@@ -329,5 +329,63 @@
   <guid>https://kr9268.github.io/posts_miniprojects/sel-py-autoPIforl001-20231215/</guid>
   <pubDate>Fri, 15 Dec 2023 00:00:00 GMT</pubDate>
 </item>
+<item>
+  <title>[Python] Peak타임 대응용 수출계약서(pdf) tabula리딩</title>
+  <dc:creator>Kibok Park</dc:creator>
+  <link>https://kr9268.github.io/posts_miniprojects/sel-py-readPIAR-20231102/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="추진배경" class="level2">
+<h2 class="anchored" data-anchor-id="추진배경">추진배경</h2>
+<ul>
+<li>50~120건의 서류를 아침제공 후 오전 내 입력하도록 요청받아 다른 업무가 불가능할 정도의 피크타임 발생
+<ul>
+<li>시차, 주문접수, 생산계획 등이 맞물려 조정이 불가능한 상황</li>
+</ul></li>
+<li>동일 양식의 내용이 다른 서류 50~120건이며, 일부 내용은 별도의 수주시스템에 시스템화되어 올려져 있음</li>
+<li>시스템 제약으로 글자수 제한이 있어, 주문번호를 줄이는 등 별도의 작업 수행</li>
+<li>정확도가 높은 수주시스템의 내용(엑셀로 저장)을 기반으로, pdf로 보완하여 자동화 추진</li>
+</ul>
+</section>
+<section id="효과" class="level2">
+<h2 class="anchored" data-anchor-id="효과">효과</h2>
+<ul>
+<li>Tool활용을 위한 기초작업(엑셀 다운로드, pdf저장)에 5~10분 정도 소요되어, 기존 작업시간(~4시간)대비 투입시간 감소</li>
+<li>피크타임 감소 및 생산계획 마감시간 단축</li>
+</ul>
+</section>
+<section id="github-repository" class="level2">
+<h2 class="anchored" data-anchor-id="github-repository">github repository</h2>
+<p><a href="https://github.com/KR9268/-P-Read_PI_AR_only">관련 github레포</a></p>
+</section>
+<section id="세부내용-구현내용-사용한-언어패키지-등" class="level2">
+<h2 class="anchored" data-anchor-id="세부내용-구현내용-사용한-언어패키지-등">[세부내용] 구현내용 &amp; 사용한 언어/패키지 등</h2>
+<ol type="1">
+<li><code>json</code>으로 파일을 저장할 경로정보 및 변환할 코드정보를 관리</li>
+<li><code>xlwings</code>로 Excel로 저장해둔 기본정보를 열람
+<ul>
+<li>DRM암호화와 관계없이 파일을 읽을 수 있기 때문에 <code>xlwings</code>를 채택</li>
+</ul></li>
+<li><code>tabula</code>로 pdf를 표 형태로 읽어, 지정된 자리의 정보를 읽고 json형태로 저장</li>
+<li>json형태로 저장된 정보를 <code>pandas</code> DataFrame으로 concat처리 후 저장</li>
+<li>시스템 등록을 위해 사용중인 별도의 VBA Tool에 저장된 Excel을 넘기면 업무 완료</li>
+</ol>
+
+
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
+  <category>Python</category>
+  <category>tabula</category>
+  <category>xlwings</category>
+  <category>pathlib</category>
+  <category>pandas</category>
+  <guid>https://kr9268.github.io/posts_miniprojects/sel-py-readPIAR-20231102/</guid>
+  <pubDate>Thu, 02 Nov 2023 00:00:00 GMT</pubDate>
+</item>
 </channel>
 </rss>
