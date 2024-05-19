@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Kibok Park">
-<meta name="dcterms.date" content="2024-03-19">
+<meta name="dcterms.date" content="2024-05-16">
 
-<title>Blog - [프로그래머스SQL] 가장 비싼 상품 구하기</title>
+<title>Blog - [프로그래머스SQL] 조건에 맞는 사원 정보 조회하기</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -178,7 +178,7 @@ gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">[프로그래머스SQL] 가장 비싼 상품 구하기</h1>
+      <h1 class="title">[프로그래머스SQL] 조건에 맞는 사원 정보 조회하기</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">프로그래머스/SQL</div>
               </div>
@@ -198,7 +198,7 @@ gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">March 19, 2024</p>
+        <p class="date">May 16, 2024</p>
       </div>
     </div>
     
@@ -215,7 +215,7 @@ gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
    
   <ul>
   <li><a href="#개요" id="toc-개요" class="nav-link active" data-scroll-target="#개요">개요</a></li>
-  <li><a href="#문제-가장-비싼-상품-구하기" id="toc-문제-가장-비싼-상품-구하기" class="nav-link" data-scroll-target="#문제-가장-비싼-상품-구하기">문제 : 가장 비싼 상품 구하기</a></li>
+  <li><a href="#문제-조건에-맞는-사원-정보-조회하기" id="toc-문제-조건에-맞는-사원-정보-조회하기" class="nav-link" data-scroll-target="#문제-조건에-맞는-사원-정보-조회하기">문제 : 조건에 맞는 사원 정보 조회하기</a></li>
   <li><a href="#작성답안" id="toc-작성답안" class="nav-link" data-scroll-target="#작성답안">작성답안</a></li>
   <li><a href="#정리" id="toc-정리" class="nav-link" data-scroll-target="#정리">정리</a></li>
   </ul>
@@ -231,10 +231,10 @@ gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
 <section id="개요" class="level2">
 <h2 class="anchored" data-anchor-id="개요">개요</h2>
 <p>프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다 <br> (비상업적, 비영리적 용도)</p>
-<p><a href="https://school.programmers.co.kr/learn/courses/30/lessons/131697?language=oracle">문제링크</a><br> <a href="https://programmers.zendesk.com/hc/ko/articles/360034546572-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4%EC%9D%98-%EB%AC%B8%EC%A0%9C%EB%A5%BC-%EC%99%B8%EB%B6%80%EC%97%90-%EA%B2%8C%EC%8B%9C%ED%95%A0-%EC%88%98-%EC%9E%88%EB%82%98%EC%9A%94">게시가능여부</a></p>
+<p><a href="https://school.programmers.co.kr/learn/courses/30/parts/17044">문제링크</a><br> <a href="https://programmers.zendesk.com/hc/ko/articles/360034546572-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4%EC%9D%98-%EB%AC%B8%EC%A0%9C%EB%A5%BC-%EC%99%B8%EB%B6%80%EC%97%90-%EA%B2%8C%EC%8B%9C%ED%95%A0-%EC%88%98-%EC%9E%88%EB%82%98%EC%9A%94">게시가능여부</a></p>
 </section>
-<section id="문제-가장-비싼-상품-구하기" class="level2">
-<h2 class="anchored" data-anchor-id="문제-가장-비싼-상품-구하기">문제 : 가장 비싼 상품 구하기</h2>
+<section id="문제-조건에-맞는-사원-정보-조회하기" class="level2">
+<h2 class="anchored" data-anchor-id="문제-조건에-맞는-사원-정보-조회하기">문제 : 조건에 맞는 사원 정보 조회하기</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="question.png" class="img-fluid figure-img"></p>
