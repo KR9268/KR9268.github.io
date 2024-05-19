@@ -11,7 +11,7 @@
     "href": "index.html",
     "title": "Blog",
     "section": "",
-    "text": "[프로그래머스SQL] 평균 일일 대여 요금 구하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-05-16\n\n\n\n\n\n\n\n\n\n\n\n\nNH증권 직무인터뷰를 읽고(트레이딩&빅데이터)\n\n\n\n직무분석\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-28\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n[버크셔 해서웨이의 재탄생 읽고] 용어 정리\n\n\n\n경제/금융공부\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-23\n\n\n\n\n\n\n\n\n\n\n\n\n[Scikit-learn] Kaggle 집값예측 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-05-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Pytorch] MNIST 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-02-19\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
+    "text": "[프로그래머스SQL] 평균 일일 대여 요금 구하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-05-19\n\n\n\n\n\n\n\n\n\n\n\n\nNH증권 직무인터뷰를 읽고(트레이딩&빅데이터)\n\n\n\n직무분석\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-28\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n[버크셔 해서웨이의 재탄생 읽고] 용어 정리\n\n\n\n경제/금융공부\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-23\n\n\n\n\n\n\n\n\n\n\n\n\n[Scikit-learn] Kaggle 집값예측 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-05-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Pytorch] MNIST 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-02-19\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
   },
   {
     "objectID": "index_miniprojects.html",
@@ -438,14 +438,14 @@
     "href": "posts/prgms-sql-20240516/index.html#작성답안",
     "title": "[프로그래머스SQL] 평균 일일 대여 요금 구하기",
     "section": "작성답안",
-    "text": "작성답안\n\n\n\nSELECT ROUND(AVG(DAILY_FEE)) AS AVERAGE_FEE\nFROM CAR_RENTAL_COMPANY_CAR\nWHERE CAR_TYPE = 'SUV'\n\n\nFigure 1"
+    "text": "작성답안\n\n\n\nSELECT MAX(PRICE) AS MAX_PRICE\nFROM PRODUCT\n\n\nFigure 1"
   },
   {
     "objectID": "posts/prgms-sql-20240516/index.html#정리",
     "href": "posts/prgms-sql-20240516/index.html#정리",
     "title": "[프로그래머스SQL] 평균 일일 대여 요금 구하기",
     "section": "정리",
-    "text": "정리\n\nROUND : 반올림\nAVG : 평균\nAS ??? : 컬럼명을 ???으로 가져온다\nWHERE : 작성한 조건을 기준으로 가져온다\n\nWHERE의 여러 형태예시\n\nWHERE CAR_TYPE = 'SUV'\nWHERE CAR_TYPE != 'SUV'\nWHERE DAILY_FEE &gt; 14000\nWHERE DAILY_FEE BETWEEN 14000 AND 16000\nWHERE DAILY_FEE IN (14000, 16000)\nWHERE CAR_TYPE IN ('SUV', '세단')"
+    "text": "정리\n\nMAX(컬럼명) : 최대값\nMIN(컬럼명) : 최소값"
   },
   {
     "objectID": "posts_miniprojects/sel-py-local-20240122/index.html#추진배경",
@@ -586,5 +586,12 @@
     "title": "[Python] 아웃룩 메일열람 & pdf regex리딩 & 시스템 자동등록",
     "section": "[세부내용] 구현내용 & 사용한 언어/패키지 등",
     "text": "[세부내용] 구현내용 & 사용한 언어/패키지 등\n\npywin32로 아웃룩을 제어하여 조건에 맞는 pdf첨부 열람 등 진행\n\nselenium은 chrome버전변경 등 영향이 커서 구현했다가 미사용\n\nxlwings로 Excel로 저장해둔 별도 참고용 테이블을 열람\n\nDRM암호화와 관계없이 파일을 읽을 수 있기 때문에 xlwings를 채택\n\nre로 pdf의 문자열을 검색하여 필요한 내용을 저장\nNERP_PI_LC(주요 ERP관련 기능에 대해 제작한 파이썬 패키지)으로 시스템 등록 등을 진행\nwin11toast로 모든 작업이 완료되면 알림\n[삭제기능] selenium으로 PI제공자에게 자동회신도 했었으나, chrome업데이트 등 안정성 문제로 제외\n\n아웃룩 등 smtp발송은 내부규정상 막혀있어 사용하지 않음"
+  },
+  {
+    "objectID": "posts/prgms-sql-20240516/index.html#문제-가장-비싼-상품-구하기",
+    "href": "posts/prgms-sql-20240516/index.html#문제-가장-비싼-상품-구하기",
+    "title": "[프로그래머스SQL] 가장 비싼 상품 구하기",
+    "section": "문제 : 가장 비싼 상품 구하기",
+    "text": "문제 : 가장 비싼 상품 구하기\n\n\n\n문제 이미지"
   }
 ]
