@@ -68,6 +68,87 @@
   <pubDate>Tue, 05 Mar 2024 15:00:00 GMT</pubDate>
 </item>
 <item>
+  <title>[Python] COO발급현황 조회용 Tool</title>
+  <dc:creator>Kibok Park</dc:creator>
+  <link>https://kr9268.github.io/posts_miniprojects/sel-py-monitoringCOO-20240220/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="추진배경" class="level2">
+<h2 class="anchored" data-anchor-id="추진배경">추진배경</h2>
+<ul>
+<li>업무상 공용ID가 3개로 나뉘어있으나, 모두 공동인증서 로그인으로 접속에 불편함이 있음 (ID, PW, 공동인증서PW)
+<ul>
+<li>발급현황확인, 발급거절시 사유확인 후 보완 등 진행</li>
+</ul></li>
+<li>발급거절(오류통보) 사유확인시, 건별로 클릭하여 메뉴진입 필요</li>
+<li>월마다 20여개 페이지의 표를 복사해서 가공하는 작업 수행중(데이터 Merge, 필터링 등)</li>
+<li>각 포인트에 대해 대응할 수 있는 여러 기능을 탑재한 통합관리 Tool 제작
+<ul>
+<li>주기적으로 3개 ID로 접속하여, 주요정보를, ID에 대응되는 테이블에 db형태로 저장(공용PC)</li>
+<li>유저는 streamlit으로 제작한 사이트에 접속해서 필요한 내용 확인/검색</li>
+<li>희망하는 경우, 대표Invoice번호를 등록해두면 발급완료/발급거절(보완) 상황발생시 toast알림</li>
+<li>월마다 가공하는 데이터에 대해서는, 별도버튼으로 db추출 후 가공완료한 데이터 제공</li>
+<li>ID에 대응하는 로그인 버튼을 누르면 자동로그인 후 작업창을 띄워주는 기능 제공</li>
+</ul></li>
+</ul>
+<blockquote class="blockquote">
+<p><strong>[용어설명]</strong><br> <strong>COO</strong> : 원산지증명서, Country of Origin<br></p>
+</blockquote>
+</section>
+<section id="효과" class="level2">
+<h2 class="anchored" data-anchor-id="효과">효과</h2>
+<ul>
+<li>불편했던 로그인 작업 수요감소(필요 데이터의 streamlit 대시보드 제공, toast알림 제공), 로그인 편의성 증가</li>
+<li>월 가공작업 삭제(sql query로 추출시 원하는 형태로 저장, streamlit에서 query문 조건변경 가능[날짜조건, 파일경로 등])</li>
+</ul>
+</section>
+<section id="github-repository" class="level2">
+<h2 class="anchored" data-anchor-id="github-repository">github repository</h2>
+<p><a href="https://github.com/KR9268/-P-MonitoringCOO">관련 github레포</a></p>
+</section>
+<section id="세부내용-구현내용-사용한-언어패키지-등" class="level2">
+<h2 class="anchored" data-anchor-id="세부내용-구현내용-사용한-언어패키지-등">[세부내용] 구현내용 &amp; 사용한 언어/패키지 등</h2>
+<ol type="1">
+<li>저장할 db는 <code>sqlite3</code>으로 테이블 생성, 컬럼지정 등을 수행함 (컬럼별 조건은 하단 참조)</li>
+</ol>
+<ul>
+<li>접수번호 varchar PRIMARY KEY ,<br> → <strong>대표Invoice와 고민했는데, 100% 유일값이라 Primary로 지정</strong> 증명서종류 varchar, <br> 대표Invoice varchar(10),<br> 접수일시 datetime, <br> 처리상태 varchar, <br> Remark varchar</li>
+</ul>
+<ol start="2" type="1">
+<li>각 기능은 아래의 파일로 나누어 개인/공용PC에서 실행</li>
+</ol>
+<ul>
+<li><strong>MonitoringCOO(기본파일)</strong> : <code>streamlit</code>활용한 UI, json/pickle파일 읽기, 유저의 자동로그인, 월추출 데이터 저장 등
+<ul>
+<li>마지막 스크레핑 시점을 표기하여 얼마나 최신화된 데이터인지 유저에게 공유</li>
+</ul></li>
+<li><strong>MonitoringCOO_crawler</strong> : <code>selenium</code>으로 스크레핑, 스크레핑작업에 필요한 로그인 기능(<code>pyautogui</code>, <code>pywin32</code>로 이미지/키/윈도우 인식)
+<ul>
+<li>유저가 <strong>기본파일</strong>에서 로그인기능을 사용하는 경우, 이 파일에서 import해서 사용하고 <strong>코드는 여기서 통합관리</strong></li>
+<li>스크레핑작업은 기본적으로 <strong>Scheduler</strong>파일에서 실행되지만, 필요시 이 파일을 실행하여 수동 스크레핑 (<strong>코드는 여기서 통합관리</strong>)</li>
+</ul></li>
+<li><strong>MonitoringCOO_push</strong> : <strong>기본파일</strong>에서 유저가 등록해둔 대표Invoice번호를 db에서 조회하여, <code>win11toast</code>로 알림 (처음에는 파이썬과 호환성/속도가 좋은 pickle/list로 관리하고자 했으나, 사용자ID등 추가정보 관리가 필요하여 json/dict로 관리)</li>
+<li><strong>Scheduler</strong> : 스크레핑 주기/시간을 관리하는 파일. 주로 공용PC에서 작업 (9~17시 이후엔 데이터변경이 없으므로 이 시간대에만 작동하도록 설정, 서버설정 등을 고려하여 작업주기 반영 예정)</li>
+</ul>
+
+
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
+  <category>Python</category>
+  <category>win11toast</category>
+  <category>sqlite3</category>
+  <category>streamlit</category>
+  <category>pandas</category>
+  <category>selenium</category>
+  <guid>https://kr9268.github.io/posts_miniprojects/sel-py-monitoringCOO-20240220/</guid>
+  <pubDate>Mon, 19 Feb 2024 15:00:00 GMT</pubDate>
+</item>
+<item>
   <title>[Python] LocalL/C 관리용 Tool</title>
   <dc:creator>Kibok Park</dc:creator>
   <link>https://kr9268.github.io/posts_miniprojects/sel-py-local-20240122/</link>

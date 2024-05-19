@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Kibok Park">
+<meta name="dcterms.date" content="2024-02-20">
 
-<title>Blog - Mini Projects</title>
+<title>Blog - [Python] COO발급현황 조회용 Tool</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,28 +25,26 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./profile.jpg" rel="icon" type="image/jpeg">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<script src="site_libs/quarto-contrib/watermark-1.0.11/watermark.min.js"></script>
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.jpg" rel="icon" type="image/jpeg">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/watermark-1.0.11/watermark.min.js"></script>
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -72,35 +72,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-title','listing-author','listing-date','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-LPL499WQBH"></script>
 
 <script type="text/javascript">
@@ -111,38 +82,9 @@ gtag('js', new Date());
 gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
 </script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="styles.css">
-<link rel="alternate" type="application/rss+xml" title="Blog" href="index_miniprojects.xml" data-external="1"></head>
+<link rel="stylesheet" href="../../styles.css">
+</head>
 
 <body class="nav-fixed">
 
@@ -151,7 +93,7 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Blog</span>
     </a>
   </div>
@@ -162,17 +104,17 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index_dashboards.html"> 
+    <a class="nav-link" href="../../index_dashboards.html"> 
 <span class="menu-text">Dashboards</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./index_miniprojects.html" aria-current="page"> 
+    <a class="nav-link" href="../../index_miniprojects.html"> 
 <span class="menu-text">Mini Projects</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About me</span></a>
   </li>  
   <li class="nav-item compact">
@@ -186,7 +128,7 @@ window.Quarto = {
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="./index.xml"> <i class="bi bi-rss" role="img">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -201,166 +143,130 @@ window.Quarto = {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">Mini Projects</h1>
-                      </div>
+    <div class="quarto-title column-body">
+      <h1 class="title">[Python] COO발급현황 조회용 Tool</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Python</div>
+                <div class="quarto-category">win11toast</div>
+                <div class="quarto-category">sqlite3</div>
+                <div class="quarto-category">streamlit</div>
+                <div class="quarto-category">pandas</div>
+                <div class="quarto-category">selenium</div>
+              </div>
+                  </div>
   </div>
     
   
-  <div class="quarto-title-meta column-page-left">
+  <div class="quarto-title-meta">
 
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Kibok Park </p>
+            </div>
+    </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">February 20, 2024</p>
+      </div>
+    </div>
     
       
     </div>
     
+  <div>
+    <div class="abstract">
+      <div class="block-title">Abstract</div>
+      <p>[Python] selenium(웹스크레핑), sqlite3(db), win11toast(알림), streamlit(UI)</p>
+    </div>
+  </div>
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar"><div class="quarto-margin-header"><section id="kibok-park" class="level1 margin-header-item">
-<h1>Kibok Park</h1>
-</section></div>
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(3)</span></div><div class="category" data-category="BeautifulSoup">BeautifulSoup <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Python">Python <span class="quarto-category-count">(3)</span></div><div class="category" data-category="SAP Scripting">SAP Scripting <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Streamlit">Streamlit <span class="quarto-category-count">(1)</span></div><div class="category" data-category="pandas">pandas <span class="quarto-category-count">(1)</span></div><div class="category" data-category="selenium">selenium <span class="quarto-category-count">(1)</span></div><div class="category" data-category="sqlite3">sqlite3 <span class="quarto-category-count">(2)</span></div><div class="category" data-category="streamlit">streamlit <span class="quarto-category-count">(1)</span></div><div class="category" data-category="win11toast">win11toast <span class="quarto-category-count">(1)</span></div></div></div>
-<!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
-
-
-
-
-
-
-
-
-
-<div class="quarto-listing quarto-listing-container-grid" id="listing-listing">
-<div class="listing-actions-group">
-    <div class="input-group input-group-sm quarto-listing-filter">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input type="text" class="search form-control" placeholder="Filter">
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#추진배경" id="toc-추진배경" class="nav-link active" data-scroll-target="#추진배경">추진배경</a></li>
+  <li><a href="#효과" id="toc-효과" class="nav-link" data-scroll-target="#효과">효과</a></li>
+  <li><a href="#github-repository" id="toc-github-repository" class="nav-link" data-scroll-target="#github-repository">github repository</a></li>
+  <li><a href="#세부내용-구현내용-사용한-언어패키지-등" id="toc-세부내용-구현내용-사용한-언어패키지-등" class="nav-link" data-scroll-target="#세부내용-구현내용-사용한-언어패키지-등">[세부내용] 구현내용 &amp; 사용한 언어/패키지 등</a></li>
+  </ul>
+</nav>
     </div>
-</div>
-<div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="Python,SAP Scripting" data-listing-date-sort="1709650800000" data-listing-file-modified-sort="1716042025180" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="191">
-<a href="./posts_miniprojects/sel-py-crawl_sr-20240306/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<div class="listing-item-img-placeholder card-img-top" style="height: 150px;">&nbsp;</div>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-[Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 &amp; 정리 Tool
-</h5>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
-Python
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('SAP Scripting'); return false;">
-SAP Scripting
-</div>
-</div>
-<div class="card-text listing-description">
-<p>Python, win32를 활용한 SAP Scripting</p>
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Kibok Park
-</div>
-<div class="listing-date">
-2024-03-06
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="1" data-categories="Python,win11toast,sqlite3,streamlit,pandas,selenium" data-listing-date-sort="1708354800000" data-listing-file-modified-sort="1716080929160" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="384">
-<a href="./posts_miniprojects/sel-py-monitoringCOO-20240220/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<div class="listing-item-img-placeholder card-img-top" style="height: 150px;">&nbsp;</div>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-[Python] COO발급현황 조회용 Tool
-</h5>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
-Python
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('win11toast'); return false;">
-win11toast
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('sqlite3'); return false;">
-sqlite3
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('streamlit'); return false;">
-streamlit
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('pandas'); return false;">
-pandas
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('selenium'); return false;">
-selenium
-</div>
-</div>
-<div class="card-text listing-description">
-<p>[Python] selenium(웹스크레핑), sqlite3(db), win11toast(알림), streamlit(UI)</p>
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Kibok Park
-</div>
-<div class="listing-date">
-2024-02-20
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="2" data-categories="Python,SAP Scripting,Streamlit,sqlite3,BeautifulSoup" data-listing-date-sort="1705849200000" data-listing-file-modified-sort="1716040906637" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="387">
-<a href="./posts_miniprojects/sel-py-local-20240122/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<div class="listing-item-img-placeholder card-img-top" style="height: 150px;">&nbsp;</div>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-[Python] LocalL/C 관리용 Tool
-</h5>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
-Python
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('SAP Scripting'); return false;">
-SAP Scripting
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Streamlit'); return false;">
-Streamlit
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('sqlite3'); return false;">
-sqlite3
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('BeautifulSoup'); return false;">
-BeautifulSoup
-</div>
-</div>
-<div class="card-text listing-description">
-<p>Python, Streamlit을 활용한 업무자동화</p>
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Kibok Park
-</div>
-<div class="listing-date">
-2024-01-22
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div><p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p></main> <!-- /main -->
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="추진배경" class="level2">
+<h2 class="anchored" data-anchor-id="추진배경">추진배경</h2>
+<ul>
+<li>업무상 공용ID가 3개로 나뉘어있으나, 모두 공동인증서 로그인으로 접속에 불편함이 있음 (ID, PW, 공동인증서PW)
+<ul>
+<li>발급현황확인, 발급거절시 사유확인 후 보완 등 진행</li>
+</ul></li>
+<li>발급거절(오류통보) 사유확인시, 건별로 클릭하여 메뉴진입 필요</li>
+<li>월마다 20여개 페이지의 표를 복사해서 가공하는 작업 수행중(데이터 Merge, 필터링 등)</li>
+<li>각 포인트에 대해 대응할 수 있는 여러 기능을 탑재한 통합관리 Tool 제작
+<ul>
+<li>주기적으로 3개 ID로 접속하여, 주요정보를, ID에 대응되는 테이블에 db형태로 저장(공용PC)</li>
+<li>유저는 streamlit으로 제작한 사이트에 접속해서 필요한 내용 확인/검색</li>
+<li>희망하는 경우, 대표Invoice번호를 등록해두면 발급완료/발급거절(보완) 상황발생시 toast알림</li>
+<li>월마다 가공하는 데이터에 대해서는, 별도버튼으로 db추출 후 가공완료한 데이터 제공</li>
+<li>ID에 대응하는 로그인 버튼을 누르면 자동로그인 후 작업창을 띄워주는 기능 제공</li>
+</ul></li>
+</ul>
+<blockquote class="blockquote">
+<p><strong>[용어설명]</strong><br> <strong>COO</strong> : 원산지증명서, Country of Origin<br></p>
+</blockquote>
+</section>
+<section id="효과" class="level2">
+<h2 class="anchored" data-anchor-id="효과">효과</h2>
+<ul>
+<li>불편했던 로그인 작업 수요감소(필요 데이터의 streamlit 대시보드 제공, toast알림 제공), 로그인 편의성 증가</li>
+<li>월 가공작업 삭제(sql query로 추출시 원하는 형태로 저장, streamlit에서 query문 조건변경 가능[날짜조건, 파일경로 등])</li>
+</ul>
+</section>
+<section id="github-repository" class="level2">
+<h2 class="anchored" data-anchor-id="github-repository">github repository</h2>
+<p><a href="https://github.com/KR9268/-P-MonitoringCOO">관련 github레포</a></p>
+</section>
+<section id="세부내용-구현내용-사용한-언어패키지-등" class="level2">
+<h2 class="anchored" data-anchor-id="세부내용-구현내용-사용한-언어패키지-등">[세부내용] 구현내용 &amp; 사용한 언어/패키지 등</h2>
+<ol type="1">
+<li>저장할 db는 <code>sqlite3</code>으로 테이블 생성, 컬럼지정 등을 수행함 (컬럼별 조건은 하단 참조)</li>
+</ol>
+<ul>
+<li>접수번호 varchar PRIMARY KEY ,<br> → <strong>대표Invoice와 고민했는데, 100% 유일값이라 Primary로 지정</strong> 증명서종류 varchar, <br> 대표Invoice varchar(10),<br> 접수일시 datetime, <br> 처리상태 varchar, <br> Remark varchar</li>
+</ul>
+<ol start="2" type="1">
+<li>각 기능은 아래의 파일로 나누어 개인/공용PC에서 실행</li>
+</ol>
+<ul>
+<li><strong>MonitoringCOO(기본파일)</strong> : <code>streamlit</code>활용한 UI, json/pickle파일 읽기, 유저의 자동로그인, 월추출 데이터 저장 등
+<ul>
+<li>마지막 스크레핑 시점을 표기하여 얼마나 최신화된 데이터인지 유저에게 공유</li>
+</ul></li>
+<li><strong>MonitoringCOO_crawler</strong> : <code>selenium</code>으로 스크레핑, 스크레핑작업에 필요한 로그인 기능(<code>pyautogui</code>, <code>pywin32</code>로 이미지/키/윈도우 인식)
+<ul>
+<li>유저가 <strong>기본파일</strong>에서 로그인기능을 사용하는 경우, 이 파일에서 import해서 사용하고 <strong>코드는 여기서 통합관리</strong></li>
+<li>스크레핑작업은 기본적으로 <strong>Scheduler</strong>파일에서 실행되지만, 필요시 이 파일을 실행하여 수동 스크레핑 (<strong>코드는 여기서 통합관리</strong>)</li>
+</ul></li>
+<li><strong>MonitoringCOO_push</strong> : <strong>기본파일</strong>에서 유저가 등록해둔 대표Invoice번호를 db에서 조회하여, <code>win11toast</code>로 알림 (처음에는 파이썬과 호환성/속도가 좋은 pickle/list로 관리하고자 했으나, 사용자ID등 추가정보 관리가 필요하여 json/dict로 관리)</li>
+<li><strong>Scheduler</strong> : 스크레핑 주기/시간을 관리하는 파일. 주로 공용PC에서 작업 (9~17시 이후엔 데이터변경이 없으므로 이 시간대에만 작동하도록 설정, 서버설정 등을 고려하여 작업주기 반영 예정)</li>
+</ul>
+
+
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -919,6 +825,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<script src="https://giscus.app/client.js" data-repo="kr9268/giscus_for_blog" data-repo-id="R_kgDOL0Sthw" data-category="General" data-category-id="DIC_kwDOL0Sth84Ce_5h" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
 </div> <!-- /content -->
 <script>
     const baseFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
