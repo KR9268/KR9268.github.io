@@ -10,60 +10,7 @@
 <atom:link href="https://kr9268.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.4.553</generator>
-<lastBuildDate>Sat, 18 May 2024 15:00:00 GMT</lastBuildDate>
-<item>
-  <title>[프로그래머스SQL] 평균 일일 대여 요금 구하기</title>
-  <dc:creator>Kibok Park</dc:creator>
-  <link>https://kr9268.github.io/posts/prgms-sql-20240516/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<section id="개요" class="level2">
-<h2 class="anchored" data-anchor-id="개요">개요</h2>
-<p>프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다 <br> (비상업적, 비영리적 용도)</p>
-<p><a href="https://school.programmers.co.kr/learn/courses/30/lessons/131697?language=oracle">문제링크</a><br> <a href="https://programmers.zendesk.com/hc/ko/articles/360034546572-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4%EC%9D%98-%EB%AC%B8%EC%A0%9C%EB%A5%BC-%EC%99%B8%EB%B6%80%EC%97%90-%EA%B2%8C%EC%8B%9C%ED%95%A0-%EC%88%98-%EC%9E%88%EB%82%98%EC%9A%94">게시가능여부</a></p>
-</section>
-<section id="문제-평균-일일-대여-요금-구하기" class="level2">
-<h2 class="anchored" data-anchor-id="문제-평균-일일-대여-요금-구하기">문제 : 평균 일일 대여 요금 구하기</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://kr9268.github.io/posts/prgms-sql-20240516/question.png" class="img-fluid figure-img"></p>
-<figcaption>문제 이미지</figcaption>
-</figure>
-</div>
-</section>
-<section id="작성답안" class="level2">
-<h2 class="anchored" data-anchor-id="작성답안">작성답안</h2>
-<div id="fig-polar" class="cell quarto-figure quarto-figure-center quarto-float anchored" data-vscode="{&quot;languageId&quot;:&quot;sql&quot;}">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-polar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="sourceCode cell-code" id="fig-polar" data-vscode="{&quot;languageId&quot;:&quot;sql&quot;}" style="background: #f1f3f5;"><pre class="sourceCode python cell code-with-copy"><code class="sourceCode python"><span id="fig-polar-1">SELECT MAX(PRICE) AS MAX_PRICE</span>
-<span id="fig-polar-2">FROM PRODUCT</span></code></pre></div>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-polar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1
-</figcaption>
-</figure>
-</div>
-</section>
-<section id="정리" class="level2">
-<h2 class="anchored" data-anchor-id="정리">정리</h2>
-<ul>
-<li>MAX(컬럼명) : 최대값</li>
-<li>MIN(컬럼명) : 최소값</li>
-</ul>
-
-
-</section>
-
-<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
-  <category>프로그래머스/SQL</category>
-  <guid>https://kr9268.github.io/posts/prgms-sql-20240516/</guid>
-  <pubDate>Sat, 18 May 2024 15:00:00 GMT</pubDate>
-</item>
+<lastBuildDate>Sat, 27 Apr 2024 15:00:00 GMT</lastBuildDate>
 <item>
   <title>NH증권 직무인터뷰를 읽고(트레이딩&amp;빅데이터)</title>
   <dc:creator>Kibok Park</dc:creator>
