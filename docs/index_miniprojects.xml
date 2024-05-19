@@ -10,7 +10,80 @@
 <atom:link href="https://kr9268.github.io/index_miniprojects.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.4.553</generator>
-<lastBuildDate>Tue, 05 Mar 2024 15:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 14 Dec 2024 15:00:00 GMT</lastBuildDate>
+<item>
+  <title>[Python] 아웃룩 메일열람 &amp; pdf regex리딩 &amp; 시스템 자동등록</title>
+  <dc:creator>Kibok Park</dc:creator>
+  <link>https://kr9268.github.io/posts_miniprojects/sel-py-autoPIforl001-20231215/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="추진배경" class="level2">
+<h2 class="anchored" data-anchor-id="추진배경">추진배경</h2>
+<ul>
+<li>제공받는 PI서류에, 시스템 등록에 필요한 일부가 늘 빠져있으며 별도 테이블을 참고하여 대응중</li>
+<li>기계가 인식할 수 있는 pdf로 제공되고 있으나, 마우스로 드래그하여 복사/붙여넣기를 반복</li>
+<li>제공하는 담당자의 내부규정때문에, 1메일:1파일로 나누어 여러 건을 별도메일로 제공중</li>
+<li>향후 분쟁대비, 또는 법적인 사유로 pdf의 이름을 변경하여 별도로 저장하는 작업중</li>
+<li>납품(수출)시 사용될 중요한 정보로 사용되며, 오류발생시 다른 국가로의 오배송, 수입절차 문제 등 발생</li>
+<li><strong>각 포인트에 대응할 수 있도록 아래의 형태로 개발 추진</strong>
+<ul>
+<li>아웃룩으로 수신된 메일의 첨부를 열어 필요한 각 항목을 regex로 리딩</li>
+<li>리딩된 정보 중 최소 확인사항을 코드가 검증 ex) 한국 수출인데 홍콩물품에 대해 보험을 드는 등 논리오류 검증</li>
+<li>시스템 등록 후 파일명 변경 및 아카이브에 자동 저장</li>
+<li>백그라운드에서 실행되며, 작업이 완료되면 윈도우 toast메시지로 알림</li>
+</ul></li>
+</ul>
+<blockquote class="blockquote">
+<p><strong>[용어설명]</strong><br> <strong>PI</strong> : 수출납품계약서로 발주자의 양식 등을 사용함, Proforma Invoice<br> <strong>regex</strong> : 정규표현식, 특정한 규칙을 통해 문자를 검색/편집하는데 사용</p>
+</blockquote>
+</section>
+<section id="효과" class="level2">
+<h2 class="anchored" data-anchor-id="효과">효과</h2>
+<ul>
+<li><code>건별 메일열람 - 논리오류 검증 - 시스템 등록(복사/붙여넣기, 별도테이블 참고) - 파일명 변경 및 저장</code> 등 프로세스 제거</li>
+<li>Human error 제거로 인한 다른 국가로의 오배송(재운송에 필요한 각종 비용), 수입절차(법적이슈) 등 문제예방</li>
+</ul>
+</section>
+<section id="github-repository" class="level2">
+<h2 class="anchored" data-anchor-id="github-repository">github repository</h2>
+<p><a href="https://github.com/KR9268/-P-AutoPIforL001">관련 github레포</a></p>
+</section>
+<section id="세부내용-구현내용-사용한-언어패키지-등" class="level2">
+<h2 class="anchored" data-anchor-id="세부내용-구현내용-사용한-언어패키지-등">[세부내용] 구현내용 &amp; 사용한 언어/패키지 등</h2>
+<ol type="1">
+<li><code>pywin32</code>로 아웃룩을 제어하여 조건에 맞는 pdf첨부 열람 등 진행<br>
+<ul>
+<li><code>selenium</code>은 chrome버전변경 등 영향이 커서 구현했다가 미사용</li>
+</ul></li>
+<li><code>xlwings</code>로 Excel로 저장해둔 별도 참고용 테이블을 열람
+<ul>
+<li>DRM암호화와 관계없이 파일을 읽을 수 있기 때문에 <code>xlwings</code>를 채택</li>
+</ul></li>
+<li><code>re</code>로 pdf의 문자열을 검색하여 필요한 내용을 저장</li>
+<li><code>NERP_PI_LC</code>(주요 ERP관련 기능에 대해 제작한 파이썬 패키지)으로 시스템 등록 등을 진행</li>
+<li><code>win11toast</code>로 모든 작업이 완료되면 알림</li>
+<li>[삭제기능] <code>selenium</code>으로 PI제공자에게 자동회신도 했었으나, chrome업데이트 등 안정성 문제로 제외
+<ul>
+<li>아웃룩 등 smtp발송은 내부규정상 막혀있어 사용하지 않음</li>
+</ul></li>
+</ol>
+
+
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
+  <category>Python</category>
+  <category>re</category>
+  <category>xlwings</category>
+  <category>pandas</category>
+  <category>pdfminer</category>
+  <guid>https://kr9268.github.io/posts_miniprojects/sel-py-autoPIforl001-20231215/</guid>
+  <pubDate>Sat, 14 Dec 2024 15:00:00 GMT</pubDate>
+</item>
 <item>
   <title>[Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 &amp; 정리 Tool</title>
   <dc:creator>Kibok Park</dc:creator>
