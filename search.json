@@ -140,6 +140,41 @@
     "text": "정리\n\nROUND : 반올림\nAVG : 평균\nAS ??? : 컬럼명을 ???으로 가져온다 (Alias 라고 함)\nWHERE : 작성한 조건을 기준으로 가져온다\n\nWHERE의 여러 형태예시\n\nWHERE CAR_TYPE = 'SUV'\nWHERE CAR_TYPE != 'SUV'\nWHERE DAILY_FEE &gt; 14000\nWHERE DAILY_FEE BETWEEN 14000 AND 16000\nWHERE DAILY_FEE IN (14000, 16000)\nWHERE CAR_TYPE IN ('SUV', '세단')"
   },
   {
+    "objectID": "posts/prgms-sql-20240320/index.html",
+    "href": "posts/prgms-sql-20240320/index.html",
+    "title": "[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기",
+    "section": "",
+    "text": "프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다  (비상업적, 비영리적 용도)\n문제링크 게시가능여부\nCopyright © 2024 Kibok Park All rights reserved."
+  },
+  {
+    "objectID": "posts/prgms-sql-20240320/index.html#개요",
+    "href": "posts/prgms-sql-20240320/index.html#개요",
+    "title": "[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기",
+    "section": "",
+    "text": "프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다  (비상업적, 비영리적 용도)\n문제링크 게시가능여부"
+  },
+  {
+    "objectID": "posts/prgms-sql-20240320/index.html#문제-조건에-부합하는-중고거래-댓글-조회하기",
+    "href": "posts/prgms-sql-20240320/index.html#문제-조건에-부합하는-중고거래-댓글-조회하기",
+    "title": "[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기",
+    "section": "문제 : 조건에 부합하는 중고거래 댓글 조회하기",
+    "text": "문제 : 조건에 부합하는 중고거래 댓글 조회하기\n\n    &lt;h6 class=\"guide-section-title\"&gt;문제 설명&lt;/h6&gt;\n    &lt;div class=\"markdown solarized-dark\"&gt;&lt;p&gt;다음은 중고거래 게시판 정보를 담은 &lt;code&gt;USED_GOODS_BOARD&lt;/code&gt; 테이블과 중고거래 게시판 첨부파일 정보를 담은 &lt;code&gt;USED_GOODS_REPLY&lt;/code&gt; 테이블입니다. &lt;code&gt;USED_GOODS_BOARD&lt;/code&gt; 테이블은 다음과 같으며 &lt;code&gt;BOARD_ID&lt;/code&gt;, &lt;code&gt;WRITER_ID&lt;/code&gt;, &lt;code&gt;TITLE&lt;/code&gt;, &lt;code&gt;CONTENTS&lt;/code&gt;, &lt;code&gt;PRICE&lt;/code&gt;, &lt;code&gt;CREATED_DATE&lt;/code&gt;, &lt;code&gt;STATUS&lt;/code&gt;, &lt;code&gt;VIEWS&lt;/code&gt;은 게시글 ID, 작성자 ID, 게시글 제목, 게시글 내용, 가격, 작성일, 거래상태, 조회수를 의미합니다.&lt;/p&gt;\n\n\n\n\nColumn name\n\n\nType\n\n\nNullable\n\n\n\n\n\n\nBOARD_ID\n\n\nVARCHAR(5)\n\n\nFALSE\n\n\n\n\nWRITER_ID\n\n\nVARCHAR(50)\n\n\nFALSE\n\n\n\n\nTITLE\n\n\nVARCHAR(100)\n\n\nFALSE\n\n\n\n\nCONTENTS\n\n\nVARCHAR(1000)\n\n\nFALSE\n\n\n\n\nPRICE\n\n\nNUMBER\n\n\nFALSE\n\n\n\n\nCREATED_DATE\n\n\nDATE\n\n\nFALSE\n\n\n\n\nSTATUS\n\n\nVARCHAR(10)\n\n\nFALSE\n\n\n\n\nVIEWS\n\n\nNUMBER\n\n\nFALSE\n\n\n\n\n\nUSED_GOODS_REPLY 테이블은 다음과 같으며 REPLY_ID, BOARD_ID, WRITER_ID, CONTENTS, CREATED_DATE는 각각 댓글 ID, 게시글 ID, 작성자 ID, 댓글 내용, 작성일을 의미합니다.\n\n\n\n\n\nColumn name\n\n\nType\n\n\nNullable\n\n\n\n\n\n\nREPLY_ID\n\n\nVARCHAR(10)\n\n\nFALSE\n\n\n\n\nBOARD_ID\n\n\nVARCHAR(5)\n\n\nFALSE\n\n\n\n\nWRITER_ID\n\n\nVARCHAR(50)\n\n\nFALSE\n\n\n\n\nCONTENTS\n\n\nVARCHAR(1000)\n\n\nTRUE\n\n\n\n\nCREATED_DATE\n\n\nDATE\n\n\nFALSE\n\n\n\n\n\n\n문제\n\n\nUSED_GOODS_BOARD와 USED_GOODS_REPLY 테이블에서 2022년 10월에 작성된 게시글 제목, 게시글 ID, 댓글 ID, 댓글 작성자 ID, 댓글 내용, 댓글 작성일을 조회하는 SQL문을 작성해주세요. 결과는 댓글 작성일을 기준으로 오름차순 정렬해주시고, 댓글 작성일이 같다면 게시글 제목을 기준으로 오름차순 정렬해주세요.\n\n\n\n예시\n\n\nUSED_GOODS_BOARD 테이블이 다음과 같고\n\n\n\n\n\nBOARD_ID\n\n\nWRITER_ID\n\n\nTITLE\n\n\nCONTENTS\n\n\nPRICE\n\n\nCREATED_DATE\n\n\nSTATUS\n\n\nVIEWS\n\n\n\n\n\n\nB0001\n\n\nkwag98\n\n\n반려견 배변패드 팝니다\n\n\n정말 저렴히 판매합니다. 전부 미개봉 새상품입니다.\n\n\n12000\n\n\n2022-10-01\n\n\nDONE\n\n\n250\n\n\n\n\nB0002\n\n\nlee871201\n\n\n국내산 볶음참깨\n\n\n직접 농사지은 참깨입니다.\n\n\n3000\n\n\n2022-10-02\n\n\nDONE\n\n\n121\n\n\n\n\nB0003\n\n\ngoung12\n\n\n배드민턴 라켓\n\n\n사놓고 방치만 해서 팝니다.\n\n\n9000\n\n\n2022-10-02\n\n\nSALE\n\n\n212\n\n\n\n\nB0004\n\n\nkeel1990\n\n\n디올 귀걸이\n\n\n신세계강남점에서 구입. 정품 아닐시 백퍼센트 환불\n\n\n130000\n\n\n2022-10-02\n\n\nSALE\n\n\n199\n\n\n\n\nB0005\n\n\nhaphli01\n\n\n스팸클래식 팔아요\n\n\n유통기한 2025년까지에요\n\n\n10000\n\n\n2022-10-02\n\n\nSALE\n\n\n121\n\n\n\n\n\nUSED_GOODS_REPLY 테이블이 다음과 같을 때\n\n\n\n\n\nREPLY_ID\n\n\nBOARD_ID\n\n\nWRITER_ID\n\n\nCONTENTS\n\n\nCREATED_DATE\n\n\n\n\n\n\nR000000001\n\n\nB0001\n\n\ns2s2123\n\n\n구매하겠습니다. 쪽지 드립니다.\n\n\n2022-10-02\n\n\n\n\nR000000002\n\n\nB0002\n\n\nhoho1112\n\n\n쪽지 주세요.\n\n\n2022-10-03\n\n\n\n\nR000000003\n\n\nB0006\n\n\nhwahwa2\n\n\n삽니다. 연락주세요.\n\n\n2022-10-03\n\n\n\n\nR000000004\n\n\nB0007\n\n\nhong02\n\n\n예약중\n\n\n2022-10-06\n\n\n\n\nR000000005\n\n\nB0009\n\n\nhanju23\n\n\n구매완료\n\n\n2022-10-07\n\n\n\n\n\nSQL을 실행하면 다음과 같이 출력되어야 합니다.\n\n\n\n\n\nTITLE\n\n\nBOARD_ID\n\n\nREPLY_ID\n\n\nWRITER_ID\n\n\nCONTENTS\n\n\nCREATED_DATE\n\n\n\n\n\n\n반려견 배변패드 팝니다\n\n\nB0001\n\n\nR000000001\n\n\ns2s2123\n\n\n구매하겠습니다. 쪽지 드립니다.\n\n\n2022-10-02\n\n\n\n\n국내산 볶음참깨\n\n\nB0002\n\n\nR000000002\n\n\nhoho1112\n\n\n쪽지 주세요.\n\n\n2022-10-03\n\n\n\n\n\n\n주의사항\n\n\nCREATED_DATE의 포맷이 예시의 포맷과 일치해야 정답처리 됩니다.\n\n\n  &lt;/div&gt;"
+  },
+  {
+    "objectID": "posts/prgms-sql-20240320/index.html#작성답안",
+    "href": "posts/prgms-sql-20240320/index.html#작성답안",
+    "title": "[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기",
+    "section": "작성답안",
+    "text": "작성답안\n\n\n\nSELECT board.TITLE, board.BOARD_ID,\n       reply.REPLY_ID, reply.WRITER_ID, reply.CONTENTS, TO_CHAR(reply.CREATED_DATE, 'YYYY-MM-DD')\nFROM USED_GOODS_BOARD board, USED_GOODS_REPLY reply\nWHERE TO_CHAR(board.CREATED_DATE, 'YYYYMM') = '202210'\n  AND board.BOARD_ID = reply.BOARD_ID\nORDER BY reply.CREATED_DATE ASC, board.TITLE ASC;\n\n\nFigure 1"
+  },
+  {
+    "objectID": "posts/prgms-sql-20240320/index.html#정리",
+    "href": "posts/prgms-sql-20240320/index.html#정리",
+    "title": "[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기",
+    "section": "정리",
+    "text": "정리\n\n각 테이블의 BOARD_ID 일치시키는 것을 실수하였음. 향후 동일케이스에 대해서는 고려하여 풀기\n다중정렬 &gt; ORDER BY reply.CREATED_DATE ASC, board.TITLE ASC; 앞의 컬럼일수록 정렬 우선순위를 가짐"
+  },
+  {
     "objectID": "about.html",
     "href": "about.html",
     "title": "Kibok Park",
@@ -172,7 +207,7 @@
     "href": "index.html",
     "title": "Blog",
     "section": "",
-    "text": "NH증권 직무인터뷰를 읽고(트레이딩&빅데이터)\n\n\n\n직무분석\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-28\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n[버크셔 해서웨이의 재탄생 읽고] 용어 정리\n\n\n\n경제/금융공부\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-23\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 조건에 맞는 도서 리스트 출력하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-19\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 가장 비싼 상품 구하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-18\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 평균 일일 대여 요금 구하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-17\n\n\n\n\n\n\n\n\n\n\n\n\n[Scikit-learn] Kaggle 집값예측 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-05-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Pytorch] MNIST 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-02-19\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
+    "text": "NH증권 직무인터뷰를 읽고(트레이딩&빅데이터)\n\n\n\n직무분석\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-28\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n[버크셔 해서웨이의 재탄생 읽고] 용어 정리\n\n\n\n경제/금융공부\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-23\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-20\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 조건에 맞는 도서 리스트 출력하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-19\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 가장 비싼 상품 구하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-18\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 평균 일일 대여 요금 구하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-17\n\n\n\n\n\n\n\n\n\n\n\n\n[Scikit-learn] Kaggle 집값예측 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-05-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Pytorch] MNIST 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-02-19\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
   },
   {
     "objectID": "posts/prgms-sql-20240318/index.html",
