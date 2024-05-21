@@ -263,6 +263,85 @@ IFRS는 원칙에 따라 작성해 형태 차이가 거의 없으나, GAAP는 �
   <media:content url="https://kr9268.github.io/posts/bk-BerkshireHathaway-20240423-terms/image.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
+  <title>[프로그래머스SQL] 조건에 맞는 도서 리스트 출력하기</title>
+  <dc:creator>Kibok Park</dc:creator>
+  <link>https://kr9268.github.io/posts/prgms-sql-20240319/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="개요" class="level2">
+<h2 class="anchored" data-anchor-id="개요">개요</h2>
+<p>프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다 <br> (비상업적, 비영리적 용도)</p>
+<p><a href="https://school.programmers.co.kr/learn/courses/30/parts/17042">문제링크</a><br> <a href="https://programmers.zendesk.com/hc/ko/articles/360034546572-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4%EC%9D%98-%EB%AC%B8%EC%A0%9C%EB%A5%BC-%EC%99%B8%EB%B6%80%EC%97%90-%EA%B2%8C%EC%8B%9C%ED%95%A0-%EC%88%98-%EC%9E%88%EB%82%98%EC%9A%94">게시가능여부</a></p>
+</section>
+<section id="문제-조건에-맞는-도서-리스트-출력하기" class="level2">
+<h2 class="anchored" data-anchor-id="문제-조건에-맞는-도서-리스트-출력하기">문제 : 조건에 맞는 도서 리스트 출력하기</h2>
+<section id="문제-설명" class="level3">
+<h3 class="anchored" data-anchor-id="문제-설명">문제 설명</h3>
+<p>다음은 어느 한 서점에서 판매중인 도서들의 도서 정보(BOOK) 테이블입니다.</p>
+<p>BOOK 테이블은 각 도서의 정보를 담은 테이블로 아래와 같은 구조로 되어있습니다.</p>
+<p>Column name Type Nullable Description BOOK_ID INTEGER FALSE 도서 ID CATEGORY VARCHAR(N) FALSE 카테고리 (경제, 인문, 소설, 생활, 기술) AUTHOR_ID INTEGER FALSE 저자 ID PRICE INTEGER FALSE 판매가 (원) PUBLISHED_DATE DATE FALSE 출판일</p>
+</section>
+<section id="문제" class="level3">
+<h3 class="anchored" data-anchor-id="문제">문제</h3>
+<p>BOOK 테이블에서 2021년에 출판된 ‘인문’ 카테고리에 속하는 도서 리스트를 찾아서 도서 ID(BOOK_ID), 출판일 (PUBLISHED_DATE)을 출력하는 SQL문을 작성해주세요. 결과는 출판일을 기준으로 오름차순 정렬해주세요.</p>
+<p>예시 예를 들어 BOOK 테이블이 다음과 같다면</p>
+<p>BOOK_ID CATEGORY AUTHOR_ID PRICE PUBLISHED_DATE 1 인문 1 10000 2020-01-01 2 경제 2 9000 2021-02-05 3 인문 2 11000 2021-04-11 4 인문 3 10000 2021-03-15 5 생활 1 12000 2021-01-10 조건에 속하는 도서는 도서 ID 가 3, 4인 도서이므로 다음과 같습니다.</p>
+<p>BOOK_ID PUBLISHED_DATE 3 2021-04-11 4 2021-03-15 그리고 출판일 오름차순으로 정렬하여야 하므로 다음과 같은 결과가 나와야 합니다.</p>
+<p>BOOK_ID PUBLISHED_DATE 4 2021-03-15 3 2021-04-11</p>
+</section>
+<section id="주의사항" class="level3">
+<h3 class="anchored" data-anchor-id="주의사항">주의사항</h3>
+<p>PUBLISHED_DATE의 데이트 포맷이 예시와 동일해야 정답처리 됩니다.</p>
+</section>
+</section>
+<section id="작성답안" class="level2">
+<h2 class="anchored" data-anchor-id="작성답안">작성답안</h2>
+<div id="fig-polar" class="cell quarto-figure quarto-figure-center quarto-float anchored" data-vscode="{&quot;languageId&quot;:&quot;sql&quot;}">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-polar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode cell-code" id="fig-polar" data-vscode="{&quot;languageId&quot;:&quot;sql&quot;}" style="background: #f1f3f5;"><pre class="sourceCode python cell code-with-copy"><code class="sourceCode python"><span id="fig-polar-1">SELECT BOOK_ID, TO_CHAR(PUBLISHED_DATE, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'YYYY-MM-DD'</span>)</span>
+<span id="fig-polar-2">FROM BOOK</span>
+<span id="fig-polar-3">WHERE CATEGORY <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'인문'</span> AND EXTRACT(YEAR FROM PUBLISHED_DATE) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2021</span></span>
+<span id="fig-polar-4">ORDER BY PUBLISHED_DATE ASC</span></code></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-polar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="정리" class="level2">
+<h2 class="anchored" data-anchor-id="정리">정리</h2>
+<ul>
+<li><p>TO_CHAR(표시형식 변경) &gt; SELECT TO_CHAR(컬럼명, ‘표시형식’) FROM 테이블명 표시형식(연도 4자리) : TO_CHAR(컬럼명, ‘YYYY’)<br> 표시형식(월) : TO_CHAR(컬럼명, ‘MM’)<br> 표시형식(일, 연기준 1~366) : TO_CHAR(컬럼명, ‘DDD’)<br> 표시형식(일, 일기준 1~31) : TO_CHAR(컬럼명, ‘DD’)<br> 표시형식(일, 요일) : TO_CHAR(컬럼명, ‘D’) * 지역설정에 따라 시작요일이 달라짐<br> <br> 표시형식(분기) : TO_CHAR(컬럼명, ‘Q’)<br> 표시형식(주, 연기준 1~53) : TO_CHAR(컬럼명, ‘WW’)<br> 표시형식(주, 월기준 1~53) : TO_CHAR(컬럼명, ‘W’)<br> <br> 표시형식(요일, MON/월) : TO_CHAR(컬럼명, ‘DY’)<br> 표시형식(요일, MONDAY/월요일) : TO_CHAR(컬럼명, ‘DAY’)<br> 표시형식(월, JAN/1월) : TO_CHAR(컬럼명, ‘MON’)<br> 표시형식(월, JANUARY/1월) : TO_CHAR(컬럼명, ‘MONTH’)<br> <br> 표시형식(시간, 12시간표기) : TO_CHAR(컬럼명, ‘HH12’)<br> 표시형식(시간, 24시간표기) : TO_CHAR(컬럼명, ‘HH24’)<br> 표시형식(분) : TO_CHAR(컬럼명, ‘MI’)<br> 표시형식(초) : TO_CHAR(컬럼명, ‘SS’)<br></p></li>
+<li><p>AND(모두 만족) / OR(하나라도 만족) / NOT(조건과 맞지 않는) &gt; 연산자 우선순위(참고용) 1 괄호<br> 2 NOT<br> 3 비교 (&gt; &lt; = !)<br> 4 AND<br> 5 OR</p></li>
+<li><p>ORDER BY 컬럼명 ASC (오름차순)</p></li>
+<li><p>ORDER BY 컬럼명 DESC (내림차순)</p></li>
+</ul>
+
+
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
+  <category>프로그래머스/SQL</category>
+  <guid>https://kr9268.github.io/posts/prgms-sql-20240319/</guid>
+  <pubDate>Tue, 19 Mar 2024 00:00:00 GMT</pubDate>
+</item>
+<item>
   <title>[프로그래머스SQL] 가장 비싼 상품 구하기</title>
   <dc:creator>Kibok Park</dc:creator>
   <link>https://kr9268.github.io/posts/prgms-sql-20240318/</link>
