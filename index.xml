@@ -327,10 +327,20 @@ Figure&nbsp;1
 <section id="정리" class="level2">
 <h2 class="anchored" data-anchor-id="정리">정리</h2>
 <ul>
-<li><p>TO_CHAR(표시형식 변경) &gt; SELECT TO_CHAR(컬럼명, ‘표시형식’) FROM 테이블명 표시형식(연도 4자리) : TO_CHAR(컬럼명, ‘YYYY’)<br> 표시형식(월) : TO_CHAR(컬럼명, ‘MM’)<br> 표시형식(일, 연기준 1~366) : TO_CHAR(컬럼명, ‘DDD’)<br> 표시형식(일, 일기준 1~31) : TO_CHAR(컬럼명, ‘DD’)<br> 표시형식(일, 요일) : TO_CHAR(컬럼명, ‘D’) * 지역설정에 따라 시작요일이 달라짐<br> <br> 표시형식(분기) : TO_CHAR(컬럼명, ‘Q’)<br> 표시형식(주, 연기준 1~53) : TO_CHAR(컬럼명, ‘WW’)<br> 표시형식(주, 월기준 1~53) : TO_CHAR(컬럼명, ‘W’)<br> <br> 표시형식(요일, MON/월) : TO_CHAR(컬럼명, ‘DY’)<br> 표시형식(요일, MONDAY/월요일) : TO_CHAR(컬럼명, ‘DAY’)<br> 표시형식(월, JAN/1월) : TO_CHAR(컬럼명, ‘MON’)<br> 표시형식(월, JANUARY/1월) : TO_CHAR(컬럼명, ‘MONTH’)<br> <br> 표시형식(시간, 12시간표기) : TO_CHAR(컬럼명, ‘HH12’)<br> 표시형식(시간, 24시간표기) : TO_CHAR(컬럼명, ‘HH24’)<br> 표시형식(분) : TO_CHAR(컬럼명, ‘MI’)<br> 표시형식(초) : TO_CHAR(컬럼명, ‘SS’)<br></p></li>
-<li><p>AND(모두 만족) / OR(하나라도 만족) / NOT(조건과 맞지 않는) &gt; 연산자 우선순위(참고용) 1 괄호<br> 2 NOT<br> 3 비교 (&gt; &lt; = !)<br> 4 AND<br> 5 OR</p></li>
-<li><p>ORDER BY 컬럼명 ASC (오름차순)</p></li>
-<li><p>ORDER BY 컬럼명 DESC (내림차순)</p></li>
+<li>TO_CHAR(표시형식 변경)</li>
+</ul>
+<blockquote class="blockquote">
+<p>SELECT TO_CHAR(컬럼명, ‘표시형식’) FROM 테이블명 표시형식(연도 4자리) : TO_CHAR(컬럼명, ‘YYYY’)<br> 표시형식(월) : TO_CHAR(컬럼명, ‘MM’)<br> 표시형식(일, 연기준 1~366) : TO_CHAR(컬럼명, ‘DDD’)<br> 표시형식(일, 일기준 1~31) : TO_CHAR(컬럼명, ‘DD’)<br> 표시형식(일, 요일) : TO_CHAR(컬럼명, ‘D’) * 지역설정에 따라 시작요일이 달라짐<br> <br> 표시형식(분기) : TO_CHAR(컬럼명, ‘Q’)<br> 표시형식(주, 연기준 1~53) : TO_CHAR(컬럼명, ‘WW’)<br> 표시형식(주, 월기준 1~53) : TO_CHAR(컬럼명, ‘W’)<br> <br> 표시형식(요일, MON/월) : TO_CHAR(컬럼명, ‘DY’)<br> 표시형식(요일, MONDAY/월요일) : TO_CHAR(컬럼명, ‘DAY’)<br> 표시형식(월, JAN/1월) : TO_CHAR(컬럼명, ‘MON’)<br> 표시형식(월, JANUARY/1월) : TO_CHAR(컬럼명, ‘MONTH’)<br> <br> 표시형식(시간, 12시간표기) : TO_CHAR(컬럼명, ‘HH12’)<br> 표시형식(시간, 24시간표기) : TO_CHAR(컬럼명, ‘HH24’)<br> 표시형식(분) : TO_CHAR(컬럼명, ‘MI’)<br> 표시형식(초) : TO_CHAR(컬럼명, ‘SS’)<br></p>
+</blockquote>
+<ul>
+<li>AND(모두 만족) / OR(하나라도 만족) / NOT(조건과 맞지 않는)</li>
+</ul>
+<blockquote class="blockquote">
+<p>연산자 우선순위(참고용) 1 괄호<br> 2 NOT<br> 3 비교 (&gt; &lt; = !)<br> 4 AND<br> 5 OR</p>
+</blockquote>
+<ul>
+<li>ORDER BY 컬럼명 ASC (오름차순)</li>
+<li>ORDER BY 컬럼명 DESC (내림차순)</li>
 </ul>
 
 
