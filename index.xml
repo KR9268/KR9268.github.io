@@ -263,6 +263,312 @@ IFRS는 원칙에 따라 작성해 형태 차이가 거의 없으나, GAAP는 �
   <media:content url="https://kr9268.github.io/posts/bk-BerkshireHathaway-20240423-terms/image.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
+  <title>[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기</title>
+  <dc:creator>Kibok Park</dc:creator>
+  <link>https://kr9268.github.io/posts/prgms-sql-20240321/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="개요" class="level2">
+<h2 class="anchored" data-anchor-id="개요">개요</h2>
+<p>프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다 <br> (비상업적, 비영리적 용도)</p>
+<p><a href="https://school.programmers.co.kr/learn/courses/30/parts/17042">문제링크</a><br> <a href="https://programmers.zendesk.com/hc/ko/articles/360034546572-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4%EC%9D%98-%EB%AC%B8%EC%A0%9C%EB%A5%BC-%EC%99%B8%EB%B6%80%EC%97%90-%EA%B2%8C%EC%8B%9C%ED%95%A0-%EC%88%98-%EC%9E%88%EB%82%98%EC%9A%94">게시가능여부</a></p>
+</section>
+<section id="문제-3월에-태어난-여성-회원-목록-출력하기" class="level2">
+<h2 class="anchored" data-anchor-id="문제-3월에-태어난-여성-회원-목록-출력하기">문제 : 3월에 태어난 여성 회원 목록 출력하기</h2>
+<div class="markdown solarized-dark">
+<p>
+다음은 식당 리뷰 사이트의 회원 정보를 담은 <code>MEMBER_PROFILE</code> 테이블입니다. <code>MEMBER_PROFILE</code> 테이블은 다음과 같으며 <code>MEMBER_ID</code>, <code>MEMBER_NAME</code>, <code>TLNO</code>, <code>GENDER</code>, <code>DATE_OF_BIRTH</code>는 회원 ID, 회원 이름, 회원 연락처, 성별, 생년월일을 의미합니다.
+</p>
+<table class="table">
+<thead>
+<tr>
+<th>
+Column name
+</th>
+<th>
+Type
+</th>
+<th>
+Nullable
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+MEMBER_ID
+</td>
+<td>
+VARCHAR(100)
+</td>
+<td>
+FALSE
+</td>
+</tr>
+<tr>
+<td>
+MEMBER_NAME
+</td>
+<td>
+VARCHAR(50)
+</td>
+<td>
+FALSE
+</td>
+</tr>
+<tr>
+<td>
+TLNO
+</td>
+<td>
+VARCHAR(50)
+</td>
+<td>
+TRUE
+</td>
+</tr>
+<tr>
+<td>
+GENDER
+</td>
+<td>
+VARCHAR(1)
+</td>
+<td>
+TRUE
+</td>
+</tr>
+<tr>
+<td>
+DATE_OF_BIRTH
+</td>
+<td>
+DATE
+</td>
+<td>
+TRUE
+</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h5 class="anchored">
+문제
+</h5>
+<p>
+<code>MEMBER_PROFILE</code> 테이블에서 생일이 3월인 여성 회원의 ID, 이름, 성별, 생년월일을 조회하는 SQL문을 작성해주세요. 이때 전화번호가 NULL인 경우는 출력대상에서 제외시켜 주시고, 결과는 회원ID를 기준으로 오름차순 정렬해주세요.
+</p>
+<hr>
+<h5 class="anchored">
+예시
+</h5>
+<p>
+<code>MEMBER_PROFILE</code> 테이블이 다음과 같을 때
+</p>
+<table class="table">
+<thead>
+<tr>
+<th>
+MEMBER_ID
+</th>
+<th>
+MEMBER_NAME
+</th>
+<th>
+TLNO
+</th>
+<th>
+GENDER
+</th>
+<th>
+DATE_OF_BIRTH
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>jiho92@naver.com</code>
+</td>
+<td>
+이지호
+</td>
+<td>
+01076432111
+</td>
+<td>
+W
+</td>
+<td>
+1992-02-12
+</td>
+</tr>
+<tr>
+<td>
+<code>jiyoon22@hotmail.com</code>
+</td>
+<td>
+김지윤
+</td>
+<td>
+01032324117
+</td>
+<td>
+W
+</td>
+<td>
+1992-02-22
+</td>
+</tr>
+<tr>
+<td>
+<code>jihoon93@hanmail.net</code>
+</td>
+<td>
+김지훈
+</td>
+<td>
+01023258688
+</td>
+<td>
+M
+</td>
+<td>
+1993-02-23
+</td>
+</tr>
+<tr>
+<td>
+<code>seoyeons@naver.com</code>
+</td>
+<td>
+박서연
+</td>
+<td>
+01076482209
+</td>
+<td>
+W
+</td>
+<td>
+1993-03-16
+</td>
+</tr>
+<tr>
+<td>
+<code>yoonsy94@gmail.com</code>
+</td>
+<td>
+윤서연
+</td>
+<td>
+NULL
+</td>
+<td>
+W
+</td>
+<td>
+1994-03-19
+</td>
+</tr>
+</tbody>
+</table>
+<p>
+SQL을 실행하면 다음과 같이 출력되어야 합니다.
+</p>
+<table class="table">
+<thead>
+<tr>
+<th>
+MEMBER_ID
+</th>
+<th>
+MEMBER_NAME
+</th>
+<th>
+GENDER
+</th>
+<th>
+DATE_OF_BIRTH
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>seoyeons@naver.com</code>
+</td>
+<td>
+박서연
+</td>
+<td>
+W
+</td>
+<td>
+1993-03-16
+</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h5 class="anchored">
+주의사항
+</h5>
+<p>
+<code>DATE_OF_BIRTH</code>의 데이트 포맷이 예시와 동일해야 정답처리 됩니다.
+</p>
+</div>
+</section>
+<section id="작성답안" class="level2">
+<h2 class="anchored" data-anchor-id="작성답안">작성답안</h2>
+<div id="fig-polar" class="cell quarto-figure quarto-figure-center quarto-float anchored" data-vscode="{&quot;languageId&quot;:&quot;sql&quot;}">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-polar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode cell-code" id="fig-polar" data-vscode="{&quot;languageId&quot;:&quot;sql&quot;}" style="background: #f1f3f5;"><pre class="sourceCode python cell code-with-copy"><code class="sourceCode python"><span id="fig-polar-1">SELECT MEMBER_ID, MEMBER_NAME,  GENDER, TO_CHAR(DATE_OF_BIRTH, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'YYYY-MM-DD'</span>)</span>
+<span id="fig-polar-2">FROM MEMBER_PROFILE</span>
+<span id="fig-polar-3">WHERE GENDER <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'W'</span></span>
+<span id="fig-polar-4">  AND TO_CHAR(DATE_OF_BIRTH, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'MON'</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'MAR'</span></span>
+<span id="fig-polar-5">  AND TLNO IS NOT NULL</span>
+<span id="fig-polar-6">ORDER BY MEMBER_ID ASC</span></code></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-polar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="정리" class="level2">
+<h2 class="anchored" data-anchor-id="정리">정리</h2>
+<ul>
+<li>WHERE 컬럼명 IS <strong>NOT</strong> NULL</li>
+<li>WHERE <strong>NOT</strong> 컬럼명 IS NULL</li>
+</ul>
+
+
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
+  <category>프로그래머스/SQL</category>
+  <guid>https://kr9268.github.io/posts/prgms-sql-20240321/</guid>
+  <pubDate>Thu, 21 Mar 2024 00:00:00 GMT</pubDate>
+</item>
+<item>
   <title>[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기</title>
   <dc:creator>Kibok Park</dc:creator>
   <link>https://kr9268.github.io/posts/prgms-sql-20240320/</link>
