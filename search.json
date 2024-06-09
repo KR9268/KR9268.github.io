@@ -280,186 +280,102 @@
     "text": "정리\n\nROUND : 반올림\nAVG : 평균\nAS ??? : 컬럼명을 ???으로 가져온다 (Alias 라고 함)\nWHERE : 작성한 조건을 기준으로 가져온다\n\nWHERE의 여러 형태예시\n\nWHERE CAR_TYPE = 'SUV'\nWHERE CAR_TYPE != 'SUV'\nWHERE DAILY_FEE &gt; 14000\nWHERE DAILY_FEE BETWEEN 14000 AND 16000\nWHERE DAILY_FEE IN (14000, 16000)\nWHERE CAR_TYPE IN ('SUV', '세단')"
   },
   {
-    "objectID": "posts/prgms-sql-20240320/index.html",
-    "href": "posts/prgms-sql-20240320/index.html",
-    "title": "[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기",
+    "objectID": "posts/bk-BerkshireHathaway-20240423-terms/index.html",
+    "href": "posts/bk-BerkshireHathaway-20240423-terms/index.html",
+    "title": "[버크셔 해서웨이의 재탄생 읽고] 용어 정리",
+    "section": "",
+    "text": "공부할 겸 혼자서 구글링하면서 용어 정리해보는 포스팅입니다\nCopyright © 2024 Kibok Park All rights reserved."
+  },
+  {
+    "objectID": "posts/bk-BerkshireHathaway-20240423-terms/index.html#프롤로그",
+    "href": "posts/bk-BerkshireHathaway-20240423-terms/index.html#프롤로그",
+    "title": "[버크셔 해서웨이의 재탄생 읽고] 용어 정리",
+    "section": "프롤로그",
+    "text": "프롤로그\n\n경제적 해자(enonomic moat) : 성 외곽에서 성을 보호해주는 해자처럼 경쟁우위를 갖게 해주는 요소 (a business’s ability to maintain a competitive edge over its competitors)\n자본배분(capital allocation) : 경제적 자원들을 효율증대/이익극대화를 위해 분배/투자 하는 것 (distributing and investing a company’s financial resources in ways that will increase its efficiency, and maximize its profits) &gt; 자본배분을 알면 워런버핏 사례의 캐피털시티를 이해할 수 있다\n플로트(float, 책임준비금) : 보험회사가 보험금을 지급하기 위해 적립시키는 돈(은행과 달리 자산운용준칙에 따라 자율적으로 사용 가능)\n\n플로트라는 단어의 다른 뜻 : 일반 대중이 거래할 수 있게 발행한 보통주 (the regular shares a company has issued to the public that are available for investors to trade) &gt; 플로트를 알면 워런버핏 사례의 가이코를 이해할 수 있다 (내셔널 인뎀너티와 블루칩스탬프의 플로트를 활용한 투자법 등)\n\n재보험 : 보험계약상 책임의 전부 또는 일부를 다른 보험자에게 인수시킴 (위험의 분산과 인수능력의 극대화를 위해 필요, 위험 대비 자산이 충분치 않은 경우 재보험으로 보험금액의 전부 인수가능)\n영업이익(operating income/earnings) : 기업의 핵심사업(영업활동)으로 얻은 이익 (a measure of the amount of profit realized from a business’s core operations)\n연간 영업활동 순이익(operating earnings) : 영업활동에 필요한 차입금 등 부채의 이자비용도 차감한 이익(영업활동에서 발생한 순이익)\n\n일반 회계기준(GAAP, Generally Accepted Accounting Principles, GAAP)\n\n일반적으로 인정된 회계원칙. 회계규정 자체 또는 회계실무 지침 등 광범위하게 인정되는 회계기준 &gt; GAAP관련 추가로 알아보기\n\n\n**IFRS(International Financial Reporting Standards) : 국제회계기준위원회에서 공표한 회계기준. IFRS를 공부하면 IFRS를 차용한 국가의 회사 재무제표는 같은 형식으로 이해 가능\n\n규칙기반의 GAAP vs 원칙기반의 IFRS\n\nIFRS는 원칙에 따라 작성해 형태 차이가 거의 없으나, GAAP는 세부적인 사안에 대해 자세히 기술(IFRS도 주석 부분에 기술)\n\n\n내용을 세세하게 다루거나, 공정가치를 계산하지않아 IFRS보다 현재가치를 크게 하고 싶을때 GAAP사용\n\n\n\nNon-GAAP\n\n반복적으로 발생하지 않는 1회적 비용은 제외하고 회계처리. 비용이 줄어 순수익이 늘어남\n\n\n미국의 경우 Non-GAAP로 다양한 비용을 제외시켜 표시하는 것이 불법은 아님(기업에 유리) 참고한 링크"
+  },
+  {
+    "objectID": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-섬유공장",
+    "href": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-섬유공장",
+    "title": "[버크셔 해서웨이의 재탄생 읽고] 용어 정리",
+    "section": "1장. 섬유공장",
+    "text": "1장. 섬유공장\n\n\n총자산이익률(ROA, Return on assets) : 순이익 / 총자산(자기자본 + 타인자본). 얼마나 순이익이 창출되는지 판단할 수 있음. ROA의 높고 낮음에 따라 주가의 높낮이도 따를 가능성이 큼 산업의 성숙기[성장/성숙/사양 등]에 따라 ROA는 달라질 수 있음\n자기자본이익률(ROE, Return on equity) : 순이익 / 자본총계(자산-부채) ROA가 높은 경우 적정 수준으로 부채확대를 통해 총자산 자체를 늘리면 ROE를 높일 수 있음 참고한 링크 참고한 링크\n\n\n\n운전자본(Working Capital, =유동자본?) : 회사를 운영하는데 들어가는 돈(매출채권, 선급금, 재고자산 등 유동자산과 매입채무, 선수금 등 유동부채가 해당함)\n순운전자본(Net Working Capital, 운전자본-총부채) : ?? (클럽 설명) 벤자민 그레이엄이 ’현명한 투자자’에서 주창한 투자 전략 즉시 현금화할 수 있는 자산과 비교함으로써 보수적인 기준에서 주가의 저(고)평가 여부를 판단하는 척도로 사용\n장부가치\n주가순자산배수(PBR, price to book value)\n주주환원\n자사주 매입\n감가상각비\n자산 대체원가\n무형자산상각비 차감 전 이익(EBITDA)\n투하자본 : 영업활동(수익활동)에 투입한 자산\n투하자본이익률(ROIC, return on invested capital) : 영업활동(수익활동)에 투입한 자산으로 얻은 영업이익의 비율\n배당의 이중과세 : 연간이익에 대한 기업의 법인세 + 배당금에 대한 주주의 소득세\n자사주 매입을 통한 주주의 세금 이연(은 주주이익에 도움)"
+  },
+  {
+    "objectID": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-투자-1962-1965년",
+    "href": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-투자-1962-1965년",
+    "title": "[버크셔 해서웨이의 재탄생 읽고] 용어 정리",
+    "section": "2장. 투자: 1962-1965년",
+    "text": "2장. 투자: 1962-1965년\n\n무한책임 파트너(general partner) : 펀드 운용에 관한 무한책임을 지는 출자자, 보통 운용자를 말함\n헤지펀드 :\n환매 :\n이월결손금\n손익계산서\n유동성소요\n**내재 사업가치(intrinsic business value)\n유한책임조합"
+  },
+  {
+    "objectID": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-전환-1965-1967년",
+    "href": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-전환-1965-1967년",
+    "title": "[버크셔 해서웨이의 재탄생 읽고] 용어 정리",
+    "section": "3장. 전환: 1965-1967년",
+    "text": "3장. 전환: 1965-1967년\n\n자본배분\n투하자본이익률\n매출원가\n특별항목 (’특별항목 반영 전 순이익’에서 사용된 의미, ’1964년 특별항목은 유휴설비비용 22만 달러를 포함했다’와 같이 사용)\n유휴설비비용(idle plant expense): 비영업용 제조설비의 유지보수 및 감가상각비\n**기대손실\n손상차손 write-down\n유형자산 손상차손\n이익잉여금\n총포괄손익\n총창출자본(total capital generated)"
+  },
+  {
+    "objectID": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-인수-1967-1969년",
+    "href": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-인수-1967-1969년",
+    "title": "[버크셔 해서웨이의 재탄생 읽고] 용어 정리",
+    "section": "4장. 인수: 1967-1969년",
+    "text": "4장. 인수: 1967-1969년\n\n완전 소유 기업(wholly-owned-subsidiary) : 1개 기업이 단독 투자하여 100% 소유 지문을 가지는것\n상환청구권 :\n\n\n플로트(책임준비금) : + 지급준비금(lost reserve) + 손해사정비 준비금(lost adjustment expense reserve) + 미경과보험료 적립금(unearned premium reserve) - 대리점 미수금(agents’ balance) - 선급 신계약비(prepaid acquisition cost) - 출재보험 준비금(deferred charges applicable to assumed reinsurance) * 플로트 계산법은 분석대상 기업과 애널리스트에 따라 다름 * 기타자산과 기타부채를 처리하는 방법에서 차이가 발생함 * 정확한 플로트 값이 중요하지 않음(소수점 마지막까지 계산X) *\n\n\n합산비율(combined ratio) : 손해율 + 사업비율. 100%를 기준으로 높으면 손해 낮으면 이익\n손해율(loss ratio) : 보험료 수입 대비 보험금 지급 비율\n사업비율(expense ratio) : 보험료 수입 중 인건비, 마케팅비, 모집수수료, 중개비 등 비중\n경과보험료(earned premiums) : 1년단위/일시납이 기본인 손해보험업에서 더 유의미한 기준. 보험사의 회계연도 말을 기준으로 가입자의 전체 보험기간을 경과/미경과 기간으로 구분, 받은 보험료를 경과/미경과 보험료로 구분함\n레버리지 :\n영업 레버리지(operating leverage)\n재무 레버리지(financial leverage)\n유형순자산(tangible net worth)\n영업권(goodwill)\n원수보험료\n순원수보험료(net premiums written) : 원수보험료에서 수/출재보험료와 환급보험료를 가감한 값\n비연결자회사\n연결납세제도(consolidated tax return) : 모회사의 자회사 지분율이 80%이상이고 경제적으로 결합되어있을 때 하나의 과세단위로 해석함. 이에 따라 모회사-자회사간 배당을 과세하지 않을때가 있음. 한국에도 도입되어있지만 연결 요건이 엄격함\n예수부채\n요구불예금\n스핀오프 : 자회사 주식을 모회사 주주에게 배당(인적분할) + 기존 회사의 자회사화\n투자 영업이익 : 이자 및 배당수익 + 유가증권 추분이익"
+  },
+  {
+    "objectID": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-확장-1970년대",
+    "href": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-확장-1970년대",
+    "title": "[버크셔 해서웨이의 재탄생 읽고] 용어 정리",
+    "section": "5장. 확장: 1970년대",
+    "text": "5장. 확장: 1970년대\n\n투하자본\n매출채권\n부채자기자본비율(debt to equity)\n표면이자율\n일반사채(debenture:무담보회사채)\n이자비용 및 법인세 차감 전 이익(EBIT)\n주가매출액배수(price to sales, PSR) : 기업의 주가와 매출을 비교하는 가치평가 지표\n예상손해율(loss expectancy)\n보험영업 손실/이익\n듀레이션(duration, 듀레이션이 긴 재보험에서의 용례)"
+  },
+  {
+    "objectID": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-다른-기업들",
+    "href": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-다른-기업들",
+    "title": "[버크셔 해서웨이의 재탄생 읽고] 용어 정리",
+    "section": "6장. 다른 기업들",
+    "text": "6장. 다른 기업들\n\n공모채 : 불특정다수에게 발행하는 채권\n사용자본이익률(ROCE)\n최초 이익수익률(initial earnings yield)\n모기지(mortgate) : 주택 구매 등을 위해 돈을 빌리고, 갚지 못하는 경우 해당 주택을 대출 업체가 소유\n예대마진(spread) : 예금이자와 대출이자간 차이\n예수부채 : 불특정 다수를 상대로 조달한 자금\n차입인수(LBO, leverage buyout) : 인수할 회사의 자본 등을 담보로 자금을 확보하여 기업을 인수"
+  },
+  {
+    "objectID": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-복합기업",
+    "href": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-복합기업",
+    "title": "[버크셔 해서웨이의 재탄생 읽고] 용어 정리",
+    "section": "7장. 복합기업",
+    "text": "7장. 복합기업\n\n자본잉여금(paid-in surplus) : 주식 발행 등으로 발생하는 잉여금. 돈을 받고 주식을 발행하는 유상증자시 늘어나게 됨\n지배지분이익 : 지배 기업의 순이익에서 지분율만큼 반영한 이익\n매출총이익률 : 매출액 대비 매출총이익 비율\n\n매출총이익 : 매출액에서 (매출과 직접적으로 관계된)비용 차감"
+  },
+  {
+    "objectID": "posts/prgms-sql-20240318/index.html",
+    "href": "posts/prgms-sql-20240318/index.html",
+    "title": "[프로그래머스SQL] 가장 비싼 상품 구하기",
     "section": "",
     "text": "프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다  (비상업적, 비영리적 용도)\n문제링크 게시가능여부\nCopyright © 2024 Kibok Park All rights reserved."
   },
   {
-    "objectID": "posts/prgms-sql-20240320/index.html#개요",
-    "href": "posts/prgms-sql-20240320/index.html#개요",
-    "title": "[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기",
+    "objectID": "posts/prgms-sql-20240318/index.html#개요",
+    "href": "posts/prgms-sql-20240318/index.html#개요",
+    "title": "[프로그래머스SQL] 가장 비싼 상품 구하기",
     "section": "",
     "text": "프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다  (비상업적, 비영리적 용도)\n문제링크 게시가능여부"
   },
   {
-    "objectID": "posts/prgms-sql-20240320/index.html#문제-조건에-부합하는-중고거래-댓글-조회하기",
-    "href": "posts/prgms-sql-20240320/index.html#문제-조건에-부합하는-중고거래-댓글-조회하기",
-    "title": "[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기",
-    "section": "문제 : 조건에 부합하는 중고거래 댓글 조회하기",
-    "text": "문제 : 조건에 부합하는 중고거래 댓글 조회하기\n\n    &lt;h6 class=\"guide-section-title\"&gt;문제 설명&lt;/h6&gt;\n    &lt;div class=\"markdown solarized-dark\"&gt;&lt;p&gt;다음은 중고거래 게시판 정보를 담은 &lt;code&gt;USED_GOODS_BOARD&lt;/code&gt; 테이블과 중고거래 게시판 첨부파일 정보를 담은 &lt;code&gt;USED_GOODS_REPLY&lt;/code&gt; 테이블입니다. &lt;code&gt;USED_GOODS_BOARD&lt;/code&gt; 테이블은 다음과 같으며 &lt;code&gt;BOARD_ID&lt;/code&gt;, &lt;code&gt;WRITER_ID&lt;/code&gt;, &lt;code&gt;TITLE&lt;/code&gt;, &lt;code&gt;CONTENTS&lt;/code&gt;, &lt;code&gt;PRICE&lt;/code&gt;, &lt;code&gt;CREATED_DATE&lt;/code&gt;, &lt;code&gt;STATUS&lt;/code&gt;, &lt;code&gt;VIEWS&lt;/code&gt;은 게시글 ID, 작성자 ID, 게시글 제목, 게시글 내용, 가격, 작성일, 거래상태, 조회수를 의미합니다.&lt;/p&gt;\n\n\n\n\nColumn name\n\n\nType\n\n\nNullable\n\n\n\n\n\n\nBOARD_ID\n\n\nVARCHAR(5)\n\n\nFALSE\n\n\n\n\nWRITER_ID\n\n\nVARCHAR(50)\n\n\nFALSE\n\n\n\n\nTITLE\n\n\nVARCHAR(100)\n\n\nFALSE\n\n\n\n\nCONTENTS\n\n\nVARCHAR(1000)\n\n\nFALSE\n\n\n\n\nPRICE\n\n\nNUMBER\n\n\nFALSE\n\n\n\n\nCREATED_DATE\n\n\nDATE\n\n\nFALSE\n\n\n\n\nSTATUS\n\n\nVARCHAR(10)\n\n\nFALSE\n\n\n\n\nVIEWS\n\n\nNUMBER\n\n\nFALSE\n\n\n\n\n\nUSED_GOODS_REPLY 테이블은 다음과 같으며 REPLY_ID, BOARD_ID, WRITER_ID, CONTENTS, CREATED_DATE는 각각 댓글 ID, 게시글 ID, 작성자 ID, 댓글 내용, 작성일을 의미합니다.\n\n\n\n\n\nColumn name\n\n\nType\n\n\nNullable\n\n\n\n\n\n\nREPLY_ID\n\n\nVARCHAR(10)\n\n\nFALSE\n\n\n\n\nBOARD_ID\n\n\nVARCHAR(5)\n\n\nFALSE\n\n\n\n\nWRITER_ID\n\n\nVARCHAR(50)\n\n\nFALSE\n\n\n\n\nCONTENTS\n\n\nVARCHAR(1000)\n\n\nTRUE\n\n\n\n\nCREATED_DATE\n\n\nDATE\n\n\nFALSE\n\n\n\n\n\n\n문제\n\n\nUSED_GOODS_BOARD와 USED_GOODS_REPLY 테이블에서 2022년 10월에 작성된 게시글 제목, 게시글 ID, 댓글 ID, 댓글 작성자 ID, 댓글 내용, 댓글 작성일을 조회하는 SQL문을 작성해주세요. 결과는 댓글 작성일을 기준으로 오름차순 정렬해주시고, 댓글 작성일이 같다면 게시글 제목을 기준으로 오름차순 정렬해주세요.\n\n\n\n예시\n\n\nUSED_GOODS_BOARD 테이블이 다음과 같고\n\n\n\n\n\nBOARD_ID\n\n\nWRITER_ID\n\n\nTITLE\n\n\nCONTENTS\n\n\nPRICE\n\n\nCREATED_DATE\n\n\nSTATUS\n\n\nVIEWS\n\n\n\n\n\n\nB0001\n\n\nkwag98\n\n\n반려견 배변패드 팝니다\n\n\n정말 저렴히 판매합니다. 전부 미개봉 새상품입니다.\n\n\n12000\n\n\n2022-10-01\n\n\nDONE\n\n\n250\n\n\n\n\nB0002\n\n\nlee871201\n\n\n국내산 볶음참깨\n\n\n직접 농사지은 참깨입니다.\n\n\n3000\n\n\n2022-10-02\n\n\nDONE\n\n\n121\n\n\n\n\nB0003\n\n\ngoung12\n\n\n배드민턴 라켓\n\n\n사놓고 방치만 해서 팝니다.\n\n\n9000\n\n\n2022-10-02\n\n\nSALE\n\n\n212\n\n\n\n\nB0004\n\n\nkeel1990\n\n\n디올 귀걸이\n\n\n신세계강남점에서 구입. 정품 아닐시 백퍼센트 환불\n\n\n130000\n\n\n2022-10-02\n\n\nSALE\n\n\n199\n\n\n\n\nB0005\n\n\nhaphli01\n\n\n스팸클래식 팔아요\n\n\n유통기한 2025년까지에요\n\n\n10000\n\n\n2022-10-02\n\n\nSALE\n\n\n121\n\n\n\n\n\nUSED_GOODS_REPLY 테이블이 다음과 같을 때\n\n\n\n\n\nREPLY_ID\n\n\nBOARD_ID\n\n\nWRITER_ID\n\n\nCONTENTS\n\n\nCREATED_DATE\n\n\n\n\n\n\nR000000001\n\n\nB0001\n\n\ns2s2123\n\n\n구매하겠습니다. 쪽지 드립니다.\n\n\n2022-10-02\n\n\n\n\nR000000002\n\n\nB0002\n\n\nhoho1112\n\n\n쪽지 주세요.\n\n\n2022-10-03\n\n\n\n\nR000000003\n\n\nB0006\n\n\nhwahwa2\n\n\n삽니다. 연락주세요.\n\n\n2022-10-03\n\n\n\n\nR000000004\n\n\nB0007\n\n\nhong02\n\n\n예약중\n\n\n2022-10-06\n\n\n\n\nR000000005\n\n\nB0009\n\n\nhanju23\n\n\n구매완료\n\n\n2022-10-07\n\n\n\n\n\nSQL을 실행하면 다음과 같이 출력되어야 합니다.\n\n\n\n\n\nTITLE\n\n\nBOARD_ID\n\n\nREPLY_ID\n\n\nWRITER_ID\n\n\nCONTENTS\n\n\nCREATED_DATE\n\n\n\n\n\n\n반려견 배변패드 팝니다\n\n\nB0001\n\n\nR000000001\n\n\ns2s2123\n\n\n구매하겠습니다. 쪽지 드립니다.\n\n\n2022-10-02\n\n\n\n\n국내산 볶음참깨\n\n\nB0002\n\n\nR000000002\n\n\nhoho1112\n\n\n쪽지 주세요.\n\n\n2022-10-03\n\n\n\n\n\n\n주의사항\n\n\nCREATED_DATE의 포맷이 예시의 포맷과 일치해야 정답처리 됩니다.\n\n\n  &lt;/div&gt;"
+    "objectID": "posts/prgms-sql-20240318/index.html#문제-가장-비싼-상품-구하기",
+    "href": "posts/prgms-sql-20240318/index.html#문제-가장-비싼-상품-구하기",
+    "title": "[프로그래머스SQL] 가장 비싼 상품 구하기",
+    "section": "문제 : 가장 비싼 상품 구하기",
+    "text": "문제 : 가장 비싼 상품 구하기\n\n\n\n문제 이미지"
   },
   {
-    "objectID": "posts/prgms-sql-20240320/index.html#작성답안",
-    "href": "posts/prgms-sql-20240320/index.html#작성답안",
-    "title": "[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기",
+    "objectID": "posts/prgms-sql-20240318/index.html#작성답안",
+    "href": "posts/prgms-sql-20240318/index.html#작성답안",
+    "title": "[프로그래머스SQL] 가장 비싼 상품 구하기",
     "section": "작성답안",
-    "text": "작성답안\n\n\n\nSELECT board.TITLE, board.BOARD_ID,\n       reply.REPLY_ID, reply.WRITER_ID, reply.CONTENTS, TO_CHAR(reply.CREATED_DATE, 'YYYY-MM-DD')\nFROM USED_GOODS_BOARD board, USED_GOODS_REPLY reply\nWHERE TO_CHAR(board.CREATED_DATE, 'YYYYMM') = '202210'\n  AND board.BOARD_ID = reply.BOARD_ID\nORDER BY reply.CREATED_DATE ASC, board.TITLE ASC;\n\n\nFigure 1"
+    "text": "작성답안\n\n\n\nSELECT MAX(PRICE) AS MAX_PRICE\nFROM PRODUCT\n\n\nFigure 1"
   },
   {
-    "objectID": "posts/prgms-sql-20240320/index.html#정리",
-    "href": "posts/prgms-sql-20240320/index.html#정리",
-    "title": "[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기",
+    "objectID": "posts/prgms-sql-20240318/index.html#정리",
+    "href": "posts/prgms-sql-20240318/index.html#정리",
+    "title": "[프로그래머스SQL] 가장 비싼 상품 구하기",
     "section": "정리",
-    "text": "정리\n\n각 테이블의 BOARD_ID 일치시키는 것을 실수하였음. 향후 동일케이스에 대해서는 고려하여 풀기\n다중정렬 &gt; ORDER BY reply.CREATED_DATE ASC, board.TITLE ASC; 앞의 컬럼일수록 정렬 우선순위를 가짐"
-  },
-  {
-    "objectID": "posts/meta-dl-creditcard-20240609/index.html",
-    "href": "posts/meta-dl-creditcard-20240609/index.html",
-    "title": "[M_Study_3주차] Multi-class Classification / Artificial Neural Network",
-    "section": "",
-    "text": "참여중인 딥러닝 스터디 3주차 기록입니다.\nCopyright © 2024 Kibok Park All rights reserved."
-  },
-  {
-    "objectID": "posts/meta-dl-creditcard-20240609/index.html#개요",
-    "href": "posts/meta-dl-creditcard-20240609/index.html#개요",
-    "title": "[M_Study_3주차] Multi-class Classification / Artificial Neural Network",
-    "section": "",
-    "text": "참여중인 딥러닝 스터디 3주차 기록입니다."
-  },
-  {
-    "objectID": "posts/meta-dl-creditcard-20240609/index.html#주차-과제-설명",
-    "href": "posts/meta-dl-creditcard-20240609/index.html#주차-과제-설명",
-    "title": "[M_Study_3주차] Multi-class Classification / Artificial Neural Network",
-    "section": "2주차 과제 설명",
-    "text": "2주차 과제 설명\n\ntf.random.set_seed(2024)\n\n서로 다른 모델을 비교하는 경우, 시작점이 다른 것 때문에 성능우위가 다르게 측정되는 경우 발생 (같은 성능임에도 다르게 나오거나, 좋은 모델이 더 나쁜 모델로 오인되는 경우)\n이러한 경우를 방지하고자, set_seed로 같은 지점에서 시작하게 할 수 있음\n딥러닝은 복잡한 다차원의 함수이므로, 좋은 시작점에 따라 달라질 수 있음 (좋은 Optimizer를 사용하고 좋은 데이터를 쓴다면 차이는 줄어들 수 있음)\n\nMatrix Multiplication\n\nA(1,2), B(2,1)와 같은 Matrix에서, A의 열(,2)과 B의 행(2,)의 숫자가 같아야 가능\n\nCost function에서 마이너스(-)를 붙이는 경우\n\n높을수록 안좋은 척도여야 할 때, 계산식이 높을수록 좋은 값인 경우 붙여서 변환\n\nLearning rate\n\nGD에서 안정적으로 최적점에 가게하기 위해 학습률을 조정\n사람이 지정하는 hyper parameter, 경험에 의해 넣는 경우가 많다(정답은 없음)\n\nConfusion Matrix\n\nRecall, Precision 으로 표현하는 것은 경영진 등에는 와닿지 않을 수 있으므로 시각화하여 보여주면 좋음"
-  },
-  {
-    "objectID": "posts/meta-dl-creditcard-20240609/index.html#주차-과제-logistic-regression-코드-작성한-것",
-    "href": "posts/meta-dl-creditcard-20240609/index.html#주차-과제-logistic-regression-코드-작성한-것",
-    "title": "[M_Study_3주차] Multi-class Classification / Artificial Neural Network",
-    "section": "2주차 과제 Logistic regression 코드 작성한 것",
-    "text": "2주차 과제 Logistic regression 코드 작성한 것\nimport matplotlib.pyplot as plt\nimport numpy as np\nimport tensorflow as tf\n\n# Train data\nX_train = np.array([[1., 1.],\n                   [1., 2.],\n                   [2., 1.],\n                   [3., 2.],\n                   [3., 3.],\n                   [2., 3.]],\n                   dtype=np.float32)\nY_train = np.array([[0.],\n                   [0.],\n                   [0.],\n                   [1.],\n                   [1.],\n                   [1.],],\n                   dtype=np.float32)\n\n# 회귀선 작성 전 분포확인\ncolors=['red' if L&gt;0.5 else 'blue' for L in Y_train]\nplt.scatter(X_train[:,0], X_train[:, 1], label='Logistics regression', color=colors)\n\n\n\nimage.png\n\n\n# 모델 학습\ntf.random.set_seed(2020)\nW = tf.Variable(tf.random.normal([2,1], mean=0.0))\nb = tf.Variable(tf.random.normal([1], mean=0.0))\n\ndef hypothesis(X):\n    z = tf.matmul(X, W) + b\n    sigmoid = 1 / (1 + tf.exp(-z))\n    return sigmoid\n\ndef cost_fn(H, Y):\n    cost = -tf.reduce_mean(Y*tf.math.log(H) + (1-Y)*tf.math.log(1-H))\n    return cost\n\nlearning_rate = 0.01\noptimizer = tf.optimizers.SGD(learning_rate)\n\nfor step in range(5001):\n    with tf.GradientTape() as g:\n        pred = hypothesis(X_train)\n        cost = cost_fn(pred, Y_train)\n\n        gradients = g.gradient(cost, [W,b])\n    \n    optimizer.apply_gradients(zip(gradients, [W, b]))\n\n    if step % 1000 == 0:\n        print(f'Step={step+1}, Cost = {cost}, W={W.numpy()}, b = {b.numpy()}')\n\nw_hat = W.numpy()\nb_hat = b.numpy()\n\nStep=1, Cost = 0.7932398319244385, W=[[-0.10415223] [0.68125504]], b = [0.3810195]  Step=1001, Cost = 0.5122759938240051, W=[[0.1809378] [0.55177015]], b = [-0.97815347]  Step=2001, Cost = 0.39883172512054443, W=[[0.5135696] [0.6884617]], b = [-1.9777462]  Step=3001, Cost = 0.32507583498954773, W=[[0.7515713] [0.8368167]], b = [-2.7877953]  Step=4001, Cost = 0.27400580048561096, W=[[0.9350327] [0.97824335]], b = [-3.4628296]  Step=5001, Cost = 0.2367737740278244, W=[[1.0848083] [1.1075894]], b = [-4.039375]\n\n# Slope(Coefficient) 확인\nslope = w_hat[0]/w_hat[1]\nxx = np.linspace(np.min(X_train[:,0]),np.max(X_train[:,0])) # min과 max 사이 구간의 숫자를 생성. x값\nyy = -slope*xx - b_hat/w_hat[1]                             # xx(x값)입력하여 y값 생성\n\n# train data분포\nplt.scatter(X_train[:, 0], X_train[:, 1], label='Logistics regression', color=colors)\n\n# 분류선(Decision Boundary)확인\nplt.plot(xx, yy, label='Decision Boundary')\nplt.legend()\n\n\n\nimage-2.png\n\n\n# Confusion matrix\nfrom sklearn.metrics import confusion_matrix\n\nX_test = np.array([[1., 0.],\n                   [0., 2.],\n                   [1., 1.],\n                   [3., 2.],\n                   [3., 3.],\n                   [2., 3.]],\n                   dtype=np.float32)\nY_test = np.array([[0.],\n                   [0.],\n                   [1.],\n                   [0.],\n                   [1.],\n                   [0.],],\n                   dtype=np.float32)\n\nY_actual = Y_test\nY_predicted = hypothesis(X_test)\nY_predicted_binary = np.where(Y_predicted &gt;= 0.5, 1, 0)\n\nCM_array = confusion_matrix(Y_actual, Y_predicted_binary, labels=[0, 1]) \nCM_array\n\narray([[2, 2], [1, 1]], dtype=int64)\n\n# Confusion matrix 시각화(seaborn)\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n\nclass_labels = ['Negative', 'Positive']\nplt.figure(figsize=(8, 6))\nsns.heatmap(CM_array, annot=True, cmap='Blues',\n            xticklabels=class_labels, yticklabels=class_labels)\n\nplt.title('Confusion Matrix')\nplt.xlabel('Predicted')\nplt.ylabel('True')\n\n\n\nimage-3.png\n\n\n# Confusion matrix 시각화(Scikit-learn)\nfrom sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay\n\ndisp = ConfusionMatrixDisplay(confusion_matrix=CM_array, display_labels=[0, 1])\ndisp.plot(cmap=plt.cm.Blues)\nplt.title('Confusion Matrix')\nplt.show()\n\n\n\nimage-4.png"
-  },
-  {
-    "objectID": "posts/meta-dl-creditcard-20240609/index.html#multi-class-classfication-regression",
-    "href": "posts/meta-dl-creditcard-20240609/index.html#multi-class-classfication-regression",
-    "title": "[M_Study_3주차] Multi-class Classification / Artificial Neural Network",
-    "section": "Multi-class Classfication regression",
-    "text": "Multi-class Classfication regression\n\n2가지 분류가 아닌 3가지 이상의 분류(A,B,C로 나누는 신용등급 등)\nBinary classification과 달리 하나의 Decision boundary로는 해결 불가\nOne vs All(Rest)\n\n하나의 대상과, 아닌 것’들’로 Binary Classification을 여러번 수행\n예를 들어 a, b, c 3가지를 분류하는 경우\n\n아래와 같은 같은 3개의 식으로 표현할 수 있고, \n아래와 같이 하나의 행렬로 한번에 표현할 수 있다  \n\nSoftmax : 각 결과값(\\(H_a, H_b, H_c\\))의 비율(확률)이 나오게 됨(총합이 1)\n\nCross entropy cost function\n\n정보량은 확률에 반비례한다고 정의 (정보량= $ 1 p$)\n\n특정 성씨의 사람을 뽑는다고 할 때, 한국의 주요 성씨인 김씨\\(1 \\over 10\\) vs 소수 성씨인 남궁씨\\(1 \\over 100\\)\n\n로그를 취하여 전개하면 Cross entropy 식이 된다\nEntropy : Measure for uncertainty (불확실성의 측정)  \nCase별 Cross entropy(cost function)\n\n출력값(결과값 softmax)과 실제값이 비슷한 경우 : 특정 값 산출\n출력값(결과값 softmax)과 실제값이 완전히 다른 경우 : 무한대\n출력값(결과값 softmax)과 실제값이 완전히 동일한 경우 : 0\n\nCross entropy를 개인이 직접구현한다면 놓칠 수 있는 부분(cross entropy의 무한대)의 문제\n\n파이토치 등 많은 사람이 참여한 패키지를 사용하면 방지할 수 있음\n컴퓨터에서의 Zero division error 등의 경우, 텐서플로우 등 패키지에선 분모에 0.00001등을 더하여 실제값엔 영향이 작게하며 오류 제거"
-  },
-  {
-    "objectID": "posts/prgms-sql-20240321/index.html",
-    "href": "posts/prgms-sql-20240321/index.html",
-    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
-    "section": "",
-    "text": "프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다  (비상업적, 비영리적 용도)\n문제링크 게시가능여부\nCopyright © 2024 Kibok Park All rights reserved."
-  },
-  {
-    "objectID": "posts/prgms-sql-20240321/index.html#개요",
-    "href": "posts/prgms-sql-20240321/index.html#개요",
-    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
-    "section": "",
-    "text": "프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다  (비상업적, 비영리적 용도)\n문제링크 게시가능여부"
-  },
-  {
-    "objectID": "posts/prgms-sql-20240321/index.html#문제-3월에-태어난-여성-회원-목록-출력하기",
-    "href": "posts/prgms-sql-20240321/index.html#문제-3월에-태어난-여성-회원-목록-출력하기",
-    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
-    "section": "문제 : 3월에 태어난 여성 회원 목록 출력하기",
-    "text": "문제 : 3월에 태어난 여성 회원 목록 출력하기\n\n\n다음은 식당 리뷰 사이트의 회원 정보를 담은 MEMBER_PROFILE 테이블입니다. MEMBER_PROFILE 테이블은 다음과 같으며 MEMBER_ID, MEMBER_NAME, TLNO, GENDER, DATE_OF_BIRTH는 회원 ID, 회원 이름, 회원 연락처, 성별, 생년월일을 의미합니다.\n\n\n\n\n\nColumn name\n\n\nType\n\n\nNullable\n\n\n\n\n\n\nMEMBER_ID\n\n\nVARCHAR(100)\n\n\nFALSE\n\n\n\n\nMEMBER_NAME\n\n\nVARCHAR(50)\n\n\nFALSE\n\n\n\n\nTLNO\n\n\nVARCHAR(50)\n\n\nTRUE\n\n\n\n\nGENDER\n\n\nVARCHAR(1)\n\n\nTRUE\n\n\n\n\nDATE_OF_BIRTH\n\n\nDATE\n\n\nTRUE\n\n\n\n\n\n\n문제\n\n\nMEMBER_PROFILE 테이블에서 생일이 3월인 여성 회원의 ID, 이름, 성별, 생년월일을 조회하는 SQL문을 작성해주세요. 이때 전화번호가 NULL인 경우는 출력대상에서 제외시켜 주시고, 결과는 회원ID를 기준으로 오름차순 정렬해주세요.\n\n\n\n예시\n\n\nMEMBER_PROFILE 테이블이 다음과 같을 때\n\n\n\n\n\nMEMBER_ID\n\n\nMEMBER_NAME\n\n\nTLNO\n\n\nGENDER\n\n\nDATE_OF_BIRTH\n\n\n\n\n\n\njiho92@naver.com\n\n\n이지호\n\n\n01076432111\n\n\nW\n\n\n1992-02-12\n\n\n\n\njiyoon22@hotmail.com\n\n\n김지윤\n\n\n01032324117\n\n\nW\n\n\n1992-02-22\n\n\n\n\njihoon93@hanmail.net\n\n\n김지훈\n\n\n01023258688\n\n\nM\n\n\n1993-02-23\n\n\n\n\nseoyeons@naver.com\n\n\n박서연\n\n\n01076482209\n\n\nW\n\n\n1993-03-16\n\n\n\n\nyoonsy94@gmail.com\n\n\n윤서연\n\n\nNULL\n\n\nW\n\n\n1994-03-19\n\n\n\n\n\nSQL을 실행하면 다음과 같이 출력되어야 합니다.\n\n\n\n\n\nMEMBER_ID\n\n\nMEMBER_NAME\n\n\nGENDER\n\n\nDATE_OF_BIRTH\n\n\n\n\n\n\nseoyeons@naver.com\n\n\n박서연\n\n\nW\n\n\n1993-03-16\n\n\n\n\n\n\n주의사항\n\n\nDATE_OF_BIRTH의 데이트 포맷이 예시와 동일해야 정답처리 됩니다."
-  },
-  {
-    "objectID": "posts/prgms-sql-20240321/index.html#작성답안",
-    "href": "posts/prgms-sql-20240321/index.html#작성답안",
-    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
-    "section": "작성답안",
-    "text": "작성답안\n\n\n\nSELECT MEMBER_ID, MEMBER_NAME,  GENDER, TO_CHAR(DATE_OF_BIRTH, 'YYYY-MM-DD')\nFROM MEMBER_PROFILE\nWHERE GENDER = 'W'\n  AND TO_CHAR(DATE_OF_BIRTH, 'MON') = 'MAR'\n  AND TLNO IS NOT NULL\nORDER BY MEMBER_ID ASC\n\n\nFigure 1"
-  },
-  {
-    "objectID": "posts/prgms-sql-20240321/index.html#정리",
-    "href": "posts/prgms-sql-20240321/index.html#정리",
-    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
-    "section": "정리",
-    "text": "정리\n\nWHERE 컬럼명 IS NOT NULL\nWHERE NOT 컬럼명 IS NULL"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Blog",
-    "section": "",
-    "text": "[M_Study_3주차] Multi-class Classification / Artificial Neural Network\n\n\n\n파이썬\n\n\n머신러닝\n\n\n딥러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-06-09\n\n\n\n\n\n\n\n\n\n\n\n\n[M_Study_2주차] Multiple Regression / Logistic Regression\n\n\n\n파이썬\n\n\n머신러닝\n\n\n딥러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-06-02\n\n\n\n\n\n\n\n\n\n\n\n\n[M_Study_1주차] Tensorflow / Linear Regression\n\n\n\n파이썬\n\n\n머신러닝\n\n\n딥러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-05-26\n\n\n\n\n\n\n\n\n\n\n\n\nNH증권 직무인터뷰를 읽고(트레이딩&빅데이터)\n\n\n\n직무분석\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-28\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n[버크셔 해서웨이의 재탄생 읽고] 용어 정리\n\n\n\n경제/금융공부\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-23\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-21\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-20\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 조건에 맞는 도서 리스트 출력하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-19\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 가장 비싼 상품 구하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-18\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 평균 일일 대여 요금 구하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-17\n\n\n\n\n\n\n\n\n\n\n\n\n[Scikit-learn] Kaggle 집값예측 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-05-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Pytorch] MNIST 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-02-19\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
-  },
-  {
-    "objectID": "index_miniprojects.html",
-    "href": "index_miniprojects.html",
-    "title": "Mini Projects",
-    "section": "",
-    "text": "[Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 & 정리 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\n\nPython, win32를 활용한 SAP Scripting\n\n\n\nKibok Park\n\n\n2024-03-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] COO발급관리용 Tool\n\n\n\nPython\n\n\nwin11toast\n\n\nsqlite3\n\n\nstreamlit\n\n\npandas\n\n\nselenium\n\n\n\n[Python] selenium(웹스크레핑), sqlite3(db), win11toast(알림), streamlit(UI)\n\n\n\nKibok Park\n\n\n2024-02-20\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] LocalL/C 관리용 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\nStreamlit\n\n\nsqlite3\n\n\nBeautifulSoup\n\n\n\nPython, Streamlit을 활용한 업무자동화\n\n\n\nKibok Park\n\n\n2024-01-22\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] 아웃룩 메일열람 & pdf regex리딩 & 시스템 자동등록\n\n\n\nPython\n\n\nre\n\n\nxlwings\n\n\npandas\n\n\npdfminer\n\n\n\n[Python] re(regex), xlwings(암호화 Excel리딩), pdfminer(pdf리딩), pywin32(outlook)\n\n\n\nKibok Park\n\n\n2023-12-15\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] Peak타임 대응용 수출계약서pdf tabula리딩\n\n\n\nPython\n\n\ntabula\n\n\nxlwings\n\n\npathlib\n\n\npandas\n\n\n\n[Python] tabula(pdf리딩[표 형태], xlwings(암호화 Excel리딩)\n\n\n\nKibok Park\n\n\n2023-11-02\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "Kibok Park",
-    "section": "",
-    "text": "I’m Kibok Park. Welcome to my blog. I’m not an expert in my favorites yet, but I’m working on becoming one. I hope you to have nice time with my blog.\nCopyright © 2024 Kibok Park All rights reserved."
-  },
-  {
-    "objectID": "about.html#hello",
-    "href": "about.html#hello",
-    "title": "Kibok Park",
-    "section": "",
-    "text": "I’m Kibok Park. Welcome to my blog. I’m not an expert in my favorites yet, but I’m working on becoming one. I hope you to have nice time with my blog."
-  },
-  {
-    "objectID": "about.html#topics",
-    "href": "about.html#topics",
-    "title": "Kibok Park",
-    "section": "Topics",
-    "text": "Topics\nPython, Quantative trading"
-  },
-  {
-    "objectID": "posts/coach-ml-mnist-20230301/index.html",
-    "href": "posts/coach-ml-mnist-20230301/index.html",
-    "title": "[Pytorch] MNIST 실습",
-    "section": "",
-    "text": "파이토치로 MNIST 머신러닝 실습해본 코드 기록용으로 남깁니다.\nCopyright © 2024 Kibok Park All rights reserved."
-  },
-  {
-    "objectID": "posts/coach-ml-mnist-20230301/index.html#개요",
-    "href": "posts/coach-ml-mnist-20230301/index.html#개요",
-    "title": "[Pytorch] MNIST 실습",
-    "section": "",
-    "text": "파이토치로 MNIST 머신러닝 실습해본 코드 기록용으로 남깁니다."
-  },
-  {
-    "objectID": "posts/coach-ml-mnist-20230301/index.html#pytorch활용한-mnist-데이터셋-로딩",
-    "href": "posts/coach-ml-mnist-20230301/index.html#pytorch활용한-mnist-데이터셋-로딩",
-    "title": "[Pytorch] MNIST 실습",
-    "section": "Pytorch활용한 MNIST 데이터셋 로딩",
-    "text": "Pytorch활용한 MNIST 데이터셋 로딩\n\n\n\nimport torch\nimport torch.nn as nn\nfrom torch.utils.data import DataLoader\nimport torchvision\nimport torchvision.datasets as dset\nimport torchvision.transforms as transforms\n\nroot = './data'\nmnist_train = dset.MNIST (root=root, train=True, transform=transforms.ToTensor(), download=True )\nmnist_test = dset.MNIST (root=root, train=False, transform=transforms.ToTensor(), download=True)\n\n# Train용 / Test용 데이터셋\ntrain_loader = DataLoader(mnist_train, batch_size=10, shuffle=True)\ntest_loader = DataLoader(mnist_test, batch_size=10, shuffle=True)\n\n\nFigure 1"
-  },
-  {
-    "objectID": "posts/coach-ml-mnist-20230301/index.html#학습준비가중치-초기화-등",
-    "href": "posts/coach-ml-mnist-20230301/index.html#학습준비가중치-초기화-등",
-    "title": "[Pytorch] MNIST 실습",
-    "section": "학습준비(가중치 초기화 등)",
-    "text": "학습준비(가중치 초기화 등)\n\nMNIST의 크기 : 28 * 28\nLoss : Cross Entropy\nOptimizer - SGD(Stochastic Gradient Descent)\nLearning rate = 0.1\n\n\ndevice = torch.device('cuda' if torch.cuda.is_available() else 'cpu')\n\n# 모델 구현 (28*28 = 784 / 0~9라서 10개 / 가중치 사용하므로 bias)\nlinear = torch.nn.Linear(784, 10, bias=True).to(device) \n\n# weight init 가중치 초기화\ntorch.nn.init.normal_(linear.weight)\n\n# Loss fn - Cross Entropy Loss\ncriterion = torch.nn.CrossEntropyLoss().to(device)\n\n# optimizer - SGD\noptimizer = torch.optim.SGD(linear.parameters(), lr=0.1)"
-  },
-  {
-    "objectID": "posts/coach-ml-mnist-20230301/index.html#모델-학습",
-    "href": "posts/coach-ml-mnist-20230301/index.html#모델-학습",
-    "title": "[Pytorch] MNIST 실습",
-    "section": "모델 학습",
-    "text": "모델 학습\n\ntraining_epochs = 20 # training 반복 횟수\n\nfor epoch in range(training_epochs):\n  for i, (imgs, labels) in enumerate(train_loader):\n    labels = labels.to(device)\n    imgs = imgs.view(-1, 28 * 28).to(device)\n\n    outputs = linear(imgs) \n    loss = criterion(outputs, labels) \n\n    optimizer.zero_grad()# optimzier zero grad\n\n    loss.backward() # loss backward\n    optimizer.step() # optimzier step\n\n    _,argmax = torch.max(outputs, 1)\n    accuracy = (labels == argmax).float().mean()\n\n  if (i+1) % 100 == 0:\n    print('Epoch [{}/{}], Step [{}/{}], Loss: {: .4f}, Accuracy: {: .2f}%'.format(\n    epoch+1, training_epochs, i+1, len(train_loader), loss.item(), accuracy.item()* 100))\n\nEpoch [1/20], Step [6000/6000], Loss:  0.0273, Accuracy:  100.00%\nEpoch [2/20], Step [6000/6000], Loss:  0.0762, Accuracy:  100.00%\nEpoch [3/20], Step [6000/6000], Loss:  0.5928, Accuracy:  80.00%\nEpoch [4/20], Step [6000/6000], Loss:  0.2854, Accuracy:  90.00%\nEpoch [5/20], Step [6000/6000], Loss:  0.1373, Accuracy:  90.00%\nEpoch [6/20], Step [6000/6000], Loss:  0.0668, Accuracy:  100.00%\nEpoch [7/20], Step [6000/6000], Loss:  0.0253, Accuracy:  100.00%\nEpoch [8/20], Step [6000/6000], Loss:  0.0542, Accuracy:  100.00%\nEpoch [9/20], Step [6000/6000], Loss:  0.9203, Accuracy:  80.00%\nEpoch [10/20], Step [6000/6000], Loss:  0.1244, Accuracy:  90.00%\nEpoch [11/20], Step [6000/6000], Loss:  0.6108, Accuracy:  90.00%\nEpoch [12/20], Step [6000/6000], Loss:  0.1312, Accuracy:  100.00%\nEpoch [13/20], Step [6000/6000], Loss:  0.0705, Accuracy:  100.00%\nEpoch [14/20], Step [6000/6000], Loss:  1.6259, Accuracy:  70.00%\nEpoch [15/20], Step [6000/6000], Loss:  0.0538, Accuracy:  100.00%\nEpoch [16/20], Step [6000/6000], Loss:  0.2435, Accuracy:  80.00%\nEpoch [17/20], Step [6000/6000], Loss:  0.0061, Accuracy:  100.00%\nEpoch [18/20], Step [6000/6000], Loss:  0.1091, Accuracy:  100.00%\nEpoch [19/20], Step [6000/6000], Loss:  0.0157, Accuracy:  100.00%\nEpoch [20/20], Step [6000/6000], Loss:  0.1413, Accuracy:  90.00%"
-  },
-  {
-    "objectID": "posts/coach-ml-mnist-20230301/index.html#학습된-모델-테스트",
-    "href": "posts/coach-ml-mnist-20230301/index.html#학습된-모델-테스트",
-    "title": "[Pytorch] MNIST 실습",
-    "section": "학습된 모델 테스트",
-    "text": "학습된 모델 테스트\n\nlinear.eval()\nwith torch.no_grad():\n    correct = 0\n    total = 0\n    for i, (imgs, labels) in enumerate(test_loader):\n        imgs, labels = imgs.to(device), labels.to(device)\n        imgs = imgs.view(-1, 28 * 28)\n\n        outputs = linear(imgs) # 구현\n\n        _, argmax = torch.max(outputs, 1) # max()를 통해 최종 출력이 가장 높은 class 선택\n        total += imgs.size(0)\n        correct += (labels == argmax). sum().item()\n\n    print('Test accuracy for {} images: {: .2f}%'.format(total, correct / total * 100))\n\nTest accuracy for 10000 images:  91.99%"
+    "text": "정리\n\nMAX(컬럼명) : 최대값\nMIN(컬럼명) : 최소값"
   },
   {
     "objectID": "posts/meta-dl-creditcard-20240526/index.html",
@@ -539,130 +455,186 @@
     "text": "Bias vs Variance 의 Trade off\n\nerror는 Variance와 Bias로 이루어져 있다 &gt; Variance(V), Bias(B) 예시 (과녁) V 낮음 B 낮음 : 정중앙에 잘 모여있음 V 낮음 B 높음 : 잘 모여있지만 위치가 잘못됨 V 높음 B 낮음 : 정답 근처이지만 불안정하게 퍼져있음 V 높음 V 높음 : 정답 근처도 아니고, 불안정하게 퍼져있음\nBias낮음 : Training에서 적중률이 높다, Overfitting 정답 자체를 틀리는 것과 관계\nVariance높음 : 모델이 불안정하다 변동에 과민하게 반응하는 것과 관계 (결과의 극단적 변화, 무의미한 결과는 무의미한 것으로 간주해야 안정적인 모델)\n둘 다 낮추기는 힘듦 (B낮추려면 V높아짐, B낮추려면 V 높아짐)\n둘 다 낮추기 위한 단 하나의 방법 : 데이터를 추가한다\nBias와 Variance를 고려한 가장 error가 적은 부분 Sweet spot"
   },
   {
-    "objectID": "posts/prgms-sql-20240318/index.html",
-    "href": "posts/prgms-sql-20240318/index.html",
-    "title": "[프로그래머스SQL] 가장 비싼 상품 구하기",
+    "objectID": "posts/coach-ml-mnist-20230301/index.html",
+    "href": "posts/coach-ml-mnist-20230301/index.html",
+    "title": "[Pytorch] MNIST 실습",
+    "section": "",
+    "text": "파이토치로 MNIST 머신러닝 실습해본 코드 기록용으로 남깁니다.\nCopyright © 2024 Kibok Park All rights reserved."
+  },
+  {
+    "objectID": "posts/coach-ml-mnist-20230301/index.html#개요",
+    "href": "posts/coach-ml-mnist-20230301/index.html#개요",
+    "title": "[Pytorch] MNIST 실습",
+    "section": "",
+    "text": "파이토치로 MNIST 머신러닝 실습해본 코드 기록용으로 남깁니다."
+  },
+  {
+    "objectID": "posts/coach-ml-mnist-20230301/index.html#pytorch활용한-mnist-데이터셋-로딩",
+    "href": "posts/coach-ml-mnist-20230301/index.html#pytorch활용한-mnist-데이터셋-로딩",
+    "title": "[Pytorch] MNIST 실습",
+    "section": "Pytorch활용한 MNIST 데이터셋 로딩",
+    "text": "Pytorch활용한 MNIST 데이터셋 로딩\n\n\n\nimport torch\nimport torch.nn as nn\nfrom torch.utils.data import DataLoader\nimport torchvision\nimport torchvision.datasets as dset\nimport torchvision.transforms as transforms\n\nroot = './data'\nmnist_train = dset.MNIST (root=root, train=True, transform=transforms.ToTensor(), download=True )\nmnist_test = dset.MNIST (root=root, train=False, transform=transforms.ToTensor(), download=True)\n\n# Train용 / Test용 데이터셋\ntrain_loader = DataLoader(mnist_train, batch_size=10, shuffle=True)\ntest_loader = DataLoader(mnist_test, batch_size=10, shuffle=True)\n\n\nFigure 1"
+  },
+  {
+    "objectID": "posts/coach-ml-mnist-20230301/index.html#학습준비가중치-초기화-등",
+    "href": "posts/coach-ml-mnist-20230301/index.html#학습준비가중치-초기화-등",
+    "title": "[Pytorch] MNIST 실습",
+    "section": "학습준비(가중치 초기화 등)",
+    "text": "학습준비(가중치 초기화 등)\n\nMNIST의 크기 : 28 * 28\nLoss : Cross Entropy\nOptimizer - SGD(Stochastic Gradient Descent)\nLearning rate = 0.1\n\n\ndevice = torch.device('cuda' if torch.cuda.is_available() else 'cpu')\n\n# 모델 구현 (28*28 = 784 / 0~9라서 10개 / 가중치 사용하므로 bias)\nlinear = torch.nn.Linear(784, 10, bias=True).to(device) \n\n# weight init 가중치 초기화\ntorch.nn.init.normal_(linear.weight)\n\n# Loss fn - Cross Entropy Loss\ncriterion = torch.nn.CrossEntropyLoss().to(device)\n\n# optimizer - SGD\noptimizer = torch.optim.SGD(linear.parameters(), lr=0.1)"
+  },
+  {
+    "objectID": "posts/coach-ml-mnist-20230301/index.html#모델-학습",
+    "href": "posts/coach-ml-mnist-20230301/index.html#모델-학습",
+    "title": "[Pytorch] MNIST 실습",
+    "section": "모델 학습",
+    "text": "모델 학습\n\ntraining_epochs = 20 # training 반복 횟수\n\nfor epoch in range(training_epochs):\n  for i, (imgs, labels) in enumerate(train_loader):\n    labels = labels.to(device)\n    imgs = imgs.view(-1, 28 * 28).to(device)\n\n    outputs = linear(imgs) \n    loss = criterion(outputs, labels) \n\n    optimizer.zero_grad()# optimzier zero grad\n\n    loss.backward() # loss backward\n    optimizer.step() # optimzier step\n\n    _,argmax = torch.max(outputs, 1)\n    accuracy = (labels == argmax).float().mean()\n\n  if (i+1) % 100 == 0:\n    print('Epoch [{}/{}], Step [{}/{}], Loss: {: .4f}, Accuracy: {: .2f}%'.format(\n    epoch+1, training_epochs, i+1, len(train_loader), loss.item(), accuracy.item()* 100))\n\nEpoch [1/20], Step [6000/6000], Loss:  0.0273, Accuracy:  100.00%\nEpoch [2/20], Step [6000/6000], Loss:  0.0762, Accuracy:  100.00%\nEpoch [3/20], Step [6000/6000], Loss:  0.5928, Accuracy:  80.00%\nEpoch [4/20], Step [6000/6000], Loss:  0.2854, Accuracy:  90.00%\nEpoch [5/20], Step [6000/6000], Loss:  0.1373, Accuracy:  90.00%\nEpoch [6/20], Step [6000/6000], Loss:  0.0668, Accuracy:  100.00%\nEpoch [7/20], Step [6000/6000], Loss:  0.0253, Accuracy:  100.00%\nEpoch [8/20], Step [6000/6000], Loss:  0.0542, Accuracy:  100.00%\nEpoch [9/20], Step [6000/6000], Loss:  0.9203, Accuracy:  80.00%\nEpoch [10/20], Step [6000/6000], Loss:  0.1244, Accuracy:  90.00%\nEpoch [11/20], Step [6000/6000], Loss:  0.6108, Accuracy:  90.00%\nEpoch [12/20], Step [6000/6000], Loss:  0.1312, Accuracy:  100.00%\nEpoch [13/20], Step [6000/6000], Loss:  0.0705, Accuracy:  100.00%\nEpoch [14/20], Step [6000/6000], Loss:  1.6259, Accuracy:  70.00%\nEpoch [15/20], Step [6000/6000], Loss:  0.0538, Accuracy:  100.00%\nEpoch [16/20], Step [6000/6000], Loss:  0.2435, Accuracy:  80.00%\nEpoch [17/20], Step [6000/6000], Loss:  0.0061, Accuracy:  100.00%\nEpoch [18/20], Step [6000/6000], Loss:  0.1091, Accuracy:  100.00%\nEpoch [19/20], Step [6000/6000], Loss:  0.0157, Accuracy:  100.00%\nEpoch [20/20], Step [6000/6000], Loss:  0.1413, Accuracy:  90.00%"
+  },
+  {
+    "objectID": "posts/coach-ml-mnist-20230301/index.html#학습된-모델-테스트",
+    "href": "posts/coach-ml-mnist-20230301/index.html#학습된-모델-테스트",
+    "title": "[Pytorch] MNIST 실습",
+    "section": "학습된 모델 테스트",
+    "text": "학습된 모델 테스트\n\nlinear.eval()\nwith torch.no_grad():\n    correct = 0\n    total = 0\n    for i, (imgs, labels) in enumerate(test_loader):\n        imgs, labels = imgs.to(device), labels.to(device)\n        imgs = imgs.view(-1, 28 * 28)\n\n        outputs = linear(imgs) # 구현\n\n        _, argmax = torch.max(outputs, 1) # max()를 통해 최종 출력이 가장 높은 class 선택\n        total += imgs.size(0)\n        correct += (labels == argmax). sum().item()\n\n    print('Test accuracy for {} images: {: .2f}%'.format(total, correct / total * 100))\n\nTest accuracy for 10000 images:  91.99%"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "Kibok Park",
+    "section": "",
+    "text": "I’m Kibok Park. Welcome to my blog. I’m not an expert in my favorites yet, but I’m working on becoming one. I hope you to have nice time with my blog.\nCopyright © 2024 Kibok Park All rights reserved."
+  },
+  {
+    "objectID": "about.html#hello",
+    "href": "about.html#hello",
+    "title": "Kibok Park",
+    "section": "",
+    "text": "I’m Kibok Park. Welcome to my blog. I’m not an expert in my favorites yet, but I’m working on becoming one. I hope you to have nice time with my blog."
+  },
+  {
+    "objectID": "about.html#topics",
+    "href": "about.html#topics",
+    "title": "Kibok Park",
+    "section": "Topics",
+    "text": "Topics\nPython, Quantative trading"
+  },
+  {
+    "objectID": "index_miniprojects.html",
+    "href": "index_miniprojects.html",
+    "title": "Mini Projects",
+    "section": "",
+    "text": "[Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 & 정리 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\n\nPython, win32를 활용한 SAP Scripting\n\n\n\nKibok Park\n\n\n2024-03-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] COO발급관리용 Tool\n\n\n\nPython\n\n\nwin11toast\n\n\nsqlite3\n\n\nstreamlit\n\n\npandas\n\n\nselenium\n\n\n\n[Python] selenium(웹스크레핑), sqlite3(db), win11toast(알림), streamlit(UI)\n\n\n\nKibok Park\n\n\n2024-02-20\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] LocalL/C 관리용 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\nStreamlit\n\n\nsqlite3\n\n\nBeautifulSoup\n\n\n\nPython, Streamlit을 활용한 업무자동화\n\n\n\nKibok Park\n\n\n2024-01-22\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] 아웃룩 메일열람 & pdf regex리딩 & 시스템 자동등록\n\n\n\nPython\n\n\nre\n\n\nxlwings\n\n\npandas\n\n\npdfminer\n\n\n\n[Python] re(regex), xlwings(암호화 Excel리딩), pdfminer(pdf리딩), pywin32(outlook)\n\n\n\nKibok Park\n\n\n2023-12-15\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] Peak타임 대응용 수출계약서pdf tabula리딩\n\n\n\nPython\n\n\ntabula\n\n\nxlwings\n\n\npathlib\n\n\npandas\n\n\n\n[Python] tabula(pdf리딩[표 형태], xlwings(암호화 Excel리딩)\n\n\n\nKibok Park\n\n\n2023-11-02\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Blog",
+    "section": "",
+    "text": "[M_Study_3주차] Multi-class Classification / Artificial Neural Network\n\n\n\n파이썬\n\n\n머신러닝\n\n\n딥러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-06-09\n\n\n\n\n\n\n\n\n\n\n\n\n[M_Study_2주차] Multiple Regression / Logistic Regression\n\n\n\n파이썬\n\n\n머신러닝\n\n\n딥러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-06-02\n\n\n\n\n\n\n\n\n\n\n\n\n[M_Study_1주차] Tensorflow / Linear Regression\n\n\n\n파이썬\n\n\n머신러닝\n\n\n딥러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-05-26\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n[버크셔 해서웨이의 재탄생 읽고] 용어 정리\n\n\n\n경제/금융공부\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-23\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-21\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-20\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 조건에 맞는 도서 리스트 출력하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-19\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 가장 비싼 상품 구하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-18\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 평균 일일 대여 요금 구하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-17\n\n\n\n\n\n\n\n\n\n\n\n\n[Scikit-learn] Kaggle 집값예측 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-05-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Pytorch] MNIST 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-02-19\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
+  },
+  {
+    "objectID": "posts/prgms-sql-20240321/index.html",
+    "href": "posts/prgms-sql-20240321/index.html",
+    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
     "section": "",
     "text": "프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다  (비상업적, 비영리적 용도)\n문제링크 게시가능여부\nCopyright © 2024 Kibok Park All rights reserved."
   },
   {
-    "objectID": "posts/prgms-sql-20240318/index.html#개요",
-    "href": "posts/prgms-sql-20240318/index.html#개요",
-    "title": "[프로그래머스SQL] 가장 비싼 상품 구하기",
+    "objectID": "posts/prgms-sql-20240321/index.html#개요",
+    "href": "posts/prgms-sql-20240321/index.html#개요",
+    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
     "section": "",
     "text": "프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다  (비상업적, 비영리적 용도)\n문제링크 게시가능여부"
   },
   {
-    "objectID": "posts/prgms-sql-20240318/index.html#문제-가장-비싼-상품-구하기",
-    "href": "posts/prgms-sql-20240318/index.html#문제-가장-비싼-상품-구하기",
-    "title": "[프로그래머스SQL] 가장 비싼 상품 구하기",
-    "section": "문제 : 가장 비싼 상품 구하기",
-    "text": "문제 : 가장 비싼 상품 구하기\n\n\n\n문제 이미지"
+    "objectID": "posts/prgms-sql-20240321/index.html#문제-3월에-태어난-여성-회원-목록-출력하기",
+    "href": "posts/prgms-sql-20240321/index.html#문제-3월에-태어난-여성-회원-목록-출력하기",
+    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
+    "section": "문제 : 3월에 태어난 여성 회원 목록 출력하기",
+    "text": "문제 : 3월에 태어난 여성 회원 목록 출력하기\n\n\n다음은 식당 리뷰 사이트의 회원 정보를 담은 MEMBER_PROFILE 테이블입니다. MEMBER_PROFILE 테이블은 다음과 같으며 MEMBER_ID, MEMBER_NAME, TLNO, GENDER, DATE_OF_BIRTH는 회원 ID, 회원 이름, 회원 연락처, 성별, 생년월일을 의미합니다.\n\n\n\n\n\nColumn name\n\n\nType\n\n\nNullable\n\n\n\n\n\n\nMEMBER_ID\n\n\nVARCHAR(100)\n\n\nFALSE\n\n\n\n\nMEMBER_NAME\n\n\nVARCHAR(50)\n\n\nFALSE\n\n\n\n\nTLNO\n\n\nVARCHAR(50)\n\n\nTRUE\n\n\n\n\nGENDER\n\n\nVARCHAR(1)\n\n\nTRUE\n\n\n\n\nDATE_OF_BIRTH\n\n\nDATE\n\n\nTRUE\n\n\n\n\n\n\n문제\n\n\nMEMBER_PROFILE 테이블에서 생일이 3월인 여성 회원의 ID, 이름, 성별, 생년월일을 조회하는 SQL문을 작성해주세요. 이때 전화번호가 NULL인 경우는 출력대상에서 제외시켜 주시고, 결과는 회원ID를 기준으로 오름차순 정렬해주세요.\n\n\n\n예시\n\n\nMEMBER_PROFILE 테이블이 다음과 같을 때\n\n\n\n\n\nMEMBER_ID\n\n\nMEMBER_NAME\n\n\nTLNO\n\n\nGENDER\n\n\nDATE_OF_BIRTH\n\n\n\n\n\n\njiho92@naver.com\n\n\n이지호\n\n\n01076432111\n\n\nW\n\n\n1992-02-12\n\n\n\n\njiyoon22@hotmail.com\n\n\n김지윤\n\n\n01032324117\n\n\nW\n\n\n1992-02-22\n\n\n\n\njihoon93@hanmail.net\n\n\n김지훈\n\n\n01023258688\n\n\nM\n\n\n1993-02-23\n\n\n\n\nseoyeons@naver.com\n\n\n박서연\n\n\n01076482209\n\n\nW\n\n\n1993-03-16\n\n\n\n\nyoonsy94@gmail.com\n\n\n윤서연\n\n\nNULL\n\n\nW\n\n\n1994-03-19\n\n\n\n\n\nSQL을 실행하면 다음과 같이 출력되어야 합니다.\n\n\n\n\n\nMEMBER_ID\n\n\nMEMBER_NAME\n\n\nGENDER\n\n\nDATE_OF_BIRTH\n\n\n\n\n\n\nseoyeons@naver.com\n\n\n박서연\n\n\nW\n\n\n1993-03-16\n\n\n\n\n\n\n주의사항\n\n\nDATE_OF_BIRTH의 데이트 포맷이 예시와 동일해야 정답처리 됩니다."
   },
   {
-    "objectID": "posts/prgms-sql-20240318/index.html#작성답안",
-    "href": "posts/prgms-sql-20240318/index.html#작성답안",
-    "title": "[프로그래머스SQL] 가장 비싼 상품 구하기",
+    "objectID": "posts/prgms-sql-20240321/index.html#작성답안",
+    "href": "posts/prgms-sql-20240321/index.html#작성답안",
+    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
     "section": "작성답안",
-    "text": "작성답안\n\n\n\nSELECT MAX(PRICE) AS MAX_PRICE\nFROM PRODUCT\n\n\nFigure 1"
+    "text": "작성답안\n\n\n\nSELECT MEMBER_ID, MEMBER_NAME,  GENDER, TO_CHAR(DATE_OF_BIRTH, 'YYYY-MM-DD')\nFROM MEMBER_PROFILE\nWHERE GENDER = 'W'\n  AND TO_CHAR(DATE_OF_BIRTH, 'MON') = 'MAR'\n  AND TLNO IS NOT NULL\nORDER BY MEMBER_ID ASC\n\n\nFigure 1"
   },
   {
-    "objectID": "posts/prgms-sql-20240318/index.html#정리",
-    "href": "posts/prgms-sql-20240318/index.html#정리",
-    "title": "[프로그래머스SQL] 가장 비싼 상품 구하기",
+    "objectID": "posts/prgms-sql-20240321/index.html#정리",
+    "href": "posts/prgms-sql-20240321/index.html#정리",
+    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
     "section": "정리",
-    "text": "정리\n\nMAX(컬럼명) : 최대값\nMIN(컬럼명) : 최소값"
+    "text": "정리\n\nWHERE 컬럼명 IS NOT NULL\nWHERE NOT 컬럼명 IS NULL"
   },
   {
-    "objectID": "posts/bk-BerkshireHathaway-20240423-terms/index.html",
-    "href": "posts/bk-BerkshireHathaway-20240423-terms/index.html",
-    "title": "[버크셔 해서웨이의 재탄생 읽고] 용어 정리",
+    "objectID": "posts/meta-dl-creditcard-20240609/index.html",
+    "href": "posts/meta-dl-creditcard-20240609/index.html",
+    "title": "[M_Study_3주차] Multi-class Classification / Artificial Neural Network",
     "section": "",
-    "text": "공부할 겸 혼자서 구글링하면서 용어 정리해보는 포스팅입니다\nCopyright © 2024 Kibok Park All rights reserved."
+    "text": "참여중인 딥러닝 스터디 3주차 기록입니다.\nCopyright © 2024 Kibok Park All rights reserved."
   },
   {
-    "objectID": "posts/bk-BerkshireHathaway-20240423-terms/index.html#프롤로그",
-    "href": "posts/bk-BerkshireHathaway-20240423-terms/index.html#프롤로그",
-    "title": "[버크셔 해서웨이의 재탄생 읽고] 용어 정리",
-    "section": "프롤로그",
-    "text": "프롤로그\n\n경제적 해자(enonomic moat) : 성 외곽에서 성을 보호해주는 해자처럼 경쟁우위를 갖게 해주는 요소 (a business’s ability to maintain a competitive edge over its competitors)\n자본배분(capital allocation) : 경제적 자원들을 효율증대/이익극대화를 위해 분배/투자 하는 것 (distributing and investing a company’s financial resources in ways that will increase its efficiency, and maximize its profits) &gt; 자본배분을 알면 워런버핏 사례의 캐피털시티를 이해할 수 있다\n플로트(float, 책임준비금) : 보험회사가 보험금을 지급하기 위해 적립시키는 돈(은행과 달리 자산운용준칙에 따라 자율적으로 사용 가능)\n\n플로트라는 단어의 다른 뜻 : 일반 대중이 거래할 수 있게 발행한 보통주 (the regular shares a company has issued to the public that are available for investors to trade) &gt; 플로트를 알면 워런버핏 사례의 가이코를 이해할 수 있다 (내셔널 인뎀너티와 블루칩스탬프의 플로트를 활용한 투자법 등)\n\n재보험 : 보험계약상 책임의 전부 또는 일부를 다른 보험자에게 인수시킴 (위험의 분산과 인수능력의 극대화를 위해 필요, 위험 대비 자산이 충분치 않은 경우 재보험으로 보험금액의 전부 인수가능)\n영업이익(operating income/earnings) : 기업의 핵심사업(영업활동)으로 얻은 이익 (a measure of the amount of profit realized from a business’s core operations)\n연간 영업활동 순이익(operating earnings) : 영업활동에 필요한 차입금 등 부채의 이자비용도 차감한 이익(영업활동에서 발생한 순이익)\n\n일반 회계기준(GAAP, Generally Accepted Accounting Principles, GAAP)\n\n일반적으로 인정된 회계원칙. 회계규정 자체 또는 회계실무 지침 등 광범위하게 인정되는 회계기준 &gt; GAAP관련 추가로 알아보기\n\n\n**IFRS(International Financial Reporting Standards) : 국제회계기준위원회에서 공표한 회계기준. IFRS를 공부하면 IFRS를 차용한 국가의 회사 재무제표는 같은 형식으로 이해 가능\n\n규칙기반의 GAAP vs 원칙기반의 IFRS\n\nIFRS는 원칙에 따라 작성해 형태 차이가 거의 없으나, GAAP는 세부적인 사안에 대해 자세히 기술(IFRS도 주석 부분에 기술)\n\n\n내용을 세세하게 다루거나, 공정가치를 계산하지않아 IFRS보다 현재가치를 크게 하고 싶을때 GAAP사용\n\n\n\nNon-GAAP\n\n반복적으로 발생하지 않는 1회적 비용은 제외하고 회계처리. 비용이 줄어 순수익이 늘어남\n\n\n미국의 경우 Non-GAAP로 다양한 비용을 제외시켜 표시하는 것이 불법은 아님(기업에 유리) 참고한 링크"
-  },
-  {
-    "objectID": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-섬유공장",
-    "href": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-섬유공장",
-    "title": "[버크셔 해서웨이의 재탄생 읽고] 용어 정리",
-    "section": "1장. 섬유공장",
-    "text": "1장. 섬유공장\n\n\n총자산이익률(ROA, Return on assets) : 순이익 / 총자산(자기자본 + 타인자본). 얼마나 순이익이 창출되는지 판단할 수 있음. ROA의 높고 낮음에 따라 주가의 높낮이도 따를 가능성이 큼 산업의 성숙기[성장/성숙/사양 등]에 따라 ROA는 달라질 수 있음\n자기자본이익률(ROE, Return on equity) : 순이익 / 자본총계(자산-부채) ROA가 높은 경우 적정 수준으로 부채확대를 통해 총자산 자체를 늘리면 ROE를 높일 수 있음 참고한 링크 참고한 링크\n\n\n\n운전자본(Working Capital, =유동자본?) : 회사를 운영하는데 들어가는 돈(매출채권, 선급금, 재고자산 등 유동자산과 매입채무, 선수금 등 유동부채가 해당함)\n순운전자본(Net Working Capital, 운전자본-총부채) : ?? (클럽 설명) 벤자민 그레이엄이 ’현명한 투자자’에서 주창한 투자 전략 즉시 현금화할 수 있는 자산과 비교함으로써 보수적인 기준에서 주가의 저(고)평가 여부를 판단하는 척도로 사용\n장부가치\n주가순자산배수(PBR, price to book value)\n주주환원\n자사주 매입\n감가상각비\n자산 대체원가\n무형자산상각비 차감 전 이익(EBITDA)\n투하자본 : 영업활동(수익활동)에 투입한 자산\n투하자본이익률(ROIC, return on invested capital) : 영업활동(수익활동)에 투입한 자산으로 얻은 영업이익의 비율\n배당의 이중과세 : 연간이익에 대한 기업의 법인세 + 배당금에 대한 주주의 소득세\n자사주 매입을 통한 주주의 세금 이연(은 주주이익에 도움)"
-  },
-  {
-    "objectID": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-투자-1962-1965년",
-    "href": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-투자-1962-1965년",
-    "title": "[버크셔 해서웨이의 재탄생 읽고] 용어 정리",
-    "section": "2장. 투자: 1962-1965년",
-    "text": "2장. 투자: 1962-1965년\n\n무한책임 파트너(general partner) : 펀드 운용에 관한 무한책임을 지는 출자자, 보통 운용자를 말함\n헤지펀드 :\n환매 :\n이월결손금\n손익계산서\n유동성소요\n**내재 사업가치(intrinsic business value)\n유한책임조합"
-  },
-  {
-    "objectID": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-전환-1965-1967년",
-    "href": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-전환-1965-1967년",
-    "title": "[버크셔 해서웨이의 재탄생 읽고] 용어 정리",
-    "section": "3장. 전환: 1965-1967년",
-    "text": "3장. 전환: 1965-1967년\n\n자본배분\n투하자본이익률\n매출원가\n특별항목 (’특별항목 반영 전 순이익’에서 사용된 의미, ’1964년 특별항목은 유휴설비비용 22만 달러를 포함했다’와 같이 사용)\n유휴설비비용(idle plant expense): 비영업용 제조설비의 유지보수 및 감가상각비\n**기대손실\n손상차손 write-down\n유형자산 손상차손\n이익잉여금\n총포괄손익\n총창출자본(total capital generated)"
-  },
-  {
-    "objectID": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-인수-1967-1969년",
-    "href": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-인수-1967-1969년",
-    "title": "[버크셔 해서웨이의 재탄생 읽고] 용어 정리",
-    "section": "4장. 인수: 1967-1969년",
-    "text": "4장. 인수: 1967-1969년\n\n완전 소유 기업(wholly-owned-subsidiary) : 1개 기업이 단독 투자하여 100% 소유 지문을 가지는것\n상환청구권 :\n\n\n플로트(책임준비금) : + 지급준비금(lost reserve) + 손해사정비 준비금(lost adjustment expense reserve) + 미경과보험료 적립금(unearned premium reserve) - 대리점 미수금(agents’ balance) - 선급 신계약비(prepaid acquisition cost) - 출재보험 준비금(deferred charges applicable to assumed reinsurance) * 플로트 계산법은 분석대상 기업과 애널리스트에 따라 다름 * 기타자산과 기타부채를 처리하는 방법에서 차이가 발생함 * 정확한 플로트 값이 중요하지 않음(소수점 마지막까지 계산X) *\n\n\n합산비율(combined ratio) : 손해율 + 사업비율. 100%를 기준으로 높으면 손해 낮으면 이익\n손해율(loss ratio) : 보험료 수입 대비 보험금 지급 비율\n사업비율(expense ratio) : 보험료 수입 중 인건비, 마케팅비, 모집수수료, 중개비 등 비중\n경과보험료(earned premiums) : 1년단위/일시납이 기본인 손해보험업에서 더 유의미한 기준. 보험사의 회계연도 말을 기준으로 가입자의 전체 보험기간을 경과/미경과 기간으로 구분, 받은 보험료를 경과/미경과 보험료로 구분함\n레버리지 :\n영업 레버리지(operating leverage)\n재무 레버리지(financial leverage)\n유형순자산(tangible net worth)\n영업권(goodwill)\n원수보험료\n순원수보험료(net premiums written) : 원수보험료에서 수/출재보험료와 환급보험료를 가감한 값\n비연결자회사\n연결납세제도(consolidated tax return) : 모회사의 자회사 지분율이 80%이상이고 경제적으로 결합되어있을 때 하나의 과세단위로 해석함. 이에 따라 모회사-자회사간 배당을 과세하지 않을때가 있음. 한국에도 도입되어있지만 연결 요건이 엄격함\n예수부채\n요구불예금\n스핀오프 : 자회사 주식을 모회사 주주에게 배당(인적분할) + 기존 회사의 자회사화\n투자 영업이익 : 이자 및 배당수익 + 유가증권 추분이익"
-  },
-  {
-    "objectID": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-확장-1970년대",
-    "href": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-확장-1970년대",
-    "title": "[버크셔 해서웨이의 재탄생 읽고] 용어 정리",
-    "section": "5장. 확장: 1970년대",
-    "text": "5장. 확장: 1970년대\n\n투하자본\n매출채권\n부채자기자본비율(debt to equity)\n표면이자율\n일반사채(debenture:무담보회사채)\n이자비용 및 법인세 차감 전 이익(EBIT)\n주가매출액배수(price to sales, PSR) : 기업의 주가와 매출을 비교하는 가치평가 지표\n예상손해율(loss expectancy)\n보험영업 손실/이익\n듀레이션(duration, 듀레이션이 긴 재보험에서의 용례)"
-  },
-  {
-    "objectID": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-다른-기업들",
-    "href": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-다른-기업들",
-    "title": "[버크셔 해서웨이의 재탄생 읽고] 용어 정리",
-    "section": "6장. 다른 기업들",
-    "text": "6장. 다른 기업들\n\n공모채 : 불특정다수에게 발행하는 채권\n사용자본이익률(ROCE)\n최초 이익수익률(initial earnings yield)\n모기지(mortgate) : 주택 구매 등을 위해 돈을 빌리고, 갚지 못하는 경우 해당 주택을 대출 업체가 소유\n예대마진(spread) : 예금이자와 대출이자간 차이\n예수부채 : 불특정 다수를 상대로 조달한 자금\n차입인수(LBO, leverage buyout) : 인수할 회사의 자본 등을 담보로 자금을 확보하여 기업을 인수"
-  },
-  {
-    "objectID": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-복합기업",
-    "href": "posts/bk-BerkshireHathaway-20240423-terms/index.html#장.-복합기업",
-    "title": "[버크셔 해서웨이의 재탄생 읽고] 용어 정리",
-    "section": "7장. 복합기업",
-    "text": "7장. 복합기업\n\n자본잉여금(paid-in surplus) : 주식 발행 등으로 발생하는 잉여금. 돈을 받고 주식을 발행하는 유상증자시 늘어나게 됨\n지배지분이익 : 지배 기업의 순이익에서 지분율만큼 반영한 이익\n매출총이익률 : 매출액 대비 매출총이익 비율\n\n매출총이익 : 매출액에서 (매출과 직접적으로 관계된)비용 차감"
-  },
-  {
-    "objectID": "posts/vba-noname-yyyymmdd/index.html",
-    "href": "posts/vba-noname-yyyymmdd/index.html",
-    "title": "NH증권 직무인터뷰를 읽고(트레이딩&빅데이터)",
+    "objectID": "posts/meta-dl-creditcard-20240609/index.html#개요",
+    "href": "posts/meta-dl-creditcard-20240609/index.html#개요",
+    "title": "[M_Study_3주차] Multi-class Classification / Artificial Neural Network",
     "section": "",
-    "text": "관심이 생겨서 관련 공고 등을 보고 있는데, 직무이해 겸 모르는 단어를 정리해봅니다.\n\n\n\n\n\n\n참고한 공고 (클릭해서 펼치기)\n\n\n\n\n\nNH투자증권 채용공고-Trading\nNH투자증권 채용공고-빅데이터 분석\nNH투자증권 직무인터뷰\nCopyright © 2024 Kibok Park All rights reserved."
+    "text": "참여중인 딥러닝 스터디 3주차 기록입니다."
   },
   {
-    "objectID": "posts/vba-noname-yyyymmdd/index.html#참고한-공고-인터뷰-자료",
-    "href": "posts/vba-noname-yyyymmdd/index.html#참고한-공고-인터뷰-자료",
-    "title": "NH증권 직무인터뷰를 읽고(트레이딩&빅데이터)",
+    "objectID": "posts/meta-dl-creditcard-20240609/index.html#주차-과제-설명",
+    "href": "posts/meta-dl-creditcard-20240609/index.html#주차-과제-설명",
+    "title": "[M_Study_3주차] Multi-class Classification / Artificial Neural Network",
+    "section": "2주차 과제 설명",
+    "text": "2주차 과제 설명\n\ntf.random.set_seed(2024)\n\n서로 다른 모델을 비교하는 경우, 시작점이 다른 것 때문에 성능우위가 다르게 측정되는 경우 발생 (같은 성능임에도 다르게 나오거나, 좋은 모델이 더 나쁜 모델로 오인되는 경우)\n이러한 경우를 방지하고자, set_seed로 같은 지점에서 시작하게 할 수 있음\n딥러닝은 복잡한 다차원의 함수이므로, 좋은 시작점에 따라 달라질 수 있음 (좋은 Optimizer를 사용하고 좋은 데이터를 쓴다면 차이는 줄어들 수 있음)\n\nMatrix Multiplication\n\nA(1,2), B(2,1)와 같은 Matrix에서, A의 열(,2)과 B의 행(2,)의 숫자가 같아야 가능\n\nCost function에서 마이너스(-)를 붙이는 경우\n\n높을수록 안좋은 척도여야 할 때, 계산식이 높을수록 좋은 값인 경우 붙여서 변환\n\nLearning rate\n\nGD에서 안정적으로 최적점에 가게하기 위해 학습률을 조정\n사람이 지정하는 hyper parameter, 경험에 의해 넣는 경우가 많다(정답은 없음)\n\nConfusion Matrix\n\nRecall, Precision 으로 표현하는 것은 경영진 등에는 와닿지 않을 수 있으므로 시각화하여 보여주면 좋음"
+  },
+  {
+    "objectID": "posts/meta-dl-creditcard-20240609/index.html#주차-과제-logistic-regression-코드-작성한-것",
+    "href": "posts/meta-dl-creditcard-20240609/index.html#주차-과제-logistic-regression-코드-작성한-것",
+    "title": "[M_Study_3주차] Multi-class Classification / Artificial Neural Network",
+    "section": "2주차 과제 Logistic regression 코드 작성한 것",
+    "text": "2주차 과제 Logistic regression 코드 작성한 것\nimport matplotlib.pyplot as plt\nimport numpy as np\nimport tensorflow as tf\n\n# Train data\nX_train = np.array([[1., 1.],\n                   [1., 2.],\n                   [2., 1.],\n                   [3., 2.],\n                   [3., 3.],\n                   [2., 3.]],\n                   dtype=np.float32)\nY_train = np.array([[0.],\n                   [0.],\n                   [0.],\n                   [1.],\n                   [1.],\n                   [1.],],\n                   dtype=np.float32)\n\n# 회귀선 작성 전 분포확인\ncolors=['red' if L&gt;0.5 else 'blue' for L in Y_train]\nplt.scatter(X_train[:,0], X_train[:, 1], label='Logistics regression', color=colors)\n\n\n\nimage.png\n\n\n# 모델 학습\ntf.random.set_seed(2020)\nW = tf.Variable(tf.random.normal([2,1], mean=0.0))\nb = tf.Variable(tf.random.normal([1], mean=0.0))\n\ndef hypothesis(X):\n    z = tf.matmul(X, W) + b\n    sigmoid = 1 / (1 + tf.exp(-z))\n    return sigmoid\n\ndef cost_fn(H, Y):\n    cost = -tf.reduce_mean(Y*tf.math.log(H) + (1-Y)*tf.math.log(1-H))\n    return cost\n\nlearning_rate = 0.01\noptimizer = tf.optimizers.SGD(learning_rate)\n\nfor step in range(5001):\n    with tf.GradientTape() as g:\n        pred = hypothesis(X_train)\n        cost = cost_fn(pred, Y_train)\n\n        gradients = g.gradient(cost, [W,b])\n    \n    optimizer.apply_gradients(zip(gradients, [W, b]))\n\n    if step % 1000 == 0:\n        print(f'Step={step+1}, Cost = {cost}, W={W.numpy()}, b = {b.numpy()}')\n\nw_hat = W.numpy()\nb_hat = b.numpy()\n\nStep=1, Cost = 0.7932398319244385, W=[[-0.10415223] [0.68125504]], b = [0.3810195]  Step=1001, Cost = 0.5122759938240051, W=[[0.1809378] [0.55177015]], b = [-0.97815347]  Step=2001, Cost = 0.39883172512054443, W=[[0.5135696] [0.6884617]], b = [-1.9777462]  Step=3001, Cost = 0.32507583498954773, W=[[0.7515713] [0.8368167]], b = [-2.7877953]  Step=4001, Cost = 0.27400580048561096, W=[[0.9350327] [0.97824335]], b = [-3.4628296]  Step=5001, Cost = 0.2367737740278244, W=[[1.0848083] [1.1075894]], b = [-4.039375]\n\n# Slope(Coefficient) 확인\nslope = w_hat[0]/w_hat[1]\nxx = np.linspace(np.min(X_train[:,0]),np.max(X_train[:,0])) # min과 max 사이 구간의 숫자를 생성. x값\nyy = -slope*xx - b_hat/w_hat[1]                             # xx(x값)입력하여 y값 생성\n\n# train data분포\nplt.scatter(X_train[:, 0], X_train[:, 1], label='Logistics regression', color=colors)\n\n# 분류선(Decision Boundary)확인\nplt.plot(xx, yy, label='Decision Boundary')\nplt.legend()\n\n\n\nimage-2.png\n\n\n# Confusion matrix\nfrom sklearn.metrics import confusion_matrix\n\nX_test = np.array([[1., 0.],\n                   [0., 2.],\n                   [1., 1.],\n                   [3., 2.],\n                   [3., 3.],\n                   [2., 3.]],\n                   dtype=np.float32)\nY_test = np.array([[0.],\n                   [0.],\n                   [1.],\n                   [0.],\n                   [1.],\n                   [0.],],\n                   dtype=np.float32)\n\nY_actual = Y_test\nY_predicted = hypothesis(X_test)\nY_predicted_binary = np.where(Y_predicted &gt;= 0.5, 1, 0)\n\nCM_array = confusion_matrix(Y_actual, Y_predicted_binary, labels=[0, 1]) \nCM_array\n\narray([[2, 2], [1, 1]], dtype=int64)\n\n# Confusion matrix 시각화(seaborn)\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n\nclass_labels = ['Negative', 'Positive']\nplt.figure(figsize=(8, 6))\nsns.heatmap(CM_array, annot=True, cmap='Blues',\n            xticklabels=class_labels, yticklabels=class_labels)\n\nplt.title('Confusion Matrix')\nplt.xlabel('Predicted')\nplt.ylabel('True')\n\n\n\nimage-3.png\n\n\n# Confusion matrix 시각화(Scikit-learn)\nfrom sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay\n\ndisp = ConfusionMatrixDisplay(confusion_matrix=CM_array, display_labels=[0, 1])\ndisp.plot(cmap=plt.cm.Blues)\nplt.title('Confusion Matrix')\nplt.show()\n\n\n\nimage-4.png"
+  },
+  {
+    "objectID": "posts/meta-dl-creditcard-20240609/index.html#multi-class-classfication-regression",
+    "href": "posts/meta-dl-creditcard-20240609/index.html#multi-class-classfication-regression",
+    "title": "[M_Study_3주차] Multi-class Classification / Artificial Neural Network",
+    "section": "Multi-class Classfication regression",
+    "text": "Multi-class Classfication regression\n\n2가지 분류가 아닌 3가지 이상의 분류(A,B,C로 나누는 신용등급 등)\nBinary classification과 달리 하나의 Decision boundary로는 해결 불가\nOne vs All(Rest)\n\n하나의 대상과, 아닌 것’들’로 Binary Classification을 여러번 수행\n예를 들어 a, b, c 3가지를 분류하는 경우\n\n아래와 같은 같은 3개의 식으로 표현할 수 있고, \n아래와 같이 하나의 행렬로 한번에 표현할 수 있다  \n\nSoftmax : 각 결과값(\\(H_a, H_b, H_c\\))의 비율(확률)이 나오게 됨(총합이 1)\n\nCross entropy cost function\n\n정보량은 확률에 반비례한다고 정의 (정보량= $ 1 p$)\n\n특정 성씨의 사람을 뽑는다고 할 때, 한국의 주요 성씨인 김씨\\(1 \\over 10\\) vs 소수 성씨인 남궁씨\\(1 \\over 100\\)\n\n로그를 취하여 전개하면 Cross entropy 식이 된다\nEntropy : Measure for uncertainty (불확실성의 측정)  \nCase별 Cross entropy(cost function)\n\n출력값(결과값 softmax)과 실제값이 비슷한 경우 : 특정 값 산출\n출력값(결과값 softmax)과 실제값이 완전히 다른 경우 : 무한대\n출력값(결과값 softmax)과 실제값이 완전히 동일한 경우 : 0\n\nCross entropy를 개인이 직접구현한다면 놓칠 수 있는 부분(cross entropy의 무한대)의 문제\n\n파이토치 등 많은 사람이 참여한 패키지를 사용하면 방지할 수 있음\n컴퓨터에서의 Zero division error 등의 경우, 텐서플로우 등 패키지에선 분모에 0.00001등을 더하여 실제값엔 영향이 작게하며 오류 제거"
+  },
+  {
+    "objectID": "posts/prgms-sql-20240320/index.html",
+    "href": "posts/prgms-sql-20240320/index.html",
+    "title": "[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기",
     "section": "",
-    "text": "관심이 생겨서 관련 공고 등을 보고 있는데, 직무이해 겸 모르는 단어를 정리해봅니다.\n\n\n\n\n\n\n참고한 공고 (클릭해서 펼치기)\n\n\n\n\n\nNH투자증권 채용공고-Trading\nNH투자증권 채용공고-빅데이터 분석\nNH투자증권 직무인터뷰"
+    "text": "프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다  (비상업적, 비영리적 용도)\n문제링크 게시가능여부\nCopyright © 2024 Kibok Park All rights reserved."
   },
   {
-    "objectID": "posts/vba-noname-yyyymmdd/index.html#트레이딩-직무-단어정리",
-    "href": "posts/vba-noname-yyyymmdd/index.html#트레이딩-직무-단어정리",
-    "title": "NH증권 직무인터뷰를 읽고(트레이딩&빅데이터)",
-    "section": "트레이딩 직무 단어정리",
-    "text": "트레이딩 직무 단어정리\n\n프랍 트레이딩(Proprietary Trading) : 고객이 아닌 금융회사의 돈으로 주식이나 파생상품 등 금융상품을 거래하는 것 (=자기계정거래, 자기계좌거래, 고유계정거래, 고유계좌거래)\n\n\n프랍트레이딩은 통상 선물·옵션 등 파생상품 부문, 일반적 주식투자 같은 방향성 매매, 알고리즘에 따라 투자하는 시스템 매매, 채권투자, 부동산이나 인프라 등의 대체투자 등으로 나뉜다. 보통 자기매매 비중이 높은 중소형 증권사에는 많게는 50여명에 이르는 프랍트레이더들이 있다. 이 가운데 80% 이상이 파생 트레이더다.중소형 증권사들의 파생상품투자 비중이 높은 것은 비용이 싸기 때문이다. 증권사의 경우 선물·옵션 거래시 사후 증거금 제도가 적용된다. 장중 거래에는 증거금이 따로 필요 없고 장 마감 후 포지션 규모에 따라 증거금을 마련하면 된다. 따라서 장중에는 활발히 거래하고 장 마감 직전 파생상품을 보유하지 않았으면 증거금 부담은 없다. 하루 단위로 청산하는 경우 사실상 금융비용은 없다.\n상기내용 참고한 서울경제 기사링크 거래증거금vs위탁증거금 내용 참고할 수 있는 블로그\n\n\n장내거래 vs 장외거래 : 정규시장 외 체결되는 거래\n매크로 지식 : Macro economics지식 (↔︎ Micro economics)\n서킷브레이커(일시매매정지, Trading Curb) : 가격 변동이 지나친 경우 일시적으로 거래를 중단하는 것\n틱 : 체결량에 따른 단위 (5틱 = 체결 5회 기준)\n셀사이드(Sell-side|은행, 증권사 등) : 금융 서비스 등을 제공하여 수익 창출\n바이사이드(Buy-side|자산운용사, 연기금, 보험사, 헤지펀드 등) : 투자를 하여 수익 창출\n\n\n참고글:셀사이드와 바이사이드의 금융공학\n\n\n하우스 : 증권사, 금융사 등 단체를 칭함"
+    "objectID": "posts/prgms-sql-20240320/index.html#개요",
+    "href": "posts/prgms-sql-20240320/index.html#개요",
+    "title": "[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기",
+    "section": "",
+    "text": "프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다  (비상업적, 비영리적 용도)\n문제링크 게시가능여부"
   },
   {
-    "objectID": "posts/vba-noname-yyyymmdd/index.html#빅데이터-직무-단어정리",
-    "href": "posts/vba-noname-yyyymmdd/index.html#빅데이터-직무-단어정리",
-    "title": "NH증권 직무인터뷰를 읽고(트레이딩&빅데이터)",
-    "section": "빅데이터 직무 단어정리",
-    "text": "빅데이터 직무 단어정리\n\nMTS : Mobile Trading System (HTS : Home Trading System)\n원장 : 증권사가 고객계좌나 거래내역, 매매 등을 관리하는 프로그램"
+    "objectID": "posts/prgms-sql-20240320/index.html#문제-조건에-부합하는-중고거래-댓글-조회하기",
+    "href": "posts/prgms-sql-20240320/index.html#문제-조건에-부합하는-중고거래-댓글-조회하기",
+    "title": "[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기",
+    "section": "문제 : 조건에 부합하는 중고거래 댓글 조회하기",
+    "text": "문제 : 조건에 부합하는 중고거래 댓글 조회하기\n\n    &lt;h6 class=\"guide-section-title\"&gt;문제 설명&lt;/h6&gt;\n    &lt;div class=\"markdown solarized-dark\"&gt;&lt;p&gt;다음은 중고거래 게시판 정보를 담은 &lt;code&gt;USED_GOODS_BOARD&lt;/code&gt; 테이블과 중고거래 게시판 첨부파일 정보를 담은 &lt;code&gt;USED_GOODS_REPLY&lt;/code&gt; 테이블입니다. &lt;code&gt;USED_GOODS_BOARD&lt;/code&gt; 테이블은 다음과 같으며 &lt;code&gt;BOARD_ID&lt;/code&gt;, &lt;code&gt;WRITER_ID&lt;/code&gt;, &lt;code&gt;TITLE&lt;/code&gt;, &lt;code&gt;CONTENTS&lt;/code&gt;, &lt;code&gt;PRICE&lt;/code&gt;, &lt;code&gt;CREATED_DATE&lt;/code&gt;, &lt;code&gt;STATUS&lt;/code&gt;, &lt;code&gt;VIEWS&lt;/code&gt;은 게시글 ID, 작성자 ID, 게시글 제목, 게시글 내용, 가격, 작성일, 거래상태, 조회수를 의미합니다.&lt;/p&gt;\n\n\n\n\nColumn name\n\n\nType\n\n\nNullable\n\n\n\n\n\n\nBOARD_ID\n\n\nVARCHAR(5)\n\n\nFALSE\n\n\n\n\nWRITER_ID\n\n\nVARCHAR(50)\n\n\nFALSE\n\n\n\n\nTITLE\n\n\nVARCHAR(100)\n\n\nFALSE\n\n\n\n\nCONTENTS\n\n\nVARCHAR(1000)\n\n\nFALSE\n\n\n\n\nPRICE\n\n\nNUMBER\n\n\nFALSE\n\n\n\n\nCREATED_DATE\n\n\nDATE\n\n\nFALSE\n\n\n\n\nSTATUS\n\n\nVARCHAR(10)\n\n\nFALSE\n\n\n\n\nVIEWS\n\n\nNUMBER\n\n\nFALSE\n\n\n\n\n\nUSED_GOODS_REPLY 테이블은 다음과 같으며 REPLY_ID, BOARD_ID, WRITER_ID, CONTENTS, CREATED_DATE는 각각 댓글 ID, 게시글 ID, 작성자 ID, 댓글 내용, 작성일을 의미합니다.\n\n\n\n\n\nColumn name\n\n\nType\n\n\nNullable\n\n\n\n\n\n\nREPLY_ID\n\n\nVARCHAR(10)\n\n\nFALSE\n\n\n\n\nBOARD_ID\n\n\nVARCHAR(5)\n\n\nFALSE\n\n\n\n\nWRITER_ID\n\n\nVARCHAR(50)\n\n\nFALSE\n\n\n\n\nCONTENTS\n\n\nVARCHAR(1000)\n\n\nTRUE\n\n\n\n\nCREATED_DATE\n\n\nDATE\n\n\nFALSE\n\n\n\n\n\n\n문제\n\n\nUSED_GOODS_BOARD와 USED_GOODS_REPLY 테이블에서 2022년 10월에 작성된 게시글 제목, 게시글 ID, 댓글 ID, 댓글 작성자 ID, 댓글 내용, 댓글 작성일을 조회하는 SQL문을 작성해주세요. 결과는 댓글 작성일을 기준으로 오름차순 정렬해주시고, 댓글 작성일이 같다면 게시글 제목을 기준으로 오름차순 정렬해주세요.\n\n\n\n예시\n\n\nUSED_GOODS_BOARD 테이블이 다음과 같고\n\n\n\n\n\nBOARD_ID\n\n\nWRITER_ID\n\n\nTITLE\n\n\nCONTENTS\n\n\nPRICE\n\n\nCREATED_DATE\n\n\nSTATUS\n\n\nVIEWS\n\n\n\n\n\n\nB0001\n\n\nkwag98\n\n\n반려견 배변패드 팝니다\n\n\n정말 저렴히 판매합니다. 전부 미개봉 새상품입니다.\n\n\n12000\n\n\n2022-10-01\n\n\nDONE\n\n\n250\n\n\n\n\nB0002\n\n\nlee871201\n\n\n국내산 볶음참깨\n\n\n직접 농사지은 참깨입니다.\n\n\n3000\n\n\n2022-10-02\n\n\nDONE\n\n\n121\n\n\n\n\nB0003\n\n\ngoung12\n\n\n배드민턴 라켓\n\n\n사놓고 방치만 해서 팝니다.\n\n\n9000\n\n\n2022-10-02\n\n\nSALE\n\n\n212\n\n\n\n\nB0004\n\n\nkeel1990\n\n\n디올 귀걸이\n\n\n신세계강남점에서 구입. 정품 아닐시 백퍼센트 환불\n\n\n130000\n\n\n2022-10-02\n\n\nSALE\n\n\n199\n\n\n\n\nB0005\n\n\nhaphli01\n\n\n스팸클래식 팔아요\n\n\n유통기한 2025년까지에요\n\n\n10000\n\n\n2022-10-02\n\n\nSALE\n\n\n121\n\n\n\n\n\nUSED_GOODS_REPLY 테이블이 다음과 같을 때\n\n\n\n\n\nREPLY_ID\n\n\nBOARD_ID\n\n\nWRITER_ID\n\n\nCONTENTS\n\n\nCREATED_DATE\n\n\n\n\n\n\nR000000001\n\n\nB0001\n\n\ns2s2123\n\n\n구매하겠습니다. 쪽지 드립니다.\n\n\n2022-10-02\n\n\n\n\nR000000002\n\n\nB0002\n\n\nhoho1112\n\n\n쪽지 주세요.\n\n\n2022-10-03\n\n\n\n\nR000000003\n\n\nB0006\n\n\nhwahwa2\n\n\n삽니다. 연락주세요.\n\n\n2022-10-03\n\n\n\n\nR000000004\n\n\nB0007\n\n\nhong02\n\n\n예약중\n\n\n2022-10-06\n\n\n\n\nR000000005\n\n\nB0009\n\n\nhanju23\n\n\n구매완료\n\n\n2022-10-07\n\n\n\n\n\nSQL을 실행하면 다음과 같이 출력되어야 합니다.\n\n\n\n\n\nTITLE\n\n\nBOARD_ID\n\n\nREPLY_ID\n\n\nWRITER_ID\n\n\nCONTENTS\n\n\nCREATED_DATE\n\n\n\n\n\n\n반려견 배변패드 팝니다\n\n\nB0001\n\n\nR000000001\n\n\ns2s2123\n\n\n구매하겠습니다. 쪽지 드립니다.\n\n\n2022-10-02\n\n\n\n\n국내산 볶음참깨\n\n\nB0002\n\n\nR000000002\n\n\nhoho1112\n\n\n쪽지 주세요.\n\n\n2022-10-03\n\n\n\n\n\n\n주의사항\n\n\nCREATED_DATE의 포맷이 예시의 포맷과 일치해야 정답처리 됩니다.\n\n\n  &lt;/div&gt;"
+  },
+  {
+    "objectID": "posts/prgms-sql-20240320/index.html#작성답안",
+    "href": "posts/prgms-sql-20240320/index.html#작성답안",
+    "title": "[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기",
+    "section": "작성답안",
+    "text": "작성답안\n\n\n\nSELECT board.TITLE, board.BOARD_ID,\n       reply.REPLY_ID, reply.WRITER_ID, reply.CONTENTS, TO_CHAR(reply.CREATED_DATE, 'YYYY-MM-DD')\nFROM USED_GOODS_BOARD board, USED_GOODS_REPLY reply\nWHERE TO_CHAR(board.CREATED_DATE, 'YYYYMM') = '202210'\n  AND board.BOARD_ID = reply.BOARD_ID\nORDER BY reply.CREATED_DATE ASC, board.TITLE ASC;\n\n\nFigure 1"
+  },
+  {
+    "objectID": "posts/prgms-sql-20240320/index.html#정리",
+    "href": "posts/prgms-sql-20240320/index.html#정리",
+    "title": "[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기",
+    "section": "정리",
+    "text": "정리\n\n각 테이블의 BOARD_ID 일치시키는 것을 실수하였음. 향후 동일케이스에 대해서는 고려하여 풀기\n다중정렬 &gt; ORDER BY reply.CREATED_DATE ASC, board.TITLE ASC; 앞의 컬럼일수록 정렬 우선순위를 가짐"
   },
   {
     "objectID": "index_dashboards.html",
