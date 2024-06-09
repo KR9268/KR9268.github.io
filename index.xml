@@ -786,6 +786,7 @@ font-style: inherit;">'Confusion Matrix'</span>)</span>
   <category>파이썬</category>
   <category>머신러닝</category>
   <category>딥러닝</category>
+  <category>MStudy</category>
   <guid>https://kr9268.github.io/posts/meta-dl-creditcard-20240609/</guid>
   <pubDate>Sun, 09 Jun 2024 00:00:00 GMT</pubDate>
 </item>
@@ -1265,6 +1266,7 @@ font-style: inherit;">zip</span>(gradients, [W,b])) </span></code></pre></div></
   <category>파이썬</category>
   <category>머신러닝</category>
   <category>딥러닝</category>
+  <category>MStudy</category>
   <guid>https://kr9268.github.io/posts/meta-dl-creditcard-20240602/</guid>
   <pubDate>Sun, 02 Jun 2024 00:00:00 GMT</pubDate>
 </item>
@@ -2195,6 +2197,7 @@ flexibility : 성능, performance (100문제중 80문제를 찾추는가)<br> in
   <category>파이썬</category>
   <category>머신러닝</category>
   <category>딥러닝</category>
+  <category>MStudy</category>
   <guid>https://kr9268.github.io/posts/meta-dl-creditcard-20240526/</guid>
   <pubDate>Sun, 26 May 2024 00:00:00 GMT</pubDate>
 </item>
