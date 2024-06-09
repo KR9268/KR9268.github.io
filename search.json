@@ -350,6 +350,76 @@
     "text": "Multi-class Classfication regression\n\n2가지 분류가 아닌 3가지 이상의 분류(A,B,C로 나누는 신용등급 등)\nBinary classification과 달리 하나의 Decision boundary로는 해결 불가\nOne vs All(Rest)\n\n하나의 대상과, 아닌 것’들’로 Binary Classification을 여러번 수행\n예를 들어 a, b, c 3가지를 분류하는 경우\n\n아래와 같은 같은 3개의 식으로 표현할 수 있고, \n아래와 같이 하나의 행렬로 한번에 표현할 수 있다  \n\nSoftmax : 각 결과값(\\(H_a, H_b, H_c\\))의 비율(확률)이 나오게 됨(총합이 1)\n\nCross entropy cost function\n\n정보량은 확률에 반비례한다고 정의 (정보량= $ 1 p$)\n\n특정 성씨의 사람을 뽑는다고 할 때, 한국의 주요 성씨인 김씨\\(1 \\over 10\\) vs 소수 성씨인 남궁씨\\(1 \\over 100\\)\n\n로그를 취하여 전개하면 Cross entropy 식이 된다\nEntropy : Measure for uncertainty (불확실성의 측정)  \nCase별 Cross entropy(cost function)\n\n출력값(결과값 softmax)과 실제값이 비슷한 경우 : 특정 값 산출\n출력값(결과값 softmax)과 실제값이 완전히 다른 경우 : 무한대\n출력값(결과값 softmax)과 실제값이 완전히 동일한 경우 : 0\n\nCross entropy를 개인이 직접구현한다면 놓칠 수 있는 부분(cross entropy의 무한대)의 문제\n\n파이토치 등 많은 사람이 참여한 패키지를 사용하면 방지할 수 있음\n컴퓨터에서의 Zero division error 등의 경우, 텐서플로우 등 패키지에선 분모에 0.00001등을 더하여 실제값엔 영향이 작게하며 오류 제거"
   },
   {
+    "objectID": "posts/prgms-sql-20240321/index.html",
+    "href": "posts/prgms-sql-20240321/index.html",
+    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
+    "section": "",
+    "text": "프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다  (비상업적, 비영리적 용도)\n문제링크 게시가능여부\nCopyright © 2024 Kibok Park All rights reserved."
+  },
+  {
+    "objectID": "posts/prgms-sql-20240321/index.html#개요",
+    "href": "posts/prgms-sql-20240321/index.html#개요",
+    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
+    "section": "",
+    "text": "프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다  (비상업적, 비영리적 용도)\n문제링크 게시가능여부"
+  },
+  {
+    "objectID": "posts/prgms-sql-20240321/index.html#문제-3월에-태어난-여성-회원-목록-출력하기",
+    "href": "posts/prgms-sql-20240321/index.html#문제-3월에-태어난-여성-회원-목록-출력하기",
+    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
+    "section": "문제 : 3월에 태어난 여성 회원 목록 출력하기",
+    "text": "문제 : 3월에 태어난 여성 회원 목록 출력하기\n\n\n다음은 식당 리뷰 사이트의 회원 정보를 담은 MEMBER_PROFILE 테이블입니다. MEMBER_PROFILE 테이블은 다음과 같으며 MEMBER_ID, MEMBER_NAME, TLNO, GENDER, DATE_OF_BIRTH는 회원 ID, 회원 이름, 회원 연락처, 성별, 생년월일을 의미합니다.\n\n\n\n\n\nColumn name\n\n\nType\n\n\nNullable\n\n\n\n\n\n\nMEMBER_ID\n\n\nVARCHAR(100)\n\n\nFALSE\n\n\n\n\nMEMBER_NAME\n\n\nVARCHAR(50)\n\n\nFALSE\n\n\n\n\nTLNO\n\n\nVARCHAR(50)\n\n\nTRUE\n\n\n\n\nGENDER\n\n\nVARCHAR(1)\n\n\nTRUE\n\n\n\n\nDATE_OF_BIRTH\n\n\nDATE\n\n\nTRUE\n\n\n\n\n\n\n문제\n\n\nMEMBER_PROFILE 테이블에서 생일이 3월인 여성 회원의 ID, 이름, 성별, 생년월일을 조회하는 SQL문을 작성해주세요. 이때 전화번호가 NULL인 경우는 출력대상에서 제외시켜 주시고, 결과는 회원ID를 기준으로 오름차순 정렬해주세요.\n\n\n\n예시\n\n\nMEMBER_PROFILE 테이블이 다음과 같을 때\n\n\n\n\n\nMEMBER_ID\n\n\nMEMBER_NAME\n\n\nTLNO\n\n\nGENDER\n\n\nDATE_OF_BIRTH\n\n\n\n\n\n\njiho92@naver.com\n\n\n이지호\n\n\n01076432111\n\n\nW\n\n\n1992-02-12\n\n\n\n\njiyoon22@hotmail.com\n\n\n김지윤\n\n\n01032324117\n\n\nW\n\n\n1992-02-22\n\n\n\n\njihoon93@hanmail.net\n\n\n김지훈\n\n\n01023258688\n\n\nM\n\n\n1993-02-23\n\n\n\n\nseoyeons@naver.com\n\n\n박서연\n\n\n01076482209\n\n\nW\n\n\n1993-03-16\n\n\n\n\nyoonsy94@gmail.com\n\n\n윤서연\n\n\nNULL\n\n\nW\n\n\n1994-03-19\n\n\n\n\n\nSQL을 실행하면 다음과 같이 출력되어야 합니다.\n\n\n\n\n\nMEMBER_ID\n\n\nMEMBER_NAME\n\n\nGENDER\n\n\nDATE_OF_BIRTH\n\n\n\n\n\n\nseoyeons@naver.com\n\n\n박서연\n\n\nW\n\n\n1993-03-16\n\n\n\n\n\n\n주의사항\n\n\nDATE_OF_BIRTH의 데이트 포맷이 예시와 동일해야 정답처리 됩니다."
+  },
+  {
+    "objectID": "posts/prgms-sql-20240321/index.html#작성답안",
+    "href": "posts/prgms-sql-20240321/index.html#작성답안",
+    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
+    "section": "작성답안",
+    "text": "작성답안\n\n\n\nSELECT MEMBER_ID, MEMBER_NAME,  GENDER, TO_CHAR(DATE_OF_BIRTH, 'YYYY-MM-DD')\nFROM MEMBER_PROFILE\nWHERE GENDER = 'W'\n  AND TO_CHAR(DATE_OF_BIRTH, 'MON') = 'MAR'\n  AND TLNO IS NOT NULL\nORDER BY MEMBER_ID ASC\n\n\nFigure 1"
+  },
+  {
+    "objectID": "posts/prgms-sql-20240321/index.html#정리",
+    "href": "posts/prgms-sql-20240321/index.html#정리",
+    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
+    "section": "정리",
+    "text": "정리\n\nWHERE 컬럼명 IS NOT NULL\nWHERE NOT 컬럼명 IS NULL"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Blog",
+    "section": "",
+    "text": "[M_Study_3주차] Multi-class Classification / Artificial Neural Network\n\n\n\n파이썬\n\n\n머신러닝\n\n\n딥러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-06-09\n\n\n\n\n\n\n\n\n\n\n\n\n[M_Study_2주차] Multiple Regression / Logistic Regression\n\n\n\n파이썬\n\n\n머신러닝\n\n\n딥러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-06-02\n\n\n\n\n\n\n\n\n\n\n\n\n[M_Study_1주차] Tensorflow / Linear Regression\n\n\n\n파이썬\n\n\n머신러닝\n\n\n딥러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-05-26\n\n\n\n\n\n\n\n\n\n\n\n\nNH증권 직무인터뷰를 읽고(트레이딩&빅데이터)\n\n\n\n직무분석\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-28\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n[버크셔 해서웨이의 재탄생 읽고] 용어 정리\n\n\n\n경제/금융공부\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-23\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-21\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-20\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 조건에 맞는 도서 리스트 출력하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-19\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 가장 비싼 상품 구하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-18\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 평균 일일 대여 요금 구하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-17\n\n\n\n\n\n\n\n\n\n\n\n\n[Scikit-learn] Kaggle 집값예측 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-05-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Pytorch] MNIST 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-02-19\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
+  },
+  {
+    "objectID": "index_miniprojects.html",
+    "href": "index_miniprojects.html",
+    "title": "Mini Projects",
+    "section": "",
+    "text": "[Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 & 정리 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\n\nPython, win32를 활용한 SAP Scripting\n\n\n\nKibok Park\n\n\n2024-03-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] COO발급관리용 Tool\n\n\n\nPython\n\n\nwin11toast\n\n\nsqlite3\n\n\nstreamlit\n\n\npandas\n\n\nselenium\n\n\n\n[Python] selenium(웹스크레핑), sqlite3(db), win11toast(알림), streamlit(UI)\n\n\n\nKibok Park\n\n\n2024-02-20\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] LocalL/C 관리용 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\nStreamlit\n\n\nsqlite3\n\n\nBeautifulSoup\n\n\n\nPython, Streamlit을 활용한 업무자동화\n\n\n\nKibok Park\n\n\n2024-01-22\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] 아웃룩 메일열람 & pdf regex리딩 & 시스템 자동등록\n\n\n\nPython\n\n\nre\n\n\nxlwings\n\n\npandas\n\n\npdfminer\n\n\n\n[Python] re(regex), xlwings(암호화 Excel리딩), pdfminer(pdf리딩), pywin32(outlook)\n\n\n\nKibok Park\n\n\n2023-12-15\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] Peak타임 대응용 수출계약서pdf tabula리딩\n\n\n\nPython\n\n\ntabula\n\n\nxlwings\n\n\npathlib\n\n\npandas\n\n\n\n[Python] tabula(pdf리딩[표 형태], xlwings(암호화 Excel리딩)\n\n\n\nKibok Park\n\n\n2023-11-02\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "Kibok Park",
+    "section": "",
+    "text": "I’m Kibok Park. Welcome to my blog. I’m not an expert in my favorites yet, but I’m working on becoming one. I hope you to have nice time with my blog.\nCopyright © 2024 Kibok Park All rights reserved."
+  },
+  {
+    "objectID": "about.html#hello",
+    "href": "about.html#hello",
+    "title": "Kibok Park",
+    "section": "",
+    "text": "I’m Kibok Park. Welcome to my blog. I’m not an expert in my favorites yet, but I’m working on becoming one. I hope you to have nice time with my blog."
+  },
+  {
+    "objectID": "about.html#topics",
+    "href": "about.html#topics",
+    "title": "Kibok Park",
+    "section": "Topics",
+    "text": "Topics\nPython, Quantative trading"
+  },
+  {
     "objectID": "posts/coach-ml-mnist-20230301/index.html",
     "href": "posts/coach-ml-mnist-20230301/index.html",
     "title": "[Pytorch] MNIST 실습",
@@ -392,74 +462,81 @@
     "text": "학습된 모델 테스트\n\nlinear.eval()\nwith torch.no_grad():\n    correct = 0\n    total = 0\n    for i, (imgs, labels) in enumerate(test_loader):\n        imgs, labels = imgs.to(device), labels.to(device)\n        imgs = imgs.view(-1, 28 * 28)\n\n        outputs = linear(imgs) # 구현\n\n        _, argmax = torch.max(outputs, 1) # max()를 통해 최종 출력이 가장 높은 class 선택\n        total += imgs.size(0)\n        correct += (labels == argmax). sum().item()\n\n    print('Test accuracy for {} images: {: .2f}%'.format(total, correct / total * 100))\n\nTest accuracy for 10000 images:  91.99%"
   },
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "Kibok Park",
+    "objectID": "posts/meta-dl-creditcard-20240526/index.html",
+    "href": "posts/meta-dl-creditcard-20240526/index.html",
+    "title": "[M_Study_1주차] Tensorflow / Linear Regression",
     "section": "",
-    "text": "I’m Kibok Park. Welcome to my blog. I’m not an expert in my favorites yet, but I’m working on becoming one. I hope you to have nice time with my blog.\nCopyright © 2024 Kibok Park All rights reserved."
+    "text": "참여중인 딥러닝 스터디 1주차 기록입니다.\nCopyright © 2024 Kibok Park All rights reserved."
   },
   {
-    "objectID": "about.html#hello",
-    "href": "about.html#hello",
-    "title": "Kibok Park",
+    "objectID": "posts/meta-dl-creditcard-20240526/index.html#개요",
+    "href": "posts/meta-dl-creditcard-20240526/index.html#개요",
+    "title": "[M_Study_1주차] Tensorflow / Linear Regression",
     "section": "",
-    "text": "I’m Kibok Park. Welcome to my blog. I’m not an expert in my favorites yet, but I’m working on becoming one. I hope you to have nice time with my blog."
+    "text": "참여중인 딥러닝 스터디 1주차 기록입니다."
   },
   {
-    "objectID": "about.html#topics",
-    "href": "about.html#topics",
-    "title": "Kibok Park",
-    "section": "Topics",
-    "text": "Topics\nPython, Quantative trading"
+    "objectID": "posts/meta-dl-creditcard-20240526/index.html#tensorflow-pytorch",
+    "href": "posts/meta-dl-creditcard-20240526/index.html#tensorflow-pytorch",
+    "title": "[M_Study_1주차] Tensorflow / Linear Regression",
+    "section": "Tensorflow, Pytorch",
+    "text": "Tensorflow, Pytorch\n\n프레임워크 2가지 존재 : Tensorflow(텐서플로우, 구글), Pytorch(파이토치, 페이스북)\n\n알파고(딥마인드)시점까지는 ai의 90퍼센트 이상은 텐서플로우로 구현되었으나, 후발주자로 페이스북이 파이토치를 만들고 경쟁구도가 되었음\n\n파이토치 vs 텐서플로우\n\n파이토치 : high레벨에 가까운 pythonic함 (사람의 직관에 가까운, 추상화된) 대학원 등 교육 쪽에서 많이 사용(구현해보는 것에 중점) 사용자 증가로 긍정적 생태계 조성(텐서플로우에는 없는 함수가 개발될 수 있고, 디버깅 쉬워짐[참고Case많음], 참고강의 많음)\n텐서플로우 : low레벨에 가까운 효율성 (기계가 이해하기 쉬운 C언어와 같은) 산업 등 비즈니스 영역에서 많이 사용(효율성 중시)"
   },
   {
-    "objectID": "index_miniprojects.html",
-    "href": "index_miniprojects.html",
-    "title": "Mini Projects",
-    "section": "",
-    "text": "[Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 & 정리 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\n\nPython, win32를 활용한 SAP Scripting\n\n\n\nKibok Park\n\n\n2024-03-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] COO발급관리용 Tool\n\n\n\nPython\n\n\nwin11toast\n\n\nsqlite3\n\n\nstreamlit\n\n\npandas\n\n\nselenium\n\n\n\n[Python] selenium(웹스크레핑), sqlite3(db), win11toast(알림), streamlit(UI)\n\n\n\nKibok Park\n\n\n2024-02-20\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] LocalL/C 관리용 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\nStreamlit\n\n\nsqlite3\n\n\nBeautifulSoup\n\n\n\nPython, Streamlit을 활용한 업무자동화\n\n\n\nKibok Park\n\n\n2024-01-22\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] 아웃룩 메일열람 & pdf regex리딩 & 시스템 자동등록\n\n\n\nPython\n\n\nre\n\n\nxlwings\n\n\npandas\n\n\npdfminer\n\n\n\n[Python] re(regex), xlwings(암호화 Excel리딩), pdfminer(pdf리딩), pywin32(outlook)\n\n\n\nKibok Park\n\n\n2023-12-15\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] Peak타임 대응용 수출계약서pdf tabula리딩\n\n\n\nPython\n\n\ntabula\n\n\nxlwings\n\n\npathlib\n\n\npandas\n\n\n\n[Python] tabula(pdf리딩[표 형태], xlwings(암호화 Excel리딩)\n\n\n\nKibok Park\n\n\n2023-11-02\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
+    "objectID": "posts/meta-dl-creditcard-20240526/index.html#tensor",
+    "href": "posts/meta-dl-creditcard-20240526/index.html#tensor",
+    "title": "[M_Study_1주차] Tensorflow / Linear Regression",
+    "section": "Tensor",
+    "text": "Tensor\n\nTensor : ai에서 사용하는 배열 (차원=rank), 고차원의 데이터 저장(숫자뿐 아니라 문자도 가능)\n\n0차원 scalar / 1차원 vector / 2차원 matric (2d tensor) /3차원 3 tensor (3d tendor) / N차원 N tensor\n참고영상 : https://youtu.be/m0qwxNA7IzI?si=FeyWcPYuun7T_QON\n\n\n\n\n\nimage.png\n\n\n\n고차원/비정형 데이터 필요성 예시\n\n이미지 데이터(흑백)는 3d tensor 필요\n이미지 데이터(컬러)는 4d tensor 필요\n영상 데이터는 5d tensor 필요\n(결론→) 비정형데이터의 처리에 있어 tensor가 필요\n\n기존에는 매출, 성장률 등 숫자(정형 데이터)만 썼다면, 이제는 이미지(비정형 데이터) 등도 데이터 분석에 사용하기 시작함"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Blog",
-    "section": "",
-    "text": "[M_Study_3주차] Multi-class Classification / Artificial Neural Network\n\n\n\n파이썬\n\n\n머신러닝\n\n\n딥러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-06-09\n\n\n\n\n\n\n\n\n\n\n\n\n[M_Study_2주차] Multiple Regression / Logistic Regression\n\n\n\n파이썬\n\n\n머신러닝\n\n\n딥러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-06-02\n\n\n\n\n\n\n\n\n\n\n\n\nNH증권 직무인터뷰를 읽고(트레이딩&빅데이터)\n\n\n\n직무분석\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-28\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n[버크셔 해서웨이의 재탄생 읽고] 용어 정리\n\n\n\n경제/금융공부\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-23\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-21\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-20\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 조건에 맞는 도서 리스트 출력하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-19\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 가장 비싼 상품 구하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-18\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 평균 일일 대여 요금 구하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-17\n\n\n\n\n\n\n\n\n\n\n\n\n[Scikit-learn] Kaggle 집값예측 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-05-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Pytorch] MNIST 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-02-19\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
+    "objectID": "posts/meta-dl-creditcard-20240526/index.html#tensorflow-실습-constant-rank",
+    "href": "posts/meta-dl-creditcard-20240526/index.html#tensorflow-실습-constant-rank",
+    "title": "[M_Study_1주차] Tensorflow / Linear Regression",
+    "section": "Tensorflow 실습 (constant, rank)",
+    "text": "Tensorflow 실습 (constant, rank)\n\n텐서플로우 2.0의 차이 &gt; 즉시 실행모드(Eager Mode)지원 (1.x버전에서는 그래프를 생성하고 초기화하는 등 별도 작업이 필요했었음) \nRank(축) : 차원의 수\nShape(형상) : 0, 1, 2차원 등 데이터의 차원\ndtype : string, float32, float16, int32, int8 등 데이터 타입\n\n\nimport numpy as np\nimport tensorflow as tf\n\nprint(tf.__version__)\n\n2.16.1\n\n\n\na = tf.constant(2)\nb  = tf.constant([2,3])\nc = tf.constant([[2,3],[6,7]])\nd = tf.constant(['hello'])\n\nprint('[tf.rank 차원의 수 출력]')\nprint(tf.rank(a))\nprint(tf.rank(b))\nprint(tf.rank(c))\nprint(tf.rank(d))\nprint()\n\nprint('[변수 자체 출력]')\nprint(a)\nprint(b)\nprint(c)\nprint(d)\n\n[tf.rank 차원의 수 출력]\ntf.Tensor(0, shape=(), dtype=int32)\ntf.Tensor(1, shape=(), dtype=int32)\ntf.Tensor(2, shape=(), dtype=int32)\ntf.Tensor(1, shape=(), dtype=int32)\n\n[변수 자체 출력]\ntf.Tensor(2, shape=(), dtype=int32)\ntf.Tensor([2 3], shape=(2,), dtype=int32)\ntf.Tensor(\n[[2 3]\n [6 7]], shape=(2, 2), dtype=int32)\ntf.Tensor([b'hello'], shape=(1,), dtype=string)"
   },
   {
-    "objectID": "posts/prgms-sql-20240321/index.html",
-    "href": "posts/prgms-sql-20240321/index.html",
-    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
-    "section": "",
-    "text": "프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다  (비상업적, 비영리적 용도)\n문제링크 게시가능여부\nCopyright © 2024 Kibok Park All rights reserved."
+    "objectID": "posts/meta-dl-creditcard-20240526/index.html#계산-add-subtract-multiply",
+    "href": "posts/meta-dl-creditcard-20240526/index.html#계산-add-subtract-multiply",
+    "title": "[M_Study_1주차] Tensorflow / Linear Regression",
+    "section": "계산 (add, subtract, multiply)",
+    "text": "계산 (add, subtract, multiply)\n\nadd, subtract, multiply (+, -, * 기호로도 가능)\n\n\na = tf.constant(3)\nb = tf.constant(2)\n\n\nprint(tf.add(a,b))\nprint(a+b)\n\ntf.Tensor(5, shape=(), dtype=int32)\ntf.Tensor(5, shape=(), dtype=int32)\n\n\n\nprint(tf.subtract(a,b))\nprint(a-b)\n\ntf.Tensor(1, shape=(), dtype=int32)\ntf.Tensor(1, shape=(), dtype=int32)\n\n\n\nprint(tf.multiply(a,b))\nprint(a*b)\n\ntf.Tensor(6, shape=(), dtype=int32)\ntf.Tensor(6, shape=(), dtype=int32)"
   },
   {
-    "objectID": "posts/prgms-sql-20240321/index.html#개요",
-    "href": "posts/prgms-sql-20240321/index.html#개요",
-    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
-    "section": "",
-    "text": "프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다  (비상업적, 비영리적 용도)\n문제링크 게시가능여부"
+    "objectID": "posts/meta-dl-creditcard-20240526/index.html#numpy와-tensor의-변환",
+    "href": "posts/meta-dl-creditcard-20240526/index.html#numpy와-tensor의-변환",
+    "title": "[M_Study_1주차] Tensorflow / Linear Regression",
+    "section": "numpy와 tensor의 변환",
+    "text": "numpy와 tensor의 변환\n\n둘 다 데이터를 담는 container\n학습이 잘되고 있는지, 중간결과 등을 확인할때 numpy형태로 cpu로 확인\n실제 계산은 tensor 형태로 gpu에서 수행\n\n\n# numpy()\nc = (a+b)\n\nprint(c)\nprint(type(c))\n\nprint()\nprint(c.numpy())\nprint(type(c.numpy()))\n\ntf.Tensor(5, shape=(), dtype=int32)\n&lt;class 'tensorflow.python.framework.ops.EagerTensor'&gt;\n\n5\n&lt;class 'numpy.int32'&gt;\n\n\n\n# tf.convet_to_tensor()\nc_sqrt = np.sqrt(c,dtype=np.float32)\nc_tensor = tf.convert_to_tensor(c_sqrt)\n\nprint(c_sqrt)\nprint(type(c_sqrt))\n\nprint()\nprint(tf.convert_to_tensor(c_sqrt))\nprint(type(tf.convert_to_tensor(c_sqrt)))\n\n2.236068\n&lt;class 'numpy.float32'&gt;\n\ntf.Tensor(2.236068, shape=(), dtype=float32)\n&lt;class 'tensorflow.python.framework.ops.EagerTensor'&gt;"
   },
   {
-    "objectID": "posts/prgms-sql-20240321/index.html#문제-3월에-태어난-여성-회원-목록-출력하기",
-    "href": "posts/prgms-sql-20240321/index.html#문제-3월에-태어난-여성-회원-목록-출력하기",
-    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
-    "section": "문제 : 3월에 태어난 여성 회원 목록 출력하기",
-    "text": "문제 : 3월에 태어난 여성 회원 목록 출력하기\n\n\n다음은 식당 리뷰 사이트의 회원 정보를 담은 MEMBER_PROFILE 테이블입니다. MEMBER_PROFILE 테이블은 다음과 같으며 MEMBER_ID, MEMBER_NAME, TLNO, GENDER, DATE_OF_BIRTH는 회원 ID, 회원 이름, 회원 연락처, 성별, 생년월일을 의미합니다.\n\n\n\n\n\nColumn name\n\n\nType\n\n\nNullable\n\n\n\n\n\n\nMEMBER_ID\n\n\nVARCHAR(100)\n\n\nFALSE\n\n\n\n\nMEMBER_NAME\n\n\nVARCHAR(50)\n\n\nFALSE\n\n\n\n\nTLNO\n\n\nVARCHAR(50)\n\n\nTRUE\n\n\n\n\nGENDER\n\n\nVARCHAR(1)\n\n\nTRUE\n\n\n\n\nDATE_OF_BIRTH\n\n\nDATE\n\n\nTRUE\n\n\n\n\n\n\n문제\n\n\nMEMBER_PROFILE 테이블에서 생일이 3월인 여성 회원의 ID, 이름, 성별, 생년월일을 조회하는 SQL문을 작성해주세요. 이때 전화번호가 NULL인 경우는 출력대상에서 제외시켜 주시고, 결과는 회원ID를 기준으로 오름차순 정렬해주세요.\n\n\n\n예시\n\n\nMEMBER_PROFILE 테이블이 다음과 같을 때\n\n\n\n\n\nMEMBER_ID\n\n\nMEMBER_NAME\n\n\nTLNO\n\n\nGENDER\n\n\nDATE_OF_BIRTH\n\n\n\n\n\n\njiho92@naver.com\n\n\n이지호\n\n\n01076432111\n\n\nW\n\n\n1992-02-12\n\n\n\n\njiyoon22@hotmail.com\n\n\n김지윤\n\n\n01032324117\n\n\nW\n\n\n1992-02-22\n\n\n\n\njihoon93@hanmail.net\n\n\n김지훈\n\n\n01023258688\n\n\nM\n\n\n1993-02-23\n\n\n\n\nseoyeons@naver.com\n\n\n박서연\n\n\n01076482209\n\n\nW\n\n\n1993-03-16\n\n\n\n\nyoonsy94@gmail.com\n\n\n윤서연\n\n\nNULL\n\n\nW\n\n\n1994-03-19\n\n\n\n\n\nSQL을 실행하면 다음과 같이 출력되어야 합니다.\n\n\n\n\n\nMEMBER_ID\n\n\nMEMBER_NAME\n\n\nGENDER\n\n\nDATE_OF_BIRTH\n\n\n\n\n\n\nseoyeons@naver.com\n\n\n박서연\n\n\nW\n\n\n1993-03-16\n\n\n\n\n\n\n주의사항\n\n\nDATE_OF_BIRTH의 데이트 포맷이 예시와 동일해야 정답처리 됩니다."
+    "objectID": "posts/meta-dl-creditcard-20240526/index.html#linear-regression",
+    "href": "posts/meta-dl-creditcard-20240526/index.html#linear-regression",
+    "title": "[M_Study_1주차] Tensorflow / Linear Regression",
+    "section": "Linear regression",
+    "text": "Linear regression\n\n추세선 등을 그어서 쉽게 판단 가능 + X(투입)에 대한 Y(산출)을 판단해 데이터에 기반한 정량적 판단(객관적 증거)\n선형적관계 &gt; \\(Y = f(X) + \\epsilon\\) 을 기본적인 ML/DL의 식이라고 할 때,  \\(f\\)의 관계가 선형적 관계가 있다고 가정할 때 Linear regression  \\(income = f(education, seniority) + \\epsilon\\) 와 같은 예시를 들 수 있음\nSingle/Multi regression이 있다\n\n\n[용어정리]\nresponse, target : Y값 feature, input, predictor : X값 \\(\\epsilon\\)(엡실론) : 오차 \\(\\hat{x}\\) : 예측값 \\(x\\) (위의 기호는 hat)\n\n\n비선형적 관계를 다루는 모델을 사용하여 오차를 줄일 수 있음 단 오차를 0으로 만드는게 무조건 좋은 것은 아님 → 다뤄보지 못한 데이터가 나오면 성능이 떨어짐(과적합 overfitting)"
   },
   {
-    "objectID": "posts/prgms-sql-20240321/index.html#작성답안",
-    "href": "posts/prgms-sql-20240321/index.html#작성답안",
-    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
-    "section": "작성답안",
-    "text": "작성답안\n\n\n\nSELECT MEMBER_ID, MEMBER_NAME,  GENDER, TO_CHAR(DATE_OF_BIRTH, 'YYYY-MM-DD')\nFROM MEMBER_PROFILE\nWHERE GENDER = 'W'\n  AND TO_CHAR(DATE_OF_BIRTH, 'MON') = 'MAR'\n  AND TLNO IS NOT NULL\nORDER BY MEMBER_ID ASC\n\n\nFigure 1"
+    "objectID": "posts/meta-dl-creditcard-20240526/index.html#interpretability-vs-flexibility",
+    "href": "posts/meta-dl-creditcard-20240526/index.html#interpretability-vs-flexibility",
+    "title": "[M_Study_1주차] Tensorflow / Linear Regression",
+    "section": "interpretability vs flexibility",
+    "text": "interpretability vs flexibility\n &gt;[용어정리]\nflexibility : 성능, performance (100문제중 80문제를 찾추는가) interpretability : 해석 Least Squares : Linear regression\n\nDeep learning : 높은 성능 / 낮은 해석능력  효과적이고 빠름, 비선형적이면 좋은 모델을 뽑을 수 없음(선형이라는 가정 자체가 틀린 시작)\nLeast Squares : 성능은 DL보다 낮지만 높은 해석능력 (전통적 통계학의 기반을 둔 머신러닝, Statistical ML) 많은 시간과 데이터 필요, 비선형적 관계를 잘 모델링\n성능이 좋으니 DL만 사용? &gt; 관련 사례 DL로 판단하여 대출거절한 것은 차별에 해당한다는 판례 대출거절에 대해 근거를 제시해야하지만(자산부족 등), DL은 해석능력(interpretability)이 낮아 설명할 근거가 부족함 Least Squares(ㅣinear regression)로 근거를 제시했다면 차별이 되지 않았을 것"
   },
   {
-    "objectID": "posts/prgms-sql-20240321/index.html#정리",
-    "href": "posts/prgms-sql-20240321/index.html#정리",
-    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
-    "section": "정리",
-    "text": "정리\n\nWHERE 컬럼명 IS NOT NULL\nWHERE NOT 컬럼명 IS NULL"
+    "objectID": "posts/meta-dl-creditcard-20240526/index.html#assessing-model-accuracy",
+    "href": "posts/meta-dl-creditcard-20240526/index.html#assessing-model-accuracy",
+    "title": "[M_Study_1주차] Tensorflow / Linear Regression",
+    "section": "assessing model accuracy",
+    "text": "assessing model accuracy\n\nerror의 정의 : 예측값과 실제값의 차이\n\n평균에 제곱한 에러 총합 MSE(Mean Squared Error), 줄일수록 좋음\n\n제곱을 활용하는 이유 : 나중에 미분(에러가 최소화되는 지점찾기)를 하는데, 이를 위해서 함 (다음 강의에서 설명예정)\n\\(MSE_{TR}\\)(Training set), \\(MSE_{TE}\\)(Test set)\n\n데이터 특성(복잡/단순)과 모델 적용(복잡/단순)에 따른 Training, Test MSE추이 \n\n검정(정답), 노랑(Linear), 초록(Smoothing splines)/ 빨강(\\(MSE_{TR}\\)), 회색(\\(MSE_{TE}\\))\n단순한 데이터에 복잡한 모델(초록)을 사용하니 과적합 발생 \n데이터가 복잡하지 않아 Linear를 사용하니 Error추이(우측그래프)도 좋음"
+  },
+  {
+    "objectID": "posts/meta-dl-creditcard-20240526/index.html#bias-vs-variance-의-trade-off",
+    "href": "posts/meta-dl-creditcard-20240526/index.html#bias-vs-variance-의-trade-off",
+    "title": "[M_Study_1주차] Tensorflow / Linear Regression",
+    "section": "Bias vs Variance 의 Trade off",
+    "text": "Bias vs Variance 의 Trade off\n\nerror는 Variance와 Bias로 이루어져 있다 &gt; Variance(V), Bias(B) 예시 (과녁) V 낮음 B 낮음 : 정중앙에 잘 모여있음 V 낮음 B 높음 : 잘 모여있지만 위치가 잘못됨 V 높음 B 낮음 : 정답 근처이지만 불안정하게 퍼져있음 V 높음 V 높음 : 정답 근처도 아니고, 불안정하게 퍼져있음\nBias낮음 : Training에서 적중률이 높다, Overfitting 정답 자체를 틀리는 것과 관계\nVariance높음 : 모델이 불안정하다 변동에 과민하게 반응하는 것과 관계 (결과의 극단적 변화, 무의미한 결과는 무의미한 것으로 간주해야 안정적인 모델)\n둘 다 낮추기는 힘듦 (B낮추려면 V높아짐, B낮추려면 V 높아짐)\n둘 다 낮추기 위한 단 하나의 방법 : 데이터를 추가한다\nBias와 Variance를 고려한 가장 error가 적은 부분 Sweet spot"
   },
   {
     "objectID": "posts/prgms-sql-20240318/index.html",

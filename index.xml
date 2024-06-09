@@ -1269,6 +1269,936 @@ font-style: inherit;">zip</span>(gradients, [W,b])) </span></code></pre></div></
   <pubDate>Sun, 02 Jun 2024 00:00:00 GMT</pubDate>
 </item>
 <item>
+  <title>[M_Study_1주차] Tensorflow / Linear Regression</title>
+  <dc:creator>Kibok Park</dc:creator>
+  <link>https://kr9268.github.io/posts/meta-dl-creditcard-20240526/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="개요" class="level2">
+<h2 class="anchored" data-anchor-id="개요">개요</h2>
+<p>참여중인 딥러닝 스터디 1주차 기록입니다.</p>
+</section>
+<section id="tensorflow-pytorch" class="level2">
+<h2 class="anchored" data-anchor-id="tensorflow-pytorch">Tensorflow, Pytorch</h2>
+<ul>
+<li>프레임워크 2가지 존재 : Tensorflow(텐서플로우, 구글), Pytorch(파이토치, 페이스북)
+<ul>
+<li>알파고(딥마인드)시점까지는 ai의 90퍼센트 이상은 텐서플로우로 구현되었으나, 후발주자로 페이스북이 파이토치를 만들고 경쟁구도가 되었음</li>
+</ul></li>
+<li>파이토치 vs 텐서플로우
+<ul>
+<li>파이토치 : high레벨에 가까운 pythonic함 (사람의 직관에 가까운, 추상화된) 대학원 등 교육 쪽에서 많이 사용(구현해보는 것에 중점) 사용자 증가로 긍정적 생태계 조성(텐서플로우에는 없는 함수가 개발될 수 있고, 디버깅 쉬워짐[참고Case많음], 참고강의 많음)</li>
+<li>텐서플로우 : low레벨에 가까운 효율성 (기계가 이해하기 쉬운 C언어와 같은) 산업 등 비즈니스 영역에서 많이 사용(효율성 중시)</li>
+</ul></li>
+</ul>
+</section>
+<section id="tensor" class="level2">
+<h2 class="anchored" data-anchor-id="tensor">Tensor</h2>
+<ul>
+<li>Tensor : ai에서 사용하는 배열 (차원=rank), 고차원의 데이터 저장(숫자뿐 아니라 문자도 가능)
+<ul>
+<li>0차원 scalar / 1차원 vector / 2차원 matric (2d tensor) /3차원 3 tensor (3d tendor) / N차원 N tensor</li>
+<li>참고영상 : https://youtu.be/m0qwxNA7IzI?si=FeyWcPYuun7T_QON</li>
+</ul></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240526/index_files/figure-html/a6d10b1d-1-image.png" class="img-fluid figure-img"></p>
+<figcaption>image.png</figcaption>
+</figure>
+</div>
+<ul>
+<li>고차원/비정형 데이터 필요성 예시
+<ul>
+<li>이미지 데이터(흑백)는 3d tensor 필요</li>
+<li>이미지 데이터(컬러)는 4d tensor 필요</li>
+<li>영상 데이터는 5d tensor 필요</li>
+<li>(결론→) 비정형데이터의 처리에 있어 tensor가 필요</li>
+</ul></li>
+<li>기존에는 매출, 성장률 등 숫자(정형 데이터)만 썼다면, 이제는 이미지(비정형 데이터) 등도 데이터 분석에 사용하기 시작함</li>
+</ul>
+</section>
+<section id="variable" class="level1">
+<h1>Variable</h1>
+<ul>
+<li><p>연산 등은 data type을 일치시켜야 정상적으로 가능</p></li>
+<li><p>Variable 타입 (float32/64 , int8/16/32/64)</p>
+<ul>
+<li>컴퓨터는 수를 2진수로 표현하며, float데이터의 경우는 경우 오차가 발생하고, 이를 사용한 계산이 많아수록 오차가 커짐</li>
+<li>float64가 언제나 좋은 것은 아님(메모리 사용량[비용], 연산속도의 문제)</li>
+<li><strong>딥러닝에서는 주로 32bit를 주로 사용</strong>(숫자 하나하나에 큰 의미가 있지 않음, 중요한 것은 숫자 사이의 관계)
+<ul>
+<li>딥러닝은 엄청 많은 계산을 해야하기 때문에, 비용적으로 저렴한 32bit 사용 &gt; [컴퓨터에서 계산을 담당하게 되는 부품은 CPU, GPU] <br> CPU 어려운 계산을 조금 가능 / GPU 쉬운 계산을 많이 가능<br> (교수와 초등학생에 비유 가능 → 1개의 미적분이라면 CPU, 1만개의 사칙연산은 GPU)<br> → 그렇기 때문에 GPU를 많이 사용함<br> (많이 쓰이는 그래픽카드는 한개당 3천만원, 구글 프로젝트는 1만개씩 사용 1~6개월정도 사용)</li>
+</ul></li>
+</ul></li>
+</ul>
+<section id="tensorflow-실습-constant-rank" class="level2">
+<h2 class="anchored" data-anchor-id="tensorflow-실습-constant-rank">Tensorflow 실습 (constant, rank)</h2>
+<ul>
+<li><p>텐서플로우 2.0의 차이 &gt; 즉시 실행모드(Eager Mode)지원<br> (1.x버전에서는 그래프를 생성하고 초기화하는 등 별도 작업이 필요했었음)<br> <br></p></li>
+<li><p>Rank(축) : 차원의 수</p></li>
+<li><p>Shape(형상) : 0, 1, 2차원 등 데이터의 차원</p></li>
+<li><p>dtype : <code>string</code>, <code>float32</code>, <code>float16</code>, <code>int32</code>, <code>int8</code> 등 데이터 타입</p></li>
+</ul>
+<div id="f98caba0" class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb1-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> tensorflow <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> tf</span>
+<span id="cb1-3"></span>
+<span id="cb1-4"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(tf.__version__)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>2.16.1</code></pre>
+</div>
+</div>
+<div id="6141b8eb" class="cell">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">a <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.constant(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb3-2">b  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.constant([<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>])</span>
+<span id="cb3-3">c <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.constant([[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>],[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>]])</span>
+<span id="cb3-4">d <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.constant([<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'hello'</span>])</span>
+<span id="cb3-5"></span>
+<span id="cb3-6"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'[tf.rank 차원의 수 출력]'</span>)</span>
+<span id="cb3-7"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(tf.rank(a))</span>
+<span id="cb3-8"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(tf.rank(b))</span>
+<span id="cb3-9"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(tf.rank(c))</span>
+<span id="cb3-10"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(tf.rank(d))</span>
+<span id="cb3-11"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>()</span>
+<span id="cb3-12"></span>
+<span id="cb3-13"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'[변수 자체 출력]'</span>)</span>
+<span id="cb3-14"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(a)</span>
+<span id="cb3-15"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(b)</span>
+<span id="cb3-16"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(c)</span>
+<span id="cb3-17"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(d)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[tf.rank 차원의 수 출력]
+tf.Tensor(0, shape=(), dtype=int32)
+tf.Tensor(1, shape=(), dtype=int32)
+tf.Tensor(2, shape=(), dtype=int32)
+tf.Tensor(1, shape=(), dtype=int32)
+
+[변수 자체 출력]
+tf.Tensor(2, shape=(), dtype=int32)
+tf.Tensor([2 3], shape=(2,), dtype=int32)
+tf.Tensor(
+[[2 3]
+ [6 7]], shape=(2, 2), dtype=int32)
+tf.Tensor([b'hello'], shape=(1,), dtype=string)</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="난수생성" class="level1">
+<h1>난수생성</h1>
+<ul>
+<li>tf.random.uniform (균등분포 uniform distribution)</li>
+<li>tf.random.normal (정규분포 normal distribution)
+<ul>
+<li>모든 분포 중 가장 중요한 분포, 분포 상 가운데 부분 데이터를 많이 가져오게 됨 (정규분포는 평균과 sd만 있으면 그릴 수 있다)</li>
+</ul></li>
+</ul>
+<div id="16303ac5" class="cell">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">rand1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.random.uniform(shape<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], minval<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, maxval<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb5-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(rand1.shape)</span>
+<span id="cb5-3"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(rand1)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(1,)
+tf.Tensor([0.8562789], shape=(1,), dtype=float32)</code></pre>
+</div>
+</div>
+<div id="7bd604f7" class="cell">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1">rand2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.random.normal(shape<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>], mean<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, stddev<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb7-2">rand3 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.random.normal(shape<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>), mean<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, stddev<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb7-3"></span>
+<span id="cb7-4"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(rand2.shape)</span>
+<span id="cb7-5"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(rand2)</span>
+<span id="cb7-6"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>()</span>
+<span id="cb7-7"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(rand3.shape)</span>
+<span id="cb7-8"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(rand3)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(1, 2)
+tf.Tensor([[-0.8665893   0.65539646]], shape=(1, 2), dtype=float32)
+
+(3, 2)
+tf.Tensor(
+[[ 0.2873476   0.08000568]
+ [ 0.23599206  0.11011286]
+ [-3.2414987   0.7665266 ]], shape=(3, 2), dtype=float32)</code></pre>
+</div>
+</div>
+<section id="계산-add-subtract-multiply" class="level2">
+<h2 class="anchored" data-anchor-id="계산-add-subtract-multiply">계산 (add, subtract, multiply)</h2>
+<ul>
+<li>add, subtract, multiply (<code>+</code>, <code>-</code>, <code>*</code> 기호로도 가능)</li>
+</ul>
+<div id="01f10f64" class="cell">
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1">a <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.constant(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)</span>
+<span id="cb9-2">b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.constant(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span></code></pre></div>
+</div>
+<div id="d023566a" class="cell">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(tf.add(a,b))</span>
+<span id="cb10-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(a<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span>b)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tf.Tensor(5, shape=(), dtype=int32)
+tf.Tensor(5, shape=(), dtype=int32)</code></pre>
+</div>
+</div>
+<div id="7df4614a" class="cell">
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(tf.subtract(a,b))</span>
+<span id="cb12-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(a<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>b)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tf.Tensor(1, shape=(), dtype=int32)
+tf.Tensor(1, shape=(), dtype=int32)</code></pre>
+</div>
+</div>
+<div id="8117cbdb" class="cell">
+<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(tf.multiply(a,b))</span>
+<span id="cb14-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(a<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span>b)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tf.Tensor(6, shape=(), dtype=int32)
+tf.Tensor(6, shape=(), dtype=int32)</code></pre>
+</div>
+</div>
+</section>
+<section id="numpy와-tensor의-변환" class="level2">
+<h2 class="anchored" data-anchor-id="numpy와-tensor의-변환">numpy와 tensor의 변환</h2>
+<ul>
+<li>둘 다 데이터를 담는 container</li>
+<li>학습이 잘되고 있는지, 중간결과 등을 확인할때 numpy형태로 cpu로 확인</li>
+<li>실제 계산은 tensor 형태로 gpu에서 수행</li>
+</ul>
+<div id="a2c3d50f" class="cell">
+<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># numpy()</span></span>
+<span id="cb16-2">c <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (a<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span>b)</span>
+<span id="cb16-3"></span>
+<span id="cb16-4"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(c)</span>
+<span id="cb16-5"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">type</span>(c))</span>
+<span id="cb16-6"></span>
+<span id="cb16-7"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>()</span>
+<span id="cb16-8"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(c.numpy())</span>
+<span id="cb16-9"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">type</span>(c.numpy()))</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tf.Tensor(5, shape=(), dtype=int32)
+&lt;class 'tensorflow.python.framework.ops.EagerTensor'&gt;
+
+5
+&lt;class 'numpy.int32'&gt;</code></pre>
+</div>
+</div>
+<div id="509406c0" class="cell">
+<div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># tf.convet_to_tensor()</span></span>
+<span id="cb18-2">c_sqrt <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.sqrt(c,dtype<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>np.float32)</span>
+<span id="cb18-3">c_tensor <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.convert_to_tensor(c_sqrt)</span>
+<span id="cb18-4"></span>
+<span id="cb18-5"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(c_sqrt)</span>
+<span id="cb18-6"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">type</span>(c_sqrt))</span>
+<span id="cb18-7"></span>
+<span id="cb18-8"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>()</span>
+<span id="cb18-9"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(tf.convert_to_tensor(c_sqrt))</span>
+<span id="cb18-10"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">type</span>(tf.convert_to_tensor(c_sqrt)))</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>2.236068
+&lt;class 'numpy.float32'&gt;
+
+tf.Tensor(2.236068, shape=(), dtype=float32)
+&lt;class 'tensorflow.python.framework.ops.EagerTensor'&gt;</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="broadcasting" class="level1">
+<h1>broadcasting</h1>
+<ul>
+<li>tensor의 형태가 다르지만 broadcasting으로 빈 부분을 채워 계산</li>
+</ul>
+<div id="d16e14eb" class="cell">
+<div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1">t <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.constant([[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.</span>,<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.</span>,<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.</span>],[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.</span>,<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5.</span>,<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6.</span>]])</span>
+<span id="cb20-2">t <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span></span></code></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;tf.Tensor: shape=(2, 3), dtype=float32, numpy=
+array([[11., 12., 13.],
+       [14., 15., 16.]], dtype=float32)&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="행렬-곱셈matrix-multiplication" class="level1">
+<h1>행렬 곱셈(matrix multiplication)</h1>
+<ul>
+<li>딥러닝 공부 전 어떻게 하는 것인지 알아두면 좋음</li>
+</ul>
+<div id="80120715" class="cell">
+<div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1">t <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">@</span> tf.transpose(t)</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;tf.Tensor: shape=(2, 2), dtype=float32, numpy=
+array([[14., 32.],
+       [32., 77.]], dtype=float32)&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="타입변환" class="level1">
+<h1>타입변환</h1>
+<ul>
+<li><p>기본 dtype : <code>float32</code>, <code>int32</code></p></li>
+<li><p>연산시 tensor의 타입을 맞춰야 함</p></li>
+<li><p>타입 변환에는 <code>tf.cast()</code> 사용<br> <br></p></li>
+<li><p>타입이 달라 연산이 안되는 오류는 텐서플로우를 사용하며 많이 발생, 데이터타입을 지정하며 쓰는 것을 권장 &gt; 추가지식 <br> <code>2.</code> 과 같이 0을 생략해도 float로 간주 파이썬은 인간처럼 데이터형이 달라도 계산하지만(2+2.0), 다른 언어는 오류 발생</p></li>
+</ul>
+<div id="213881cd" class="cell">
+<div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1">a <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.constant(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb24-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(a)</span>
+<span id="cb24-3"></span>
+<span id="cb24-4">b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.constant(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.</span>)</span>
+<span id="cb24-5"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(b)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tf.Tensor(2, shape=(), dtype=int32)
+tf.Tensor(2.0, shape=(), dtype=float32)</code></pre>
+</div>
+</div>
+<div id="15ec004a" class="cell">
+<div class="sourceCode cell-code" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 일부러 오류나게 한 코드</span></span>
+<span id="cb26-2">a<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span>b</span></code></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>InvalidArgumentError: cannot compute AddV2 as input #1(zero-based) was expected to be a int32 tensor but is a float tensor [Op:AddV2] name: </code></pre>
+</div>
+</div>
+<div id="6ecafda8" class="cell">
+<div class="sourceCode cell-code" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1">a<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span>tf.cast(b, tf.int32)</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;tf.Tensor: shape=(), dtype=int32, numpy=4&gt;</code></pre>
+</div>
+</div>
+<section id="autograph-오토그래프" class="level3">
+<h3 class="anchored" data-anchor-id="autograph-오토그래프">AutoGraph (오토그래프)</h3>
+<ul>
+<li><p>Tensorflow가 작업을 좀 더 빠르게 동작하게 하기 위한 방법으로 Graph로 만들어 연산을 진행</p></li>
+<li><p><code>tf.Graph</code></p></li>
+<li><p>유연성이 있음</p>
+<ul>
+<li>모바일 애플리케이션, 임베디드 기기, 백엔드 서버와 같이 Python 인터프리터가 없는 환경에서 Tensorflow 사용 가능</li>
+</ul></li>
+</ul>
+</section>
+<section id="tf.function" class="level3">
+<h3 class="anchored" data-anchor-id="tf.function"><span class="citation" data-cites="tf.function">@tf.function</span></h3>
+<ul>
+<li><p>자동으로 그래프를 생성(Auto Graph)</p></li>
+<li><p>그래프로 변환하여 사용 -&gt; GPU 연산 가능</p></li>
+<li><p>파이썬으로 구성된 함수를 텐서플로우의 그래프 형태로 다루고 싶을 때 사용가능</p></li>
+<li><p>원본 함수가 필요하다면 <code>(tf.function).python_function()</code> <br></p></li>
+</ul>
+<div id="0629fcda" class="cell">
+<div class="sourceCode cell-code" id="cb30" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">@tf.function</span></span>
+<span id="cb30-2"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">def</span> my_function(x):</span>
+<span id="cb30-3">  <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">return</span> x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span>x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span></span>
+<span id="cb30-4"></span>
+<span id="cb30-5"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(my_function(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>))</span>
+<span id="cb30-6"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(my_function(tf.constant(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)))</span>
+<span id="cb30-7"></span>
+<span id="cb30-8"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(tf.autograph.to_code(my_function.python_function))</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tf.Tensor(-13, shape=(), dtype=int32)
+tf.Tensor(-13, shape=(), dtype=int32)
+def tf__my_function(x):
+    with ag__.FunctionScope('my_function', 'fscope', ag__.ConversionOptions(recursive=True, user_requested=True, optional_features=(), internal_convert_user_code=True)) as fscope:
+        do_return = False
+        retval_ = ag__.UndefinedReturnValue()
+        try:
+            do_return = True
+            retval_ = ag__.ld(x) ** 2 - 10 * ag__.ld(x) + 3
+        except:
+            do_return = False
+            raise
+        return fscope.ret(retval_, do_return)
+</code></pre>
+</div>
+</div>
+<ul>
+<li>텐서플로우는 계산 그래프 미리 고정 시켜 계산 등을 빠르게 하여 비용 등을 절감할 수 있다 (파이토치는 그래프고정기능 자체가 없어서 속도를 빠르게 할 수 없다)</li>
+</ul>
+<div id="5bee52d5" class="cell">
+<div class="sourceCode cell-code" id="cb32" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> timeit</span>
+<span id="cb32-2"></span>
+<span id="cb32-3"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">class</span> SequentialModel(tf.keras.Model):</span>
+<span id="cb32-4">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">def</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">__init__</span>(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span>kwargs):</span>
+<span id="cb32-5">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">super</span>(SequentialModel, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>).<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">__init__</span>(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span>kwargs)</span>
+<span id="cb32-6">    <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.flatten <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.keras.layers.Flatten(input_shape<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">28</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">28</span>))</span>
+<span id="cb32-7">    <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.dense_1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.keras.layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">128</span>, activation <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'relu'</span>)</span>
+<span id="cb32-8">    <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.dropout <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.keras.layers.Dropout(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span>)</span>
+<span id="cb32-9">    <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.dense_2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.keras.layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>)</span>
+<span id="cb32-10"></span>
+<span id="cb32-11">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">def</span> call(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>,x):</span>
+<span id="cb32-12">    x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.flatten(x)</span>
+<span id="cb32-13">    x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.dense_1(x)</span>
+<span id="cb32-14">    x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.dropout(x)</span>
+<span id="cb32-15">    x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.dense_2(x)</span>
+<span id="cb32-16">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">return</span> x</span>
+<span id="cb32-17"></span>
+<span id="cb32-18">input_data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.random.uniform([<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">60</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">28</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">28</span>])</span>
+<span id="cb32-19"></span>
+<span id="cb32-20">eager_model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> SequentialModel()</span>
+<span id="cb32-21">graph_model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.function(eager_model)</span>
+<span id="cb32-22"></span>
+<span id="cb32-23"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Eager time: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>timeit<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>timeit(<span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">lambda</span>: eager_model(input_data), number <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10000</span>)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb32-24"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Graph time: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>timeit<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>timeit(<span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">lambda</span>: graph_model(input_data), number <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10000</span>)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>c:\Users\kibok\AppData\Local\Programs\Python\Python311\Lib\site-packages\keras\src\layers\reshaping\flatten.py:37: UserWarning: Do not pass an `input_shape`/`input_dim` argument to a layer. When using Sequential models, prefer using an `Input(shape)` object as the first layer in the model instead.
+  super().__init__(**kwargs)</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Eager time: 18.815009500001906
+Graph time: 4.405216699997254</code></pre>
+</div>
+</div>
+</section>
+<section id="변수-생성" class="level3">
+<h3 class="anchored" data-anchor-id="변수-생성">변수 생성</h3>
+<ul>
+<li><code>tf.Variable</code></li>
+<li>딥러닝 모델 학습 시, 그래프 연산이 필요할 때 사용</li>
+</ul>
+<div id="03723c02" class="cell">
+<div class="sourceCode cell-code" id="cb35" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1">X <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.Variable(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20.</span>)</span>
+<span id="cb35-2"></span>
+<span id="cb35-3"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(X)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;tf.Variable 'Variable:0' shape=() dtype=float32, numpy=20.0&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="autograd-자동-미분" class="level3">
+<h3 class="anchored" data-anchor-id="autograd-자동-미분">Autograd (자동 미분)</h3>
+<ul>
+<li><p><code>tf.GradientTape</code> API를 사용</p></li>
+<li><p><code>tf.Variable</code> 같은 일부 입력에 대한 기울기 계산</p>
+<ul>
+<li>기본적으로 한번만 사용됨</li>
+</ul></li>
+<li><p>변수가 포함된 연산만 기록</p></li>
+<li><p>텐서플로우의 꽃</p></li>
+<li><p>ai가 많이 한다는 단순계산은 미분이며 이를 많이 하므로 자동미분은 도움이 됨 <br> cpu에서 gpu로 넘기는 것은 c++수준의 코드를 짜야하고 넘겨야하는 번거로움이 있는데, 이를 자동으로 해줘서 편함</p></li>
+</ul>
+<div id="111fbdbf" class="cell">
+<div class="sourceCode cell-code" id="cb37" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1">x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.Variable(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.</span>)</span>
+<span id="cb37-2"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">with</span> tf.GradientTape() <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> tape: <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#with 아래 값들은 미분값 추정을 하겠다는 선언 (tape : 기록)</span></span>
+<span id="cb37-3">  y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span></code></pre></div>
+</div>
+<div id="6ac1c6ae" class="cell">
+<div class="sourceCode cell-code" id="cb38" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">type</span>(x))</span>
+<span id="cb38-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">type</span>(y))</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'tensorflow.python.ops.resource_variable_ops.ResourceVariable'&gt;
+&lt;class 'tensorflow.python.framework.ops.EagerTensor'&gt;</code></pre>
+</div>
+</div>
+<div id="044f925b" class="cell">
+<div class="sourceCode cell-code" id="cb40" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1">dy_dx <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tape.gradient(y,x)</span>
+<span id="cb40-2">dy_dx.numpy()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>6.0</code></pre>
+</div>
+</div>
+<div id="cc6fb239" class="cell">
+<div class="sourceCode cell-code" id="cb42" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># tape내에 선언하지 않은 x2로 인해 에러 발생 (일부러 에러낸 코드)</span></span>
+<span id="cb42-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 모든 수식을 gradient(추적)하는 것은 비용이 많이 드므로 필요한 것만 with로 선언</span></span>
+<span id="cb42-3">x2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.Variable(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>)</span>
+<span id="cb42-4">dy_dx <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tape.gradient(y,x2)</span>
+<span id="cb42-5">dy_dx.numpy()</span></code></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>RuntimeError: A non-persistent GradientTape can only be used to compute one set of gradients (or jacobians)</code></pre>
+</div>
+</div>
+<ul>
+<li>이미지 처리 CNN, 시계열 처리 RNN 등 배울 예정</li>
+</ul>
+</section>
+<section id="linear-regression" class="level2">
+<h2 class="anchored" data-anchor-id="linear-regression">Linear regression</h2>
+<ul>
+<li>추세선 등을 그어서 쉽게 판단 가능 + X(투입)에 대한 Y(산출)을 판단해 데이터에 기반한 정량적 판단(객관적 증거)</li>
+<li>선형적관계 &gt; <img src="https://latex.codecogs.com/png.latex?Y%20=%20f(X)%20+%20%5Cepsilon"> 을 기본적인 ML/DL의 식이라고 할 때, <br> <img src="https://latex.codecogs.com/png.latex?f">의 관계가 선형적 관계가 있다고 가정할 때 Linear regression <br> <img src="https://latex.codecogs.com/png.latex?income%20=%20f(education,%20seniority)%20+%20%5Cepsilon"> 와 같은 예시를 들 수 있음</li>
+<li>Single/Multi regression이 있다</li>
+</ul>
+<blockquote class="blockquote">
+<p>[용어정리]<br>
+response, target : Y값<br> feature, input, predictor : X값<br> <img src="https://latex.codecogs.com/png.latex?%5Cepsilon">(엡실론) : 오차<br> <img src="https://latex.codecogs.com/png.latex?%5Chat%7Bx%7D"> : 예측값 <img src="https://latex.codecogs.com/png.latex?x"> (위의 기호는 hat)</p>
+</blockquote>
+<ul>
+<li>비선형적 관계를 다루는 모델을 사용하여 오차를 줄일 수 있음<br> <strong>단 오차를 0으로 만드는게 무조건 좋은 것은 아님</strong> → 다뤄보지 못한 데이터가 나오면 <strong>성능이 떨어짐(과적합 overfitting)</strong></li>
+</ul>
+</section>
+<section id="interpretability-vs-flexibility" class="level2">
+<h2 class="anchored" data-anchor-id="interpretability-vs-flexibility">interpretability vs flexibility</h2>
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240526/index_files/figure-html/04d9a463-4-image.png" class="img-fluid" alt="image.png"> &gt;[용어정리]<br>
+flexibility : 성능, performance (100문제중 80문제를 찾추는가)<br> interpretability : 해석<br> Least Squares : Linear regression</p>
+<ul>
+<li>Deep learning : 높은 성능 / 낮은 해석능력 <br> 효과적이고 빠름, 비선형적이면 좋은 모델을 뽑을 수 없음(선형이라는 가정 자체가 틀린 시작)</li>
+<li>Least Squares : 성능은 DL보다 낮지만 높은 해석능력 (전통적 통계학의 기반을 둔 머신러닝, Statistical ML)<br> 많은 시간과 데이터 필요, 비선형적 관계를 잘 모델링</li>
+<li>성능이 좋으니 DL만 사용? &gt; 관련 사례<br> DL로 판단하여 대출거절한 것은 차별에 해당한다는 판례<br> 대출거절에 대해 근거를 제시해야하지만(자산부족 등), DL은 해석능력(interpretability)이 낮아 설명할 근거가 부족함<br> Least Squares(ㅣinear regression)로 근거를 제시했다면 차별이 되지 않았을 것<br></li>
+</ul>
+</section>
+<section id="assessing-model-accuracy" class="level2">
+<h2 class="anchored" data-anchor-id="assessing-model-accuracy">assessing model accuracy</h2>
+<ul>
+<li>error의 정의 : 예측값과 실제값의 차이
+<ul>
+<li>평균에 제곱한 에러 총합 MSE(Mean Squared Error), 줄일수록 좋음
+<ul>
+<li>제곱을 활용하는 이유 : 나중에 미분(에러가 최소화되는 지점찾기)를 하는데, 이를 위해서 함 (다음 강의에서 설명예정)</li>
+<li><img src="https://latex.codecogs.com/png.latex?MSE_%7BTR%7D">(Training set), <img src="https://latex.codecogs.com/png.latex?MSE_%7BTE%7D">(Test set)</li>
+</ul></li>
+<li>데이터 특성(복잡/단순)과 모델 적용(복잡/단순)에 따른 Training, Test MSE추이 <img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240526/index_files/figure-html/04d9a463-1-image-2.png" class="img-fluid" alt="image-2.png">
+<ul>
+<li>검정(정답), 노랑(Linear), 초록(Smoothing splines)/ 빨강(<img src="https://latex.codecogs.com/png.latex?MSE_%7BTR%7D">), 회색(<img src="https://latex.codecogs.com/png.latex?MSE_%7BTE%7D">)</li>
+<li><strong>단순한 데이터에 복잡한 모델(초록)을 사용하니 과적합</strong> 발생<br> <img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240526/index_files/figure-html/04d9a463-2-image-3.png" class="img-fluid" alt="image-3.png"></li>
+<li><strong>데이터가 복잡하지 않아 Linear를 사용하니 Error추이(우측그래프)도 좋음</strong></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="bias-vs-variance-의-trade-off" class="level2">
+<h2 class="anchored" data-anchor-id="bias-vs-variance-의-trade-off">Bias vs Variance 의 Trade off</h2>
+<ul>
+<li><p>error는 Variance와 Bias로 이루어져 있다 &gt; Variance(V), Bias(B) 예시 (과녁) V 낮음 B 낮음 : 정중앙에 잘 모여있음 V 낮음 B 높음 : 잘 모여있지만 위치가 잘못됨 V 높음 B 낮음 : 정답 근처이지만 불안정하게 퍼져있음 V 높음 V 높음 : 정답 근처도 아니고, 불안정하게 퍼져있음</p></li>
+<li><p>Bias낮음 : Training에서 적중률이 높다, Overfitting <strong>정답 자체를 틀리는 것</strong>과 관계</p></li>
+<li><p>Variance높음 : 모델이 불안정하다 <strong>변동에 과민하게 반응하는 것</strong>과 관계 (결과의 극단적 변화, 무의미한 결과는 무의미한 것으로 간주해야 안정적인 모델)</p></li>
+<li><p>둘 다 낮추기는 힘듦 (B낮추려면 V높아짐, B낮추려면 V 높아짐)</p></li>
+<li><p>둘 다 낮추기 위한 단 하나의 방법 : 데이터를 추가한다</p></li>
+<li><p>Bias와 Variance를 고려한 가장 error가 적은 부분 Sweet spot <br> <img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240526/index_files/figure-html/04d9a463-3-image-4.png" class="img-fluid" alt="image-4.png"></p></li>
+</ul>
+
+
+</section>
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
+  <category>파이썬</category>
+  <category>머신러닝</category>
+  <category>딥러닝</category>
+  <guid>https://kr9268.github.io/posts/meta-dl-creditcard-20240526/</guid>
+  <pubDate>Sun, 26 May 2024 00:00:00 GMT</pubDate>
+</item>
+<item>
   <title>NH증권 직무인터뷰를 읽고(트레이딩&amp;빅데이터)</title>
   <dc:creator>Kibok Park</dc:creator>
   <link>https://kr9268.github.io/posts/vba-noname-yyyymmdd/</link>
