@@ -9,7 +9,7 @@
 <link>https://kr9268.github.io/index_miniprojects.html</link>
 <atom:link href="https://kr9268.github.io/index_miniprojects.xml" rel="self" type="application/rss+xml"/>
 <description></description>
-<generator>quarto-1.4.554</generator>
+<generator>quarto-1.4.555</generator>
 <lastBuildDate>Wed, 06 Mar 2024 00:00:00 GMT</lastBuildDate>
 <item>
   <title>[Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 &amp; 정리 Tool</title>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.554">
+<meta name="generator" content="quarto-1.4.555">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -234,6 +234,10 @@ gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
   <li><a href="#모델학습-및-예측" id="toc-모델학습-및-예측" class="nav-link" data-scroll-target="#모델학습-및-예측">모델학습 및 예측</a></li>
   <li><a href="#제출용-dataframe-및-csv파일-생성" id="toc-제출용-dataframe-및-csv파일-생성" class="nav-link" data-scroll-target="#제출용-dataframe-및-csv파일-생성">제출용 DataFrame 및 csv파일 생성</a></li>
   </ul></li>
+  <li><a href="#gridsearch" id="toc-gridsearch" class="nav-link" data-scroll-target="#gridsearch">GridSearch</a>
+  <ul class="collapse">
+  <li><a href="#lightgbm에-grid-search-적용해보기" id="toc-lightgbm에-grid-search-적용해보기" class="nav-link" data-scroll-target="#lightgbm에-grid-search-적용해보기">LightGBM에 Grid Search 적용해보기</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -371,7 +375,7 @@ price</code></pre>
 <ul>
 <li>train, test 데이터를 합쳐서 한번에 확인</li>
 </ul>
-<div id="26ca0d11" class="cell" data-execution_count="43">
+<div id="26ca0d11" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 합치기</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df_chk_missing <span class="op">=</span> pd.concat((data, test), axis<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -389,7 +393,7 @@ price</code></pre>
 <ul>
 <li>isna()로 결측치를 확인</li>
 </ul>
-<div id="d7834677" class="cell" data-execution_count="44">
+<div id="d7834677" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_chk_missing.isna().<span class="bu">sum</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>id               0
@@ -421,7 +425,7 @@ dtype: int64</code></pre>
 <ul>
 <li>missingno 패키지로 컬럼별 결측치 시각화</li>
 </ul>
-<div id="704c8e19" class="cell" data-execution_count="29">
+<div id="704c8e19" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> missingno</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>missingno.matrix(df_chk_missing)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -464,7 +468,7 @@ dtype: int64</code></pre>
 <ul>
 <li>가격과 관계없는 단순식별용 데이터인 id 삭제</li>
 </ul>
-<div id="1172ccf8" class="cell" data-execution_count="45">
+<div id="1172ccf8" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>main_id <span class="op">=</span> df_chk_missing[<span class="st">'id'</span>][:train_length]</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>test_id <span class="op">=</span> df_chk_missing[<span class="st">'id'</span>][train_length:]</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="kw">del</span> df_chk_missing[<span class="st">'id'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -475,25 +479,24 @@ dtype: int64</code></pre>
 <ul>
 <li>날짜 뒤에 T00000과 같이 시간데이터(로 추정됨)가 있는데, 모두 T00000으로만 되어있으므로 삭제</li>
 </ul>
-<div id="d8004c60" class="cell" data-execution_count="46">
+<div id="d8004c60" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># T000000으로 되어있는 값 세기</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>df_chk_missing[<span class="st">'date'</span>].<span class="bu">str</span>.contains(<span class="st">'T000000'</span>).value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="46">
+<div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>date
 True    21590
 Name: count, dtype: int64</code></pre>
 </div>
 </div>
-<div id="49494527" class="cell" data-execution_count="47">
+<div id="49494527" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># apply로 lambda함수를 사용하여, date컬럼의 앞자리만 저장</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>df_chk_missing[<span class="st">'date'</span>] <span class="op">=</span> df_chk_missing[<span class="st">'date'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x : <span class="bu">str</span>(x[:<span class="dv">6</span>]))</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>df_chk_missing.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="47">
-<div>
+<div class="cell-output cell-output-display" data-execution_count="11">
 <div>
 
 
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -635,7 +638,6 @@ Name: count, dtype: int64</code></pre>
 </div>
 </div>
 </div>
-</div>
 </section>
 <section id="로그변환" class="level4">
 <h4 class="anchored" data-anchor-id="로그변환">로그변환</h4>
@@ -644,7 +646,7 @@ Name: count, dtype: int64</code></pre>
 </ul>
 <section id="분포가-치우쳐져-있는-항목-찾기시각화" class="level5">
 <h5 class="anchored" data-anchor-id="분포가-치우쳐져-있는-항목-찾기시각화">분포가 치우쳐져 있는 항목 찾기(시각화)</h5>
-<div id="9cd20f17" class="cell" data-execution_count="49">
+<div id="9cd20f17" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>row_plot <span class="op">=</span> <span class="dv">5</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>col_plot <span class="op">=</span> <span class="dv">4</span></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(row_plot, col_plot, figsize<span class="op">=</span>(<span class="dv">24</span>, <span class="dv">35</span>)) </span>
@@ -678,7 +680,7 @@ Name: count, dtype: int64</code></pre>
 <li>sqft_lot15</li>
 </ul></li>
 </ul>
-<div id="74772982" class="cell" data-execution_count="50">
+<div id="74772982" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 변환대상 리스트에 저장</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>skewed_columns <span class="op">=</span> [<span class="st">'sqft_living'</span>, <span class="st">'sqft_lot'</span>, <span class="st">'sqft_above'</span>, <span class="st">'sqft_basement'</span>, <span class="st">'sqft_living15'</span>, <span class="st">'sqft_lot15'</span>]</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -716,7 +718,7 @@ Name: count, dtype: int64</code></pre>
 </section>
 <section id="train-test-데이터로-정리" class="level4">
 <h4 class="anchored" data-anchor-id="train-test-데이터로-정리">train, test 데이터로 정리</h4>
-<div id="72bcf9f1" class="cell" data-execution_count="81">
+<div id="72bcf9f1" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>preprocessed_train <span class="op">=</span> df_chk_missing[:train_length].copy()</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>preprocessed_test <span class="op">=</span> df_chk_missing[train_length:].copy()</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>price_train <span class="op">=</span> y.copy()</span>
@@ -740,7 +742,7 @@ Name: count, dtype: int64</code></pre>
 <ul>
 <li>본래 사용하는 패키지는 모두 최상단에서 불러오는게 맞음!</li>
 </ul>
-<div id="17630aef" class="cell" data-execution_count="51">
+<div id="17630aef" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> GradientBoostingRegressor</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> KFold, cross_val_score</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xgboost <span class="im">as</span> xgb</span>
@@ -748,7 +750,7 @@ Name: count, dtype: int64</code></pre>
 </div>
 <section id="모델-불러오고-cross-validation으로-모델성능-측청" class="level3">
 <h3 class="anchored" data-anchor-id="모델-불러오고-cross-validation으로-모델성능-측청">모델 불러오고 Cross Validation으로 모델성능 측청</h3>
-<div id="5fa4f06c" class="cell">
+<div id="5fa4f06c" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>gboost <span class="op">=</span> GradientBoostingRegressor(random_state<span class="op">=</span><span class="dv">1210</span>)</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>xgboost <span class="op">=</span> xgb.XGBRegressor(random_state<span class="op">=</span><span class="dv">1210</span>)</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>lightgbm <span class="op">=</span> lgb.LGBMRegressor(random_state<span class="op">=</span><span class="dv">1210</span>)</span>
@@ -761,10 +763,38 @@ Name: count, dtype: int64</code></pre>
 <span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>model_cv_score <span class="op">=</span> <span class="bu">dict</span>()</span>
 <span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> model <span class="kw">in</span> model_dict.keys():</span>
 <span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>    model_cv_score[model] <span class="op">=</span> np.mean(cross_val_score(model_dict[model], X<span class="op">=</span>preprocessed_train, y<span class="op">=</span>price_train))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.001070 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2296
+[LightGBM] [Info] Number of data points in the train set: 12028, number of used features: 19
+[LightGBM] [Info] Start training from score 540497.991270
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000462 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2327
+[LightGBM] [Info] Number of data points in the train set: 12028, number of used features: 19
+[LightGBM] [Info] Start training from score 542956.681826
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000355 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2331
+[LightGBM] [Info] Number of data points in the train set: 12028, number of used features: 19
+[LightGBM] [Info] Start training from score 543149.529265
+[LightGBM] [Info] Auto-choosing row-wise multi-threading, the overhead of testing was 0.000627 seconds.
+You can set `force_row_wise=true` to remove the overhead.
+And if memory is not enough, you can set `force_col_wise=true`.
+[LightGBM] [Info] Total Bins 2332
+[LightGBM] [Info] Number of data points in the train set: 12028, number of used features: 19
+[LightGBM] [Info] Start training from score 542032.619305
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000316 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2298
+[LightGBM] [Info] Number of data points in the train set: 12028, number of used features: 19
+[LightGBM] [Info] Start training from score 534776.444047</code></pre>
 </div>
-<div id="f2d2cc36" class="cell" data-execution_count="86">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> model <span class="kw">in</span> model_dict.keys():</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span>model<span class="sc">}</span><span class="ss"> : </span><span class="sc">{</span>model_cv_score[model]<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="f2d2cc36" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> model <span class="kw">in</span> model_dict.keys():</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span>model<span class="sc">}</span><span class="ss"> : </span><span class="sc">{</span>model_cv_score[model]<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>GradientBoosting : 0.8613647608814923
 XGBoost : 0.8762617283884332
@@ -777,18 +807,18 @@ LigntGBM : 0.8818569800403846</code></pre>
 <ul>
 <li>Score가 가장 높았던 lightGBM으로 진행해보기</li>
 </ul>
-<div id="7d1a0715" class="cell" data-execution_count="87">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>model_dict[<span class="st">'LigntGBM'</span>].fit(preprocessed_train.values, y)</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>prediction <span class="op">=</span> model_dict[<span class="st">'LigntGBM'</span>].predict(preprocessed_test.values)</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>prediction</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="7d1a0715" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>model_dict[<span class="st">'LigntGBM'</span>].fit(preprocessed_train.values, y)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>prediction <span class="op">=</span> model_dict[<span class="st">'LigntGBM'</span>].predict(preprocessed_test.values)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>prediction</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000583 seconds.
+<pre><code>[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000727 seconds.
 You can set `force_col_wise=true` to remove the overhead.
 [LightGBM] [Info] Total Bins 2338
 [LightGBM] [Info] Number of data points in the train set: 15035, number of used features: 19
 [LightGBM] [Info] Start training from score 540682.653143</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="87">
+<div class="cell-output cell-output-display" data-execution_count="18">
 <pre><code>array([1296687.09405506,  311847.90404507,  806735.28228208, ...,
        1726006.82963994,  395020.94053356,  333594.29000994])</code></pre>
 </div>
@@ -796,16 +826,15 @@ You can set `force_col_wise=true` to remove the overhead.
 </section>
 <section id="제출용-dataframe-및-csv파일-생성" class="level3">
 <h3 class="anchored" data-anchor-id="제출용-dataframe-및-csv파일-생성">제출용 DataFrame 및 csv파일 생성</h3>
-<div id="92579a95" class="cell" data-execution_count="88">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>df_submission <span class="op">=</span> pd.DataFrame({<span class="st">'id'</span> : test_id, </span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>                              <span class="st">'price'</span> : prediction})</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>df_submission</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="88">
-<div>
+<div id="92579a95" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>df_submission <span class="op">=</span> pd.DataFrame({<span class="st">'id'</span> : test_id, </span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>                              <span class="st">'price'</span> : prediction})</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>df_submission</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
 <div>
 
 
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -876,9 +905,124 @@ You can set `force_col_wise=true` to remove the overhead.
 </div>
 </div>
 </div>
+<div id="bff541a2" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>df_submission.to_csv(<span class="st">'submission.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="bff541a2" class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>df_submission.to_csv(<span class="st">'submission.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="gridsearch" class="level2">
+<h2 class="anchored" data-anchor-id="gridsearch">GridSearch</h2>
+<section id="lightgbm에-grid-search-적용해보기" class="level3">
+<h3 class="anchored" data-anchor-id="lightgbm에-grid-search-적용해보기">LightGBM에 Grid Search 적용해보기</h3>
+<ul>
+<li>fit 후 결과값 부연설명
+<ul>
+<li>5 folds : cv = 5</li>
+<li>4 candidates : 2(max_depth) X 2(n_estimators)</li>
+<li>20 fits : 5 folds X 4 candidates</li>
+</ul></li>
+</ul>
+<div id="4b8796c8" class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GridSearchCV</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>grid_param <span class="op">=</span> {</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'n_estimators'</span>: [<span class="dv">50</span>, <span class="dv">100</span>], <span class="co">#트리수</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max_depth'</span>: [<span class="dv">1</span>, <span class="dv">10</span>], <span class="co">#트리깊이</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>grid_model <span class="op">=</span> GridSearchCV(lgb.LGBMRegressor(random_state<span class="op">=</span><span class="dv">1210</span>), </span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>                          param_grid<span class="op">=</span>grid_param, </span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>                          scoring<span class="op">=</span><span class="st">'neg_mean_squared_error'</span>,</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>                           cv<span class="op">=</span><span class="dv">5</span>, verbose<span class="op">=</span><span class="dv">1</span>, n_jobs<span class="op">=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="0234cec0" class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>grid_model.fit(preprocessed_train.values, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="6e05acac" class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>grid_model.cv_results_</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> grid_model.cv_results_[<span class="st">'params'</span>]</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>df_grid_result <span class="op">=</span> pd.DataFrame(params)</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>df_grid_result[<span class="st">'score'</span>] <span class="op">=</span> grid_model.cv_results_[<span class="st">'mean_test_score'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="19f3be96" class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>df_grid_result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">max_depth</th>
+<th data-quarto-table-cell-role="th">n_estimators</th>
+<th data-quarto-table-cell-role="th">score</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>50</td>
+<td>-4.787553e+10</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>1</td>
+<td>100</td>
+<td>-3.851269e+10</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>10</td>
+<td>50</td>
+<td>-1.723322e+10</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>10</td>
+<td>100</td>
+<td>-1.636420e+10</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<ul>
+<li>GridSearch 기준 Score가 가장 좋은 파라메터로 진행해보기</li>
+</ul>
+<div id="adc1dff5" class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> lgb.LGBMRegressor(max_depth<span class="op">=</span><span class="dv">10</span>, n_estimators<span class="op">=</span><span class="dv">100</span>, random_state<span class="op">=</span><span class="dv">1210</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>model.fit(preprocessed_train.values, y)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>prediction <span class="op">=</span> model.predict(preprocessed_test.values)</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>prediction</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[LightGBM] [Warning] Accuracy may be bad since you didn't explicitly set num_leaves OR 2^max_depth &gt; num_leaves. (num_leaves=31).
+[LightGBM] [Warning] Accuracy may be bad since you didn't explicitly set num_leaves OR 2^max_depth &gt; num_leaves. (num_leaves=31).
+[LightGBM] [Info] Auto-choosing row-wise multi-threading, the overhead of testing was 0.000693 seconds.
+You can set `force_row_wise=true` to remove the overhead.
+And if memory is not enough, you can set `force_col_wise=true`.
+[LightGBM] [Info] Total Bins 2338
+[LightGBM] [Info] Number of data points in the train set: 15035, number of used features: 19
+[LightGBM] [Info] Start training from score 540682.653143
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] Accuracy may be bad since you didn't explicitly set num_leaves OR 2^max_depth &gt; num_leaves. (num_leaves=31).</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>array([1291842.41370212,  314132.92290945,  817260.44452776, ...,
+       1713971.79620206,  389405.58625426,  332109.32763046])</code></pre>
+</div>
 </div>
 
 
