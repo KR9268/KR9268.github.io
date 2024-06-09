@@ -10,7 +10,785 @@
 <atom:link href="https://kr9268.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.4.553</generator>
-<lastBuildDate>Sat, 27 Apr 2024 15:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 08 Jun 2024 15:00:00 GMT</lastBuildDate>
+<item>
+  <title>[M_Study_3주차] Multi-class Classification / Artificial Neural Network</title>
+  <dc:creator>Kibok Park</dc:creator>
+  <link>https://kr9268.github.io/posts/meta-dl-creditcard-20240609/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="개요" class="level2">
+<h2 class="anchored" data-anchor-id="개요">개요</h2>
+<p>참여중인 딥러닝 스터디 3주차 기록입니다.</p>
+</section>
+<section id="주차-과제-설명" class="level2">
+<h2 class="anchored" data-anchor-id="주차-과제-설명">2주차 과제 설명</h2>
+<ul>
+<li>tf.random.set_seed(2024)
+<ul>
+<li>서로 다른 모델을 비교하는 경우, 시작점이 다른 것 때문에 성능우위가 다르게 측정되는 경우 발생 (같은 성능임에도 다르게 나오거나, 좋은 모델이 더 나쁜 모델로 오인되는 경우)</li>
+<li>이러한 경우를 방지하고자, set_seed로 같은 지점에서 시작하게 할 수 있음</li>
+<li>딥러닝은 복잡한 다차원의 함수이므로, 좋은 시작점에 따라 달라질 수 있음 (좋은 Optimizer를 사용하고 좋은 데이터를 쓴다면 차이는 줄어들 수 있음)</li>
+</ul></li>
+<li>Matrix Multiplication
+<ul>
+<li>A(1,2), B(2,1)와 같은 Matrix에서, A의 열(,2)과 B의 행(2,)의 숫자가 같아야 가능</li>
+</ul></li>
+<li>Cost function에서 마이너스(-)를 붙이는 경우
+<ul>
+<li>높을수록 안좋은 척도여야 할 때, 계산식이 높을수록 좋은 값인 경우 붙여서 변환</li>
+</ul></li>
+<li>Learning rate
+<ul>
+<li>GD에서 안정적으로 최적점에 가게하기 위해 학습률을 조정</li>
+<li>사람이 지정하는 hyper parameter, 경험에 의해 넣는 경우가 많다(정답은 없음)</li>
+</ul></li>
+<li>Confusion Matrix
+<ul>
+<li>Recall, Precision 으로 표현하는 것은 경영진 등에는 와닿지 않을 수 있으므로 시각화하여 보여주면 좋음</li>
+</ul></li>
+</ul>
+</section>
+<section id="주차-과제-logistic-regression-코드-작성한-것" class="level2">
+<h2 class="anchored" data-anchor-id="주차-과제-logistic-regression-코드-작성한-것">2주차 과제 Logistic regression 코드 작성한 것</h2>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> plt</span>
+<span id="cb1-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb1-3"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> tensorflow <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> tf</span>
+<span id="cb1-4"></span>
+<span id="cb1-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Train data</span></span>
+<span id="cb1-6">X_train <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.array([[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.</span>],</span>
+<span id="cb1-7">                   [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.</span>],</span>
+<span id="cb1-8">                   [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.</span>],</span>
+<span id="cb1-9">                   [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.</span>],</span>
+<span id="cb1-10">                   [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.</span>],</span>
+<span id="cb1-11">                   [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.</span>]],</span>
+<span id="cb1-12">                   dtype<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>np.float32)</span>
+<span id="cb1-13">Y_train <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.array([[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.</span>],</span>
+<span id="cb1-14">                   [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.</span>],</span>
+<span id="cb1-15">                   [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.</span>],</span>
+<span id="cb1-16">                   [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.</span>],</span>
+<span id="cb1-17">                   [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.</span>],</span>
+<span id="cb1-18">                   [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.</span>],],</span>
+<span id="cb1-19">                   dtype<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>np.float32)</span>
+<span id="cb1-20"></span>
+<span id="cb1-21"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 회귀선 작성 전 분포확인</span></span>
+<span id="cb1-22">colors<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'red'</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">if</span> L<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">else</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'blue'</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> L <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> Y_train]</span>
+<span id="cb1-23">plt.scatter(X_train[:,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>], X_train[:, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Logistics regression'</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>colors)</span></code></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240609/index_files/figure-html/1b6f06d5-4-image.png" class="img-fluid figure-img"></p>
+<figcaption>image.png</figcaption>
+</figure>
+</div>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 모델 학습</span></span>
+<span id="cb2-2">tf.random.set_seed(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2020</span>)</span>
+<span id="cb2-3">W <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.Variable(tf.random.normal([<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], mean<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.0</span>))</span>
+<span id="cb2-4">b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.Variable(tf.random.normal([<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], mean<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.0</span>))</span>
+<span id="cb2-5"></span>
+<span id="cb2-6"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">def</span> hypothesis(X):</span>
+<span id="cb2-7">    z <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.matmul(X, W) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> b</span>
+<span id="cb2-8">    sigmoid <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> tf.exp(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>z))</span>
+<span id="cb2-9">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">return</span> sigmoid</span>
+<span id="cb2-10"></span>
+<span id="cb2-11"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">def</span> cost_fn(H, Y):</span>
+<span id="cb2-12">    cost <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>tf.reduce_mean(Y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span>tf.math.log(H) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>Y)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span>tf.math.log(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>H))</span>
+<span id="cb2-13">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">return</span> cost</span>
+<span id="cb2-14"></span>
+<span id="cb2-15">learning_rate <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.01</span></span>
+<span id="cb2-16">optimizer <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.optimizers.SGD(learning_rate)</span>
+<span id="cb2-17"></span>
+<span id="cb2-18"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> step <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5001</span>):</span>
+<span id="cb2-19">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">with</span> tf.GradientTape() <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> g:</span>
+<span id="cb2-20">        pred <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> hypothesis(X_train)</span>
+<span id="cb2-21">        cost <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> cost_fn(pred, Y_train)</span>
+<span id="cb2-22"></span>
+<span id="cb2-23">        gradients <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> g.gradient(cost, [W,b])</span>
+<span id="cb2-24">    </span>
+<span id="cb2-25">    optimizer.apply_gradients(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">zip</span>(gradients, [W, b]))</span>
+<span id="cb2-26"></span>
+<span id="cb2-27">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">if</span> step <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>:</span>
+<span id="cb2-28">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f'Step=</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>step<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">, Cost = </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>cost<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">, W=</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>W<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>numpy()<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">, b = </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>b<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>numpy()<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'</span>)</span>
+<span id="cb2-29"></span>
+<span id="cb2-30">w_hat <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> W.numpy()</span>
+<span id="cb2-31">b_hat <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> b.numpy()</span></code></pre></div>
+<blockquote class="blockquote">
+<p>Step=1, Cost = 0.7932398319244385, W=[[-0.10415223] [0.68125504]], b = [0.3810195] <br> Step=1001, Cost = 0.5122759938240051, W=[[0.1809378] [0.55177015]], b = [-0.97815347] <br> Step=2001, Cost = 0.39883172512054443, W=[[0.5135696] [0.6884617]], b = [-1.9777462] <br> Step=3001, Cost = 0.32507583498954773, W=[[0.7515713] [0.8368167]], b = [-2.7877953] <br> Step=4001, Cost = 0.27400580048561096, W=[[0.9350327] [0.97824335]], b = [-3.4628296] <br> Step=5001, Cost = 0.2367737740278244, W=[[1.0848083] [1.1075894]], b = [-4.039375]</p>
+</blockquote>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Slope(Coefficient) 확인</span></span>
+<span id="cb3-2">slope <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> w_hat[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>w_hat[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span>
+<span id="cb3-3">xx <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.linspace(np.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">min</span>(X_train[:,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]),np.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">max</span>(X_train[:,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>])) <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># min과 max 사이 구간의 숫자를 생성. x값</span></span>
+<span id="cb3-4">yy <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>slope<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span>xx <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> b_hat<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>w_hat[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]                             <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># xx(x값)입력하여 y값 생성</span></span>
+<span id="cb3-5"></span>
+<span id="cb3-6"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># train data분포</span></span>
+<span id="cb3-7">plt.scatter(X_train[:, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>], X_train[:, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Logistics regression'</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>colors)</span>
+<span id="cb3-8"></span>
+<span id="cb3-9"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 분류선(Decision Boundary)확인</span></span>
+<span id="cb3-10">plt.plot(xx, yy, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Decision Boundary'</span>)</span>
+<span id="cb3-11">plt.legend()</span></code></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240609/index_files/figure-html/1b6f06d5-1-image-2.png" class="img-fluid figure-img"></p>
+<figcaption>image-2.png</figcaption>
+</figure>
+</div>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Confusion matrix</span></span>
+<span id="cb4-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> sklearn.metrics <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> confusion_matrix</span>
+<span id="cb4-3"></span>
+<span id="cb4-4">X_test <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.array([[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.</span>],</span>
+<span id="cb4-5">                   [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.</span>],</span>
+<span id="cb4-6">                   [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.</span>],</span>
+<span id="cb4-7">                   [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.</span>],</span>
+<span id="cb4-8">                   [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.</span>],</span>
+<span id="cb4-9">                   [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.</span>]],</span>
+<span id="cb4-10">                   dtype<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>np.float32)</span>
+<span id="cb4-11">Y_test <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.array([[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.</span>],</span>
+<span id="cb4-12">                   [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.</span>],</span>
+<span id="cb4-13">                   [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.</span>],</span>
+<span id="cb4-14">                   [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.</span>],</span>
+<span id="cb4-15">                   [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.</span>],</span>
+<span id="cb4-16">                   [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.</span>],],</span>
+<span id="cb4-17">                   dtype<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>np.float32)</span>
+<span id="cb4-18"></span>
+<span id="cb4-19">Y_actual <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Y_test</span>
+<span id="cb4-20">Y_predicted <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> hypothesis(X_test)</span>
+<span id="cb4-21">Y_predicted_binary <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.where(Y_predicted <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb4-22"></span>
+<span id="cb4-23">CM_array <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> confusion_matrix(Y_actual, Y_predicted_binary, labels<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]) </span>
+<span id="cb4-24">CM_array</span></code></pre></div>
+<blockquote class="blockquote">
+<p>array([[2, 2],<br> [1, 1]], dtype=int64)</p>
+</blockquote>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Confusion matrix 시각화(seaborn)</span></span>
+<span id="cb5-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> plt</span>
+<span id="cb5-3"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> seaborn <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> sns</span>
+<span id="cb5-4"></span>
+<span id="cb5-5">class_labels <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Negative'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Positive'</span>]</span>
+<span id="cb5-6">plt.figure(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>))</span>
+<span id="cb5-7">sns.heatmap(CM_array, annot<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>, cmap<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Blues'</span>,</span>
+<span id="cb5-8">            xticklabels<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>class_labels, yticklabels<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>class_labels)</span>
+<span id="cb5-9"></span>
+<span id="cb5-10">plt.title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Confusion Matrix'</span>)</span>
+<span id="cb5-11">plt.xlabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Predicted'</span>)</span>
+<span id="cb5-12">plt.ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'True'</span>)</span></code></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240609/index_files/figure-html/1b6f06d5-2-image-3.png" class="img-fluid figure-img"></p>
+<figcaption>image-3.png</figcaption>
+</figure>
+</div>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Confusion matrix 시각화(Scikit-learn)</span></span>
+<span id="cb6-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> sklearn.metrics <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> confusion_matrix, ConfusionMatrixDisplay</span>
+<span id="cb6-3"></span>
+<span id="cb6-4">disp <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ConfusionMatrixDisplay(confusion_matrix<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>CM_array, display_labels<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>])</span>
+<span id="cb6-5">disp.plot(cmap<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>plt.cm.Blues)</span>
+<span id="cb6-6">plt.title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Confusion Matrix'</span>)</span>
+<span id="cb6-7">plt.show()</span></code></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240609/index_files/figure-html/1b6f06d5-3-image-4.png" class="img-fluid figure-img"></p>
+<figcaption>image-4.png</figcaption>
+</figure>
+</div>
+</section>
+<section id="multi-class-classfication-regression" class="level2">
+<h2 class="anchored" data-anchor-id="multi-class-classfication-regression">Multi-class Classfication regression</h2>
+<ul>
+<li><p>2가지 분류가 아닌 3가지 이상의 분류(A,B,C로 나누는 신용등급 등)</p></li>
+<li><p>Binary classification과 달리 하나의 Decision boundary로는 해결 불가</p></li>
+<li><p>One vs All(Rest)</p>
+<ul>
+<li>하나의 대상과, 아닌 것’들’로 Binary Classification을 여러번 수행</li>
+<li>예를 들어 a, b, c 3가지를 분류하는 경우
+<ul>
+<li>아래와 같은 같은 3개의 식으로 표현할 수 있고,<br> <img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240609/index_files/figure-html/00653178-3-image.png" class="img-fluid" alt="image.png"></li>
+<li>아래와 같이 하나의 행렬로 한번에 표현할 수 있다 <br> <img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240609/index_files/figure-html/00653178-1-image-2.png" class="img-fluid" alt="image-2.png"></li>
+</ul></li>
+<li>Softmax : 각 결과값(<img src="https://latex.codecogs.com/png.latex?H_a,%20H_b,%20H_c">)의 비율(확률)이 나오게 됨(총합이 1)</li>
+</ul></li>
+<li><p>Cross entropy cost function</p>
+<ul>
+<li><p><strong>정보량은 확률에 반비례한다고 정의</strong> (정보량= $ 1 p$)</p>
+<ul>
+<li>특정 성씨의 사람을 뽑는다고 할 때, 한국의 주요 성씨인 김씨<img src="https://latex.codecogs.com/png.latex?1%20%5Cover%2010"> vs 소수 성씨인 남궁씨<img src="https://latex.codecogs.com/png.latex?1%20%5Cover%20100"></li>
+</ul></li>
+<li><p>로그를 취하여 전개하면 Cross entropy 식이 된다</p></li>
+<li><p>Entropy : Measure for uncertainty (불확실성의 측정) <br> <img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240609/index_files/figure-html/00653178-2-image-3.png" class="img-fluid" alt="image-3.png"></p></li>
+<li><p>Case별 Cross entropy(cost function)</p>
+<ul>
+<li>출력값(결과값 softmax)과 실제값이 비슷한 경우 : 특정 값 산출</li>
+<li>출력값(결과값 softmax)과 실제값이 완전히 다른 경우 : 무한대</li>
+<li>출력값(결과값 softmax)과 실제값이 완전히 동일한 경우 : 0</li>
+</ul></li>
+<li><p>Cross entropy를 개인이 직접구현한다면 놓칠 수 있는 부분(cross entropy의 무한대)의 문제</p>
+<ul>
+<li>파이토치 등 많은 사람이 참여한 패키지를 사용하면 방지할 수 있음</li>
+<li>컴퓨터에서의 Zero division error 등의 경우, 텐서플로우 등 패키지에선 분모에 0.00001등을 더하여 실제값엔 영향이 작게하며 오류 제거</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="softmax" class="level1">
+<h1>Softmax</h1>
+<ul>
+<li><p>Multi class 분류에서 많이 하는 것 : 이미지 분류</p>
+<ul>
+<li>Image X가 함수f(x)[모델]를 통과하여 Label Y(Class)로 산출</li>
+<li>Image데이터는 컴퓨터에게는 숫자로 이루어진 행렬로 보여짐</li>
+</ul></li>
+<li><p>아래의 경우에서 W의 차원은? (<img src="https://latex.codecogs.com/png.latex?Y=W*X+B">) → (10*3072)</p>
+<ul>
+<li>X : Image (3072<em>1) (실제로는 32[가로] </em> 32[세로] * 3[RGB])</li>
+<li>Y : 고양이/자동차/새 등 Label (10 * 1)</li>
+<li>B : (10*1)</li>
+</ul></li>
+<li><p>계산속도를 높이기 위한 방법</p>
+<ul>
+<li>곱하기 한번으로 값이 나오게끔 계산횟수를 줄임<br> <img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240609/index_files/figure-html/c12fd90a-1-image.png" class="img-fluid" alt="image.png"></li>
+</ul></li>
+<li><p>Flatten</p>
+<ul>
+<li>(2, 2)를 (4, 1)로 변경</li>
+</ul></li>
+<li><p>학습한 W를 시각화하면, 분류하고자 하는 것의 형태가 어느정도보임(고양이 분류를 위한 W라면 고양이 실루엣)</p></li>
+<li><p>Softmax 함수</p>
+<ul>
+<li>Exponetial(<img src="https://latex.codecogs.com/png.latex?e">)의 사용
+<ul>
+<li>음수가 Score로 나와서 확률적 해석에 방해되는 상황을 방지하기 위해 사용</li>
+</ul></li>
+<li>Sigmoid가 Binary classification에 대한 함수인 것과 달리, Multi-class에 대해 사용 가능</li>
+</ul></li>
+</ul>
+</section>
+<section id="loss-function" class="level1">
+<h1>Loss function</h1>
+<ul>
+<li>0/1 Loss (가장 원시적)
+<ul>
+<li>맞으면 0, 틀리면 1</li>
+<li>문제점 : 적게 틀린 것(고양이를 다른 동물로)과 많이 틀린 것(고양이를 자동차로)의 패널티가 같음</li>
+</ul></li>
+<li>Log loss
+<ul>
+<li>틀린/맞춘 정도에 따라 패널티를 부여</li>
+</ul></li>
+<li>Exponetial loss
+<ul>
+<li>틀렸을 때 더 강한 패널티(기울기)</li>
+</ul></li>
+<li>Hinge loss
+<ul>
+<li>SVM(Support Vector Machine)에서 많이 사용</li>
+</ul></li>
+</ul>
+</section>
+<section id="cross-entropy" class="level1">
+<h1>Cross entropy</h1>
+<ul>
+<li>Binary 상황에서의 Cross entropy 수식 <br> <img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240609/index_files/figure-html/83629cdf-2-image.png" class="img-fluid" alt="image.png"></li>
+<li>Multi class 상황에서의 Cross entropy 수식<br> <img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240609/index_files/figure-html/83629cdf-1-image-2.png" class="img-fluid" alt="image-2.png"></li>
+</ul>
+</section>
+<section id="stochastic-gradient-descent" class="level1">
+<h1>Stochastic Gradient Descent</h1>
+<ul>
+<li>Stochastic Gradient Descent : 데이터를 메모리 상황에 맞게 쪼개서 넣는 방식
+<ul>
+<li>예를 들어, 메모리 1GB/학습할 데이터 100GB 라면 데이터를 쪼개서 넣는 것</li>
+<li>학습용 메모리 확보의 어려움 : V-Ram(그래픽카드 메모리)는 D-Ram(일반 램)보다 매우 비쌈</li>
+<li>데이터는 많으므로 확보된 메모리에 맞게 데이터를 쪼개서 GD 진행</li>
+</ul></li>
+<li>Batch size(Minibatch) : 나눈 데이터의 단위
+<ul>
+<li>예를 들어 100을 1씩 나누었다면, Minibatch가 1이다 와 같이 표현함</li>
+<li>Batch size는 2의 배수로 넣는 것이 관례</li>
+<li>1만개의 데이터를 100으로 나누었다면, 경사하강법(GD)을 100회 진행</li>
+</ul></li>
+<li>Epoch, Step
+<ul>
+<li>100만개의 데이터를 1만개로 나눴고, 1만개를 100회 넣어 전체데이터를 1번 넣었다면?
+<ul>
+<li>1 Epoch (모든 데이터가 다 들어가야 1 epoch)</li>
+<li>100 Step (데이터를 넣은 횟수)</li>
+<li>Step횟수 &gt; Epoch횟수</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="neural-networks" class="level1">
+<h1>Neural Networks</h1>
+<ul>
+<li><p>이미지나 오디오, 텍스트 등 비정형데이터를 처리하기 위해 만들어진 아키텍쳐</p></li>
+<li><p>MLP : XOR문제를 풀 수 없는 상황에서, 사람의 신경망에서 착안하여 해결</p>
+<ul>
+<li>중간 신경망(hidden layer)하여, Multi Layer Perceptron(MLP)</li>
+<li>위에서 진행한 Multi classification은 1 layer라면, MLP는 layer가 더 추가된 것</li>
+<li>다양한 관계를 복합적으로 표현</li>
+</ul></li>
+<li><p>중간에 Activation function을 넣어 비선형성을 추가</p>
+<ul>
+<li>Sigmoid, tanh, ReLU 등 (ReLU를 많이 사용)</li>
+</ul></li>
+<li><p>Forward pass vs Back propagation</p>
+<ul>
+<li>Forward pass : 순서대로 계산</li>
+<li>Back propagation : 뒤에서부터 앞쪽으로 미분(시작값은 1)
+<ul>
+<li>Chain rule를 활용
+<ul>
+<li>Upstream gradient에 Local grandient를 곱해 Downstream gradient가 나옴</li>
+</ul></li>
+<li>Forward pass대비 계산량이 적은 이점이 있다
+<ul>
+<li>Parameter <img src="https://latex.codecogs.com/png.latex?W_1">(계산량 10만), <img src="https://latex.codecogs.com/png.latex?W_2">(계산량 5만)가 있을 때,
+<ul>
+<li>Forward pass가 <img src="https://latex.codecogs.com/png.latex?W_1">의 중복계산이 발생</li>
+<li>Back propagation은 Upstream의 값을 저장해두었다가 사용, 필요한 계산만 추가계산</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><p>Patterns in Gradient Flow</p>
+<ul>
+<li>계산노드의 고정 : 미리 정해두면 Backpropagation미분계산을 빠르게 진행할 수 있음
+<ul>
+<li>1.0 Tensorflow가 Flexble하지 않지만 빠른 이유는 이런 계산노드의 고정 때문</li>
+</ul></li>
+<li>add gate(gradient distributor) : Upstream을 그대로 downstream으로</li>
+<li>mul gate(swap multiplier) : downstream을 upstream에 곱해 반대쪽 downstream으로</li>
+<li>copy gate(gradient adder)</li>
+<li>max gate(gradient router)</li>
+</ul></li>
+</ul>
+
+
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
+  <category>파이썬</category>
+  <category>머신러닝</category>
+  <category>딥러닝</category>
+  <guid>https://kr9268.github.io/posts/meta-dl-creditcard-20240609/</guid>
+  <pubDate>Sat, 08 Jun 2024 15:00:00 GMT</pubDate>
+</item>
 <item>
   <title>NH증권 직무인터뷰를 읽고(트레이딩&amp;빅데이터)</title>
   <dc:creator>Kibok Park</dc:creator>
@@ -261,6 +1039,1012 @@ IFRS는 원칙에 따라 작성해 형태 차이가 거의 없으나, GAAP는 �
   <guid>https://kr9268.github.io/posts/bk-BerkshireHathaway-20240423-terms/</guid>
   <pubDate>Mon, 22 Apr 2024 15:00:00 GMT</pubDate>
   <media:content url="https://kr9268.github.io/posts/bk-BerkshireHathaway-20240423-terms/image.jpg" medium="image" type="image/jpeg"/>
+</item>
+<item>
+  <title>[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기</title>
+  <dc:creator>Kibok Park</dc:creator>
+  <link>https://kr9268.github.io/posts/prgms-sql-20240321/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="개요" class="level2">
+<h2 class="anchored" data-anchor-id="개요">개요</h2>
+<p>프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다 <br> (비상업적, 비영리적 용도)</p>
+<p><a href="https://school.programmers.co.kr/learn/courses/30/parts/17042">문제링크</a><br> <a href="https://programmers.zendesk.com/hc/ko/articles/360034546572-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4%EC%9D%98-%EB%AC%B8%EC%A0%9C%EB%A5%BC-%EC%99%B8%EB%B6%80%EC%97%90-%EA%B2%8C%EC%8B%9C%ED%95%A0-%EC%88%98-%EC%9E%88%EB%82%98%EC%9A%94">게시가능여부</a></p>
+</section>
+<section id="문제-3월에-태어난-여성-회원-목록-출력하기" class="level2">
+<h2 class="anchored" data-anchor-id="문제-3월에-태어난-여성-회원-목록-출력하기">문제 : 3월에 태어난 여성 회원 목록 출력하기</h2>
+<div class="markdown solarized-dark">
+<p>
+다음은 식당 리뷰 사이트의 회원 정보를 담은 <code>MEMBER_PROFILE</code> 테이블입니다. <code>MEMBER_PROFILE</code> 테이블은 다음과 같으며 <code>MEMBER_ID</code>, <code>MEMBER_NAME</code>, <code>TLNO</code>, <code>GENDER</code>, <code>DATE_OF_BIRTH</code>는 회원 ID, 회원 이름, 회원 연락처, 성별, 생년월일을 의미합니다.
+</p>
+<table class="table">
+<thead>
+<tr>
+<th>
+Column name
+</th>
+<th>
+Type
+</th>
+<th>
+Nullable
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+MEMBER_ID
+</td>
+<td>
+VARCHAR(100)
+</td>
+<td>
+FALSE
+</td>
+</tr>
+<tr>
+<td>
+MEMBER_NAME
+</td>
+<td>
+VARCHAR(50)
+</td>
+<td>
+FALSE
+</td>
+</tr>
+<tr>
+<td>
+TLNO
+</td>
+<td>
+VARCHAR(50)
+</td>
+<td>
+TRUE
+</td>
+</tr>
+<tr>
+<td>
+GENDER
+</td>
+<td>
+VARCHAR(1)
+</td>
+<td>
+TRUE
+</td>
+</tr>
+<tr>
+<td>
+DATE_OF_BIRTH
+</td>
+<td>
+DATE
+</td>
+<td>
+TRUE
+</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h5 class="anchored">
+문제
+</h5>
+<p>
+<code>MEMBER_PROFILE</code> 테이블에서 생일이 3월인 여성 회원의 ID, 이름, 성별, 생년월일을 조회하는 SQL문을 작성해주세요. 이때 전화번호가 NULL인 경우는 출력대상에서 제외시켜 주시고, 결과는 회원ID를 기준으로 오름차순 정렬해주세요.
+</p>
+<hr>
+<h5 class="anchored">
+예시
+</h5>
+<p>
+<code>MEMBER_PROFILE</code> 테이블이 다음과 같을 때
+</p>
+<table class="table">
+<thead>
+<tr>
+<th>
+MEMBER_ID
+</th>
+<th>
+MEMBER_NAME
+</th>
+<th>
+TLNO
+</th>
+<th>
+GENDER
+</th>
+<th>
+DATE_OF_BIRTH
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>jiho92@naver.com</code>
+</td>
+<td>
+이지호
+</td>
+<td>
+01076432111
+</td>
+<td>
+W
+</td>
+<td>
+1992-02-12
+</td>
+</tr>
+<tr>
+<td>
+<code>jiyoon22@hotmail.com</code>
+</td>
+<td>
+김지윤
+</td>
+<td>
+01032324117
+</td>
+<td>
+W
+</td>
+<td>
+1992-02-22
+</td>
+</tr>
+<tr>
+<td>
+<code>jihoon93@hanmail.net</code>
+</td>
+<td>
+김지훈
+</td>
+<td>
+01023258688
+</td>
+<td>
+M
+</td>
+<td>
+1993-02-23
+</td>
+</tr>
+<tr>
+<td>
+<code>seoyeons@naver.com</code>
+</td>
+<td>
+박서연
+</td>
+<td>
+01076482209
+</td>
+<td>
+W
+</td>
+<td>
+1993-03-16
+</td>
+</tr>
+<tr>
+<td>
+<code>yoonsy94@gmail.com</code>
+</td>
+<td>
+윤서연
+</td>
+<td>
+NULL
+</td>
+<td>
+W
+</td>
+<td>
+1994-03-19
+</td>
+</tr>
+</tbody>
+</table>
+<p>
+SQL을 실행하면 다음과 같이 출력되어야 합니다.
+</p>
+<table class="table">
+<thead>
+<tr>
+<th>
+MEMBER_ID
+</th>
+<th>
+MEMBER_NAME
+</th>
+<th>
+GENDER
+</th>
+<th>
+DATE_OF_BIRTH
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>seoyeons@naver.com</code>
+</td>
+<td>
+박서연
+</td>
+<td>
+W
+</td>
+<td>
+1993-03-16
+</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h5 class="anchored">
+주의사항
+</h5>
+<p>
+<code>DATE_OF_BIRTH</code>의 데이트 포맷이 예시와 동일해야 정답처리 됩니다.
+</p>
+</div>
+</section>
+<section id="작성답안" class="level2">
+<h2 class="anchored" data-anchor-id="작성답안">작성답안</h2>
+<div id="fig-polar" class="cell quarto-figure quarto-figure-center quarto-float anchored" data-vscode="{&quot;languageId&quot;:&quot;sql&quot;}">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-polar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode cell-code" id="fig-polar" data-vscode="{&quot;languageId&quot;:&quot;sql&quot;}" style="background: #f1f3f5;"><pre class="sourceCode python cell code-with-copy"><code class="sourceCode python"><span id="fig-polar-1">SELECT MEMBER_ID, MEMBER_NAME,  GENDER, TO_CHAR(DATE_OF_BIRTH, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'YYYY-MM-DD'</span>)</span>
+<span id="fig-polar-2">FROM MEMBER_PROFILE</span>
+<span id="fig-polar-3">WHERE GENDER <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'W'</span></span>
+<span id="fig-polar-4">  AND TO_CHAR(DATE_OF_BIRTH, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'MON'</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'MAR'</span></span>
+<span id="fig-polar-5">  AND TLNO IS NOT NULL</span>
+<span id="fig-polar-6">ORDER BY MEMBER_ID ASC</span></code></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-polar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="정리" class="level2">
+<h2 class="anchored" data-anchor-id="정리">정리</h2>
+<ul>
+<li>WHERE 컬럼명 IS <strong>NOT</strong> NULL</li>
+<li>WHERE <strong>NOT</strong> 컬럼명 IS NULL</li>
+</ul>
+
+
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
+  <category>프로그래머스/SQL</category>
+  <guid>https://kr9268.github.io/posts/prgms-sql-20240321/</guid>
+  <pubDate>Wed, 20 Mar 2024 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기</title>
+  <dc:creator>Kibok Park</dc:creator>
+  <link>https://kr9268.github.io/posts/prgms-sql-20240320/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="개요" class="level2">
+<h2 class="anchored" data-anchor-id="개요">개요</h2>
+<p>프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다 <br> (비상업적, 비영리적 용도)</p>
+<p><a href="https://school.programmers.co.kr/learn/courses/30/parts/17042">문제링크</a><br> <a href="https://programmers.zendesk.com/hc/ko/articles/360034546572-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4%EC%9D%98-%EB%AC%B8%EC%A0%9C%EB%A5%BC-%EC%99%B8%EB%B6%80%EC%97%90-%EA%B2%8C%EC%8B%9C%ED%95%A0-%EC%88%98-%EC%9E%88%EB%82%98%EC%9A%94">게시가능여부</a></p>
+</section>
+<section id="문제-조건에-부합하는-중고거래-댓글-조회하기" class="level2">
+<h2 class="anchored" data-anchor-id="문제-조건에-부합하는-중고거래-댓글-조회하기">문제 : 조건에 부합하는 중고거래 댓글 조회하기</h2>
+<div class="guide-section-description">
+<pre><code>    &lt;h6 class="guide-section-title"&gt;문제 설명&lt;/h6&gt;
+    &lt;div class="markdown solarized-dark"&gt;&lt;p&gt;다음은 중고거래 게시판 정보를 담은 &lt;code&gt;USED_GOODS_BOARD&lt;/code&gt; 테이블과 중고거래 게시판 첨부파일 정보를 담은 &lt;code&gt;USED_GOODS_REPLY&lt;/code&gt; 테이블입니다. &lt;code&gt;USED_GOODS_BOARD&lt;/code&gt; 테이블은 다음과 같으며 &lt;code&gt;BOARD_ID&lt;/code&gt;, &lt;code&gt;WRITER_ID&lt;/code&gt;, &lt;code&gt;TITLE&lt;/code&gt;, &lt;code&gt;CONTENTS&lt;/code&gt;, &lt;code&gt;PRICE&lt;/code&gt;, &lt;code&gt;CREATED_DATE&lt;/code&gt;, &lt;code&gt;STATUS&lt;/code&gt;, &lt;code&gt;VIEWS&lt;/code&gt;은 게시글 ID, 작성자 ID, 게시글 제목, 게시글 내용, 가격, 작성일, 거래상태, 조회수를 의미합니다.&lt;/p&gt;</code></pre>
+<table class="table">
+<thead>
+<tr>
+<th>
+Column name
+</th>
+<th>
+Type
+</th>
+<th>
+Nullable
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+BOARD_ID
+</td>
+<td>
+VARCHAR(5)
+</td>
+<td>
+FALSE
+</td>
+</tr>
+<tr>
+<td>
+WRITER_ID
+</td>
+<td>
+VARCHAR(50)
+</td>
+<td>
+FALSE
+</td>
+</tr>
+<tr>
+<td>
+TITLE
+</td>
+<td>
+VARCHAR(100)
+</td>
+<td>
+FALSE
+</td>
+</tr>
+<tr>
+<td>
+CONTENTS
+</td>
+<td>
+VARCHAR(1000)
+</td>
+<td>
+FALSE
+</td>
+</tr>
+<tr>
+<td>
+PRICE
+</td>
+<td>
+NUMBER
+</td>
+<td>
+FALSE
+</td>
+</tr>
+<tr>
+<td>
+CREATED_DATE
+</td>
+<td>
+DATE
+</td>
+<td>
+FALSE
+</td>
+</tr>
+<tr>
+<td>
+STATUS
+</td>
+<td>
+VARCHAR(10)
+</td>
+<td>
+FALSE
+</td>
+</tr>
+<tr>
+<td>
+VIEWS
+</td>
+<td>
+NUMBER
+</td>
+<td>
+FALSE
+</td>
+</tr>
+</tbody>
+</table>
+<p>
+<code>USED_GOODS_REPLY</code> 테이블은 다음과 같으며 <code>REPLY_ID</code>, <code>BOARD_ID</code>, <code>WRITER_ID</code>, <code>CONTENTS</code>, <code>CREATED_DATE</code>는 각각 댓글 ID, 게시글 ID, 작성자 ID, 댓글 내용, 작성일을 의미합니다.
+</p>
+<table class="table">
+<thead>
+<tr>
+<th>
+Column name
+</th>
+<th>
+Type
+</th>
+<th>
+Nullable
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+REPLY_ID
+</td>
+<td>
+VARCHAR(10)
+</td>
+<td>
+FALSE
+</td>
+</tr>
+<tr>
+<td>
+BOARD_ID
+</td>
+<td>
+VARCHAR(5)
+</td>
+<td>
+FALSE
+</td>
+</tr>
+<tr>
+<td>
+WRITER_ID
+</td>
+<td>
+VARCHAR(50)
+</td>
+<td>
+FALSE
+</td>
+</tr>
+<tr>
+<td>
+CONTENTS
+</td>
+<td>
+VARCHAR(1000)
+</td>
+<td>
+TRUE
+</td>
+</tr>
+<tr>
+<td>
+CREATED_DATE
+</td>
+<td>
+DATE
+</td>
+<td>
+FALSE
+</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h5 class="anchored">
+문제
+</h5>
+<p>
+<code>USED_GOODS_BOARD</code>와 <code>USED_GOODS_REPLY</code> 테이블에서 2022년 10월에 작성된 게시글 제목, 게시글 ID, 댓글 ID, 댓글 작성자 ID, 댓글 내용, 댓글 작성일을 조회하는 SQL문을 작성해주세요. 결과는 댓글 작성일을 기준으로 오름차순 정렬해주시고, 댓글 작성일이 같다면 게시글 제목을 기준으로 오름차순 정렬해주세요.
+</p>
+<hr>
+<h5 class="anchored">
+예시
+</h5>
+<p>
+<code>USED_GOODS_BOARD</code> 테이블이 다음과 같고
+</p>
+<table class="table">
+<thead>
+<tr>
+<th>
+BOARD_ID
+</th>
+<th>
+WRITER_ID
+</th>
+<th>
+TITLE
+</th>
+<th>
+CONTENTS
+</th>
+<th>
+PRICE
+</th>
+<th>
+CREATED_DATE
+</th>
+<th>
+STATUS
+</th>
+<th>
+VIEWS
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+B0001
+</td>
+<td>
+kwag98
+</td>
+<td>
+반려견 배변패드 팝니다
+</td>
+<td>
+정말 저렴히 판매합니다. 전부 미개봉 새상품입니다.
+</td>
+<td>
+12000
+</td>
+<td>
+2022-10-01
+</td>
+<td>
+DONE
+</td>
+<td>
+250
+</td>
+</tr>
+<tr>
+<td>
+B0002
+</td>
+<td>
+lee871201
+</td>
+<td>
+국내산 볶음참깨
+</td>
+<td>
+직접 농사지은 참깨입니다.
+</td>
+<td>
+3000
+</td>
+<td>
+2022-10-02
+</td>
+<td>
+DONE
+</td>
+<td>
+121
+</td>
+</tr>
+<tr>
+<td>
+B0003
+</td>
+<td>
+goung12
+</td>
+<td>
+배드민턴 라켓
+</td>
+<td>
+사놓고 방치만 해서 팝니다.
+</td>
+<td>
+9000
+</td>
+<td>
+2022-10-02
+</td>
+<td>
+SALE
+</td>
+<td>
+212
+</td>
+</tr>
+<tr>
+<td>
+B0004
+</td>
+<td>
+keel1990
+</td>
+<td>
+디올 귀걸이
+</td>
+<td>
+신세계강남점에서 구입. 정품 아닐시 백퍼센트 환불
+</td>
+<td>
+130000
+</td>
+<td>
+2022-10-02
+</td>
+<td>
+SALE
+</td>
+<td>
+199
+</td>
+</tr>
+<tr>
+<td>
+B0005
+</td>
+<td>
+haphli01
+</td>
+<td>
+스팸클래식 팔아요
+</td>
+<td>
+유통기한 2025년까지에요
+</td>
+<td>
+10000
+</td>
+<td>
+2022-10-02
+</td>
+<td>
+SALE
+</td>
+<td>
+121
+</td>
+</tr>
+</tbody>
+</table>
+<p>
+<code>USED_GOODS_REPLY</code> 테이블이 다음과 같을 때
+</p>
+<table class="table">
+<thead>
+<tr>
+<th>
+REPLY_ID
+</th>
+<th>
+BOARD_ID
+</th>
+<th>
+WRITER_ID
+</th>
+<th>
+CONTENTS
+</th>
+<th>
+CREATED_DATE
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+R000000001
+</td>
+<td>
+B0001
+</td>
+<td>
+s2s2123
+</td>
+<td>
+구매하겠습니다. 쪽지 드립니다.
+</td>
+<td>
+2022-10-02
+</td>
+</tr>
+<tr>
+<td>
+R000000002
+</td>
+<td>
+B0002
+</td>
+<td>
+hoho1112
+</td>
+<td>
+쪽지 주세요.
+</td>
+<td>
+2022-10-03
+</td>
+</tr>
+<tr>
+<td>
+R000000003
+</td>
+<td>
+B0006
+</td>
+<td>
+hwahwa2
+</td>
+<td>
+삽니다. 연락주세요.
+</td>
+<td>
+2022-10-03
+</td>
+</tr>
+<tr>
+<td>
+R000000004
+</td>
+<td>
+B0007
+</td>
+<td>
+hong02
+</td>
+<td>
+예약중
+</td>
+<td>
+2022-10-06
+</td>
+</tr>
+<tr>
+<td>
+R000000005
+</td>
+<td>
+B0009
+</td>
+<td>
+hanju23
+</td>
+<td>
+구매완료
+</td>
+<td>
+2022-10-07
+</td>
+</tr>
+</tbody>
+</table>
+<p>
+SQL을 실행하면 다음과 같이 출력되어야 합니다.
+</p>
+<table class="table">
+<thead>
+<tr>
+<th>
+TITLE
+</th>
+<th>
+BOARD_ID
+</th>
+<th>
+REPLY_ID
+</th>
+<th>
+WRITER_ID
+</th>
+<th>
+CONTENTS
+</th>
+<th>
+CREATED_DATE
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+반려견 배변패드 팝니다
+</td>
+<td>
+B0001
+</td>
+<td>
+R000000001
+</td>
+<td>
+s2s2123
+</td>
+<td>
+구매하겠습니다. 쪽지 드립니다.
+</td>
+<td>
+2022-10-02
+</td>
+</tr>
+<tr>
+<td>
+국내산 볶음참깨
+</td>
+<td>
+B0002
+</td>
+<td>
+R000000002
+</td>
+<td>
+hoho1112
+</td>
+<td>
+쪽지 주세요.
+</td>
+<td>
+2022-10-03
+</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h5 class="anchored">
+주의사항
+</h5>
+<p>
+<code>CREATED_DATE</code>의 포맷이 예시의 포맷과 일치해야 정답처리 됩니다.
+</p>
+</div>
+<pre><code>  &lt;/div&gt;</code></pre>
+</section>
+<section id="작성답안" class="level2">
+<h2 class="anchored" data-anchor-id="작성답안">작성답안</h2>
+<div id="fig-polar" class="cell quarto-figure quarto-figure-center quarto-float anchored" data-vscode="{&quot;languageId&quot;:&quot;sql&quot;}">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-polar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode cell-code" id="fig-polar" data-vscode="{&quot;languageId&quot;:&quot;sql&quot;}" style="background: #f1f3f5;"><pre class="sourceCode python cell code-with-copy"><code class="sourceCode python"><span id="fig-polar-1">SELECT board.TITLE, board.BOARD_ID,</span>
+<span id="fig-polar-2">       reply.REPLY_ID, reply.WRITER_ID, reply.CONTENTS, TO_CHAR(reply.CREATED_DATE, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'YYYY-MM-DD'</span>)</span>
+<span id="fig-polar-3">FROM USED_GOODS_BOARD board, USED_GOODS_REPLY reply</span>
+<span id="fig-polar-4">WHERE TO_CHAR(board.CREATED_DATE, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'YYYYMM'</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'202210'</span></span>
+<span id="fig-polar-5">  AND board.BOARD_ID <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> reply.BOARD_ID</span>
+<span id="fig-polar-6">ORDER BY reply.CREATED_DATE ASC, board.TITLE ASC<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span></code></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-polar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="정리" class="level2">
+<h2 class="anchored" data-anchor-id="정리">정리</h2>
+<ul>
+<li>각 테이블의 BOARD_ID 일치시키는 것을 실수하였음. 향후 동일케이스에 대해서는 고려하여 풀기</li>
+<li>다중정렬<br> &gt; ORDER BY reply.CREATED_DATE ASC, board.TITLE ASC;<br> 앞의 컬럼일수록 정렬 우선순위를 가짐</li>
+</ul>
+
+
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
+  <category>프로그래머스/SQL</category>
+  <guid>https://kr9268.github.io/posts/prgms-sql-20240320/</guid>
+  <pubDate>Tue, 19 Mar 2024 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>[프로그래머스SQL] 조건에 맞는 도서 리스트 출력하기</title>
+  <dc:creator>Kibok Park</dc:creator>
+  <link>https://kr9268.github.io/posts/prgms-sql-20240319/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="개요" class="level2">
+<h2 class="anchored" data-anchor-id="개요">개요</h2>
+<p>프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다 <br> (비상업적, 비영리적 용도)</p>
+<p><a href="https://school.programmers.co.kr/learn/courses/30/parts/17042">문제링크</a><br> <a href="https://programmers.zendesk.com/hc/ko/articles/360034546572-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4%EC%9D%98-%EB%AC%B8%EC%A0%9C%EB%A5%BC-%EC%99%B8%EB%B6%80%EC%97%90-%EA%B2%8C%EC%8B%9C%ED%95%A0-%EC%88%98-%EC%9E%88%EB%82%98%EC%9A%94">게시가능여부</a></p>
+</section>
+<section id="문제-조건에-맞는-도서-리스트-출력하기" class="level2">
+<h2 class="anchored" data-anchor-id="문제-조건에-맞는-도서-리스트-출력하기">문제 : 조건에 맞는 도서 리스트 출력하기</h2>
+<section id="문제-설명" class="level3">
+<h3 class="anchored" data-anchor-id="문제-설명">문제 설명</h3>
+<p>다음은 어느 한 서점에서 판매중인 도서들의 도서 정보(BOOK) 테이블입니다.</p>
+<p>BOOK 테이블은 각 도서의 정보를 담은 테이블로 아래와 같은 구조로 되어있습니다.</p>
+<p>Column name Type Nullable Description<br> BOOK_ID INTEGER FALSE 도서 ID<br> CATEGORY VARCHAR(N) FALSE 카테고리 (경제, 인문, 소설, 생활, 기술)<br> AUTHOR_ID INTEGER FALSE 저자 ID<br> PRICE INTEGER FALSE 판매가 (원)<br> PUBLISHED_DATE DATE FALSE 출판일</p>
+</section>
+<section id="문제" class="level3">
+<h3 class="anchored" data-anchor-id="문제">문제</h3>
+<p>BOOK 테이블에서 2021년에 출판된 ‘인문’ 카테고리에 속하는 도서 리스트를 찾아서 도서 ID(BOOK_ID), 출판일 (PUBLISHED_DATE)을 출력하는 SQL문을 작성해주세요. 결과는 출판일을 기준으로 오름차순 정렬해주세요.</p>
+<p>예시 예를 들어 BOOK 테이블이 다음과 같다면</p>
+<p>BOOK_ID CATEGORY AUTHOR_ID PRICE PUBLISHED_DATE<br> 1 인문 1 10000 2020-01-01<br> 2 경제 2 9000 2021-02-05<br> 3 인문 2 11000 2021-04-11<br> 4 인문 3 10000 2021-03-15<br> 5 생활 1 12000 2021-01-10<br> 조건에 속하는 도서는 도서 ID 가 3, 4인 도서이므로 다음과 같습니다.</p>
+<p>BOOK_ID PUBLISHED_DATE<br> 3 2021-04-11<br> 4 2021-03-15<br> 그리고 출판일 오름차순으로 정렬하여야 하므로 다음과 같은 결과가 나와야 합니다.</p>
+<p>BOOK_ID PUBLISHED_DATE<br> 4 2021-03-15<br> 3 2021-04-11<br></p>
+</section>
+<section id="주의사항" class="level3">
+<h3 class="anchored" data-anchor-id="주의사항">주의사항</h3>
+<p>PUBLISHED_DATE의 데이트 포맷이 예시와 동일해야 정답처리 됩니다.</p>
+</section>
+</section>
+<section id="작성답안" class="level2">
+<h2 class="anchored" data-anchor-id="작성답안">작성답안</h2>
+<div id="fig-polar" class="cell quarto-figure quarto-figure-center quarto-float anchored" data-vscode="{&quot;languageId&quot;:&quot;sql&quot;}">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-polar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode cell-code" id="fig-polar" data-vscode="{&quot;languageId&quot;:&quot;sql&quot;}" style="background: #f1f3f5;"><pre class="sourceCode python cell code-with-copy"><code class="sourceCode python"><span id="fig-polar-1">SELECT BOOK_ID, TO_CHAR(PUBLISHED_DATE, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'YYYY-MM-DD'</span>)</span>
+<span id="fig-polar-2">FROM BOOK</span>
+<span id="fig-polar-3">WHERE CATEGORY <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'인문'</span> AND EXTRACT(YEAR FROM PUBLISHED_DATE) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2021</span></span>
+<span id="fig-polar-4">ORDER BY PUBLISHED_DATE ASC</span></code></pre></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-polar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="정리" class="level2">
+<h2 class="anchored" data-anchor-id="정리">정리</h2>
+<ul>
+<li>TO_CHAR(표시형식 변경)</li>
+</ul>
+<blockquote class="blockquote">
+<p>SELECT TO_CHAR(컬럼명, ‘표시형식’) FROM 테이블명 표시형식(연도 4자리) : TO_CHAR(컬럼명, ‘YYYY’)<br> 표시형식(월) : TO_CHAR(컬럼명, ‘MM’)<br> 표시형식(일, 연기준 1~366) : TO_CHAR(컬럼명, ‘DDD’)<br> 표시형식(일, 일기준 1~31) : TO_CHAR(컬럼명, ‘DD’)<br> 표시형식(일, 요일) : TO_CHAR(컬럼명, ‘D’) * 지역설정에 따라 시작요일이 달라짐<br> <br> 표시형식(분기) : TO_CHAR(컬럼명, ‘Q’)<br> 표시형식(주, 연기준 1~53) : TO_CHAR(컬럼명, ‘WW’)<br> 표시형식(주, 월기준 1~53) : TO_CHAR(컬럼명, ‘W’)<br> <br> 표시형식(요일, MON/월) : TO_CHAR(컬럼명, ‘DY’)<br> 표시형식(요일, MONDAY/월요일) : TO_CHAR(컬럼명, ‘DAY’)<br> 표시형식(월, JAN/1월) : TO_CHAR(컬럼명, ‘MON’)<br> 표시형식(월, JANUARY/1월) : TO_CHAR(컬럼명, ‘MONTH’)<br> <br> 표시형식(시간, 12시간표기) : TO_CHAR(컬럼명, ‘HH12’)<br> 표시형식(시간, 24시간표기) : TO_CHAR(컬럼명, ‘HH24’)<br> 표시형식(분) : TO_CHAR(컬럼명, ‘MI’)<br> 표시형식(초) : TO_CHAR(컬럼명, ‘SS’)<br></p>
+</blockquote>
+<ul>
+<li>AND(모두 만족) / OR(하나라도 만족) / NOT(조건과 맞지 않는)</li>
+</ul>
+<blockquote class="blockquote">
+<p>연산자 우선순위(참고용) 1 괄호<br> 2 NOT<br> 3 비교 (&gt; &lt; = !)<br> 4 AND<br> 5 OR</p>
+</blockquote>
+<ul>
+<li>ORDER BY 컬럼명 ASC (오름차순)</li>
+<li>ORDER BY 컬럼명 DESC (내림차순)</li>
+</ul>
+
+
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
+  <category>프로그래머스/SQL</category>
+  <guid>https://kr9268.github.io/posts/prgms-sql-20240319/</guid>
+  <pubDate>Mon, 18 Mar 2024 15:00:00 GMT</pubDate>
 </item>
 <item>
   <title>[프로그래머스SQL] 가장 비싼 상품 구하기</title>
@@ -605,7 +2389,7 @@ price</code></pre>
 <ul>
 <li>train, test 데이터를 합쳐서 한번에 확인</li>
 </ul>
-<div id="26ca0d11" class="cell" data-execution_count="43">
+<div id="26ca0d11" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># 합치기</span></span>
@@ -643,7 +2427,7 @@ font-style: inherit;">print</span>(train_length, test_length)</span></code></pre
 <ul>
 <li>isna()로 결측치를 확인</li>
 </ul>
-<div id="d7834677" class="cell" data-execution_count="44">
+<div id="d7834677" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(df_chk_missing.isna().<span class="bu" style="color: null;
@@ -679,7 +2463,7 @@ dtype: int64</code></pre>
 <ul>
 <li>missingno 패키지로 컬럼별 결측치 시각화</li>
 </ul>
-<div id="704c8e19" class="cell" data-execution_count="29">
+<div id="704c8e19" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> missingno</span>
@@ -734,7 +2518,7 @@ font-style: inherit;">"Profiling Report"</span>)</span>
 <ul>
 <li>가격과 관계없는 단순식별용 데이터인 id 삭제</li>
 </ul>
-<div id="1172ccf8" class="cell" data-execution_count="45">
+<div id="1172ccf8" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1">main_id <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> df_chk_missing[<span class="st" style="color: #20794D;
@@ -757,7 +2541,7 @@ font-style: inherit;">'id'</span>]</span></code></pre></div>
 <ul>
 <li>날짜 뒤에 T00000과 같이 시간데이터(로 추정됨)가 있는데, 모두 T00000으로만 되어있으므로 삭제</li>
 </ul>
-<div id="d8004c60" class="cell" data-execution_count="46">
+<div id="d8004c60" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># T000000으로 되어있는 값 세기</span></span>
@@ -768,13 +2552,13 @@ background-color: null;
 font-style: inherit;">str</span>.contains(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'T000000'</span>).value_counts()</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="46">
+<div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>date
 True    21590
 Name: count, dtype: int64</code></pre>
 </div>
 </div>
-<div id="49494527" class="cell" data-execution_count="47">
+<div id="49494527" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># apply로 lambda함수를 사용하여, date컬럼의 앞자리만 저장</span></span>
@@ -794,7 +2578,7 @@ font-style: inherit;">str</span>(x[:<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">6</span>]))</span>
 <span id="cb20-3">df_chk_missing.head()</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="47">
+<div class="cell-output cell-output-display" data-execution_count="11">
 <div>
 <div>
 
@@ -950,7 +2734,7 @@ font-style: inherit;">6</span>]))</span>
 </ul>
 <section id="분포가-치우쳐져-있는-항목-찾기시각화" class="level5">
 <h5 class="anchored" data-anchor-id="분포가-치우쳐져-있는-항목-찾기시각화">분포가 치우쳐져 있는 항목 찾기(시각화)</h5>
-<div id="9cd20f17" class="cell" data-execution_count="49">
+<div id="9cd20f17" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1">row_plot <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
@@ -1036,7 +2820,7 @@ font-style: inherit;">break</span></span></code></pre></div>
 <li>sqft_lot15</li>
 </ul></li>
 </ul>
-<div id="74772982" class="cell" data-execution_count="50">
+<div id="74772982" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># 변환대상 리스트에 저장</span></span>
@@ -1154,7 +2938,7 @@ font-style: inherit;">'_log'</span>)</span></code></pre></div>
 </section>
 <section id="train-test-데이터로-정리" class="level4">
 <h4 class="anchored" data-anchor-id="train-test-데이터로-정리">train, test 데이터로 정리</h4>
-<div id="72bcf9f1" class="cell" data-execution_count="81">
+<div id="72bcf9f1" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1">preprocessed_train <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> df_chk_missing[:train_length].copy()</span>
@@ -1206,7 +2990,7 @@ font-style: inherit;">print</span>(preprocessed_test.shape)</span></code></pre><
 <ul>
 <li>본래 사용하는 패키지는 모두 최상단에서 불러오는게 맞음!</li>
 </ul>
-<div id="17630aef" class="cell" data-execution_count="51">
+<div id="17630aef" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> sklearn.ensemble <span class="im" style="color: #00769E;
@@ -1230,7 +3014,7 @@ font-style: inherit;">as</span> lgb</span></code></pre></div>
 </div>
 <section id="모델-불러오고-cross-validation으로-모델성능-측청" class="level3">
 <h3 class="anchored" data-anchor-id="모델-불러오고-cross-validation으로-모델성능-측청">모델 불러오고 Cross Validation으로 모델성능 측청</h3>
-<div id="5fa4f06c" class="cell">
+<div id="5fa4f06c" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1">gboost <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> GradientBoostingRegressor(random_state<span class="op" style="color: #5E5E5E;
@@ -1285,14 +3069,42 @@ background-color: null;
 font-style: inherit;">=</span>preprocessed_train, y<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span>price_train))</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.001070 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2296
+[LightGBM] [Info] Number of data points in the train set: 12028, number of used features: 19
+[LightGBM] [Info] Start training from score 540497.991270
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000462 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2327
+[LightGBM] [Info] Number of data points in the train set: 12028, number of used features: 19
+[LightGBM] [Info] Start training from score 542956.681826
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000355 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2331
+[LightGBM] [Info] Number of data points in the train set: 12028, number of used features: 19
+[LightGBM] [Info] Start training from score 543149.529265
+[LightGBM] [Info] Auto-choosing row-wise multi-threading, the overhead of testing was 0.000627 seconds.
+You can set `force_row_wise=true` to remove the overhead.
+And if memory is not enough, you can set `force_col_wise=true`.
+[LightGBM] [Info] Total Bins 2332
+[LightGBM] [Info] Number of data points in the train set: 12028, number of used features: 19
+[LightGBM] [Info] Start training from score 542032.619305
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000316 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2298
+[LightGBM] [Info] Number of data points in the train set: 12028, number of used features: 19
+[LightGBM] [Info] Start training from score 534776.444047</code></pre>
 </div>
-<div id="f2d2cc36" class="cell" data-execution_count="86">
-<div class="sourceCode cell-code" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><span class="cf" style="color: #003B4F;
+</div>
+<div id="f2d2cc36" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><span class="cf" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">for</span> model <span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">in</span> model_dict.keys():</span>
-<span id="cb27-2">    <span class="bu" style="color: null;
+<span id="cb28-2">    <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
 background-color: null;
@@ -1321,24 +3133,24 @@ LigntGBM : 0.8818569800403846</code></pre>
 <ul>
 <li>Score가 가장 높았던 lightGBM으로 진행해보기</li>
 </ul>
-<div id="7d1a0715" class="cell" data-execution_count="87">
-<div class="sourceCode cell-code" id="cb29" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1">model_dict[<span class="st" style="color: #20794D;
+<div id="7d1a0715" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb30" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1">model_dict[<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'LigntGBM'</span>].fit(preprocessed_train.values, y)</span>
-<span id="cb29-2">prediction <span class="op" style="color: #5E5E5E;
+<span id="cb30-2">prediction <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> model_dict[<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'LigntGBM'</span>].predict(preprocessed_test.values)</span>
-<span id="cb29-3">prediction</span></code></pre></div>
+<span id="cb30-3">prediction</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000583 seconds.
+<pre><code>[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000727 seconds.
 You can set `force_col_wise=true` to remove the overhead.
 [LightGBM] [Info] Total Bins 2338
 [LightGBM] [Info] Number of data points in the train set: 15035, number of used features: 19
 [LightGBM] [Info] Start training from score 540682.653143</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="87">
+<div class="cell-output cell-output-display" data-execution_count="18">
 <pre><code>array([1296687.09405506,  311847.90404507,  806735.28228208, ...,
        1726006.82963994,  395020.94053356,  333594.29000994])</code></pre>
 </div>
@@ -1346,17 +3158,17 @@ You can set `force_col_wise=true` to remove the overhead.
 </section>
 <section id="제출용-dataframe-및-csv파일-생성" class="level3">
 <h3 class="anchored" data-anchor-id="제출용-dataframe-및-csv파일-생성">제출용 DataFrame 및 csv파일 생성</h3>
-<div id="92579a95" class="cell" data-execution_count="88">
-<div class="sourceCode cell-code" id="cb32" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1">df_submission <span class="op" style="color: #5E5E5E;
+<div id="92579a95" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb33" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1">df_submission <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> pd.DataFrame({<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'id'</span> : test_id, </span>
-<span id="cb32-2">                              <span class="st" style="color: #20794D;
+<span id="cb33-2">                              <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'price'</span> : prediction})</span>
-<span id="cb32-3">df_submission</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="88">
+<span id="cb33-3">df_submission</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
 <div>
 <div>
 
@@ -1433,14 +3245,206 @@ font-style: inherit;">'price'</span> : prediction})</span>
 </div>
 </div>
 </div>
-<div id="bff541a2" class="cell">
-<div class="sourceCode cell-code" id="cb33" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1">df_submission.to_csv(<span class="st" style="color: #20794D;
+<div id="bff541a2" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb34" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1">df_submission.to_csv(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'submission.csv'</span>, index<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">False</span>)</span></code></pre></div>
+</div>
+</section>
+</section>
+<section id="gridsearch" class="level2">
+<h2 class="anchored" data-anchor-id="gridsearch">GridSearch</h2>
+<section id="lightgbm에-grid-search-적용해보기" class="level3">
+<h3 class="anchored" data-anchor-id="lightgbm에-grid-search-적용해보기">LightGBM에 Grid Search 적용해보기</h3>
+<ul>
+<li>fit 후 결과값 부연설명
+<ul>
+<li>5 folds : cv = 5</li>
+<li>4 candidates : 2(max_depth) X 2(n_estimators)</li>
+<li>20 fits : 5 folds X 4 candidates</li>
+</ul></li>
+</ul>
+<div id="4b8796c8" class="cell">
+<div class="sourceCode cell-code" id="cb35" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> sklearn.model_selection <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> GridSearchCV</span>
+<span id="cb35-2"></span>
+<span id="cb35-3">grid_param <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {</span>
+<span id="cb35-4">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'n_estimators'</span>: [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>], <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#트리수</span></span>
+<span id="cb35-5">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'max_depth'</span>: [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>], <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#트리깊이</span></span>
+<span id="cb35-6">}</span>
+<span id="cb35-7"></span>
+<span id="cb35-8">grid_model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> GridSearchCV(lgb.LGBMRegressor(random_state<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1210</span>), </span>
+<span id="cb35-9">                          param_grid<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>grid_param, </span>
+<span id="cb35-10">                          scoring<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'neg_mean_squared_error'</span>,</span>
+<span id="cb35-11">                           cv<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, verbose<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, n_jobs<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>)</span></code></pre></div>
+</div>
+<div id="0234cec0" class="cell">
+<div class="sourceCode cell-code" id="cb36" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1">grid_model.fit(preprocessed_train.values, y)</span></code></pre></div>
+</div>
+<div id="6e05acac" class="cell">
+<div class="sourceCode cell-code" id="cb37" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1">grid_model.cv_results_</span>
+<span id="cb37-2">params <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> grid_model.cv_results_[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'params'</span>]</span>
+<span id="cb37-3"></span>
+<span id="cb37-4">df_grid_result <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.DataFrame(params)</span>
+<span id="cb37-5">df_grid_result[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'score'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> grid_model.cv_results_[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'mean_test_score'</span>]</span></code></pre></div>
+</div>
+<div id="19f3be96" class="cell">
+<div class="sourceCode cell-code" id="cb38" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1">df_grid_result</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">max_depth</th>
+<th data-quarto-table-cell-role="th">n_estimators</th>
+<th data-quarto-table-cell-role="th">score</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>50</td>
+<td>-4.787553e+10</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>1</td>
+<td>100</td>
+<td>-3.851269e+10</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>10</td>
+<td>50</td>
+<td>-1.723322e+10</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>10</td>
+<td>100</td>
+<td>-1.636420e+10</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>GridSearch 기준 Score가 가장 좋은 파라메터로 진행해보기</li>
+</ul>
+<div id="adc1dff5" class="cell">
+<div class="sourceCode cell-code" id="cb39" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1">model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> lgb.LGBMRegressor(max_depth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, n_estimators<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>, random_state<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1210</span>)</span>
+<span id="cb39-2">model.fit(preprocessed_train.values, y)</span>
+<span id="cb39-3">prediction <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> model.predict(preprocessed_test.values)</span>
+<span id="cb39-4">prediction</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[LightGBM] [Warning] Accuracy may be bad since you didn't explicitly set num_leaves OR 2^max_depth &gt; num_leaves. (num_leaves=31).
+[LightGBM] [Warning] Accuracy may be bad since you didn't explicitly set num_leaves OR 2^max_depth &gt; num_leaves. (num_leaves=31).
+[LightGBM] [Info] Auto-choosing row-wise multi-threading, the overhead of testing was 0.000693 seconds.
+You can set `force_row_wise=true` to remove the overhead.
+And if memory is not enough, you can set `force_col_wise=true`.
+[LightGBM] [Info] Total Bins 2338
+[LightGBM] [Info] Number of data points in the train set: 15035, number of used features: 19
+[LightGBM] [Info] Start training from score 540682.653143
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
+[LightGBM] [Warning] Accuracy may be bad since you didn't explicitly set num_leaves OR 2^max_depth &gt; num_leaves. (num_leaves=31).</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>array([1291842.41370212,  314132.92290945,  817260.44452776, ...,
+       1713971.79620206,  389405.58625426,  332109.32763046])</code></pre>
+</div>
 </div>
 
 
@@ -1456,7 +3460,7 @@ font-style: inherit;">False</span>)</span></code></pre></div>
 <item>
   <title>[Pytorch] MNIST 실습</title>
   <dc:creator>Kibok Park</dc:creator>
-  <link>https://kr9268.github.io/posts/coach-ml-20240505/</link>
+  <link>https://kr9268.github.io/posts/coach-ml-mnist-20230301/</link>
   <description><![CDATA[ 
 
 
@@ -1890,7 +3894,7 @@ font-style: inherit;">100</span>))</span></code></pre></div>
 <p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
   <category>파이썬</category>
   <category>머신러닝</category>
-  <guid>https://kr9268.github.io/posts/coach-ml-20240505/</guid>
+  <guid>https://kr9268.github.io/posts/coach-ml-mnist-20230301/</guid>
   <pubDate>Sat, 18 Feb 2023 15:00:00 GMT</pubDate>
 </item>
 </channel>
