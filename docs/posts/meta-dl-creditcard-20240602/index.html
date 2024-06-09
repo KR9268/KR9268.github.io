@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.553">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Kibok Park">
+<meta name="dcterms.date" content="2024-06-02">
+
+<title>Blog - [M_Study_2주차] Multiple Regression / Logistic Regression</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.jpg" rel="icon" type="image/jpeg">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/watermark-1.0.11/watermark.min.js"></script>
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-LPL499WQBH"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
+</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Blog</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index_dashboards.html"> 
+<span class="menu-text">Dashboards</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index_miniprojects.html"> 
+<span class="menu-text">Mini Projects</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About me</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/KR9268"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/%EA%B8%B0%EB%B3%B5-%EB%B0%95-573a68268/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">[M_Study_2주차] Multiple Regression / Logistic Regression</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">파이썬</div>
+                <div class="quarto-category">머신러닝</div>
+                <div class="quarto-category">딥러닝</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Kibok Park </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">June 2, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#개요" id="toc-개요" class="nav-link active" data-scroll-target="#개요">개요</a></li>
+  <li><a href="#주차-과제-설명" id="toc-주차-과제-설명" class="nav-link" data-scroll-target="#주차-과제-설명">1주차 과제 설명</a></li>
+  <li><a href="#linear-regression" id="toc-linear-regression" class="nav-link" data-scroll-target="#linear-regression">Linear Regression</a></li>
+  <li><a href="#multiple-regression" id="toc-multiple-regression" class="nav-link" data-scroll-target="#multiple-regression">Multiple Regression</a></li>
+  <li><a href="#logistic-regression" id="toc-logistic-regression" class="nav-link" data-scroll-target="#logistic-regression">Logistic regression</a></li>
+  <li><a href="#모형예측classification의-성과평가confusion-matrix" id="toc-모형예측classification의-성과평가confusion-matrix" class="nav-link" data-scroll-target="#모형예측classification의-성과평가confusion-matrix">모형예측(Classification)의 성과평가(Confusion matrix)</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="개요" class="level2">
+<h2 class="anchored" data-anchor-id="개요">개요</h2>
+<p>참여중인 딥러닝 스터디 2주차 기록입니다.</p>
+</section>
+<section id="주차-과제-설명" class="level2">
+<h2 class="anchored" data-anchor-id="주차-과제-설명">1주차 과제 설명</h2>
+<ul>
+<li><p>큰 틀에서는 보통 아래의 순서로 진행</p>
+<ul>
+<li>데이터생성</li>
+<li>hypothesis</li>
+<li>cost function</li>
+<li>optimizer</li>
+<li>train</li>
+<li>Prediction (=Inference)</li>
+</ul></li>
+<li><p>tf.reduce_mean() : 열(row)끼리의 평균</p></li>
+<li><p>Non-Linear Modeling <br> &gt;<span class="math inline">\(y = ax^2 + bx + c\)</span></p>
+<ul>
+<li><p>구하고자 하는 값은 <span class="math inline">\(a, b, c\)</span></p></li>
+<li><p>모델 학습 전 임의의 값(<span class="math inline">\(a,b,c\)</span>)으로 추세선 긋기 <br> <img src="index_files/figure-html/7d189a5e-2-image.png" class="img-fluid" alt="image.png"></p></li>
+<li><p>내가 가정하는 식을 hypothesis에 넣고 학습</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> hypothesis(x):</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> a<span class="op">*</span>(x)<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> b<span class="op">*</span>x <span class="op">+</span> c</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cost_fn(pred_y, true_y):</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> tf.reduce_mean(tf.square(pred_y <span class="op">-</span> true_y))</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>optimizer <span class="op">=</span> tf.optimizers.Adam(learning_rate <span class="op">=</span> <span class="fl">0.01</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> train():</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">with</span> tf.GradientTape() <span class="im">as</span> g:</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    pred <span class="op">=</span> hypothesis(X)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    cost <span class="op">=</span> cost_fn(pred, Y)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  gradients <span class="op">=</span> g.gradient(cost, [a,b,c])                    <span class="co"># 기울기를 계산하는 부분</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  optimizer.apply_gradients(<span class="bu">zip</span>(gradients, [a,b,c]))       <span class="co"># 계산된 기울기를 업데이트 해주는 부분</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> step <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">1001</span>):</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  train()</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> step <span class="op">%</span> <span class="dv">100</span> <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    pred <span class="op">=</span> hypothesis(X)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    cost <span class="op">=</span> cost_fn(pred, Y)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f" step:</span><span class="sc">{</span>step<span class="sc">}</span><span class="ss"> cost:</span><span class="sc">{</span>cost<span class="sc">:.4f}</span><span class="ss"> a:</span><span class="sc">{</span>a<span class="sc">.</span>numpy()<span class="sc">}</span><span class="ss"> b:</span><span class="sc">{</span>b<span class="sc">.</span>numpy()<span class="sc">}</span><span class="ss"> c:</span><span class="sc">{</span>c<span class="sc">.</span>numpy()<span class="sc">}</span><span class="ss"> "</span>)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    line_x <span class="op">=</span> np.arange(<span class="bu">min</span>(X), <span class="bu">max</span>(X), <span class="fl">0.001</span>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    line_y <span class="op">=</span> a<span class="op">*</span>(line_x)<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> b<span class="op">*</span>(line_x) <span class="op">+</span> c</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>모델 학습 후 변경된 추세선 확인하기 <br> <img src="index_files/figure-html/7d189a5e-1-image-2.png" class="img-fluid" alt="image-2.png"></p></li>
+</ul></li>
+</ul>
+</section>
+<section id="linear-regression" class="level2">
+<h2 class="anchored" data-anchor-id="linear-regression">Linear Regression</h2>
+<ul>
+<li>Linear Regression의 Motivation
+<ul>
+<li>수 많은 데이터를 묘사하는 하나의 선을 긋고, 그 선으로 향후 추이(예를 들어 광고비와 매출의 관계 등)를 판단</li>
+<li>랜덤하게 하나의 선을 긋고(임의의 W, b설정), 실제 데이터(점)과 선(예측값)의 거리[오차]를 줄인다</li>
+</ul></li>
+<li>선형성이 있다는 가정 하에 모델링 수행 &gt; <span class="math inline">\(Y = B_0 + B_1X + \epsilon\)</span>
+<ul>
+<li>기존 수업의 <span class="math inline">\(Y = WX+b\)</span> 식에서 <span class="math inline">\(B_0\)</span>이 <span class="math inline">\(b\)</span>, <span class="math inline">\(B_1X\)</span>이 <span class="math inline">\(W\)</span>
+<ul>
+<li><span class="math inline">\(B_0\)</span> : <code>intercept</code> (첫번째 기울기는 <span class="math inline">\(B_1X\)</span>으로 표현)</li>
+<li><span class="math inline">\(B_1X\)</span> : <code>slope</code>, <code>coefficients</code></li>
+<li><span class="math inline">\(B_0\)</span>, <span class="math inline">\(B_1X\)</span> 등을 합쳐서 <code>parameter</code>라고 부름 (가장 적절한 parameter를 찾는 것이 AI의 목적)</li>
+</ul></li>
+</ul></li>
+<li>hat (<span class="math inline">\(\hat{B}\)</span>)은 최적화가 되었을 때 씌운다
+<ul>
+<li>처음에 임의값을 두었다가 학습을 하며 최적화가 되면 씌움</li>
+</ul></li>
+<li>residual(잔차)
+<ul>
+<li>예측값 <span class="math inline">\(\hat{y}\)</span>(<span class="math inline">\(\hat{B}_0+\hat{B}_1x_i\)</span>)에 대해 정의된 오차 <span class="math inline">\(e_i\)</span> (<span class="math inline">\(y_i-\hat{y_i}\)</span>)
+<ul>
+<li>i번째 잔차(<span class="math inline">\(i\)</span>th residual)</li>
+</ul></li>
+</ul></li>
+<li>RSS(Residual Sum of Squares) : 잔차를 제곱해서 더한 것 &gt; <span class="math inline">\(e_1^2 + e_2^2+...+e_n^2\)</span>
+<ul>
+<li>제곱이 아닌 절대값으로 해도 개념적으로는 오차를 계산 가능</li>
+<li>최소자승법(least square)으로 최적의 <span class="math inline">\(B\)</span>를 구하며 RSS가 줄어듦
+<ul>
+<li>최소자승법 : 그래프에서 오차가 가장 낮은, 미분값이 0인 지점 찾기<br>(오차가 0이 되는 지점을 미분으로 찾는 것이며, <strong>이때의 오차는 Train set의 오차임</strong>)</li>
+<li>절대값으로 오차를 찾는 경우 미분을 활용할 수 없어, RSS를 사용</li>
+<li>현대에는 최소자승법을 잘 안쓰고 GD를 사용 (GD : 하나의 랜덤한 점을 찍고, 최소점을 향해 근사를 반복해나감[epoch반복])</li>
+</ul></li>
+</ul></li>
+<li><span class="math inline">\(B_0\)</span>, <span class="math inline">\(B_1X\)</span> 등 parameter를 구했을 때, 얼마나 신뢰할 수 있는 숫자인가
+<ul>
+<li>Standard error(Variance에 루트를 씌우면 Standard error로, 본질적으로 같음)
+<ul>
+<li>Variance는 모델의 안정성</li>
+<li>Standard error, <span class="math inline">\(SE(\hat{B}_1)^2\)</span> 계산을 통해 얼마나 안정적인지 판단</li>
+<li>SE의 계산식은 데이터(샘플)가 많아질수록 분모(Sum)가 커지므로, 모델의 Variance가 낮아짐
+<ul>
+<li>→ 데이터가 많아지면 모델이 좋아진다<br> <strong>(최적의 <span class="math inline">\(B\)</span>를 최소자승법으로 구해 모델을 만들고, 데이터 샘플의 수가 커지면 계산된 최적의 <span class="math inline">\(B\)</span>가 가지는 SE가 줄어들음)</strong></li>
+</ul></li>
+</ul></li>
+<li>Confidence intervals(신뢰구간)
+<ul>
+<li>대학원 면접에서 많이 나오는 주제</li>
+<li>Variance(또는 SE)를 기반으로 신뢰구간을 구함 &gt; <span class="math inline">\(\hat{B}_1 +- 2*SE(\hat{B}_1)\)</span></li>
+<li>신뢰구간 95% / 평균 100 / 신뢰구간 80~120의 해석
+<ul>
+<li>모집단에서 샘플링을 했을 때 평균이 100</li>
+<li>모집단 평균이 105, 110일수도 있지만 추정한 신뢰구간안에 실제 평균이 존재할 확률이 95%라는 뜻</li>
+</ul></li>
+<li>Variance가 낮아지면 신뢰구간이 좁아지며 좋아짐</li>
+</ul></li>
+</ul></li>
+<li>t-statistic
+<ul>
+<li>$ t = _1-0 SE(_1) $</li>
+<li>SE가 낮을수록 좋은 값이라는 점에서, 위 수식(t값)이 클수록 좋다는 직관적 이해 가능</li>
+<li>p-value : t값보다 클 확률 (즉 낮을수록 좋다)</li>
+</ul></li>
+<li>결과 표 보며 이해하기 <br> <img src="index_files/figure-html/9b221a0e-1-image.png" class="img-fluid" alt="image.png">
+<ul>
+<li>coefficient : 구한 parameter값</li>
+<li>Standard error, t-statistic은 단위에 따라 달라질 수 있는 값</li>
+<li>p-value는 통일된 값으로, 0.0001보다 작으므로 Variance가 낮고 모델이 안정적이다 (p-value가 낮을수록 결과가 유의하다 라고 표현)</li>
+</ul></li>
+<li><span class="math inline">\(R^2\)</span>
+<ul>
+<li>$ R^2$ = $ TSS - RSS TSS $ = $1 - RSS TSS $</li>
+<li>RSS(오차의 제곱을 모두 더한 잔차)가 클수록 작아지므로, 클수록 좋은 지표임을 이해</li>
+<li>TSS는 RSS보다 무조건 크므로, <span class="math inline">\(R^2\)</span>는 0~1의 값을 갖는다</li>
+<li><span class="math inline">\(R^2\)</span>가 0.7이면 70%의 설명력을 가진다</li>
+</ul></li>
+<li>주의할 점
+<ul>
+<li>상관관계에 대해 분석한 것으로, <code>인과관계가 아니다</code> (인과관계라면 상관관계는 있을 수 있다)</li>
+</ul></li>
+</ul>
+</section>
+<section id="multiple-regression" class="level2">
+<h2 class="anchored" data-anchor-id="multiple-regression">Multiple Regression</h2>
+<ul>
+<li>변수와 계수를 추가하면 Multiple Regression이 됨
+<ul>
+<li>수식이 길어지고, * 편미분이 여러개가 나오게 되는 차이</li>
+<li>변수가 2개가 되어 기존의 <code>2차원평면/regression line</code>이 아닌 <code>3차원평면/regression plain</code>이 나옴</li>
+<li>multiple matrix를 활용해 표현 (row, column)</li>
+<li>RSS도 행렬식으로 표현
+<ul>
+<li><code>역행렬은 엄청난 연산이 필요한데, 이는 least square를 사용하지 않게된 이유</code>임 (정형데이터 위주였던 과거와 달리 이미지 등 데이터와 이에 대한 행렬이 매우 커져, computing성능발전에도 역행렬 계산 어려워짐)</li>
+<li><code>least square는 Bias를 최소화하는 방법인데, trade-off로 Variance커질 위험이 커서 사용하지 않게 됨</code>
+<ul>
+<li>현대는 모델의 Variance가 중요해짐. <strong>Overfitting과 관계된 Variance를 줄이기 위해 약간의 Bias상승은 감내</strong></li>
+<li>Least square(최소자승법)는 오차가 0이되는 지점을 미분으로 찾는 방법이며, 이때의 오차는 Train Dataset으로 오차가 너무 작아지면 Overfitting</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>Correlation 상관관계
+<ul>
+<li>Variable간의 상관관계를 보는 이유 : 중복되는 변수의 과대평가, 타 변수의 과소평가를 방지 (예를 들어 연봉과 자산의 경우 상관관계가 있음)</li>
+</ul></li>
+<li>GD(Gradient Descent, 경사하강법)
+<ul>
+<li>역행렬의 계산량문제로 최소자승법(least square)가 아닌 GD방식을 사용</li>
+<li><span class="math inline">\(a\)</span> (learning rate)로 적절히 작은 숫자를 곱해, 한번에 너무 많이 이동(하강)하지 않게 함
+<ul>
+<li>보통 0.01사용</li>
+</ul></li>
+<li>$W = W - a * $ $ c W$</li>
+<li>코드로 이해하기 <br>
+<ol type="1">
+<li>Cost를 가중치W로 미분 <strong>(gradient 함수로 $ c W$구하기)</strong></li>
+</ol>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># gradient 계산</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  gradients <span class="op">=</span> g.gradient(cost, [W,b])     </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li>가중치W 업데이트 <strong>(apply_gradients 함수로 <span class="math inline">\(W\)</span> 업데이트)</strong></li>
+</ol>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># gradients에 따라 W와 b 업데이트</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  optimizer.apply_gradients(<span class="bu">zip</span>(gradients, [W,b])) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul></li>
+<li>Single Regression에서는 없던 Multiple Regression의 고민
+<ul>
+<li>변수의 갯수 (많이 쓴다고 좋은게 아니며, 최적의 갯수 찾기)
+<ul>
+<li>forward(↔︎backward) selection
+<ul>
+<li>변수의 갯수를 늘려가다가(↔︎줄여가다가), 성능이 낮아질때 직전 갯수로 사용</li>
+</ul></li>
+<li>변수의 갯수가 달라졌을 때 성능의 지표
+<ul>
+<li>AIC(Akaike Information Criterion)</li>
+<li>BIC(Bayesian Information Criterion)</li>
+<li>Adjusted <span class="math inline">\(R^2\)</span></li>
+<li>CV(Cross-validation)</li>
+</ul></li>
+</ul></li>
+<li>요즘은 Linear Regression에서 발전된 알고리즘이 많이 나와서, 위의 것보다 먼저 알아야 하는게 많음</li>
+</ul></li>
+<li>Qualitative Predictor(Categorical, 범주형 변수)
+<ul>
+<li>숫자가 아닌 상태로 쓰이는 경우 (0남자 1여자 등, 여러개도 Okay) 활용하여 Regression에 반영할 수 있게 됨
+<ul>
+<li>예를 들어, 구하고자하는 y가 키(신장)이라면, 성별변수 남자가 0이면 가중치는 음수, 반대면 양수가 될 수 있음</li>
+</ul></li>
+</ul></li>
+<li>Interaction impact(Synergy impact)
+<ul>
+<li>변수가 구하고자하는 y가 아니라 다른 변수에도 영향을 미치는 경우
+<ul>
+<li>서로 관계있는 두 변수를 곱하여 추가해줌(<span class="math inline">\(X^1, X^2\)</span>가 관계있는 경우 <span class="math inline">\(X^1*X^2\)</span>라는 변수로)</li>
+<li>결과 표로 이해하기 <br> <img src="index_files/figure-html/68547606-1-image.png" class="img-fluid" alt="image.png">
+<ul>
+<li>radio의 p-value가 유의하지 않아 변수제거를 했을 때, 파생변수인 radio*TV는 어떻게 할까?
+<ul>
+<li>제거한다 (<strong>오리지널 변수를 제거한다면 파생변수도 제거, 오리지널이 있을때만 사용가능</strong>)</li>
+<li><strong>Hierarchy principle : 파생변수가 존재하려면 오리지널 변수도 있어야 함</strong></li>
+</ul></li>
+<li>Coefficient 값 기준으로 radio가 TV보다 더 중요한 변수인가?
+<ul>
+<li>Coefficient는 단위(unit)를 간과하므로, 높다고 해서 반드시 중요한 것은 아니다</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>변수(feature)의 관계는 독립적인게 좋음</li>
+</ul></li>
+<li>Non-linearity의 Multiple regrssion 활용한 표현
+<ul>
+<li>예를 들어 전반부는 정비례 / 후반부는 반비례 한다면
+<ul>
+<li><span class="math inline">\(B_1 *나이 + B_2 * 나이^2\)</span> 와 같이 표현 가능</li>
+<li>위의 표현식은 변수의 독립성을 저해하는가?(사용해도 되나?)
+<ul>
+<li>서로 다른관계를 묘사하는 것이라면 사용 가능
+<ul>
+<li>연봉, 자산 모두 대출점수의 양의 상관관계라면 사용 불가</li>
+<li><span class="math inline">\(B_1 *나이\)</span>는 양의 상관관계, <span class="math inline">\(B_2 * 나이^2\)</span>는 음의 상관관계라면 사용 가능</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>다만 변수가 많아지면 한계가 있으므로, <strong>비선형에 적합한 타 모델이 더 좋음</strong></li>
+</ul></li>
+<li>상관관계를 빠르게 파악하는 법 : 모든 산점도(Scatter plot)를 그려보기
+<ul>
+<li>미리 파악하여 상관관계가 있는 것을 빼고 모델링하면 더 좋은 결과가 나타남</li>
+<li>중복변수가 들어가거나 하더라도, Robust한 모델을 사용하는 것도 좋은 방법</li>
+</ul></li>
+</ul>
+</section>
+<section id="logistic-regression" class="level2">
+<h2 class="anchored" data-anchor-id="logistic-regression">Logistic regression</h2>
+<ul>
+<li>Linear regression으로 현재까지 예측문제를 풀었다면, <strong>Logistic regression으로는 분류문제를 풀 수 있다</strong></li>
+<li>머신러닝으로 푸는 큰 3가지 문제 : 예측 vs 분류 vs 클러스터링
+<ul>
+<li>분류 : 메일이 왔을 때 스팸인가 아닌가, 신용카드승인내역이 이상거래인가 정상거래인가</li>
+</ul></li>
+<li>Hyphothesis의 반영
+<ul>
+<li>기존의 Linear regression(<span class="math inline">\(y=Wx+b\)</span>)의 식으로는 놓치는 case가 많이 생김</li>
+<li><code>Logistic(Sigmoid) function</code>을 활용하여 해결 가능 <br> <img src="index_files/figure-html/38537c49-2-image.png" class="img-fluid" alt="image.png">
+<ul>
+<li>z가 아무리 커지거나 작아져도 0~1사이에서 벗어나지 않음</li>
+<li>0.5를 기준으로 판단가능 (Pass/Fail, 스팸/정상 등)</li>
+<li><strong>z부분에 기존에 데이터를 학습했던 Linear regression식(<span class="math inline">\(y=Wx+b\)</span>)을 넣으면(plug-in), 분류문제를 푸는 함수로 바꿈</strong></li>
+<li>값이 0.7이 나온다면, Pass확률이 70%인 것으로 해석가능</li>
+</ul></li>
+</ul></li>
+<li>Descision boundary 경계영역
+<ul>
+<li>예를 들어 2가지 Case를 분류하는 Linear Line이 있다면, 그것이 Descision boundary (Non Linear한 경우라도 분류문제를 풀 수 있고, 그 Line은 Descision boundary)</li>
+</ul></li>
+<li>Cost function에서는 문제가 생김
+<ul>
+<li><p>Sigmoid function으로 간편하게 분류문제를 푸는 함수로 바꿨지만, 기존처럼 미분을 하면 문제 발생</p>
+<ul>
+<li>값이 조금만 크거나 작아져도 기울기가 0이 됨 → 기존의 Mean Square방식 적용 불가 <br> <img src="index_files/figure-html/38537c49-1-image-2.png" class="img-fluid" alt="image-2.png"></li>
+<li>GD 사용시 최적 지점까지 가지 못하는 경우 발생</li>
+</ul></li>
+<li><p><code>Cross entropy</code>를 사용하게 됨</p>
+<pre><code>  [Cost function으로 사용되기 위한 2가지 조건]
+  1. 클수록 나쁘고 작을수록 좋아야 함
+  2. 미분이 가능해야 함
+    (미분이 안되는 경우 : 평평한 부분이 있거나, 위아래로 변동이 큰 구간이 많은 경우)
+
+  * 두 조건을 충족하는 것은 쉽지 않으며, Accuracy는 1번만 충족
+  * Cross entropy는 위의 2개 조건을 모두 충족</code></pre>
+<ul>
+<li>2가지 상황(y=0[pass], y=1[fail])에 대한 상황에 대해 다른 식 사용
+<ul>
+<li>필요시 하나의 식으로도 나타낼 수 있음 (y값에 따라 한쪽 식이 0이 되는 형태)</li>
+</ul></li>
+<li>현대에서도 많이 쓰이는 함수인 Cross entropy (gpt4 등)</li>
+<li>GD경사하강법으로도 사용 가능</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="모형예측classification의-성과평가confusion-matrix" class="level2">
+<h2 class="anchored" data-anchor-id="모형예측classification의-성과평가confusion-matrix">모형예측(Classification)의 성과평가(Confusion matrix)</h2>
+<ul>
+<li><p>Accuracy(정답률) : 실제값 중 맞춘 비율</p>
+<ul>
+<li>분류가 <strong>Imbalance한 경우 한계</strong>가 있음(신용카드 경우도 대다수가 정상거래) (예를 들어 암환자 비율이 90%이상일 때, 로직없이 그냥 암환자로만 판정해도 정답률 높음)</li>
+</ul></li>
+<li><p>Precision(암으로 판정한 사람 중, 실제로 암) vs Recall(실제 암인 사람 중, 암으로 판정된 사람)</p>
+<ul>
+<li>암환자를 정상환자로 판단하는 것은 치명적</li>
+<li>암과 같은 케이스는 기본적으로 암으로 ’판단’하는 것이 많아져야하므로 Recall을 사용 (분자가 ’암 판정’인, 분자가 커질수록 점수가 높은 recall을 사용하는게 적절)</li>
+<li><strong>프로젝트 특성에 따라 적합한 모델 뿐 아니라 적합한 지표를 사용하는 것이 중요</strong></li>
+</ul></li>
+<li><p>Precision이 더 중요한 케이스</p>
+<ul>
+<li>불량제품 하나를 검수하기 위해 1만개의 정상제품을 검사하면 비효율적</li>
+<li>1개의 불량제품을 감수하고 1만개를 살리는게 효율적</li>
+</ul></li>
+<li><p><strong>분류가 balance한지 imbalance한지를 체크</strong></p></li>
+<li><p>F1 score : Precision과 Recall의 조화평균</p></li>
+<li><p>Confusion matrix를 그래프로 visualize 해서 보여주면 더 설득에 용이</p></li>
+</ul>
+
+
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/kr9268\.github\.io\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="kr9268/giscus_for_blog" data-repo-id="R_kgDOL0Sthw" data-category="General" data-category-id="DIC_kwDOL0Sth84Ce_5h" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+</div> <!-- /content -->
+<script>
+    const baseFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    const watermark = new XWatermark.XWatermark();
+    watermark.init("Kibok Park", {
+      parentSelector: "body",
+      prevent: true,
+      observer: true,
+      mode: "normal",
+      font: "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', 'Liberation Sans', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
+      fontsize: baseFontSize * 1.000000,
+      angle: -15.000000,
+      color: "#000000",
+      alpha: 0.100000,
+      cols: 10,
+      rows: 50,
+      xSpace: baseFontSize * 4.000000,
+      ySpace: baseFontSize * 4.000000,
+      zIndex: -1
+    });
+    </script>
+
+
+
+
+</body></html>
