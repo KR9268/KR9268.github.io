@@ -378,6 +378,209 @@
     "text": "정리\n\nMAX(컬럼명) : 최대값\nMIN(컬럼명) : 최소값"
   },
   {
+    "objectID": "posts/prgms-sql-20240320/index.html",
+    "href": "posts/prgms-sql-20240320/index.html",
+    "title": "[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기",
+    "section": "",
+    "text": "프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다  (비상업적, 비영리적 용도)\n문제링크 게시가능여부\nCopyright © 2024 Kibok Park All rights reserved."
+  },
+  {
+    "objectID": "posts/prgms-sql-20240320/index.html#개요",
+    "href": "posts/prgms-sql-20240320/index.html#개요",
+    "title": "[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기",
+    "section": "",
+    "text": "프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다  (비상업적, 비영리적 용도)\n문제링크 게시가능여부"
+  },
+  {
+    "objectID": "posts/prgms-sql-20240320/index.html#문제-조건에-부합하는-중고거래-댓글-조회하기",
+    "href": "posts/prgms-sql-20240320/index.html#문제-조건에-부합하는-중고거래-댓글-조회하기",
+    "title": "[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기",
+    "section": "문제 : 조건에 부합하는 중고거래 댓글 조회하기",
+    "text": "문제 : 조건에 부합하는 중고거래 댓글 조회하기\n\n    &lt;h6 class=\"guide-section-title\"&gt;문제 설명&lt;/h6&gt;\n    &lt;div class=\"markdown solarized-dark\"&gt;&lt;p&gt;다음은 중고거래 게시판 정보를 담은 &lt;code&gt;USED_GOODS_BOARD&lt;/code&gt; 테이블과 중고거래 게시판 첨부파일 정보를 담은 &lt;code&gt;USED_GOODS_REPLY&lt;/code&gt; 테이블입니다. &lt;code&gt;USED_GOODS_BOARD&lt;/code&gt; 테이블은 다음과 같으며 &lt;code&gt;BOARD_ID&lt;/code&gt;, &lt;code&gt;WRITER_ID&lt;/code&gt;, &lt;code&gt;TITLE&lt;/code&gt;, &lt;code&gt;CONTENTS&lt;/code&gt;, &lt;code&gt;PRICE&lt;/code&gt;, &lt;code&gt;CREATED_DATE&lt;/code&gt;, &lt;code&gt;STATUS&lt;/code&gt;, &lt;code&gt;VIEWS&lt;/code&gt;은 게시글 ID, 작성자 ID, 게시글 제목, 게시글 내용, 가격, 작성일, 거래상태, 조회수를 의미합니다.&lt;/p&gt;\n\n\n\n\nColumn name\n\n\nType\n\n\nNullable\n\n\n\n\n\n\nBOARD_ID\n\n\nVARCHAR(5)\n\n\nFALSE\n\n\n\n\nWRITER_ID\n\n\nVARCHAR(50)\n\n\nFALSE\n\n\n\n\nTITLE\n\n\nVARCHAR(100)\n\n\nFALSE\n\n\n\n\nCONTENTS\n\n\nVARCHAR(1000)\n\n\nFALSE\n\n\n\n\nPRICE\n\n\nNUMBER\n\n\nFALSE\n\n\n\n\nCREATED_DATE\n\n\nDATE\n\n\nFALSE\n\n\n\n\nSTATUS\n\n\nVARCHAR(10)\n\n\nFALSE\n\n\n\n\nVIEWS\n\n\nNUMBER\n\n\nFALSE\n\n\n\n\n\nUSED_GOODS_REPLY 테이블은 다음과 같으며 REPLY_ID, BOARD_ID, WRITER_ID, CONTENTS, CREATED_DATE는 각각 댓글 ID, 게시글 ID, 작성자 ID, 댓글 내용, 작성일을 의미합니다.\n\n\n\n\n\nColumn name\n\n\nType\n\n\nNullable\n\n\n\n\n\n\nREPLY_ID\n\n\nVARCHAR(10)\n\n\nFALSE\n\n\n\n\nBOARD_ID\n\n\nVARCHAR(5)\n\n\nFALSE\n\n\n\n\nWRITER_ID\n\n\nVARCHAR(50)\n\n\nFALSE\n\n\n\n\nCONTENTS\n\n\nVARCHAR(1000)\n\n\nTRUE\n\n\n\n\nCREATED_DATE\n\n\nDATE\n\n\nFALSE\n\n\n\n\n\n\n문제\n\n\nUSED_GOODS_BOARD와 USED_GOODS_REPLY 테이블에서 2022년 10월에 작성된 게시글 제목, 게시글 ID, 댓글 ID, 댓글 작성자 ID, 댓글 내용, 댓글 작성일을 조회하는 SQL문을 작성해주세요. 결과는 댓글 작성일을 기준으로 오름차순 정렬해주시고, 댓글 작성일이 같다면 게시글 제목을 기준으로 오름차순 정렬해주세요.\n\n\n\n예시\n\n\nUSED_GOODS_BOARD 테이블이 다음과 같고\n\n\n\n\n\nBOARD_ID\n\n\nWRITER_ID\n\n\nTITLE\n\n\nCONTENTS\n\n\nPRICE\n\n\nCREATED_DATE\n\n\nSTATUS\n\n\nVIEWS\n\n\n\n\n\n\nB0001\n\n\nkwag98\n\n\n반려견 배변패드 팝니다\n\n\n정말 저렴히 판매합니다. 전부 미개봉 새상품입니다.\n\n\n12000\n\n\n2022-10-01\n\n\nDONE\n\n\n250\n\n\n\n\nB0002\n\n\nlee871201\n\n\n국내산 볶음참깨\n\n\n직접 농사지은 참깨입니다.\n\n\n3000\n\n\n2022-10-02\n\n\nDONE\n\n\n121\n\n\n\n\nB0003\n\n\ngoung12\n\n\n배드민턴 라켓\n\n\n사놓고 방치만 해서 팝니다.\n\n\n9000\n\n\n2022-10-02\n\n\nSALE\n\n\n212\n\n\n\n\nB0004\n\n\nkeel1990\n\n\n디올 귀걸이\n\n\n신세계강남점에서 구입. 정품 아닐시 백퍼센트 환불\n\n\n130000\n\n\n2022-10-02\n\n\nSALE\n\n\n199\n\n\n\n\nB0005\n\n\nhaphli01\n\n\n스팸클래식 팔아요\n\n\n유통기한 2025년까지에요\n\n\n10000\n\n\n2022-10-02\n\n\nSALE\n\n\n121\n\n\n\n\n\nUSED_GOODS_REPLY 테이블이 다음과 같을 때\n\n\n\n\n\nREPLY_ID\n\n\nBOARD_ID\n\n\nWRITER_ID\n\n\nCONTENTS\n\n\nCREATED_DATE\n\n\n\n\n\n\nR000000001\n\n\nB0001\n\n\ns2s2123\n\n\n구매하겠습니다. 쪽지 드립니다.\n\n\n2022-10-02\n\n\n\n\nR000000002\n\n\nB0002\n\n\nhoho1112\n\n\n쪽지 주세요.\n\n\n2022-10-03\n\n\n\n\nR000000003\n\n\nB0006\n\n\nhwahwa2\n\n\n삽니다. 연락주세요.\n\n\n2022-10-03\n\n\n\n\nR000000004\n\n\nB0007\n\n\nhong02\n\n\n예약중\n\n\n2022-10-06\n\n\n\n\nR000000005\n\n\nB0009\n\n\nhanju23\n\n\n구매완료\n\n\n2022-10-07\n\n\n\n\n\nSQL을 실행하면 다음과 같이 출력되어야 합니다.\n\n\n\n\n\nTITLE\n\n\nBOARD_ID\n\n\nREPLY_ID\n\n\nWRITER_ID\n\n\nCONTENTS\n\n\nCREATED_DATE\n\n\n\n\n\n\n반려견 배변패드 팝니다\n\n\nB0001\n\n\nR000000001\n\n\ns2s2123\n\n\n구매하겠습니다. 쪽지 드립니다.\n\n\n2022-10-02\n\n\n\n\n국내산 볶음참깨\n\n\nB0002\n\n\nR000000002\n\n\nhoho1112\n\n\n쪽지 주세요.\n\n\n2022-10-03\n\n\n\n\n\n\n주의사항\n\n\nCREATED_DATE의 포맷이 예시의 포맷과 일치해야 정답처리 됩니다.\n\n\n  &lt;/div&gt;"
+  },
+  {
+    "objectID": "posts/prgms-sql-20240320/index.html#작성답안",
+    "href": "posts/prgms-sql-20240320/index.html#작성답안",
+    "title": "[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기",
+    "section": "작성답안",
+    "text": "작성답안\n\n\n\nSELECT board.TITLE, board.BOARD_ID,\n       reply.REPLY_ID, reply.WRITER_ID, reply.CONTENTS, TO_CHAR(reply.CREATED_DATE, 'YYYY-MM-DD')\nFROM USED_GOODS_BOARD board, USED_GOODS_REPLY reply\nWHERE TO_CHAR(board.CREATED_DATE, 'YYYYMM') = '202210'\n  AND board.BOARD_ID = reply.BOARD_ID\nORDER BY reply.CREATED_DATE ASC, board.TITLE ASC;\n\n\nFigure 1"
+  },
+  {
+    "objectID": "posts/prgms-sql-20240320/index.html#정리",
+    "href": "posts/prgms-sql-20240320/index.html#정리",
+    "title": "[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기",
+    "section": "정리",
+    "text": "정리\n\n각 테이블의 BOARD_ID 일치시키는 것을 실수하였음. 향후 동일케이스에 대해서는 고려하여 풀기\n다중정렬 &gt; ORDER BY reply.CREATED_DATE ASC, board.TITLE ASC; 앞의 컬럼일수록 정렬 우선순위를 가짐"
+  },
+  {
+    "objectID": "posts/meta-dl-creditcard-20240609/index.html",
+    "href": "posts/meta-dl-creditcard-20240609/index.html",
+    "title": "[M_Study_3주차] Multi-class Classification / Artificial Neural Network",
+    "section": "",
+    "text": "참여중인 딥러닝 스터디 3주차 기록입니다.\nCopyright © 2024 Kibok Park All rights reserved."
+  },
+  {
+    "objectID": "posts/meta-dl-creditcard-20240609/index.html#개요",
+    "href": "posts/meta-dl-creditcard-20240609/index.html#개요",
+    "title": "[M_Study_3주차] Multi-class Classification / Artificial Neural Network",
+    "section": "",
+    "text": "참여중인 딥러닝 스터디 3주차 기록입니다."
+  },
+  {
+    "objectID": "posts/meta-dl-creditcard-20240609/index.html#주차-과제-설명",
+    "href": "posts/meta-dl-creditcard-20240609/index.html#주차-과제-설명",
+    "title": "[M_Study_3주차] Multi-class Classification / Artificial Neural Network",
+    "section": "2주차 과제 설명",
+    "text": "2주차 과제 설명\n\ntf.random.set_seed(2024)\n\n서로 다른 모델을 비교하는 경우, 시작점이 다른 것 때문에 성능우위가 다르게 측정되는 경우 발생 (같은 성능임에도 다르게 나오거나, 좋은 모델이 더 나쁜 모델로 오인되는 경우)\n이러한 경우를 방지하고자, set_seed로 같은 지점에서 시작하게 할 수 있음\n딥러닝은 복잡한 다차원의 함수이므로, 좋은 시작점에 따라 달라질 수 있음 (좋은 Optimizer를 사용하고 좋은 데이터를 쓴다면 차이는 줄어들 수 있음)\n\nMatrix Multiplication\n\nA(1,2), B(2,1)와 같은 Matrix에서, A의 열(,2)과 B의 행(2,)의 숫자가 같아야 가능\n\nCost function에서 마이너스(-)를 붙이는 경우\n\n높을수록 안좋은 척도여야 할 때, 계산식이 높을수록 좋은 값인 경우 붙여서 변환\n\nLearning rate\n\nGD에서 안정적으로 최적점에 가게하기 위해 학습률을 조정\n사람이 지정하는 hyper parameter, 경험에 의해 넣는 경우가 많다(정답은 없음)\n\nConfusion Matrix\n\nRecall, Precision 으로 표현하는 것은 경영진 등에는 와닿지 않을 수 있으므로 시각화하여 보여주면 좋음"
+  },
+  {
+    "objectID": "posts/meta-dl-creditcard-20240609/index.html#주차-과제-logistic-regression-코드-작성한-것",
+    "href": "posts/meta-dl-creditcard-20240609/index.html#주차-과제-logistic-regression-코드-작성한-것",
+    "title": "[M_Study_3주차] Multi-class Classification / Artificial Neural Network",
+    "section": "2주차 과제 Logistic regression 코드 작성한 것",
+    "text": "2주차 과제 Logistic regression 코드 작성한 것\nimport matplotlib.pyplot as plt\nimport numpy as np\nimport tensorflow as tf\n\n# Train data\nX_train = np.array([[1., 1.],\n                   [1., 2.],\n                   [2., 1.],\n                   [3., 2.],\n                   [3., 3.],\n                   [2., 3.]],\n                   dtype=np.float32)\nY_train = np.array([[0.],\n                   [0.],\n                   [0.],\n                   [1.],\n                   [1.],\n                   [1.],],\n                   dtype=np.float32)\n\n# 회귀선 작성 전 분포확인\ncolors=['red' if L&gt;0.5 else 'blue' for L in Y_train]\nplt.scatter(X_train[:,0], X_train[:, 1], label='Logistics regression', color=colors)\n\n\n\nimage.png\n\n\n# 모델 학습\ntf.random.set_seed(2020)\nW = tf.Variable(tf.random.normal([2,1], mean=0.0))\nb = tf.Variable(tf.random.normal([1], mean=0.0))\n\ndef hypothesis(X):\n    z = tf.matmul(X, W) + b\n    sigmoid = 1 / (1 + tf.exp(-z))\n    return sigmoid\n\ndef cost_fn(H, Y):\n    cost = -tf.reduce_mean(Y*tf.math.log(H) + (1-Y)*tf.math.log(1-H))\n    return cost\n\nlearning_rate = 0.01\noptimizer = tf.optimizers.SGD(learning_rate)\n\nfor step in range(5001):\n    with tf.GradientTape() as g:\n        pred = hypothesis(X_train)\n        cost = cost_fn(pred, Y_train)\n\n        gradients = g.gradient(cost, [W,b])\n    \n    optimizer.apply_gradients(zip(gradients, [W, b]))\n\n    if step % 1000 == 0:\n        print(f'Step={step+1}, Cost = {cost}, W={W.numpy()}, b = {b.numpy()}')\n\nw_hat = W.numpy()\nb_hat = b.numpy()\n\nStep=1, Cost = 0.7932398319244385, W=[[-0.10415223] [0.68125504]], b = [0.3810195]  Step=1001, Cost = 0.5122759938240051, W=[[0.1809378] [0.55177015]], b = [-0.97815347]  Step=2001, Cost = 0.39883172512054443, W=[[0.5135696] [0.6884617]], b = [-1.9777462]  Step=3001, Cost = 0.32507583498954773, W=[[0.7515713] [0.8368167]], b = [-2.7877953]  Step=4001, Cost = 0.27400580048561096, W=[[0.9350327] [0.97824335]], b = [-3.4628296]  Step=5001, Cost = 0.2367737740278244, W=[[1.0848083] [1.1075894]], b = [-4.039375]\n\n# Slope(Coefficient) 확인\nslope = w_hat[0]/w_hat[1]\nxx = np.linspace(np.min(X_train[:,0]),np.max(X_train[:,0])) # min과 max 사이 구간의 숫자를 생성. x값\nyy = -slope*xx - b_hat/w_hat[1]                             # xx(x값)입력하여 y값 생성\n\n# train data분포\nplt.scatter(X_train[:, 0], X_train[:, 1], label='Logistics regression', color=colors)\n\n# 분류선(Decision Boundary)확인\nplt.plot(xx, yy, label='Decision Boundary')\nplt.legend()\n\n\n\nimage-2.png\n\n\n# Confusion matrix\nfrom sklearn.metrics import confusion_matrix\n\nX_test = np.array([[1., 0.],\n                   [0., 2.],\n                   [1., 1.],\n                   [3., 2.],\n                   [3., 3.],\n                   [2., 3.]],\n                   dtype=np.float32)\nY_test = np.array([[0.],\n                   [0.],\n                   [1.],\n                   [0.],\n                   [1.],\n                   [0.],],\n                   dtype=np.float32)\n\nY_actual = Y_test\nY_predicted = hypothesis(X_test)\nY_predicted_binary = np.where(Y_predicted &gt;= 0.5, 1, 0)\n\nCM_array = confusion_matrix(Y_actual, Y_predicted_binary, labels=[0, 1]) \nCM_array\n\narray([[2, 2], [1, 1]], dtype=int64)\n\n# Confusion matrix 시각화(seaborn)\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n\nclass_labels = ['Negative', 'Positive']\nplt.figure(figsize=(8, 6))\nsns.heatmap(CM_array, annot=True, cmap='Blues',\n            xticklabels=class_labels, yticklabels=class_labels)\n\nplt.title('Confusion Matrix')\nplt.xlabel('Predicted')\nplt.ylabel('True')\n\n\n\nimage-3.png\n\n\n# Confusion matrix 시각화(Scikit-learn)\nfrom sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay\n\ndisp = ConfusionMatrixDisplay(confusion_matrix=CM_array, display_labels=[0, 1])\ndisp.plot(cmap=plt.cm.Blues)\nplt.title('Confusion Matrix')\nplt.show()\n\n\n\nimage-4.png"
+  },
+  {
+    "objectID": "posts/meta-dl-creditcard-20240609/index.html#multi-class-classfication-regression",
+    "href": "posts/meta-dl-creditcard-20240609/index.html#multi-class-classfication-regression",
+    "title": "[M_Study_3주차] Multi-class Classification / Artificial Neural Network",
+    "section": "Multi-class Classfication regression",
+    "text": "Multi-class Classfication regression\n\n2가지 분류가 아닌 3가지 이상의 분류(A,B,C로 나누는 신용등급 등)\nBinary classification과 달리 하나의 Decision boundary로는 해결 불가\nOne vs All(Rest)\n\n하나의 대상과, 아닌 것’들’로 Binary Classification을 여러번 수행\n예를 들어 a, b, c 3가지를 분류하는 경우\n\n아래와 같은 같은 3개의 식으로 표현할 수 있고, \n아래와 같이 하나의 행렬로 한번에 표현할 수 있다  \n\nSoftmax : 각 결과값(\\(H_a, H_b, H_c\\))의 비율(확률)이 나오게 됨(총합이 1)\n\nCross entropy cost function\n\n정보량은 확률에 반비례한다고 정의 (정보량= $ 1 p$)\n\n특정 성씨의 사람을 뽑는다고 할 때, 한국의 주요 성씨인 김씨\\(1 \\over 10\\) vs 소수 성씨인 남궁씨\\(1 \\over 100\\)\n\n로그를 취하여 전개하면 Cross entropy 식이 된다\nEntropy : Measure for uncertainty (불확실성의 측정)  \nCase별 Cross entropy(cost function)\n\n출력값(결과값 softmax)과 실제값이 비슷한 경우 : 특정 값 산출\n출력값(결과값 softmax)과 실제값이 완전히 다른 경우 : 무한대\n출력값(결과값 softmax)과 실제값이 완전히 동일한 경우 : 0\n\nCross entropy를 개인이 직접구현한다면 놓칠 수 있는 부분(cross entropy의 무한대)의 문제\n\n파이토치 등 많은 사람이 참여한 패키지를 사용하면 방지할 수 있음\n컴퓨터에서의 Zero division error 등의 경우, 텐서플로우 등 패키지에선 분모에 0.00001등을 더하여 실제값엔 영향이 작게하며 오류 제거"
+  },
+  {
+    "objectID": "posts/coach-ds-20230506/index.html",
+    "href": "posts/coach-ds-20230506/index.html",
+    "title": "[간단분석] 공공데이터포털 건강검진정보 활용",
+    "section": "",
+    "text": "국민건강보험공단 건강검진정보를 활용한 간단한 분석 공공데이터포털 국민건강보험공단_건강검진정보\n실습 기록용으로 남깁니다.\nCopyright © 2024 Kibok Park All rights reserved."
+  },
+  {
+    "objectID": "posts/coach-ds-20230506/index.html#개요",
+    "href": "posts/coach-ds-20230506/index.html#개요",
+    "title": "[간단분석] 공공데이터포털 건강검진정보 활용",
+    "section": "",
+    "text": "국민건강보험공단 건강검진정보를 활용한 간단한 분석 공공데이터포털 국민건강보험공단_건강검진정보\n실습 기록용으로 남깁니다."
+  },
+  {
+    "objectID": "posts/coach-ds-20230506/index.html#데이터-불러오기",
+    "href": "posts/coach-ds-20230506/index.html#데이터-불러오기",
+    "title": "[간단분석] 공공데이터포털 건강검진정보 활용",
+    "section": "데이터 불러오기",
+    "text": "데이터 불러오기\n\nimport pandas as pd\nimport numpy as np\nimport seaborn as sns\nimport koreanize_matplotlib\nimport matplotlib.pyplot as plt\n\n\ndf = pd.read_csv('국민건강보험공단_건강검진정보_20221231.CSV', encoding=\"cp949\")\n\n\ndf.columns\n\nIndex(['기준년도', '가입자일련번호', '시도코드', '성별', '연령대코드(5세단위)', '신장(5cm단위)',\n       '체중(5kg단위)', '허리둘레', '시력(좌)', '시력(우)', '청력(좌)', '청력(우)', '수축기혈압',\n       '이완기혈압', '식전혈당(공복혈당)', '총콜레스테롤', '트리글리세라이드', 'HDL콜레스테롤', 'LDL콜레스테롤',\n       '혈색소', '요단백', '혈청크레아티닌', '혈청지오티(AST)', '혈청지피티(ALT)', '감마지티피', '흡연상태',\n       '음주여부', '구강검진수검여부', '치아우식증유무', '치석'],\n      dtype='object')\n\n\n\n음주여부, 흡연상태, 연령대코드, 성별코드간의 상관관계\n\n상관계수 구하기\n\n\nfiltered = df[['음주여부','흡연상태','연령대코드(5세단위)','성별']].copy()\nfiltered.corr()\n\n\n\n\n\n\n\n\n음주여부\n흡연상태\n연령대코드(5세단위)\n성별\n\n\n\n\n음주여부\n1.000000\n0.252058\n-0.357367\n-0.254963\n\n\n흡연상태\n0.252058\n1.000000\n-0.073601\n-0.536833\n\n\n연령대코드(5세단위)\n-0.357367\n-0.073601\n1.000000\n0.042162\n\n\n성별\n-0.254963\n-0.536833\n0.042162\n1.000000\n\n\n\n\n\n\n\n\n상관계수 시각화 (Seaborn heatmap)\n\n\n#mask옵션 사용하고, annot옵션으로 수치표기, fmt옵션으로 소수자리 지정하여 heatmap으로 표현\nmask = np.triu(np.ones_like(filtered.corr(), dtype=bool))\nsns.heatmap(filtered.corr(), annot=True, fmt='.2f', mask=mask)\n\n\n\n\n\n\n\n\n\n상관관계가 강한 순으로 나열\n\n성별과 흡연, 음주와 연령의 뚜렷한 상관관계\n흡연과 음주의 약한 상관관계 &gt; [참고] -1.0과 -0.7 사이이면, 강한 음적 선형관계 -0.7과 -0.3 사이이면, 뚜렷한 음적 선형관계 -0.3과 -0.1 사이이면, 약한 음적 선형관계 -0.1과 +0.1 사이이면, 거의 무시될 수 있는 선형관계 +0.1과 +0.3 사이이면, 약한 양적 선형관계 +0.3과 +0.7 사이이면, 뚜렷한 양적 선형관계 +0.7과 +1.0 사이이면, 강한 양적 선형관계\n\n\n\n#상관계수로 표를 만들어, 강한 상관관계가 있는 순으로 조사해보았습니다 (절대값으로 내림차순)\ncon_index = []\ncon_value = []\ncon_value_abs= []\nfor i in filtered.corr().columns:\n    for j in filtered.corr().index:\n        con_index.append(i +\"/\" + j)\n        con_value.append(filtered.corr()[i][j])\n        con_value_abs.append(abs(filtered.corr()[i][j]))\npd.DataFrame({'상관계수':con_value,\n             '절대값':con_value_abs,\n             '항목':con_index}).sort_values(by=['절대값'],ascending=False)\n\n\n\n\n\n\n\n\n상관계수\n절대값\n항목\n\n\n\n\n0\n1.000000\n1.000000\n음주여부/음주여부\n\n\n5\n1.000000\n1.000000\n흡연상태/흡연상태\n\n\n10\n1.000000\n1.000000\n연령대코드(5세단위)/연령대코드(5세단위)\n\n\n15\n1.000000\n1.000000\n성별/성별\n\n\n7\n-0.536833\n0.536833\n흡연상태/성별\n\n\n13\n-0.536833\n0.536833\n성별/흡연상태\n\n\n2\n-0.357367\n0.357367\n음주여부/연령대코드(5세단위)\n\n\n8\n-0.357367\n0.357367\n연령대코드(5세단위)/음주여부\n\n\n3\n-0.254963\n0.254963\n음주여부/성별\n\n\n12\n-0.254963\n0.254963\n성별/음주여부\n\n\n1\n0.252058\n0.252058\n음주여부/흡연상태\n\n\n4\n0.252058\n0.252058\n흡연상태/음주여부\n\n\n6\n-0.073601\n0.073601\n흡연상태/연령대코드(5세단위)\n\n\n9\n-0.073601\n0.073601\n연령대코드(5세단위)/흡연상태\n\n\n11\n0.042162\n0.042162\n연령대코드(5세단위)/성별\n\n\n14\n0.042162\n0.042162\n성별/연령대코드(5세단위)\n\n\n\n\n\n\n\n\n\n흡연과 음주에 대한 추이\n\n앞서 약한 상관관계였던 흡연과 음주에 대한 인원추이\n\n\n# 코드를 실제값으로 변환\nsmoke = {1 : \"흡연안함\", 2: \"끊음\", 3: \"흡연중\"}\ndrink = {0: \"안마심\", 1: \"마심\"}\n\ndf['흡연상태'] = df['흡연상태'].replace(smoke)\ndf['음주여부'] = df['음주여부'].replace(drink)\n\n\n# '흡연상태','음주여부'만 가져와 crosstab\nfiltered_drink_smoke = df[['흡연상태','음주여부']]\ndf_crosstab = pd.crosstab(index=filtered_drink_smoke['음주여부'],columns=filtered_drink_smoke['흡연상태'])\ndf_crosstab\n\n\n\n\n\n\n\n흡연상태\n끊음\n흡연안함\n흡연중\n\n\n음주여부\n\n\n\n\n\n\n\n마심\n132750\n360530\n161804\n\n\n안마심\n33815\n280441\n30504\n\n\n\n\n\n\n\n\n# countplot 시각화\nsns.set_style('whitegrid')\nplt.rc('font',family=\"Malgun Gothic\")\nsns.countplot(data=filtered_drink_smoke, x='흡연상태', hue='음주여부', palette='Set1').set_title('흡연상태별 음주여부') # palette = 그래프테마\n\nText(0.5, 1.0, '흡연상태별 음주여부')\n\n\n\n\n\n\n\n\n\n\n흡연중이거나 했다가 끊은 경우에는 음주하는 사람의 비중이 높음\n흡연을 안하는 경우는 음주여부의 비중 차이가 크지 않음\n\n\n\n음주여부에 따른 콜레스테롤과 감마지티피의 관계\n\n감마지티피 : 알콜에 의한 간장애의 지표를 나타내는 검사항목\n각 항목을 산점도로 시각화하여 파악\n\n\ndf_temp = df[['총콜레스테롤','감마지티피','음주여부','흡연상태']]\n\n\n# lmplot 산점도\nplt.figure(figsize=(14,14))\nsns.lmplot(data=df_temp, x='총콜레스테롤', y='감마지티피', hue='음주여부', col='흡연상태',markers=['x','o'] # markers로 음주여부에 따라 o,x로\n           ,scatter_kws={'s':20}) # 뭉쳐진부분이 잘보이도록 scatter_kws로 점크기조정\n\n&lt;Figure size 1400x1400 with 0 Axes&gt;\n\n\n\n\n\n\n\n\n\n\n대체로 특정 구역에 몰려있음, 체중 120kg 이상에 대해서 추가분석\n\n\nweight_over120 = df.loc[(df['체중(5kg단위)'] &gt;= 120), ['총콜레스테롤','감마지티피','음주여부','흡연상태']]\nplt.figure(figsize=(14,14))\nsns.lmplot(data=weight_over120, x='총콜레스테롤', y='감마지티피', hue='음주여부', col='흡연상태',markers=['x','o']\n           ,scatter_kws={'s':20})\n\n&lt;Figure size 1400x1400 with 0 Axes&gt;\n\n\n\n\n\n\n\n\n\n\n흡연중인 경우, 흡연을 안하거나 끊은 경우보다 감마지피티의 값이 높게 분포\n음주여부에 따라 콜레스테롤의 차이는 크게 보이지 않으나, 감마지티피의 경우 모두 상승하는 경향\n\n\n\n연령대별 시력 확인\n\n# 별도로 정의해둔 연령코드 딕셔너리\nage_code = {1: '0~4세',\n 2: '5~9세',\n 3: '10~14세',\n 4: '15~19세',\n 5: '20~24세',\n 6: '25~29세',\n 7: '30~34세',\n 8: '35~39세',\n 9: '40~44세',\n 10: '45~49세',\n 11: '50~54세',\n 12: '55~59세',\n 13: '60~64세',\n 14: '65~69세',\n 15: '70~74세',\n 16: '75~79세',\n 17: '80~84세',\n 18: '85세+'}\n\n# 실명(시력 9.9) 제거\nsight_right = df.drop(df.loc[df['시력(우)']==9.9,].index)\nsight_left = df.drop(df.loc[df['시력(좌)']==9.9,].index)\n\n#숫자료 표기되는 연령대코드를 연령구간으로 표기할 index 생성 후 replace로 변경 (barplot의 index로 사용)\nage_code_right = []\nfor i in np.sort(sight_right['연령대코드(5세단위)'].unique()).tolist():\n    age_code_right.append(age_code[i])\nage_code_left = []\nfor i in np.sort(sight_left['연령대코드(5세단위)'].unique()).tolist():\n    age_code_left.append(age_code[i])\n\nsight_right['연령대코드(5세단위)'] = sight_right['연령대코드(5세단위)'].replace(age_code)\nsight_left['연령대코드(5세단위)'] = sight_left['연령대코드(5세단위)'].replace(age_code)\n\n\n#시력(좌), (우) 그래프를 식별하기 용이하도록 (좌)그래프를 회전\nfig, axs = plt.subplots(ncols=2, figsize=(12,5),\n                       gridspec_kw={'wspace':0.5},)\nfig.suptitle('연령별 시력 평균(좌, 우)').set_size(20) #제목\n\nsns.set_context('talk')\n\nsns.barplot(data = sight_left, x='시력(좌)', y='연령대코드(5세단위)', hue='성별', orient='h', errorbar=None, ax=axs[0],\n            order=age_code_left).invert_xaxis()\nsns.barplot(data = sight_right, x='시력(우)', y='연령대코드(5세단위)', hue='성별', orient='h', errorbar=None, ax=axs[1],\n            order=age_code_right)\n\nfor ax in axs:\n    ax.set_ylabel('연령대') # 코드가 아니므로 y축 이름을 연령대로 변경\n\n\n\n\n\n\n\n\n\n모든 연령대에서 특정 성별의 시력이 높음\n연령이 높아질수록 시력도 낮아지며, 좌우시력의 큰 차이는 보이지 않음"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "Kibok Park",
+    "section": "",
+    "text": "I’m Kibok Park. Welcome to my blog. I’m not an expert in my favorites yet, but I’m working on becoming one. I hope you to have nice time with my blog.\nCopyright © 2024 Kibok Park All rights reserved."
+  },
+  {
+    "objectID": "about.html#hello",
+    "href": "about.html#hello",
+    "title": "Kibok Park",
+    "section": "",
+    "text": "I’m Kibok Park. Welcome to my blog. I’m not an expert in my favorites yet, but I’m working on becoming one. I hope you to have nice time with my blog."
+  },
+  {
+    "objectID": "about.html#topics",
+    "href": "about.html#topics",
+    "title": "Kibok Park",
+    "section": "Topics",
+    "text": "Topics\nPython, Quantative trading"
+  },
+  {
+    "objectID": "index_miniprojects.html",
+    "href": "index_miniprojects.html",
+    "title": "Mini Projects",
+    "section": "",
+    "text": "[Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 & 정리 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\n\nPython, win32를 활용한 SAP Scripting\n\n\n\nKibok Park\n\n\n2024-03-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] COO발급관리용 Tool\n\n\n\nPython\n\n\nwin11toast\n\n\nsqlite3\n\n\nstreamlit\n\n\npandas\n\n\nselenium\n\n\n\n[Python] selenium(웹스크레핑), sqlite3(db), win11toast(알림), streamlit(UI)\n\n\n\nKibok Park\n\n\n2024-02-20\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] LocalL/C 관리용 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\nStreamlit\n\n\nsqlite3\n\n\nBeautifulSoup\n\n\n\nPython, Streamlit을 활용한 업무자동화\n\n\n\nKibok Park\n\n\n2024-01-22\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] 아웃룩 메일열람 & pdf regex리딩 & 시스템 자동등록\n\n\n\nPython\n\n\nre\n\n\nxlwings\n\n\npandas\n\n\npdfminer\n\n\n\n[Python] re(regex), xlwings(암호화 Excel리딩), pdfminer(pdf리딩), pywin32(outlook)\n\n\n\nKibok Park\n\n\n2023-12-15\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] Peak타임 대응용 수출계약서pdf tabula리딩\n\n\n\nPython\n\n\ntabula\n\n\nxlwings\n\n\npathlib\n\n\npandas\n\n\n\n[Python] tabula(pdf리딩[표 형태], xlwings(암호화 Excel리딩)\n\n\n\nKibok Park\n\n\n2023-11-02\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Blog",
+    "section": "",
+    "text": "[M_Study_3주차] Multi-class Classification / Artificial Neural Network\n\n\n\n파이썬\n\n\n머신러닝\n\n\n딥러닝\n\n\nMStudy\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-06-09\n\n\n\n\n\n\n\n\n\n\n\n\n[M_Study_2주차] Multiple Regression / Logistic Regression\n\n\n\n파이썬\n\n\n머신러닝\n\n\n딥러닝\n\n\nMStudy\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-06-02\n\n\n\n\n\n\n\n\n\n\n\n\n[M_Study_1주차] Tensorflow / Linear Regression\n\n\n\n파이썬\n\n\n머신러닝\n\n\n딥러닝\n\n\nMStudy\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-05-26\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n[버크셔 해서웨이의 재탄생 읽고] 용어 정리\n\n\n\n경제/금융공부\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-23\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-21\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-20\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 조건에 맞는 도서 리스트 출력하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-19\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 가장 비싼 상품 구하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-18\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 평균 일일 대여 요금 구하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-17\n\n\n\n\n\n\n\n\n\n\n\n\n[Scikit-learn] Kaggle 집값예측 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-05-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Pytorch] MNIST 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-02-19\n\n\n\n\n\n\n\n\n\n\n\n\n[간단분석] 공공데이터포털 건강검진정보 활용\n\n\n\n파이썬\n\n\n분석\n\n\n\n\n\n\n\nKibok Park\n\n\n2022-11-13\n\n\n\n\n\n\n\n\n\n\n\n\n[간단분석] 공공데이터포털 건강검진정보 활용\n\n\n\n파이썬\n\n\n분석\n\n\n\n\n\n\n\nKibok Park\n\n\n2022-11-06\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
+  },
+  {
+    "objectID": "posts/prgms-sql-20240321/index.html",
+    "href": "posts/prgms-sql-20240321/index.html",
+    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
+    "section": "",
+    "text": "프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다  (비상업적, 비영리적 용도)\n문제링크 게시가능여부\nCopyright © 2024 Kibok Park All rights reserved."
+  },
+  {
+    "objectID": "posts/prgms-sql-20240321/index.html#개요",
+    "href": "posts/prgms-sql-20240321/index.html#개요",
+    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
+    "section": "",
+    "text": "프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다  (비상업적, 비영리적 용도)\n문제링크 게시가능여부"
+  },
+  {
+    "objectID": "posts/prgms-sql-20240321/index.html#문제-3월에-태어난-여성-회원-목록-출력하기",
+    "href": "posts/prgms-sql-20240321/index.html#문제-3월에-태어난-여성-회원-목록-출력하기",
+    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
+    "section": "문제 : 3월에 태어난 여성 회원 목록 출력하기",
+    "text": "문제 : 3월에 태어난 여성 회원 목록 출력하기\n\n\n다음은 식당 리뷰 사이트의 회원 정보를 담은 MEMBER_PROFILE 테이블입니다. MEMBER_PROFILE 테이블은 다음과 같으며 MEMBER_ID, MEMBER_NAME, TLNO, GENDER, DATE_OF_BIRTH는 회원 ID, 회원 이름, 회원 연락처, 성별, 생년월일을 의미합니다.\n\n\n\n\n\nColumn name\n\n\nType\n\n\nNullable\n\n\n\n\n\n\nMEMBER_ID\n\n\nVARCHAR(100)\n\n\nFALSE\n\n\n\n\nMEMBER_NAME\n\n\nVARCHAR(50)\n\n\nFALSE\n\n\n\n\nTLNO\n\n\nVARCHAR(50)\n\n\nTRUE\n\n\n\n\nGENDER\n\n\nVARCHAR(1)\n\n\nTRUE\n\n\n\n\nDATE_OF_BIRTH\n\n\nDATE\n\n\nTRUE\n\n\n\n\n\n\n문제\n\n\nMEMBER_PROFILE 테이블에서 생일이 3월인 여성 회원의 ID, 이름, 성별, 생년월일을 조회하는 SQL문을 작성해주세요. 이때 전화번호가 NULL인 경우는 출력대상에서 제외시켜 주시고, 결과는 회원ID를 기준으로 오름차순 정렬해주세요.\n\n\n\n예시\n\n\nMEMBER_PROFILE 테이블이 다음과 같을 때\n\n\n\n\n\nMEMBER_ID\n\n\nMEMBER_NAME\n\n\nTLNO\n\n\nGENDER\n\n\nDATE_OF_BIRTH\n\n\n\n\n\n\njiho92@naver.com\n\n\n이지호\n\n\n01076432111\n\n\nW\n\n\n1992-02-12\n\n\n\n\njiyoon22@hotmail.com\n\n\n김지윤\n\n\n01032324117\n\n\nW\n\n\n1992-02-22\n\n\n\n\njihoon93@hanmail.net\n\n\n김지훈\n\n\n01023258688\n\n\nM\n\n\n1993-02-23\n\n\n\n\nseoyeons@naver.com\n\n\n박서연\n\n\n01076482209\n\n\nW\n\n\n1993-03-16\n\n\n\n\nyoonsy94@gmail.com\n\n\n윤서연\n\n\nNULL\n\n\nW\n\n\n1994-03-19\n\n\n\n\n\nSQL을 실행하면 다음과 같이 출력되어야 합니다.\n\n\n\n\n\nMEMBER_ID\n\n\nMEMBER_NAME\n\n\nGENDER\n\n\nDATE_OF_BIRTH\n\n\n\n\n\n\nseoyeons@naver.com\n\n\n박서연\n\n\nW\n\n\n1993-03-16\n\n\n\n\n\n\n주의사항\n\n\nDATE_OF_BIRTH의 데이트 포맷이 예시와 동일해야 정답처리 됩니다."
+  },
+  {
+    "objectID": "posts/prgms-sql-20240321/index.html#작성답안",
+    "href": "posts/prgms-sql-20240321/index.html#작성답안",
+    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
+    "section": "작성답안",
+    "text": "작성답안\n\n\n\nSELECT MEMBER_ID, MEMBER_NAME,  GENDER, TO_CHAR(DATE_OF_BIRTH, 'YYYY-MM-DD')\nFROM MEMBER_PROFILE\nWHERE GENDER = 'W'\n  AND TO_CHAR(DATE_OF_BIRTH, 'MON') = 'MAR'\n  AND TLNO IS NOT NULL\nORDER BY MEMBER_ID ASC\n\n\nFigure 1"
+  },
+  {
+    "objectID": "posts/prgms-sql-20240321/index.html#정리",
+    "href": "posts/prgms-sql-20240321/index.html#정리",
+    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
+    "section": "정리",
+    "text": "정리\n\nWHERE 컬럼명 IS NOT NULL\nWHERE NOT 컬럼명 IS NULL"
+  },
+  {
+    "objectID": "posts/coach-ml-mnist-20230301/index.html",
+    "href": "posts/coach-ml-mnist-20230301/index.html",
+    "title": "[Pytorch] MNIST 실습",
+    "section": "",
+    "text": "파이토치로 MNIST 머신러닝 실습해본 코드 기록용으로 남깁니다.\nCopyright © 2024 Kibok Park All rights reserved."
+  },
+  {
+    "objectID": "posts/coach-ml-mnist-20230301/index.html#개요",
+    "href": "posts/coach-ml-mnist-20230301/index.html#개요",
+    "title": "[Pytorch] MNIST 실습",
+    "section": "",
+    "text": "파이토치로 MNIST 머신러닝 실습해본 코드 기록용으로 남깁니다."
+  },
+  {
+    "objectID": "posts/coach-ml-mnist-20230301/index.html#pytorch활용한-mnist-데이터셋-로딩",
+    "href": "posts/coach-ml-mnist-20230301/index.html#pytorch활용한-mnist-데이터셋-로딩",
+    "title": "[Pytorch] MNIST 실습",
+    "section": "Pytorch활용한 MNIST 데이터셋 로딩",
+    "text": "Pytorch활용한 MNIST 데이터셋 로딩\n\n\n\nimport torch\nimport torch.nn as nn\nfrom torch.utils.data import DataLoader\nimport torchvision\nimport torchvision.datasets as dset\nimport torchvision.transforms as transforms\n\nroot = './data'\nmnist_train = dset.MNIST (root=root, train=True, transform=transforms.ToTensor(), download=True )\nmnist_test = dset.MNIST (root=root, train=False, transform=transforms.ToTensor(), download=True)\n\n# Train용 / Test용 데이터셋\ntrain_loader = DataLoader(mnist_train, batch_size=10, shuffle=True)\ntest_loader = DataLoader(mnist_test, batch_size=10, shuffle=True)\n\n\nFigure 1"
+  },
+  {
+    "objectID": "posts/coach-ml-mnist-20230301/index.html#학습준비가중치-초기화-등",
+    "href": "posts/coach-ml-mnist-20230301/index.html#학습준비가중치-초기화-등",
+    "title": "[Pytorch] MNIST 실습",
+    "section": "학습준비(가중치 초기화 등)",
+    "text": "학습준비(가중치 초기화 등)\n\nMNIST의 크기 : 28 * 28\nLoss : Cross Entropy\nOptimizer - SGD(Stochastic Gradient Descent)\nLearning rate = 0.1\n\n\ndevice = torch.device('cuda' if torch.cuda.is_available() else 'cpu')\n\n# 모델 구현 (28*28 = 784 / 0~9라서 10개 / 가중치 사용하므로 bias)\nlinear = torch.nn.Linear(784, 10, bias=True).to(device) \n\n# weight init 가중치 초기화\ntorch.nn.init.normal_(linear.weight)\n\n# Loss fn - Cross Entropy Loss\ncriterion = torch.nn.CrossEntropyLoss().to(device)\n\n# optimizer - SGD\noptimizer = torch.optim.SGD(linear.parameters(), lr=0.1)"
+  },
+  {
+    "objectID": "posts/coach-ml-mnist-20230301/index.html#모델-학습",
+    "href": "posts/coach-ml-mnist-20230301/index.html#모델-학습",
+    "title": "[Pytorch] MNIST 실습",
+    "section": "모델 학습",
+    "text": "모델 학습\n\ntraining_epochs = 20 # training 반복 횟수\n\nfor epoch in range(training_epochs):\n  for i, (imgs, labels) in enumerate(train_loader):\n    labels = labels.to(device)\n    imgs = imgs.view(-1, 28 * 28).to(device)\n\n    outputs = linear(imgs) \n    loss = criterion(outputs, labels) \n\n    optimizer.zero_grad()# optimzier zero grad\n\n    loss.backward() # loss backward\n    optimizer.step() # optimzier step\n\n    _,argmax = torch.max(outputs, 1)\n    accuracy = (labels == argmax).float().mean()\n\n  if (i+1) % 100 == 0:\n    print('Epoch [{}/{}], Step [{}/{}], Loss: {: .4f}, Accuracy: {: .2f}%'.format(\n    epoch+1, training_epochs, i+1, len(train_loader), loss.item(), accuracy.item()* 100))\n\nEpoch [1/20], Step [6000/6000], Loss:  0.0273, Accuracy:  100.00%\nEpoch [2/20], Step [6000/6000], Loss:  0.0762, Accuracy:  100.00%\nEpoch [3/20], Step [6000/6000], Loss:  0.5928, Accuracy:  80.00%\nEpoch [4/20], Step [6000/6000], Loss:  0.2854, Accuracy:  90.00%\nEpoch [5/20], Step [6000/6000], Loss:  0.1373, Accuracy:  90.00%\nEpoch [6/20], Step [6000/6000], Loss:  0.0668, Accuracy:  100.00%\nEpoch [7/20], Step [6000/6000], Loss:  0.0253, Accuracy:  100.00%\nEpoch [8/20], Step [6000/6000], Loss:  0.0542, Accuracy:  100.00%\nEpoch [9/20], Step [6000/6000], Loss:  0.9203, Accuracy:  80.00%\nEpoch [10/20], Step [6000/6000], Loss:  0.1244, Accuracy:  90.00%\nEpoch [11/20], Step [6000/6000], Loss:  0.6108, Accuracy:  90.00%\nEpoch [12/20], Step [6000/6000], Loss:  0.1312, Accuracy:  100.00%\nEpoch [13/20], Step [6000/6000], Loss:  0.0705, Accuracy:  100.00%\nEpoch [14/20], Step [6000/6000], Loss:  1.6259, Accuracy:  70.00%\nEpoch [15/20], Step [6000/6000], Loss:  0.0538, Accuracy:  100.00%\nEpoch [16/20], Step [6000/6000], Loss:  0.2435, Accuracy:  80.00%\nEpoch [17/20], Step [6000/6000], Loss:  0.0061, Accuracy:  100.00%\nEpoch [18/20], Step [6000/6000], Loss:  0.1091, Accuracy:  100.00%\nEpoch [19/20], Step [6000/6000], Loss:  0.0157, Accuracy:  100.00%\nEpoch [20/20], Step [6000/6000], Loss:  0.1413, Accuracy:  90.00%"
+  },
+  {
+    "objectID": "posts/coach-ml-mnist-20230301/index.html#학습된-모델-테스트",
+    "href": "posts/coach-ml-mnist-20230301/index.html#학습된-모델-테스트",
+    "title": "[Pytorch] MNIST 실습",
+    "section": "학습된 모델 테스트",
+    "text": "학습된 모델 테스트\n\nlinear.eval()\nwith torch.no_grad():\n    correct = 0\n    total = 0\n    for i, (imgs, labels) in enumerate(test_loader):\n        imgs, labels = imgs.to(device), labels.to(device)\n        imgs = imgs.view(-1, 28 * 28)\n\n        outputs = linear(imgs) # 구현\n\n        _, argmax = torch.max(outputs, 1) # max()를 통해 최종 출력이 가장 높은 class 선택\n        total += imgs.size(0)\n        correct += (labels == argmax). sum().item()\n\n    print('Test accuracy for {} images: {: .2f}%'.format(total, correct / total * 100))\n\nTest accuracy for 10000 images:  91.99%"
+  },
+  {
     "objectID": "posts/meta-dl-creditcard-20240526/index.html",
     "href": "posts/meta-dl-creditcard-20240526/index.html",
     "title": "[M_Study_1주차] Tensorflow / Linear Regression",
@@ -455,207 +658,32 @@
     "text": "Bias vs Variance 의 Trade off\n\nerror는 Variance와 Bias로 이루어져 있다 &gt; Variance(V), Bias(B) 예시 (과녁) V 낮음 B 낮음 : 정중앙에 잘 모여있음 V 낮음 B 높음 : 잘 모여있지만 위치가 잘못됨 V 높음 B 낮음 : 정답 근처이지만 불안정하게 퍼져있음 V 높음 V 높음 : 정답 근처도 아니고, 불안정하게 퍼져있음\nBias낮음 : Training에서 적중률이 높다, Overfitting 정답 자체를 틀리는 것과 관계\nVariance높음 : 모델이 불안정하다 변동에 과민하게 반응하는 것과 관계 (결과의 극단적 변화, 무의미한 결과는 무의미한 것으로 간주해야 안정적인 모델)\n둘 다 낮추기는 힘듦 (B낮추려면 V높아짐, B낮추려면 V 높아짐)\n둘 다 낮추기 위한 단 하나의 방법 : 데이터를 추가한다\nBias와 Variance를 고려한 가장 error가 적은 부분 Sweet spot"
   },
   {
-    "objectID": "posts/coach-ml-mnist-20230301/index.html",
-    "href": "posts/coach-ml-mnist-20230301/index.html",
-    "title": "[Pytorch] MNIST 실습",
-    "section": "",
-    "text": "파이토치로 MNIST 머신러닝 실습해본 코드 기록용으로 남깁니다.\nCopyright © 2024 Kibok Park All rights reserved."
-  },
-  {
-    "objectID": "posts/coach-ml-mnist-20230301/index.html#개요",
-    "href": "posts/coach-ml-mnist-20230301/index.html#개요",
-    "title": "[Pytorch] MNIST 실습",
-    "section": "",
-    "text": "파이토치로 MNIST 머신러닝 실습해본 코드 기록용으로 남깁니다."
-  },
-  {
-    "objectID": "posts/coach-ml-mnist-20230301/index.html#pytorch활용한-mnist-데이터셋-로딩",
-    "href": "posts/coach-ml-mnist-20230301/index.html#pytorch활용한-mnist-데이터셋-로딩",
-    "title": "[Pytorch] MNIST 실습",
-    "section": "Pytorch활용한 MNIST 데이터셋 로딩",
-    "text": "Pytorch활용한 MNIST 데이터셋 로딩\n\n\n\nimport torch\nimport torch.nn as nn\nfrom torch.utils.data import DataLoader\nimport torchvision\nimport torchvision.datasets as dset\nimport torchvision.transforms as transforms\n\nroot = './data'\nmnist_train = dset.MNIST (root=root, train=True, transform=transforms.ToTensor(), download=True )\nmnist_test = dset.MNIST (root=root, train=False, transform=transforms.ToTensor(), download=True)\n\n# Train용 / Test용 데이터셋\ntrain_loader = DataLoader(mnist_train, batch_size=10, shuffle=True)\ntest_loader = DataLoader(mnist_test, batch_size=10, shuffle=True)\n\n\nFigure 1"
-  },
-  {
-    "objectID": "posts/coach-ml-mnist-20230301/index.html#학습준비가중치-초기화-등",
-    "href": "posts/coach-ml-mnist-20230301/index.html#학습준비가중치-초기화-등",
-    "title": "[Pytorch] MNIST 실습",
-    "section": "학습준비(가중치 초기화 등)",
-    "text": "학습준비(가중치 초기화 등)\n\nMNIST의 크기 : 28 * 28\nLoss : Cross Entropy\nOptimizer - SGD(Stochastic Gradient Descent)\nLearning rate = 0.1\n\n\ndevice = torch.device('cuda' if torch.cuda.is_available() else 'cpu')\n\n# 모델 구현 (28*28 = 784 / 0~9라서 10개 / 가중치 사용하므로 bias)\nlinear = torch.nn.Linear(784, 10, bias=True).to(device) \n\n# weight init 가중치 초기화\ntorch.nn.init.normal_(linear.weight)\n\n# Loss fn - Cross Entropy Loss\ncriterion = torch.nn.CrossEntropyLoss().to(device)\n\n# optimizer - SGD\noptimizer = torch.optim.SGD(linear.parameters(), lr=0.1)"
-  },
-  {
-    "objectID": "posts/coach-ml-mnist-20230301/index.html#모델-학습",
-    "href": "posts/coach-ml-mnist-20230301/index.html#모델-학습",
-    "title": "[Pytorch] MNIST 실습",
-    "section": "모델 학습",
-    "text": "모델 학습\n\ntraining_epochs = 20 # training 반복 횟수\n\nfor epoch in range(training_epochs):\n  for i, (imgs, labels) in enumerate(train_loader):\n    labels = labels.to(device)\n    imgs = imgs.view(-1, 28 * 28).to(device)\n\n    outputs = linear(imgs) \n    loss = criterion(outputs, labels) \n\n    optimizer.zero_grad()# optimzier zero grad\n\n    loss.backward() # loss backward\n    optimizer.step() # optimzier step\n\n    _,argmax = torch.max(outputs, 1)\n    accuracy = (labels == argmax).float().mean()\n\n  if (i+1) % 100 == 0:\n    print('Epoch [{}/{}], Step [{}/{}], Loss: {: .4f}, Accuracy: {: .2f}%'.format(\n    epoch+1, training_epochs, i+1, len(train_loader), loss.item(), accuracy.item()* 100))\n\nEpoch [1/20], Step [6000/6000], Loss:  0.0273, Accuracy:  100.00%\nEpoch [2/20], Step [6000/6000], Loss:  0.0762, Accuracy:  100.00%\nEpoch [3/20], Step [6000/6000], Loss:  0.5928, Accuracy:  80.00%\nEpoch [4/20], Step [6000/6000], Loss:  0.2854, Accuracy:  90.00%\nEpoch [5/20], Step [6000/6000], Loss:  0.1373, Accuracy:  90.00%\nEpoch [6/20], Step [6000/6000], Loss:  0.0668, Accuracy:  100.00%\nEpoch [7/20], Step [6000/6000], Loss:  0.0253, Accuracy:  100.00%\nEpoch [8/20], Step [6000/6000], Loss:  0.0542, Accuracy:  100.00%\nEpoch [9/20], Step [6000/6000], Loss:  0.9203, Accuracy:  80.00%\nEpoch [10/20], Step [6000/6000], Loss:  0.1244, Accuracy:  90.00%\nEpoch [11/20], Step [6000/6000], Loss:  0.6108, Accuracy:  90.00%\nEpoch [12/20], Step [6000/6000], Loss:  0.1312, Accuracy:  100.00%\nEpoch [13/20], Step [6000/6000], Loss:  0.0705, Accuracy:  100.00%\nEpoch [14/20], Step [6000/6000], Loss:  1.6259, Accuracy:  70.00%\nEpoch [15/20], Step [6000/6000], Loss:  0.0538, Accuracy:  100.00%\nEpoch [16/20], Step [6000/6000], Loss:  0.2435, Accuracy:  80.00%\nEpoch [17/20], Step [6000/6000], Loss:  0.0061, Accuracy:  100.00%\nEpoch [18/20], Step [6000/6000], Loss:  0.1091, Accuracy:  100.00%\nEpoch [19/20], Step [6000/6000], Loss:  0.0157, Accuracy:  100.00%\nEpoch [20/20], Step [6000/6000], Loss:  0.1413, Accuracy:  90.00%"
-  },
-  {
-    "objectID": "posts/coach-ml-mnist-20230301/index.html#학습된-모델-테스트",
-    "href": "posts/coach-ml-mnist-20230301/index.html#학습된-모델-테스트",
-    "title": "[Pytorch] MNIST 실습",
-    "section": "학습된 모델 테스트",
-    "text": "학습된 모델 테스트\n\nlinear.eval()\nwith torch.no_grad():\n    correct = 0\n    total = 0\n    for i, (imgs, labels) in enumerate(test_loader):\n        imgs, labels = imgs.to(device), labels.to(device)\n        imgs = imgs.view(-1, 28 * 28)\n\n        outputs = linear(imgs) # 구현\n\n        _, argmax = torch.max(outputs, 1) # max()를 통해 최종 출력이 가장 높은 class 선택\n        total += imgs.size(0)\n        correct += (labels == argmax). sum().item()\n\n    print('Test accuracy for {} images: {: .2f}%'.format(total, correct / total * 100))\n\nTest accuracy for 10000 images:  91.99%"
-  },
-  {
-    "objectID": "posts/prgms-sql-20240321/index.html",
-    "href": "posts/prgms-sql-20240321/index.html",
-    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
-    "section": "",
-    "text": "프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다  (비상업적, 비영리적 용도)\n문제링크 게시가능여부\nCopyright © 2024 Kibok Park All rights reserved."
-  },
-  {
-    "objectID": "posts/prgms-sql-20240321/index.html#개요",
-    "href": "posts/prgms-sql-20240321/index.html#개요",
-    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
-    "section": "",
-    "text": "프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다  (비상업적, 비영리적 용도)\n문제링크 게시가능여부"
-  },
-  {
-    "objectID": "posts/prgms-sql-20240321/index.html#문제-3월에-태어난-여성-회원-목록-출력하기",
-    "href": "posts/prgms-sql-20240321/index.html#문제-3월에-태어난-여성-회원-목록-출력하기",
-    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
-    "section": "문제 : 3월에 태어난 여성 회원 목록 출력하기",
-    "text": "문제 : 3월에 태어난 여성 회원 목록 출력하기\n\n\n다음은 식당 리뷰 사이트의 회원 정보를 담은 MEMBER_PROFILE 테이블입니다. MEMBER_PROFILE 테이블은 다음과 같으며 MEMBER_ID, MEMBER_NAME, TLNO, GENDER, DATE_OF_BIRTH는 회원 ID, 회원 이름, 회원 연락처, 성별, 생년월일을 의미합니다.\n\n\n\n\n\nColumn name\n\n\nType\n\n\nNullable\n\n\n\n\n\n\nMEMBER_ID\n\n\nVARCHAR(100)\n\n\nFALSE\n\n\n\n\nMEMBER_NAME\n\n\nVARCHAR(50)\n\n\nFALSE\n\n\n\n\nTLNO\n\n\nVARCHAR(50)\n\n\nTRUE\n\n\n\n\nGENDER\n\n\nVARCHAR(1)\n\n\nTRUE\n\n\n\n\nDATE_OF_BIRTH\n\n\nDATE\n\n\nTRUE\n\n\n\n\n\n\n문제\n\n\nMEMBER_PROFILE 테이블에서 생일이 3월인 여성 회원의 ID, 이름, 성별, 생년월일을 조회하는 SQL문을 작성해주세요. 이때 전화번호가 NULL인 경우는 출력대상에서 제외시켜 주시고, 결과는 회원ID를 기준으로 오름차순 정렬해주세요.\n\n\n\n예시\n\n\nMEMBER_PROFILE 테이블이 다음과 같을 때\n\n\n\n\n\nMEMBER_ID\n\n\nMEMBER_NAME\n\n\nTLNO\n\n\nGENDER\n\n\nDATE_OF_BIRTH\n\n\n\n\n\n\njiho92@naver.com\n\n\n이지호\n\n\n01076432111\n\n\nW\n\n\n1992-02-12\n\n\n\n\njiyoon22@hotmail.com\n\n\n김지윤\n\n\n01032324117\n\n\nW\n\n\n1992-02-22\n\n\n\n\njihoon93@hanmail.net\n\n\n김지훈\n\n\n01023258688\n\n\nM\n\n\n1993-02-23\n\n\n\n\nseoyeons@naver.com\n\n\n박서연\n\n\n01076482209\n\n\nW\n\n\n1993-03-16\n\n\n\n\nyoonsy94@gmail.com\n\n\n윤서연\n\n\nNULL\n\n\nW\n\n\n1994-03-19\n\n\n\n\n\nSQL을 실행하면 다음과 같이 출력되어야 합니다.\n\n\n\n\n\nMEMBER_ID\n\n\nMEMBER_NAME\n\n\nGENDER\n\n\nDATE_OF_BIRTH\n\n\n\n\n\n\nseoyeons@naver.com\n\n\n박서연\n\n\nW\n\n\n1993-03-16\n\n\n\n\n\n\n주의사항\n\n\nDATE_OF_BIRTH의 데이트 포맷이 예시와 동일해야 정답처리 됩니다."
-  },
-  {
-    "objectID": "posts/prgms-sql-20240321/index.html#작성답안",
-    "href": "posts/prgms-sql-20240321/index.html#작성답안",
-    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
-    "section": "작성답안",
-    "text": "작성답안\n\n\n\nSELECT MEMBER_ID, MEMBER_NAME,  GENDER, TO_CHAR(DATE_OF_BIRTH, 'YYYY-MM-DD')\nFROM MEMBER_PROFILE\nWHERE GENDER = 'W'\n  AND TO_CHAR(DATE_OF_BIRTH, 'MON') = 'MAR'\n  AND TLNO IS NOT NULL\nORDER BY MEMBER_ID ASC\n\n\nFigure 1"
-  },
-  {
-    "objectID": "posts/prgms-sql-20240321/index.html#정리",
-    "href": "posts/prgms-sql-20240321/index.html#정리",
-    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
-    "section": "정리",
-    "text": "정리\n\nWHERE 컬럼명 IS NOT NULL\nWHERE NOT 컬럼명 IS NULL"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Blog",
-    "section": "",
-    "text": "[M_Study_3주차] Multi-class Classification / Artificial Neural Network\n\n\n\n파이썬\n\n\n머신러닝\n\n\n딥러닝\n\n\nMStudy\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-06-09\n\n\n\n\n\n\n\n\n\n\n\n\n[M_Study_2주차] Multiple Regression / Logistic Regression\n\n\n\n파이썬\n\n\n머신러닝\n\n\n딥러닝\n\n\nMStudy\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-06-02\n\n\n\n\n\n\n\n\n\n\n\n\n[M_Study_1주차] Tensorflow / Linear Regression\n\n\n\n파이썬\n\n\n머신러닝\n\n\n딥러닝\n\n\nMStudy\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-05-26\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n[버크셔 해서웨이의 재탄생 읽고] 용어 정리\n\n\n\n경제/금융공부\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-23\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-21\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-20\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 조건에 맞는 도서 리스트 출력하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-19\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 가장 비싼 상품 구하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-18\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 평균 일일 대여 요금 구하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-17\n\n\n\n\n\n\n\n\n\n\n\n\n[Scikit-learn] Kaggle 집값예측 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-05-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Pytorch] MNIST 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-02-19\n\n\n\n\n\n\n\n\n\n\n\n\n[간단분석] 공공데이터포털 건강검진정보 활용\n\n\n\n파이썬\n\n\n분석\n\n\n\n\n\n\n\nKibok Park\n\n\n2022-11-06\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
-  },
-  {
-    "objectID": "index_miniprojects.html",
-    "href": "index_miniprojects.html",
-    "title": "Mini Projects",
-    "section": "",
-    "text": "[Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 & 정리 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\n\nPython, win32를 활용한 SAP Scripting\n\n\n\nKibok Park\n\n\n2024-03-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] COO발급관리용 Tool\n\n\n\nPython\n\n\nwin11toast\n\n\nsqlite3\n\n\nstreamlit\n\n\npandas\n\n\nselenium\n\n\n\n[Python] selenium(웹스크레핑), sqlite3(db), win11toast(알림), streamlit(UI)\n\n\n\nKibok Park\n\n\n2024-02-20\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] LocalL/C 관리용 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\nStreamlit\n\n\nsqlite3\n\n\nBeautifulSoup\n\n\n\nPython, Streamlit을 활용한 업무자동화\n\n\n\nKibok Park\n\n\n2024-01-22\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] 아웃룩 메일열람 & pdf regex리딩 & 시스템 자동등록\n\n\n\nPython\n\n\nre\n\n\nxlwings\n\n\npandas\n\n\npdfminer\n\n\n\n[Python] re(regex), xlwings(암호화 Excel리딩), pdfminer(pdf리딩), pywin32(outlook)\n\n\n\nKibok Park\n\n\n2023-12-15\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] Peak타임 대응용 수출계약서pdf tabula리딩\n\n\n\nPython\n\n\ntabula\n\n\nxlwings\n\n\npathlib\n\n\npandas\n\n\n\n[Python] tabula(pdf리딩[표 형태], xlwings(암호화 Excel리딩)\n\n\n\nKibok Park\n\n\n2023-11-02\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "Kibok Park",
-    "section": "",
-    "text": "I’m Kibok Park. Welcome to my blog. I’m not an expert in my favorites yet, but I’m working on becoming one. I hope you to have nice time with my blog.\nCopyright © 2024 Kibok Park All rights reserved."
-  },
-  {
-    "objectID": "about.html#hello",
-    "href": "about.html#hello",
-    "title": "Kibok Park",
-    "section": "",
-    "text": "I’m Kibok Park. Welcome to my blog. I’m not an expert in my favorites yet, but I’m working on becoming one. I hope you to have nice time with my blog."
-  },
-  {
-    "objectID": "about.html#topics",
-    "href": "about.html#topics",
-    "title": "Kibok Park",
-    "section": "Topics",
-    "text": "Topics\nPython, Quantative trading"
-  },
-  {
-    "objectID": "posts/coach-ds-20230506/index.html",
-    "href": "posts/coach-ds-20230506/index.html",
+    "objectID": "posts/coach-ds-20221113/index.html",
+    "href": "posts/coach-ds-20221113/index.html",
     "title": "[간단분석] 공공데이터포털 건강검진정보 활용",
     "section": "",
-    "text": "국민건강보험공단 건강검진정보를 활용한 간단한 분석 공공데이터포털 국민건강보험공단_건강검진정보\n실습 기록용으로 남깁니다.\nCopyright © 2024 Kibok Park All rights reserved."
+    "text": "KOSIS 지역별 / 상품군별 온라인쇼핑 해외직접판매액 데이터를 활용한 간단한 분석 KOSIS 상품군별 온라인쇼핑 해외직접판매액\n실습 기록용으로 남깁니다.\nCopyright © 2024 Kibok Park All rights reserved."
   },
   {
-    "objectID": "posts/coach-ds-20230506/index.html#개요",
-    "href": "posts/coach-ds-20230506/index.html#개요",
+    "objectID": "posts/coach-ds-20221113/index.html#개요",
+    "href": "posts/coach-ds-20221113/index.html#개요",
     "title": "[간단분석] 공공데이터포털 건강검진정보 활용",
     "section": "",
-    "text": "국민건강보험공단 건강검진정보를 활용한 간단한 분석 공공데이터포털 국민건강보험공단_건강검진정보\n실습 기록용으로 남깁니다."
+    "text": "KOSIS 지역별 / 상품군별 온라인쇼핑 해외직접판매액 데이터를 활용한 간단한 분석 KOSIS 상품군별 온라인쇼핑 해외직접판매액\n실습 기록용으로 남깁니다."
   },
   {
-    "objectID": "posts/coach-ds-20230506/index.html#데이터-불러오기",
-    "href": "posts/coach-ds-20230506/index.html#데이터-불러오기",
+    "objectID": "posts/coach-ds-20221113/index.html#분석",
+    "href": "posts/coach-ds-20221113/index.html#분석",
     "title": "[간단분석] 공공데이터포털 건강검진정보 활용",
-    "section": "데이터 불러오기",
-    "text": "데이터 불러오기\n\nimport pandas as pd\nimport numpy as np\nimport seaborn as sns\nimport koreanize_matplotlib\nimport matplotlib.pyplot as plt\n\n\ndf = pd.read_csv('국민건강보험공단_건강검진정보_20221231.CSV', encoding=\"cp949\")\n\n\ndf.columns\n\nIndex(['기준년도', '가입자일련번호', '시도코드', '성별', '연령대코드(5세단위)', '신장(5cm단위)',\n       '체중(5kg단위)', '허리둘레', '시력(좌)', '시력(우)', '청력(좌)', '청력(우)', '수축기혈압',\n       '이완기혈압', '식전혈당(공복혈당)', '총콜레스테롤', '트리글리세라이드', 'HDL콜레스테롤', 'LDL콜레스테롤',\n       '혈색소', '요단백', '혈청크레아티닌', '혈청지오티(AST)', '혈청지피티(ALT)', '감마지티피', '흡연상태',\n       '음주여부', '구강검진수검여부', '치아우식증유무', '치석'],\n      dtype='object')\n\n\n\n음주여부, 흡연상태, 연령대코드, 성별코드간의 상관관계\n\n상관계수 구하기\n\n\nfiltered = df[['음주여부','흡연상태','연령대코드(5세단위)','성별']].copy()\nfiltered.corr()\n\n\n\n\n\n\n\n\n음주여부\n흡연상태\n연령대코드(5세단위)\n성별\n\n\n\n\n음주여부\n1.000000\n0.252058\n-0.357367\n-0.254963\n\n\n흡연상태\n0.252058\n1.000000\n-0.073601\n-0.536833\n\n\n연령대코드(5세단위)\n-0.357367\n-0.073601\n1.000000\n0.042162\n\n\n성별\n-0.254963\n-0.536833\n0.042162\n1.000000\n\n\n\n\n\n\n\n\n상관계수 시각화 (Seaborn heatmap)\n\n\n#mask옵션 사용하고, annot옵션으로 수치표기, fmt옵션으로 소수자리 지정하여 heatmap으로 표현\nmask = np.triu(np.ones_like(filtered.corr(), dtype=bool))\nsns.heatmap(filtered.corr(), annot=True, fmt='.2f', mask=mask)\n\n\n\n\n\n\n\n\n\n상관관계가 강한 순으로 나열\n\n성별과 흡연, 음주와 연령의 뚜렷한 상관관계\n흡연과 음주의 약한 상관관계 &gt; [참고] -1.0과 -0.7 사이이면, 강한 음적 선형관계 -0.7과 -0.3 사이이면, 뚜렷한 음적 선형관계 -0.3과 -0.1 사이이면, 약한 음적 선형관계 -0.1과 +0.1 사이이면, 거의 무시될 수 있는 선형관계 +0.1과 +0.3 사이이면, 약한 양적 선형관계 +0.3과 +0.7 사이이면, 뚜렷한 양적 선형관계 +0.7과 +1.0 사이이면, 강한 양적 선형관계\n\n\n\n#상관계수로 표를 만들어, 강한 상관관계가 있는 순으로 조사해보았습니다 (절대값으로 내림차순)\ncon_index = []\ncon_value = []\ncon_value_abs= []\nfor i in filtered.corr().columns:\n    for j in filtered.corr().index:\n        con_index.append(i +\"/\" + j)\n        con_value.append(filtered.corr()[i][j])\n        con_value_abs.append(abs(filtered.corr()[i][j]))\npd.DataFrame({'상관계수':con_value,\n             '절대값':con_value_abs,\n             '항목':con_index}).sort_values(by=['절대값'],ascending=False)\n\n\n\n\n\n\n\n\n상관계수\n절대값\n항목\n\n\n\n\n0\n1.000000\n1.000000\n음주여부/음주여부\n\n\n5\n1.000000\n1.000000\n흡연상태/흡연상태\n\n\n10\n1.000000\n1.000000\n연령대코드(5세단위)/연령대코드(5세단위)\n\n\n15\n1.000000\n1.000000\n성별/성별\n\n\n7\n-0.536833\n0.536833\n흡연상태/성별\n\n\n13\n-0.536833\n0.536833\n성별/흡연상태\n\n\n2\n-0.357367\n0.357367\n음주여부/연령대코드(5세단위)\n\n\n8\n-0.357367\n0.357367\n연령대코드(5세단위)/음주여부\n\n\n3\n-0.254963\n0.254963\n음주여부/성별\n\n\n12\n-0.254963\n0.254963\n성별/음주여부\n\n\n1\n0.252058\n0.252058\n음주여부/흡연상태\n\n\n4\n0.252058\n0.252058\n흡연상태/음주여부\n\n\n6\n-0.073601\n0.073601\n흡연상태/연령대코드(5세단위)\n\n\n9\n-0.073601\n0.073601\n연령대코드(5세단위)/흡연상태\n\n\n11\n0.042162\n0.042162\n연령대코드(5세단위)/성별\n\n\n14\n0.042162\n0.042162\n성별/연령대코드(5세단위)\n\n\n\n\n\n\n\n\n\n흡연과 음주에 대한 추이\n\n앞서 약한 상관관계였던 흡연과 음주에 대한 인원추이\n\n\n# 코드를 실제값으로 변환\nsmoke = {1 : \"흡연안함\", 2: \"끊음\", 3: \"흡연중\"}\ndrink = {0: \"안마심\", 1: \"마심\"}\n\ndf['흡연상태'] = df['흡연상태'].replace(smoke)\ndf['음주여부'] = df['음주여부'].replace(drink)\n\n\n# '흡연상태','음주여부'만 가져와 crosstab\nfiltered_drink_smoke = df[['흡연상태','음주여부']]\ndf_crosstab = pd.crosstab(index=filtered_drink_smoke['음주여부'],columns=filtered_drink_smoke['흡연상태'])\ndf_crosstab\n\n\n\n\n\n\n\n흡연상태\n끊음\n흡연안함\n흡연중\n\n\n음주여부\n\n\n\n\n\n\n\n마심\n132750\n360530\n161804\n\n\n안마심\n33815\n280441\n30504\n\n\n\n\n\n\n\n\n# countplot 시각화\nsns.set_style('whitegrid')\nplt.rc('font',family=\"Malgun Gothic\")\nsns.countplot(data=filtered_drink_smoke, x='흡연상태', hue='음주여부', palette='Set1').set_title('흡연상태별 음주여부') # palette = 그래프테마\n\nText(0.5, 1.0, '흡연상태별 음주여부')\n\n\n\n\n\n\n\n\n\n\n흡연중이거나 했다가 끊은 경우에는 음주하는 사람의 비중이 높음\n흡연을 안하는 경우는 음주여부의 비중 차이가 크지 않음\n\n\n\n음주여부에 따른 콜레스테롤과 감마지티피의 관계\n\n감마지티피 : 알콜에 의한 간장애의 지표를 나타내는 검사항목\n각 항목을 산점도로 시각화하여 파악\n\n\ndf_temp = df[['총콜레스테롤','감마지티피','음주여부','흡연상태']]\n\n\n# lmplot 산점도\nplt.figure(figsize=(14,14))\nsns.lmplot(data=df_temp, x='총콜레스테롤', y='감마지티피', hue='음주여부', col='흡연상태',markers=['x','o'] # markers로 음주여부에 따라 o,x로\n           ,scatter_kws={'s':20}) # 뭉쳐진부분이 잘보이도록 scatter_kws로 점크기조정\n\n&lt;Figure size 1400x1400 with 0 Axes&gt;\n\n\n\n\n\n\n\n\n\n\n대체로 특정 구역에 몰려있음, 체중 120kg 이상에 대해서 추가분석\n\n\nweight_over120 = df.loc[(df['체중(5kg단위)'] &gt;= 120), ['총콜레스테롤','감마지티피','음주여부','흡연상태']]\nplt.figure(figsize=(14,14))\nsns.lmplot(data=weight_over120, x='총콜레스테롤', y='감마지티피', hue='음주여부', col='흡연상태',markers=['x','o']\n           ,scatter_kws={'s':20})\n\n&lt;Figure size 1400x1400 with 0 Axes&gt;\n\n\n\n\n\n\n\n\n\n\n흡연중인 경우, 흡연을 안하거나 끊은 경우보다 감마지피티의 값이 높게 분포\n음주여부에 따라 콜레스테롤의 차이는 크게 보이지 않으나, 감마지티피의 경우 모두 상승하는 경향\n\n\n\n연령대별 시력 확인\n\n# 별도로 정의해둔 연령코드 딕셔너리\nage_code = {1: '0~4세',\n 2: '5~9세',\n 3: '10~14세',\n 4: '15~19세',\n 5: '20~24세',\n 6: '25~29세',\n 7: '30~34세',\n 8: '35~39세',\n 9: '40~44세',\n 10: '45~49세',\n 11: '50~54세',\n 12: '55~59세',\n 13: '60~64세',\n 14: '65~69세',\n 15: '70~74세',\n 16: '75~79세',\n 17: '80~84세',\n 18: '85세+'}\n\n# 실명(시력 9.9) 제거\nsight_right = df.drop(df.loc[df['시력(우)']==9.9,].index)\nsight_left = df.drop(df.loc[df['시력(좌)']==9.9,].index)\n\n#숫자료 표기되는 연령대코드를 연령구간으로 표기할 index 생성 후 replace로 변경 (barplot의 index로 사용)\nage_code_right = []\nfor i in np.sort(sight_right['연령대코드(5세단위)'].unique()).tolist():\n    age_code_right.append(age_code[i])\nage_code_left = []\nfor i in np.sort(sight_left['연령대코드(5세단위)'].unique()).tolist():\n    age_code_left.append(age_code[i])\n\nsight_right['연령대코드(5세단위)'] = sight_right['연령대코드(5세단위)'].replace(age_code)\nsight_left['연령대코드(5세단위)'] = sight_left['연령대코드(5세단위)'].replace(age_code)\n\n\n#시력(좌), (우) 그래프를 식별하기 용이하도록 (좌)그래프를 회전\nfig, axs = plt.subplots(ncols=2, figsize=(12,5),\n                       gridspec_kw={'wspace':0.5},)\nfig.suptitle('연령별 시력 평균(좌, 우)').set_size(20) #제목\n\nsns.set_context('talk')\n\nsns.barplot(data = sight_left, x='시력(좌)', y='연령대코드(5세단위)', hue='성별', orient='h', errorbar=None, ax=axs[0],\n            order=age_code_left).invert_xaxis()\nsns.barplot(data = sight_right, x='시력(우)', y='연령대코드(5세단위)', hue='성별', orient='h', errorbar=None, ax=axs[1],\n            order=age_code_right)\n\nfor ax in axs:\n    ax.set_ylabel('연령대') # 코드가 아니므로 y축 이름을 연령대로 변경\n\n\n\n\n\n\n\n\n\n모든 연령대에서 특정 성별의 시력이 높음\n연령이 높아질수록 시력도 낮아지며, 좌우시력의 큰 차이는 보이지 않음"
+    "section": "분석",
+    "text": "분석\n\n데이터 불러오기\n\nimport pandas as pd\nimport numpy as np\nimport seaborn as sns\nimport koreanize_matplotlib\nimport matplotlib.pyplot as plt\n\n\ndf = pd.read_csv('online_export.csv')#, encoding=\"cp949\")\n\n\ndf.head()\n\n\n\n\n\n\n\n\nUnnamed: 0\n국가(대륙)별\n상품군별\n판매유형별\n시점\n데이터\n\n\n\n\n0\n0\n미국\n컴퓨터 및 주변기기\n면세점 이외\n2017.1/4\n1054\n\n\n1\n1\n미국\n컴퓨터 및 주변기기\n면세점 이외\n2017.2/4\n946\n\n\n2\n2\n미국\n컴퓨터 및 주변기기\n면세점 이외\n2017.3/4\n791\n\n\n3\n3\n미국\n컴퓨터 및 주변기기\n면세점 이외\n2017.4/4\n854\n\n\n4\n4\n미국\n컴퓨터 및 주변기기\n면세점 이외\n2018.1/4\n2033\n\n\n\n\n\n\n\n\n\n시점 데이터의 분류 (연도, 분기의 구분), 단위표기\n\ndf['연도'] = df['시점'].map(lambda x : x.split('.')[0])\ndf['분기'] = df['시점'].map(lambda x : x.split('.')[1].split('/')[0])\ndf[['연도','분기']] = df[['연도','분기']].astype(int)\n\ndf = df.rename(columns={'데이터':'백만'})\ndf\n\n\n\n\n\n\n\n\nUnnamed: 0\n국가(대륙)별\n상품군별\n판매유형별\n시점\n백만\n연도\n분기\n\n\n\n\n0\n0\n미국\n컴퓨터 및 주변기기\n면세점 이외\n2017.1/4\n1054\n2017\n1\n\n\n1\n1\n미국\n컴퓨터 및 주변기기\n면세점 이외\n2017.2/4\n946\n2017\n2\n\n\n2\n2\n미국\n컴퓨터 및 주변기기\n면세점 이외\n2017.3/4\n791\n2017\n3\n\n\n3\n3\n미국\n컴퓨터 및 주변기기\n면세점 이외\n2017.4/4\n854\n2017\n4\n\n\n4\n4\n미국\n컴퓨터 및 주변기기\n면세점 이외\n2018.1/4\n2033\n2018\n1\n\n\n...\n...\n...\n...\n...\n...\n...\n...\n...\n\n\n2767\n2767\n기타\n기 타\n면세점 이외\n2021.2/4\n1278\n2021\n2\n\n\n2768\n2768\n기타\n기 타\n면세점 이외\n2021.3/4\n1154\n2021\n3\n\n\n2769\n2769\n기타\n기 타\n면세점 이외\n2021.4/4\n1076\n2021\n4\n\n\n2770\n2770\n기타\n기 타\n면세점 이외\n2022.1/4\n2325\n2022\n1\n\n\n2771\n2771\n기타\n기 타\n면세점 이외\n2022.2/4 p)\n725\n2022\n2\n\n\n\n\n2772 rows × 8 columns\n\n\n\n\n\n데이터 자체에 대한 분석 (describe)\n\ndf.describe()\n\n\n\n\n\n\n\n\nUnnamed: 0\n백만\n연도\n분기\n\n\n\n\ncount\n2772.000000\n2772.000000\n2772.000000\n2772.000000\n\n\nmean\n1385.500000\n1613.116522\n2019.272727\n2.409091\n\n\nstd\n800.351798\n4273.426107\n1.600909\n1.114533\n\n\nmin\n0.000000\n-10003.000000\n2017.000000\n1.000000\n\n\n25%\n692.750000\n41.750000\n2018.000000\n1.000000\n\n\n50%\n1385.500000\n291.500000\n2019.000000\n2.000000\n\n\n75%\n2078.250000\n1181.000000\n2021.000000\n3.000000\n\n\nmax\n2771.000000\n47689.000000\n2022.000000\n4.000000\n\n\n\n\n\n\n\n\n특이하게도 최소값에 음수(-10003)이 있음\n\n해외역직구와 같은 경향인가 추측해보았지만, 전체 국가/연도에서 단 1개값만 그렇다고 보기는 어려움\n이상치로 보여 제거하고 분석을 진행하면 어떨까 싶음\n\n\n\n\n국가별 판매액에 대한 heatmap을 통한 파악\n\nsales_country = df.pivot_table(values='백만', index='국가(대륙)별', columns='연도', aggfunc='sum')\nsns.heatmap(data=sales_country, annot=True, fmt='.0f', cmap='Blues')\n\n\n\n\n\n\n\n\n\n미국, 일본, 중국의 판매액이 두드러짐\n\n\n\n판매액 상위 3개국에 대한 판매액 추세 시각화\n\nsns.lineplot(data=df[df['국가(대륙)별'].isin(['미국','중국','일본'])], \n             x='연도',y='백만',hue='국가(대륙)별', errorbar=None, estimator='sum'\n            )\nplt.legend(bbox_to_anchor=(1.05,1), loc=2, borderaxespad=0) #bbox_to_anchor(그래프와의 관격, 위/아래 위치)\n\n\n\n\n\n\n\n\n\n2020, 2021년도 급격한 하락이 보임\n\n당시의 큰 이벤트로는 코로나가 있으며, 해당 시기의 국가봉쇄/여객기 항편취소/화물기 감편 등이 원인일 것으로 보임\n\n\n\n\n2020년 국가별 주요 상품군 분석\n\n판매액 비중이 높은 주요 국가에 대해 분석 진행\n\n\ndf_2020 = df[df['연도']==2020].groupby(['국가(대륙)별','분기'])['백만'].sum().unstack().copy()\nsns.heatmap(data=df_2020, annot=True, fmt='.0f', cmap='Blues')\n\n\n\n\n\n\n\n\n\n주요 3개국(미국, 일본, 중국)에 대한 제품군별 판매액 분석\n\n\nfilter_rule = (df['연도']==2020) & (df['국가(대륙)별'].isin(['미국','중국','일본']))\ndf_2020_top3 = df[filter_rule][['국가(대륙)별','상품군별','백만']]\n\n# 잘 팔리는 상품군을 딕셔너리에 저장\nbest_category = {}\nbest2_category = {}\nfor i, country in enumerate(df_2020_top3['국가(대륙)별'].unique()):\n    filter_country = df_2020_top3['국가(대륙)별'] == country\n    globals()[country] = df_2020_top3[filter_country].groupby(['상품군별'])['백만'].sum().copy()\n    best_category[i] = globals()[country].sort_values(ascending=False).index[0]\n    best2_category[i]= globals()[country].sort_values(ascending=False).index[1]\n\n#그래프 기본 틀\nfig, axs = plt.subplots(ncols=3, figsize=(15,8), # ncols(그래프 수), figsize(공간크기)\n                       gridspec_kw={'wspace':0.7},) #gridspec으로 그래프 사이 여백 설정\n\n#그래프 그리기 (반복문으로 그래프를 그리고, 범례설정과 국가/1위카테고리를 입력한 제목 생성)\nsub_title=[]\nfor i, country  in enumerate(df_2020_top3['국가(대륙)별'].unique()):\n    globals()[country].plot(kind='pie',startangle=145, autopct='%.1f%%', ax=axs[i], pctdistance=0.8, #rotatelabels=True,\n                           )\n    sub_title.append(\"[\"+country+\"]\")  \n    axs[i].set_title(sub_title[i]+ chr(10) +best_category[i])\n    axs[i].set_ylabel('')\n    axs[i].labels=None\n\n\n\n\n\n\n\n\n\n국가별 판매액 상위\n\n미국 : 의류 및 패션관련상품\n중국 : 음반 비디오 악기\n일본 : 의류 및 패션관련 상품\n\n4분기 판매가 두드러지는데, 특별히 비중이 많은 상품이 있는지 확인\n\n\nfilter_rule = (df['연도']==2020) & (df['국가(대륙)별'].isin(['미국','중국','일본'])) & (df['분기']==4)\ndf_2020_top3_quarter4 = df[filter_rule][['국가(대륙)별','상품군별','백만']]\n\n# 잘 팔리는 상품군을 딕셔너리에 저장\nbest_category = {}\nbest2_category = {}\nfor i, country in enumerate(df_2020_top3_quarter4['국가(대륙)별'].unique()):\n    filter_country = df_2020_top3_quarter4['국가(대륙)별'] == country\n    globals()[country] = df_2020_top3_quarter4[filter_country].groupby(['상품군별'])['백만'].sum().copy()\n    best_category[i] = globals()[country].sort_values(ascending=False).index[0]\n    best2_category[i]= globals()[country].sort_values(ascending=False).index[1]\n\n#그래프 기본 틀\nfig, axs = plt.subplots(ncols=3, figsize=(15,8), # ncols(그래프 수), figsize(공간크기)\n                       gridspec_kw={'wspace':0.7},) #gridspec으로 그래프 사이 여백 설정\n\n#그래프 그리기 (반복문으로 그래프를 그리고, 범례설정과 국가/1위카테고리를 입력한 제목 생성)\nsub_title=[]\nfor i, country  in enumerate(df_2020_top3_quarter4['국가(대륙)별'].unique()):\n    globals()[country].plot(kind='pie',startangle=145, autopct='%.1f%%', ax=axs[i], pctdistance=0.8, #rotatelabels=True,\n                           )\n    sub_title.append(\"[\"+country+\"]\")  \n    axs[i].set_title(sub_title[i]+ chr(10) +best_category[i])\n    axs[i].set_ylabel('')\n    axs[i].labels=None\n\n\n\n\n\n\n\n\n\n4분기 국가별 판매액 상위 (변동없음)\n\n미국 : 의류 및 패션관련상품\n중국 : 음반 비디오 악기\n일본 : 의류 및 패션관련 상품\n\n미국, 일본은 ‘의류 및 패션상품’ 판매가 두드러지므로 해외직구활성화 방안 등을 강구한다면 해당 업종을 눈여겨 봐야할 듯 함\n두번째로는 ‘화장품’ 판매실적이 좋은데, 분류가 되어있지 않으니 기초/색조 여부 등을 보긴 해야겠지만\n\n기초화장품 쪽 주력인 업체가 있다면 진출을 고민하는 등의 방향을 고민해보면 좋을 듯 하고\n색조화장품 쪽 주력인 업체라면 해당 국가들의 미의 기준(선호색 등)을 파악하며 시작하면 좋을 듯 함\n\n중국은 ‘음반 비디오 악기’ 판매 실적이 좋은데, 2020년이라면 한류가 원인 중 하나가 아닐까 싶음\n\n간단히 구글링을 했을 때 ’한국구제문화교류진흥원’이란 곳의 보고서에 따르면 아래와 같은 상태 부분이 있음\n\n20년 1월~7월의 한국 3대 엔터테인먼트들의 주가는 상승했고, 원인 중 하나가 글로벌 팬덤의 확대와 빌보드 차트 진입과 중국 현지화 전략의 순항이라 함 (물론 위에서 말한 원인은 구체적 자료를 제시한 내용은 아님)\n중국판 미생의 방영 등 한류 자체는 긍정적인 상황으로 보임(물론 중국판 미생이 `18년 제작을 마쳤으니 위의 수치엔 영향 없을듯 함)\n\n\n중국의 한류에 대한 내용검색을 위한 보고서였지만, 제조업(화장품)관련 보고서 내용도 있었는데,\n\n화장품수출 강세는 색조화장품 뿐 아니라 기초화장품도 늘었다는 내용으로 보아 두 품목 모두 상승을 견인한 것으로 보임\n의류 강세관련하여, ’팬데믹으로 의류산업은 고전’중이지만 ’마스크, 방호복 등 관련 수요 증가’라는 내용이 있어 의류품목 관련 판단은 좀 더 해보아야겠음\n\n참고한 자료 : https://kofice.or.kr/b20industry/b20_industry_00_view.asp?seq=1134&tblID=gongji&clsID=0\n\n\n\n판매액 상위국가에 대한 주요 상품 시각화\n\nfilter_rule2 = (df['국가(대륙)별'].isin(['미국','일본','중국']))&(df['상품군별'].isin([\"의류 및 패션 관련상품\", \"화장품\", \"음반·비디오·악기\"]))\ndf_top3_categorical = df[filter_rule2].copy()\n\nfig, axs = plt.subplots(ncols=3, figsize=(15,4), # ncols(그래프 수), figsize(공간크기)\n                       gridspec_kw={'wspace':0.3},) #gridspec으로 그래프 사이 여백 설정\n\nylabel_text = {0:'백만',1:'',2:''}\nfor i, country  in enumerate(df_top3_categorical['국가(대륙)별'].unique()):\n    sns.lineplot(data=df_top3_categorical[df_top3_categorical['국가(대륙)별'] == country], \n                 x='연도', y='백만', hue='상품군별', errorbar=None, marker='o',\n                 ax = axs[i])\n    axs[i].set_title('국가(대륙별) - ' + country)\n    axs[i].spines[['top','right']].set_visible(False) # 그래프 테두리 왼쪽,위,오른쪽 안보이게(false)\n    axs[i].legend().set_visible(False)\n    axs[i].set_ylabel(ylabel_text[i])\naxs[2].legend(bbox_to_anchor=(2,1), loc=0, borderaxespad=4)\n\n\n\n\n\n\n\n\n\n의류 분야는 세 국가 모두 `21년을 기점으로 하락세\n화장품은 미국/중국 하락세이나 일본이 크게 성장하여, `22년의 화장품 판매액은 일본의 영향이 크지 않을까 추측\n음반은 `21~22년도에 중국에서 판매액 증가가 뚜렷\n실제로도 확인해보니, `22년도 판매액은 일본의 비중이 컸음(하단 그래프)\n\n\nplt.figure(figsize=(10,4))\nsns.barplot(data=df[(df['연도'] == 2022) & (df['상품군별'] == '화장품')],\n             x='국가(대륙)별', y='백만', hue='상품군별', dodge=False)\nplt.legend(bbox_to_anchor=(1.1,0.5), loc=6, borderaxespad=0) #bbox_to_anchor(그래프와의 관격, 위/아래 위치)\n             #loc(좌우), borderaxespad(클수록 아래로)"
   },
   {
-    "objectID": "posts/meta-dl-creditcard-20240609/index.html",
-    "href": "posts/meta-dl-creditcard-20240609/index.html",
-    "title": "[M_Study_3주차] Multi-class Classification / Artificial Neural Network",
-    "section": "",
-    "text": "참여중인 딥러닝 스터디 3주차 기록입니다.\nCopyright © 2024 Kibok Park All rights reserved."
-  },
-  {
-    "objectID": "posts/meta-dl-creditcard-20240609/index.html#개요",
-    "href": "posts/meta-dl-creditcard-20240609/index.html#개요",
-    "title": "[M_Study_3주차] Multi-class Classification / Artificial Neural Network",
-    "section": "",
-    "text": "참여중인 딥러닝 스터디 3주차 기록입니다."
-  },
-  {
-    "objectID": "posts/meta-dl-creditcard-20240609/index.html#주차-과제-설명",
-    "href": "posts/meta-dl-creditcard-20240609/index.html#주차-과제-설명",
-    "title": "[M_Study_3주차] Multi-class Classification / Artificial Neural Network",
-    "section": "2주차 과제 설명",
-    "text": "2주차 과제 설명\n\ntf.random.set_seed(2024)\n\n서로 다른 모델을 비교하는 경우, 시작점이 다른 것 때문에 성능우위가 다르게 측정되는 경우 발생 (같은 성능임에도 다르게 나오거나, 좋은 모델이 더 나쁜 모델로 오인되는 경우)\n이러한 경우를 방지하고자, set_seed로 같은 지점에서 시작하게 할 수 있음\n딥러닝은 복잡한 다차원의 함수이므로, 좋은 시작점에 따라 달라질 수 있음 (좋은 Optimizer를 사용하고 좋은 데이터를 쓴다면 차이는 줄어들 수 있음)\n\nMatrix Multiplication\n\nA(1,2), B(2,1)와 같은 Matrix에서, A의 열(,2)과 B의 행(2,)의 숫자가 같아야 가능\n\nCost function에서 마이너스(-)를 붙이는 경우\n\n높을수록 안좋은 척도여야 할 때, 계산식이 높을수록 좋은 값인 경우 붙여서 변환\n\nLearning rate\n\nGD에서 안정적으로 최적점에 가게하기 위해 학습률을 조정\n사람이 지정하는 hyper parameter, 경험에 의해 넣는 경우가 많다(정답은 없음)\n\nConfusion Matrix\n\nRecall, Precision 으로 표현하는 것은 경영진 등에는 와닿지 않을 수 있으므로 시각화하여 보여주면 좋음"
-  },
-  {
-    "objectID": "posts/meta-dl-creditcard-20240609/index.html#주차-과제-logistic-regression-코드-작성한-것",
-    "href": "posts/meta-dl-creditcard-20240609/index.html#주차-과제-logistic-regression-코드-작성한-것",
-    "title": "[M_Study_3주차] Multi-class Classification / Artificial Neural Network",
-    "section": "2주차 과제 Logistic regression 코드 작성한 것",
-    "text": "2주차 과제 Logistic regression 코드 작성한 것\nimport matplotlib.pyplot as plt\nimport numpy as np\nimport tensorflow as tf\n\n# Train data\nX_train = np.array([[1., 1.],\n                   [1., 2.],\n                   [2., 1.],\n                   [3., 2.],\n                   [3., 3.],\n                   [2., 3.]],\n                   dtype=np.float32)\nY_train = np.array([[0.],\n                   [0.],\n                   [0.],\n                   [1.],\n                   [1.],\n                   [1.],],\n                   dtype=np.float32)\n\n# 회귀선 작성 전 분포확인\ncolors=['red' if L&gt;0.5 else 'blue' for L in Y_train]\nplt.scatter(X_train[:,0], X_train[:, 1], label='Logistics regression', color=colors)\n\n\n\nimage.png\n\n\n# 모델 학습\ntf.random.set_seed(2020)\nW = tf.Variable(tf.random.normal([2,1], mean=0.0))\nb = tf.Variable(tf.random.normal([1], mean=0.0))\n\ndef hypothesis(X):\n    z = tf.matmul(X, W) + b\n    sigmoid = 1 / (1 + tf.exp(-z))\n    return sigmoid\n\ndef cost_fn(H, Y):\n    cost = -tf.reduce_mean(Y*tf.math.log(H) + (1-Y)*tf.math.log(1-H))\n    return cost\n\nlearning_rate = 0.01\noptimizer = tf.optimizers.SGD(learning_rate)\n\nfor step in range(5001):\n    with tf.GradientTape() as g:\n        pred = hypothesis(X_train)\n        cost = cost_fn(pred, Y_train)\n\n        gradients = g.gradient(cost, [W,b])\n    \n    optimizer.apply_gradients(zip(gradients, [W, b]))\n\n    if step % 1000 == 0:\n        print(f'Step={step+1}, Cost = {cost}, W={W.numpy()}, b = {b.numpy()}')\n\nw_hat = W.numpy()\nb_hat = b.numpy()\n\nStep=1, Cost = 0.7932398319244385, W=[[-0.10415223] [0.68125504]], b = [0.3810195]  Step=1001, Cost = 0.5122759938240051, W=[[0.1809378] [0.55177015]], b = [-0.97815347]  Step=2001, Cost = 0.39883172512054443, W=[[0.5135696] [0.6884617]], b = [-1.9777462]  Step=3001, Cost = 0.32507583498954773, W=[[0.7515713] [0.8368167]], b = [-2.7877953]  Step=4001, Cost = 0.27400580048561096, W=[[0.9350327] [0.97824335]], b = [-3.4628296]  Step=5001, Cost = 0.2367737740278244, W=[[1.0848083] [1.1075894]], b = [-4.039375]\n\n# Slope(Coefficient) 확인\nslope = w_hat[0]/w_hat[1]\nxx = np.linspace(np.min(X_train[:,0]),np.max(X_train[:,0])) # min과 max 사이 구간의 숫자를 생성. x값\nyy = -slope*xx - b_hat/w_hat[1]                             # xx(x값)입력하여 y값 생성\n\n# train data분포\nplt.scatter(X_train[:, 0], X_train[:, 1], label='Logistics regression', color=colors)\n\n# 분류선(Decision Boundary)확인\nplt.plot(xx, yy, label='Decision Boundary')\nplt.legend()\n\n\n\nimage-2.png\n\n\n# Confusion matrix\nfrom sklearn.metrics import confusion_matrix\n\nX_test = np.array([[1., 0.],\n                   [0., 2.],\n                   [1., 1.],\n                   [3., 2.],\n                   [3., 3.],\n                   [2., 3.]],\n                   dtype=np.float32)\nY_test = np.array([[0.],\n                   [0.],\n                   [1.],\n                   [0.],\n                   [1.],\n                   [0.],],\n                   dtype=np.float32)\n\nY_actual = Y_test\nY_predicted = hypothesis(X_test)\nY_predicted_binary = np.where(Y_predicted &gt;= 0.5, 1, 0)\n\nCM_array = confusion_matrix(Y_actual, Y_predicted_binary, labels=[0, 1]) \nCM_array\n\narray([[2, 2], [1, 1]], dtype=int64)\n\n# Confusion matrix 시각화(seaborn)\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n\nclass_labels = ['Negative', 'Positive']\nplt.figure(figsize=(8, 6))\nsns.heatmap(CM_array, annot=True, cmap='Blues',\n            xticklabels=class_labels, yticklabels=class_labels)\n\nplt.title('Confusion Matrix')\nplt.xlabel('Predicted')\nplt.ylabel('True')\n\n\n\nimage-3.png\n\n\n# Confusion matrix 시각화(Scikit-learn)\nfrom sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay\n\ndisp = ConfusionMatrixDisplay(confusion_matrix=CM_array, display_labels=[0, 1])\ndisp.plot(cmap=plt.cm.Blues)\nplt.title('Confusion Matrix')\nplt.show()\n\n\n\nimage-4.png"
-  },
-  {
-    "objectID": "posts/meta-dl-creditcard-20240609/index.html#multi-class-classfication-regression",
-    "href": "posts/meta-dl-creditcard-20240609/index.html#multi-class-classfication-regression",
-    "title": "[M_Study_3주차] Multi-class Classification / Artificial Neural Network",
-    "section": "Multi-class Classfication regression",
-    "text": "Multi-class Classfication regression\n\n2가지 분류가 아닌 3가지 이상의 분류(A,B,C로 나누는 신용등급 등)\nBinary classification과 달리 하나의 Decision boundary로는 해결 불가\nOne vs All(Rest)\n\n하나의 대상과, 아닌 것’들’로 Binary Classification을 여러번 수행\n예를 들어 a, b, c 3가지를 분류하는 경우\n\n아래와 같은 같은 3개의 식으로 표현할 수 있고, \n아래와 같이 하나의 행렬로 한번에 표현할 수 있다  \n\nSoftmax : 각 결과값(\\(H_a, H_b, H_c\\))의 비율(확률)이 나오게 됨(총합이 1)\n\nCross entropy cost function\n\n정보량은 확률에 반비례한다고 정의 (정보량= $ 1 p$)\n\n특정 성씨의 사람을 뽑는다고 할 때, 한국의 주요 성씨인 김씨\\(1 \\over 10\\) vs 소수 성씨인 남궁씨\\(1 \\over 100\\)\n\n로그를 취하여 전개하면 Cross entropy 식이 된다\nEntropy : Measure for uncertainty (불확실성의 측정)  \nCase별 Cross entropy(cost function)\n\n출력값(결과값 softmax)과 실제값이 비슷한 경우 : 특정 값 산출\n출력값(결과값 softmax)과 실제값이 완전히 다른 경우 : 무한대\n출력값(결과값 softmax)과 실제값이 완전히 동일한 경우 : 0\n\nCross entropy를 개인이 직접구현한다면 놓칠 수 있는 부분(cross entropy의 무한대)의 문제\n\n파이토치 등 많은 사람이 참여한 패키지를 사용하면 방지할 수 있음\n컴퓨터에서의 Zero division error 등의 경우, 텐서플로우 등 패키지에선 분모에 0.00001등을 더하여 실제값엔 영향이 작게하며 오류 제거"
-  },
-  {
-    "objectID": "posts/prgms-sql-20240320/index.html",
-    "href": "posts/prgms-sql-20240320/index.html",
-    "title": "[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기",
-    "section": "",
-    "text": "프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다  (비상업적, 비영리적 용도)\n문제링크 게시가능여부\nCopyright © 2024 Kibok Park All rights reserved."
-  },
-  {
-    "objectID": "posts/prgms-sql-20240320/index.html#개요",
-    "href": "posts/prgms-sql-20240320/index.html#개요",
-    "title": "[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기",
-    "section": "",
-    "text": "프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다  (비상업적, 비영리적 용도)\n문제링크 게시가능여부"
-  },
-  {
-    "objectID": "posts/prgms-sql-20240320/index.html#문제-조건에-부합하는-중고거래-댓글-조회하기",
-    "href": "posts/prgms-sql-20240320/index.html#문제-조건에-부합하는-중고거래-댓글-조회하기",
-    "title": "[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기",
-    "section": "문제 : 조건에 부합하는 중고거래 댓글 조회하기",
-    "text": "문제 : 조건에 부합하는 중고거래 댓글 조회하기\n\n    &lt;h6 class=\"guide-section-title\"&gt;문제 설명&lt;/h6&gt;\n    &lt;div class=\"markdown solarized-dark\"&gt;&lt;p&gt;다음은 중고거래 게시판 정보를 담은 &lt;code&gt;USED_GOODS_BOARD&lt;/code&gt; 테이블과 중고거래 게시판 첨부파일 정보를 담은 &lt;code&gt;USED_GOODS_REPLY&lt;/code&gt; 테이블입니다. &lt;code&gt;USED_GOODS_BOARD&lt;/code&gt; 테이블은 다음과 같으며 &lt;code&gt;BOARD_ID&lt;/code&gt;, &lt;code&gt;WRITER_ID&lt;/code&gt;, &lt;code&gt;TITLE&lt;/code&gt;, &lt;code&gt;CONTENTS&lt;/code&gt;, &lt;code&gt;PRICE&lt;/code&gt;, &lt;code&gt;CREATED_DATE&lt;/code&gt;, &lt;code&gt;STATUS&lt;/code&gt;, &lt;code&gt;VIEWS&lt;/code&gt;은 게시글 ID, 작성자 ID, 게시글 제목, 게시글 내용, 가격, 작성일, 거래상태, 조회수를 의미합니다.&lt;/p&gt;\n\n\n\n\nColumn name\n\n\nType\n\n\nNullable\n\n\n\n\n\n\nBOARD_ID\n\n\nVARCHAR(5)\n\n\nFALSE\n\n\n\n\nWRITER_ID\n\n\nVARCHAR(50)\n\n\nFALSE\n\n\n\n\nTITLE\n\n\nVARCHAR(100)\n\n\nFALSE\n\n\n\n\nCONTENTS\n\n\nVARCHAR(1000)\n\n\nFALSE\n\n\n\n\nPRICE\n\n\nNUMBER\n\n\nFALSE\n\n\n\n\nCREATED_DATE\n\n\nDATE\n\n\nFALSE\n\n\n\n\nSTATUS\n\n\nVARCHAR(10)\n\n\nFALSE\n\n\n\n\nVIEWS\n\n\nNUMBER\n\n\nFALSE\n\n\n\n\n\nUSED_GOODS_REPLY 테이블은 다음과 같으며 REPLY_ID, BOARD_ID, WRITER_ID, CONTENTS, CREATED_DATE는 각각 댓글 ID, 게시글 ID, 작성자 ID, 댓글 내용, 작성일을 의미합니다.\n\n\n\n\n\nColumn name\n\n\nType\n\n\nNullable\n\n\n\n\n\n\nREPLY_ID\n\n\nVARCHAR(10)\n\n\nFALSE\n\n\n\n\nBOARD_ID\n\n\nVARCHAR(5)\n\n\nFALSE\n\n\n\n\nWRITER_ID\n\n\nVARCHAR(50)\n\n\nFALSE\n\n\n\n\nCONTENTS\n\n\nVARCHAR(1000)\n\n\nTRUE\n\n\n\n\nCREATED_DATE\n\n\nDATE\n\n\nFALSE\n\n\n\n\n\n\n문제\n\n\nUSED_GOODS_BOARD와 USED_GOODS_REPLY 테이블에서 2022년 10월에 작성된 게시글 제목, 게시글 ID, 댓글 ID, 댓글 작성자 ID, 댓글 내용, 댓글 작성일을 조회하는 SQL문을 작성해주세요. 결과는 댓글 작성일을 기준으로 오름차순 정렬해주시고, 댓글 작성일이 같다면 게시글 제목을 기준으로 오름차순 정렬해주세요.\n\n\n\n예시\n\n\nUSED_GOODS_BOARD 테이블이 다음과 같고\n\n\n\n\n\nBOARD_ID\n\n\nWRITER_ID\n\n\nTITLE\n\n\nCONTENTS\n\n\nPRICE\n\n\nCREATED_DATE\n\n\nSTATUS\n\n\nVIEWS\n\n\n\n\n\n\nB0001\n\n\nkwag98\n\n\n반려견 배변패드 팝니다\n\n\n정말 저렴히 판매합니다. 전부 미개봉 새상품입니다.\n\n\n12000\n\n\n2022-10-01\n\n\nDONE\n\n\n250\n\n\n\n\nB0002\n\n\nlee871201\n\n\n국내산 볶음참깨\n\n\n직접 농사지은 참깨입니다.\n\n\n3000\n\n\n2022-10-02\n\n\nDONE\n\n\n121\n\n\n\n\nB0003\n\n\ngoung12\n\n\n배드민턴 라켓\n\n\n사놓고 방치만 해서 팝니다.\n\n\n9000\n\n\n2022-10-02\n\n\nSALE\n\n\n212\n\n\n\n\nB0004\n\n\nkeel1990\n\n\n디올 귀걸이\n\n\n신세계강남점에서 구입. 정품 아닐시 백퍼센트 환불\n\n\n130000\n\n\n2022-10-02\n\n\nSALE\n\n\n199\n\n\n\n\nB0005\n\n\nhaphli01\n\n\n스팸클래식 팔아요\n\n\n유통기한 2025년까지에요\n\n\n10000\n\n\n2022-10-02\n\n\nSALE\n\n\n121\n\n\n\n\n\nUSED_GOODS_REPLY 테이블이 다음과 같을 때\n\n\n\n\n\nREPLY_ID\n\n\nBOARD_ID\n\n\nWRITER_ID\n\n\nCONTENTS\n\n\nCREATED_DATE\n\n\n\n\n\n\nR000000001\n\n\nB0001\n\n\ns2s2123\n\n\n구매하겠습니다. 쪽지 드립니다.\n\n\n2022-10-02\n\n\n\n\nR000000002\n\n\nB0002\n\n\nhoho1112\n\n\n쪽지 주세요.\n\n\n2022-10-03\n\n\n\n\nR000000003\n\n\nB0006\n\n\nhwahwa2\n\n\n삽니다. 연락주세요.\n\n\n2022-10-03\n\n\n\n\nR000000004\n\n\nB0007\n\n\nhong02\n\n\n예약중\n\n\n2022-10-06\n\n\n\n\nR000000005\n\n\nB0009\n\n\nhanju23\n\n\n구매완료\n\n\n2022-10-07\n\n\n\n\n\nSQL을 실행하면 다음과 같이 출력되어야 합니다.\n\n\n\n\n\nTITLE\n\n\nBOARD_ID\n\n\nREPLY_ID\n\n\nWRITER_ID\n\n\nCONTENTS\n\n\nCREATED_DATE\n\n\n\n\n\n\n반려견 배변패드 팝니다\n\n\nB0001\n\n\nR000000001\n\n\ns2s2123\n\n\n구매하겠습니다. 쪽지 드립니다.\n\n\n2022-10-02\n\n\n\n\n국내산 볶음참깨\n\n\nB0002\n\n\nR000000002\n\n\nhoho1112\n\n\n쪽지 주세요.\n\n\n2022-10-03\n\n\n\n\n\n\n주의사항\n\n\nCREATED_DATE의 포맷이 예시의 포맷과 일치해야 정답처리 됩니다.\n\n\n  &lt;/div&gt;"
-  },
-  {
-    "objectID": "posts/prgms-sql-20240320/index.html#작성답안",
-    "href": "posts/prgms-sql-20240320/index.html#작성답안",
-    "title": "[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기",
-    "section": "작성답안",
-    "text": "작성답안\n\n\n\nSELECT board.TITLE, board.BOARD_ID,\n       reply.REPLY_ID, reply.WRITER_ID, reply.CONTENTS, TO_CHAR(reply.CREATED_DATE, 'YYYY-MM-DD')\nFROM USED_GOODS_BOARD board, USED_GOODS_REPLY reply\nWHERE TO_CHAR(board.CREATED_DATE, 'YYYYMM') = '202210'\n  AND board.BOARD_ID = reply.BOARD_ID\nORDER BY reply.CREATED_DATE ASC, board.TITLE ASC;\n\n\nFigure 1"
-  },
-  {
-    "objectID": "posts/prgms-sql-20240320/index.html#정리",
-    "href": "posts/prgms-sql-20240320/index.html#정리",
-    "title": "[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기",
-    "section": "정리",
-    "text": "정리\n\n각 테이블의 BOARD_ID 일치시키는 것을 실수하였음. 향후 동일케이스에 대해서는 고려하여 풀기\n다중정렬 &gt; ORDER BY reply.CREATED_DATE ASC, board.TITLE ASC; 앞의 컬럼일수록 정렬 우선순위를 가짐"
+    "objectID": "posts/coach-ds-20221113/index.html#추가과제",
+    "href": "posts/coach-ds-20221113/index.html#추가과제",
+    "title": "[간단분석] 공공데이터포털 건강검진정보 활용",
+    "section": "추가과제",
+    "text": "추가과제\n\n현재 분석과는 관계없지만, 함께 진행한 과제가 있어 기록만 해둠\n\n\n# Choropleth 시각화\n\n# 데이터 불러오기 & 가공(월 합계 등)\nraw_data = pd.read_csv(\n    '국가별_수출입현황_20221119232639.csv', \n    encoding=\"cp949\")\n\niso_table = pd.read_excel('iso_alpha.xlsx', engine='openpyxl')\niso_table = iso_table[['나라 이름','alpha-3']]\n\nraw_data_saved = raw_data.copy()\nraw_data_saved['2022년합계'] = raw_data_saved[raw_data_saved.columns[2:]].sum(axis=1)\n\n# Pivot table(국가별 합계) - 합계 0은 제외 (시각화되어있지않으면 0으로 간주, 메모리도 더 절약될 것이라 생각)\npivoted = raw_data_saved.groupby(['국가별(1)'])[['2022년합계']].sum()\npivoted = pivoted[pivoted['2022년합계']!=0]\n\n# replace로 국가명↔코드로 변환 (영문으로 변환되지 않은 국가['키리바티', '타지크' 등 생소한 국가]는 제외했습니다)\npivoted['iso_table']=pivoted.index\npivoted['국가명']=pivoted.index\npivoted['iso_table'] = pivoted['iso_table'].replace(iso_table['나라 이름'].tolist(),iso_table['alpha-3'].tolist())\n\npivoted['iso_table'] = pivoted['iso_table'][((pivoted['iso_table'].str.upper()) != (pivoted['iso_table'].str.lower()))]\npivoted\n\n\n\n\n\n\n\n\n2022년합계\niso_table\n국가명\n\n\n국가별(1)\n\n\n\n\n\n\n\n가나\n146268\nGHA\n가나\n\n\n가봉\n-709661\nGAB\n가봉\n\n\n가이아나\n20358\nGUY\n가이아나\n\n\n감비아\n-1354\nGMB\n감비아\n\n\n건지\n7\nNaN\n건지\n\n\n...\n...\n...\n...\n\n\n필리핀\n6247769\nPHL\n필리핀\n\n\n허드 앤 맥도날드 군도\n-27\nNaN\n허드 앤 맥도날드 군도\n\n\n헝가리\n3696148\nHUN\n헝가리\n\n\n호주\n-19871753\nAUS\n호주\n\n\n홍콩\n20619857\nHKG\n홍콩\n\n\n\n\n244 rows × 3 columns\n\n\n\n\n# plotly의 choropleth를 활용\n# 지도위에 마우스를 올리면 국가명/iso code / 무역수지(백만단위)를 표현\nimport plotly.express as px\n\nfig = px.choropleth(pivoted, locations=\"iso_table\",\n                    color=\"2022년합계\",\n                    hover_name=\"국가명\",\n                    color_continuous_scale=px.colors.sequential.Plasma,\n                   title='2022년 국가별 무역수지 현황')\n\nfig.show()\n\nUnable to display output for mime type(s): application/vnd.plotly.v1+json\n\n\n\nQuarto rendring 문제로 출력 예시 이미지 첨부"
   },
   {
     "objectID": "index_dashboards.html",
