@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.553">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Kibok Park">
+<meta name="dcterms.date" content="2022-11-13">
+
+<title>Blog - [간단분석] KOSIS 온라인쇼핑 해외직접판매액 간단분석 (타 주제 Choropleth시각화)</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.jpg" rel="icon" type="image/jpeg">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/watermark-1.0.11/watermark.min.js"></script>
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-LPL499WQBH"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Blog</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index_dashboards.html"> 
+<span class="menu-text">Dashboards</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index_miniprojects.html"> 
+<span class="menu-text">Mini Projects</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About me</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/KR9268"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/%EA%B8%B0%EB%B3%B5-%EB%B0%95-573a68268/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">[간단분석] KOSIS 온라인쇼핑 해외직접판매액 간단분석 (타 주제 Choropleth시각화)</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">파이썬</div>
+                <div class="quarto-category">분석</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Kibok Park </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">November 13, 2022</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#개요" id="toc-개요" class="nav-link active" data-scroll-target="#개요">개요</a></li>
+  <li><a href="#분석" id="toc-분석" class="nav-link" data-scroll-target="#분석">분석</a>
+  <ul class="collapse">
+  <li><a href="#데이터-불러오기" id="toc-데이터-불러오기" class="nav-link" data-scroll-target="#데이터-불러오기">데이터 불러오기</a></li>
+  <li><a href="#시점-데이터의-분류-연도-분기의-구분-단위표기" id="toc-시점-데이터의-분류-연도-분기의-구분-단위표기" class="nav-link" data-scroll-target="#시점-데이터의-분류-연도-분기의-구분-단위표기">시점 데이터의 분류 (연도, 분기의 구분), 단위표기</a></li>
+  <li><a href="#데이터-자체에-대한-분석-describe" id="toc-데이터-자체에-대한-분석-describe" class="nav-link" data-scroll-target="#데이터-자체에-대한-분석-describe">데이터 자체에 대한 분석 (describe)</a></li>
+  <li><a href="#국가별-판매액에-대한-heatmap을-통한-파악" id="toc-국가별-판매액에-대한-heatmap을-통한-파악" class="nav-link" data-scroll-target="#국가별-판매액에-대한-heatmap을-통한-파악">국가별 판매액에 대한 heatmap을 통한 파악</a></li>
+  <li><a href="#판매액-상위-3개국에-대한-판매액-추세-시각화" id="toc-판매액-상위-3개국에-대한-판매액-추세-시각화" class="nav-link" data-scroll-target="#판매액-상위-3개국에-대한-판매액-추세-시각화">판매액 상위 3개국에 대한 판매액 추세 시각화</a></li>
+  <li><a href="#년-국가별-주요-상품군-분석" id="toc-년-국가별-주요-상품군-분석" class="nav-link" data-scroll-target="#년-국가별-주요-상품군-분석">2020년 국가별 주요 상품군 분석</a></li>
+  <li><a href="#판매액-상위국가에-대한-주요-상품-시각화" id="toc-판매액-상위국가에-대한-주요-상품-시각화" class="nav-link" data-scroll-target="#판매액-상위국가에-대한-주요-상품-시각화">판매액 상위국가에 대한 주요 상품 시각화</a></li>
+  </ul></li>
+  <li><a href="#추가과제" id="toc-추가과제" class="nav-link" data-scroll-target="#추가과제">추가과제</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="개요" class="level2">
+<h2 class="anchored" data-anchor-id="개요">개요</h2>
+<ul>
+<li><p>KOSIS 지역별 / 상품군별 온라인쇼핑 해외직접판매액 데이터를 활용한 간단한 분석<br> <a href="https://kosis.kr/statHtml/statHtml.do?orgId=101&amp;tblId=DT_1KE10081&amp;vw_cd=MT_ZTITLE&amp;list_id=JF&amp;seqNo=&amp;lang_mode=ko&amp;language=kor&amp;obj_var_id=&amp;itm_id=&amp;conn_path=MT_ZTITLE">KOSIS 상품군별 온라인쇼핑 해외직접판매액</a></p></li>
+<li><p>실습 기록용으로 남깁니다.</p></li>
+</ul>
+</section>
+<section id="분석" class="level2">
+<h2 class="anchored" data-anchor-id="분석">분석</h2>
+<section id="데이터-불러오기" class="level3">
+<h3 class="anchored" data-anchor-id="데이터-불러오기">데이터 불러오기</h3>
+<div id="9576683a" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> koreanize_matplotlib</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="6cf74227" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'online_export.csv'</span>)<span class="co">#, encoding="cp949")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="e3c41afb" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Unnamed: 0</th>
+<th data-quarto-table-cell-role="th">국가(대륙)별</th>
+<th data-quarto-table-cell-role="th">상품군별</th>
+<th data-quarto-table-cell-role="th">판매유형별</th>
+<th data-quarto-table-cell-role="th">시점</th>
+<th data-quarto-table-cell-role="th">데이터</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>0</td>
+<td>미국</td>
+<td>컴퓨터 및 주변기기</td>
+<td>면세점 이외</td>
+<td>2017.1/4</td>
+<td>1054</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>1</td>
+<td>미국</td>
+<td>컴퓨터 및 주변기기</td>
+<td>면세점 이외</td>
+<td>2017.2/4</td>
+<td>946</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2</td>
+<td>미국</td>
+<td>컴퓨터 및 주변기기</td>
+<td>면세점 이외</td>
+<td>2017.3/4</td>
+<td>791</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>3</td>
+<td>미국</td>
+<td>컴퓨터 및 주변기기</td>
+<td>면세점 이외</td>
+<td>2017.4/4</td>
+<td>854</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>4</td>
+<td>미국</td>
+<td>컴퓨터 및 주변기기</td>
+<td>면세점 이외</td>
+<td>2018.1/4</td>
+<td>2033</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="시점-데이터의-분류-연도-분기의-구분-단위표기" class="level3">
+<h3 class="anchored" data-anchor-id="시점-데이터의-분류-연도-분기의-구분-단위표기">시점 데이터의 분류 (연도, 분기의 구분), 단위표기</h3>
+<div id="3edafd07" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'연도'</span>] <span class="op">=</span> df[<span class="st">'시점'</span>].<span class="bu">map</span>(<span class="kw">lambda</span> x : x.split(<span class="st">'.'</span>)[<span class="dv">0</span>])</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'분기'</span>] <span class="op">=</span> df[<span class="st">'시점'</span>].<span class="bu">map</span>(<span class="kw">lambda</span> x : x.split(<span class="st">'.'</span>)[<span class="dv">1</span>].split(<span class="st">'/'</span>)[<span class="dv">0</span>])</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">'연도'</span>,<span class="st">'분기'</span>]] <span class="op">=</span> df[[<span class="st">'연도'</span>,<span class="st">'분기'</span>]].astype(<span class="bu">int</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.rename(columns<span class="op">=</span>{<span class="st">'데이터'</span>:<span class="st">'백만'</span>})</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Unnamed: 0</th>
+<th data-quarto-table-cell-role="th">국가(대륙)별</th>
+<th data-quarto-table-cell-role="th">상품군별</th>
+<th data-quarto-table-cell-role="th">판매유형별</th>
+<th data-quarto-table-cell-role="th">시점</th>
+<th data-quarto-table-cell-role="th">백만</th>
+<th data-quarto-table-cell-role="th">연도</th>
+<th data-quarto-table-cell-role="th">분기</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>0</td>
+<td>미국</td>
+<td>컴퓨터 및 주변기기</td>
+<td>면세점 이외</td>
+<td>2017.1/4</td>
+<td>1054</td>
+<td>2017</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>1</td>
+<td>미국</td>
+<td>컴퓨터 및 주변기기</td>
+<td>면세점 이외</td>
+<td>2017.2/4</td>
+<td>946</td>
+<td>2017</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2</td>
+<td>미국</td>
+<td>컴퓨터 및 주변기기</td>
+<td>면세점 이외</td>
+<td>2017.3/4</td>
+<td>791</td>
+<td>2017</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>3</td>
+<td>미국</td>
+<td>컴퓨터 및 주변기기</td>
+<td>면세점 이외</td>
+<td>2017.4/4</td>
+<td>854</td>
+<td>2017</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>4</td>
+<td>미국</td>
+<td>컴퓨터 및 주변기기</td>
+<td>면세점 이외</td>
+<td>2018.1/4</td>
+<td>2033</td>
+<td>2018</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2767</td>
+<td>2767</td>
+<td>기타</td>
+<td>기 타</td>
+<td>면세점 이외</td>
+<td>2021.2/4</td>
+<td>1278</td>
+<td>2021</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2768</td>
+<td>2768</td>
+<td>기타</td>
+<td>기 타</td>
+<td>면세점 이외</td>
+<td>2021.3/4</td>
+<td>1154</td>
+<td>2021</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2769</td>
+<td>2769</td>
+<td>기타</td>
+<td>기 타</td>
+<td>면세점 이외</td>
+<td>2021.4/4</td>
+<td>1076</td>
+<td>2021</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2770</td>
+<td>2770</td>
+<td>기타</td>
+<td>기 타</td>
+<td>면세점 이외</td>
+<td>2022.1/4</td>
+<td>2325</td>
+<td>2022</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2771</td>
+<td>2771</td>
+<td>기타</td>
+<td>기 타</td>
+<td>면세점 이외</td>
+<td>2022.2/4 p)</td>
+<td>725</td>
+<td>2022</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+
+<p>2772 rows × 8 columns</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="데이터-자체에-대한-분석-describe" class="level3">
+<h3 class="anchored" data-anchor-id="데이터-자체에-대한-분석-describe">데이터 자체에 대한 분석 (describe)</h3>
+<div id="66f4b607" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Unnamed: 0</th>
+<th data-quarto-table-cell-role="th">백만</th>
+<th data-quarto-table-cell-role="th">연도</th>
+<th data-quarto-table-cell-role="th">분기</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">count</td>
+<td>2772.000000</td>
+<td>2772.000000</td>
+<td>2772.000000</td>
+<td>2772.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">mean</td>
+<td>1385.500000</td>
+<td>1613.116522</td>
+<td>2019.272727</td>
+<td>2.409091</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">std</td>
+<td>800.351798</td>
+<td>4273.426107</td>
+<td>1.600909</td>
+<td>1.114533</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">min</td>
+<td>0.000000</td>
+<td>-10003.000000</td>
+<td>2017.000000</td>
+<td>1.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">25%</td>
+<td>692.750000</td>
+<td>41.750000</td>
+<td>2018.000000</td>
+<td>1.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">50%</td>
+<td>1385.500000</td>
+<td>291.500000</td>
+<td>2019.000000</td>
+<td>2.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">75%</td>
+<td>2078.250000</td>
+<td>1181.000000</td>
+<td>2021.000000</td>
+<td>3.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">max</td>
+<td>2771.000000</td>
+<td>47689.000000</td>
+<td>2022.000000</td>
+<td>4.000000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>특이하게도 최소값에 음수(-10003)이 있음
+<ul>
+<li>해외역직구와 같은 경향인가 추측해보았지만, 전체 국가/연도에서 단 1개값만 그렇다고 보기는 어려움</li>
+<li>이상치로 보여 제거하고 분석을 진행하면 어떨까 싶음</li>
+</ul></li>
+</ul>
+</section>
+<section id="국가별-판매액에-대한-heatmap을-통한-파악" class="level3">
+<h3 class="anchored" data-anchor-id="국가별-판매액에-대한-heatmap을-통한-파악">국가별 판매액에 대한 heatmap을 통한 파악</h3>
+<div id="bb8fc5d1" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>sales_country <span class="op">=</span> df.pivot_table(values<span class="op">=</span><span class="st">'백만'</span>, index<span class="op">=</span><span class="st">'국가(대륙)별'</span>, columns<span class="op">=</span><span class="st">'연도'</span>, aggfunc<span class="op">=</span><span class="st">'sum'</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>sns.heatmap(data<span class="op">=</span>sales_country, annot<span class="op">=</span><span class="va">True</span>, fmt<span class="op">=</span><span class="st">'.0f'</span>, cmap<span class="op">=</span><span class="st">'Blues'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>미국, 일본, 중국의 판매액이 두드러짐</li>
+</ul>
+</section>
+<section id="판매액-상위-3개국에-대한-판매액-추세-시각화" class="level3">
+<h3 class="anchored" data-anchor-id="판매액-상위-3개국에-대한-판매액-추세-시각화">판매액 상위 3개국에 대한 판매액 추세 시각화</h3>
+<div id="6b6323d5" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>sns.lineplot(data<span class="op">=</span>df[df[<span class="st">'국가(대륙)별'</span>].isin([<span class="st">'미국'</span>,<span class="st">'중국'</span>,<span class="st">'일본'</span>])], </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>             x<span class="op">=</span><span class="st">'연도'</span>,y<span class="op">=</span><span class="st">'백만'</span>,hue<span class="op">=</span><span class="st">'국가(대륙)별'</span>, errorbar<span class="op">=</span><span class="va">None</span>, estimator<span class="op">=</span><span class="st">'sum'</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>plt.legend(bbox_to_anchor<span class="op">=</span>(<span class="fl">1.05</span>,<span class="dv">1</span>), loc<span class="op">=</span><span class="dv">2</span>, borderaxespad<span class="op">=</span><span class="dv">0</span>) <span class="co">#bbox_to_anchor(그래프와의 관격, 위/아래 위치)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>2020, 2021년도 급격한 하락이 보임
+<ul>
+<li>당시의 큰 이벤트로는 코로나가 있으며, 해당 시기의 국가봉쇄/여객기 항편취소/화물기 감편 등이 원인일 것으로 보임</li>
+</ul></li>
+</ul>
+</section>
+<section id="년-국가별-주요-상품군-분석" class="level3">
+<h3 class="anchored" data-anchor-id="년-국가별-주요-상품군-분석">2020년 국가별 주요 상품군 분석</h3>
+<ul>
+<li>판매액 비중이 높은 주요 국가에 대해 분석 진행</li>
+</ul>
+<div id="f507bbd5" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df_2020 <span class="op">=</span> df[df[<span class="st">'연도'</span>]<span class="op">==</span><span class="dv">2020</span>].groupby([<span class="st">'국가(대륙)별'</span>,<span class="st">'분기'</span>])[<span class="st">'백만'</span>].<span class="bu">sum</span>().unstack().copy()</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>sns.heatmap(data<span class="op">=</span>df_2020, annot<span class="op">=</span><span class="va">True</span>, fmt<span class="op">=</span><span class="st">'.0f'</span>, cmap<span class="op">=</span><span class="st">'Blues'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>주요 3개국(미국, 일본, 중국)에 대한 제품군별 판매액 분석</li>
+</ul>
+<div id="fecd188a" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>filter_rule <span class="op">=</span> (df[<span class="st">'연도'</span>]<span class="op">==</span><span class="dv">2020</span>) <span class="op">&amp;</span> (df[<span class="st">'국가(대륙)별'</span>].isin([<span class="st">'미국'</span>,<span class="st">'중국'</span>,<span class="st">'일본'</span>]))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>df_2020_top3 <span class="op">=</span> df[filter_rule][[<span class="st">'국가(대륙)별'</span>,<span class="st">'상품군별'</span>,<span class="st">'백만'</span>]]</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 잘 팔리는 상품군을 딕셔너리에 저장</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>best_category <span class="op">=</span> {}</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>best2_category <span class="op">=</span> {}</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, country <span class="kw">in</span> <span class="bu">enumerate</span>(df_2020_top3[<span class="st">'국가(대륙)별'</span>].unique()):</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    filter_country <span class="op">=</span> df_2020_top3[<span class="st">'국가(대륙)별'</span>] <span class="op">==</span> country</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">globals</span>()[country] <span class="op">=</span> df_2020_top3[filter_country].groupby([<span class="st">'상품군별'</span>])[<span class="st">'백만'</span>].<span class="bu">sum</span>().copy()</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    best_category[i] <span class="op">=</span> <span class="bu">globals</span>()[country].sort_values(ascending<span class="op">=</span><span class="va">False</span>).index[<span class="dv">0</span>]</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    best2_category[i]<span class="op">=</span> <span class="bu">globals</span>()[country].sort_values(ascending<span class="op">=</span><span class="va">False</span>).index[<span class="dv">1</span>]</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co">#그래프 기본 틀</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(ncols<span class="op">=</span><span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">15</span>,<span class="dv">8</span>), <span class="co"># ncols(그래프 수), figsize(공간크기)</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>                       gridspec_kw<span class="op">=</span>{<span class="st">'wspace'</span>:<span class="fl">0.7</span>},) <span class="co">#gridspec으로 그래프 사이 여백 설정</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co">#그래프 그리기 (반복문으로 그래프를 그리고, 범례설정과 국가/1위카테고리를 입력한 제목 생성)</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>sub_title<span class="op">=</span>[]</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, country  <span class="kw">in</span> <span class="bu">enumerate</span>(df_2020_top3[<span class="st">'국가(대륙)별'</span>].unique()):</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">globals</span>()[country].plot(kind<span class="op">=</span><span class="st">'pie'</span>,startangle<span class="op">=</span><span class="dv">145</span>, autopct<span class="op">=</span><span class="st">'</span><span class="sc">%.1f%%</span><span class="st">'</span>, ax<span class="op">=</span>axs[i], pctdistance<span class="op">=</span><span class="fl">0.8</span>, <span class="co">#rotatelabels=True,</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>                           )</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    sub_title.append(<span class="st">"["</span><span class="op">+</span>country<span class="op">+</span><span class="st">"]"</span>)  </span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    axs[i].set_title(sub_title[i]<span class="op">+</span> <span class="bu">chr</span>(<span class="dv">10</span>) <span class="op">+</span>best_category[i])</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    axs[i].set_ylabel(<span class="st">''</span>)</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    axs[i].labels<span class="op">=</span><span class="va">None</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>국가별 판매액 상위
+<ul>
+<li>미국 : 의류 및 패션관련상품</li>
+<li>중국 : 음반 비디오 악기</li>
+<li>일본 : 의류 및 패션관련 상품</li>
+</ul></li>
+<li>4분기 판매가 두드러지는데, 특별히 비중이 많은 상품이 있는지 확인</li>
+</ul>
+<div id="29f04bb9" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>filter_rule <span class="op">=</span> (df[<span class="st">'연도'</span>]<span class="op">==</span><span class="dv">2020</span>) <span class="op">&amp;</span> (df[<span class="st">'국가(대륙)별'</span>].isin([<span class="st">'미국'</span>,<span class="st">'중국'</span>,<span class="st">'일본'</span>])) <span class="op">&amp;</span> (df[<span class="st">'분기'</span>]<span class="op">==</span><span class="dv">4</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>df_2020_top3_quarter4 <span class="op">=</span> df[filter_rule][[<span class="st">'국가(대륙)별'</span>,<span class="st">'상품군별'</span>,<span class="st">'백만'</span>]]</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 잘 팔리는 상품군을 딕셔너리에 저장</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>best_category <span class="op">=</span> {}</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>best2_category <span class="op">=</span> {}</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, country <span class="kw">in</span> <span class="bu">enumerate</span>(df_2020_top3_quarter4[<span class="st">'국가(대륙)별'</span>].unique()):</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    filter_country <span class="op">=</span> df_2020_top3_quarter4[<span class="st">'국가(대륙)별'</span>] <span class="op">==</span> country</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">globals</span>()[country] <span class="op">=</span> df_2020_top3_quarter4[filter_country].groupby([<span class="st">'상품군별'</span>])[<span class="st">'백만'</span>].<span class="bu">sum</span>().copy()</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    best_category[i] <span class="op">=</span> <span class="bu">globals</span>()[country].sort_values(ascending<span class="op">=</span><span class="va">False</span>).index[<span class="dv">0</span>]</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    best2_category[i]<span class="op">=</span> <span class="bu">globals</span>()[country].sort_values(ascending<span class="op">=</span><span class="va">False</span>).index[<span class="dv">1</span>]</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co">#그래프 기본 틀</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(ncols<span class="op">=</span><span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">15</span>,<span class="dv">8</span>), <span class="co"># ncols(그래프 수), figsize(공간크기)</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>                       gridspec_kw<span class="op">=</span>{<span class="st">'wspace'</span>:<span class="fl">0.7</span>},) <span class="co">#gridspec으로 그래프 사이 여백 설정</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co">#그래프 그리기 (반복문으로 그래프를 그리고, 범례설정과 국가/1위카테고리를 입력한 제목 생성)</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>sub_title<span class="op">=</span>[]</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, country  <span class="kw">in</span> <span class="bu">enumerate</span>(df_2020_top3_quarter4[<span class="st">'국가(대륙)별'</span>].unique()):</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">globals</span>()[country].plot(kind<span class="op">=</span><span class="st">'pie'</span>,startangle<span class="op">=</span><span class="dv">145</span>, autopct<span class="op">=</span><span class="st">'</span><span class="sc">%.1f%%</span><span class="st">'</span>, ax<span class="op">=</span>axs[i], pctdistance<span class="op">=</span><span class="fl">0.8</span>, <span class="co">#rotatelabels=True,</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>                           )</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>    sub_title.append(<span class="st">"["</span><span class="op">+</span>country<span class="op">+</span><span class="st">"]"</span>)  </span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>    axs[i].set_title(sub_title[i]<span class="op">+</span> <span class="bu">chr</span>(<span class="dv">10</span>) <span class="op">+</span>best_category[i])</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>    axs[i].set_ylabel(<span class="st">''</span>)</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    axs[i].labels<span class="op">=</span><span class="va">None</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>4분기 국가별 판매액 상위 (변동없음)
+<ul>
+<li>미국 : 의류 및 패션관련상품</li>
+<li>중국 : 음반 비디오 악기</li>
+<li>일본 : 의류 및 패션관련 상품</li>
+</ul></li>
+<li>미국, 일본은 ‘의류 및 패션상품’ 판매가 두드러지므로 해외직구활성화 방안 등을 강구한다면 해당 업종을 눈여겨 봐야할 듯 함</li>
+<li>두번째로는 ‘화장품’ 판매실적이 좋은데, 분류가 되어있지 않으니 기초/색조 여부 등을 보긴 해야겠지만
+<ul>
+<li>기초화장품 쪽 주력인 업체가 있다면 진출을 고민하는 등의 방향을 고민해보면 좋을 듯 하고</li>
+<li>색조화장품 쪽 주력인 업체라면 해당 국가들의 미의 기준(선호색 등)을 파악하며 시작하면 좋을 듯 함</li>
+</ul></li>
+<li>중국은 ‘음반 비디오 악기’ 판매 실적이 좋은데, 2020년이라면 한류가 원인 중 하나가 아닐까 싶음
+<ul>
+<li>간단히 구글링을 했을 때 ’한국구제문화교류진흥원’이란 곳의 보고서에 따르면 아래와 같은 상태 부분이 있음
+<ul>
+<li>20년 1월~7월의 한국 3대 엔터테인먼트들의 주가는 상승했고, 원인 중 하나가 글로벌 팬덤의 확대와 빌보드 차트 진입과 중국 현지화 전략의 순항이라 함 (물론 위에서 말한 원인은 구체적 자료를 제시한 내용은 아님)</li>
+<li>중국판 미생의 방영 등 한류 자체는 긍정적인 상황으로 보임(물론 중국판 미생이 `18년 제작을 마쳤으니 위의 수치엔 영향 없을듯 함)</li>
+</ul></li>
+</ul></li>
+<li>중국의 한류에 대한 내용검색을 위한 보고서였지만, 제조업(화장품)관련 보고서 내용도 있었는데,
+<ul>
+<li>화장품수출 강세는 색조화장품 뿐 아니라 기초화장품도 늘었다는 내용으로 보아 두 품목 모두 상승을 견인한 것으로 보임</li>
+<li>의류 강세관련하여, ’팬데믹으로 의류산업은 고전’중이지만 ’마스크, 방호복 등 관련 수요 증가’라는 내용이 있어 의류품목 관련 판단은 좀 더 해보아야겠음</li>
+</ul></li>
+<li>참고한 자료 : https://kofice.or.kr/b20industry/b20_industry_00_view.asp?seq=1134&amp;tblID=gongji&amp;clsID=0</li>
+</ul>
+</section>
+<section id="판매액-상위국가에-대한-주요-상품-시각화" class="level3">
+<h3 class="anchored" data-anchor-id="판매액-상위국가에-대한-주요-상품-시각화">판매액 상위국가에 대한 주요 상품 시각화</h3>
+<div id="10838bf1" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>filter_rule2 <span class="op">=</span> (df[<span class="st">'국가(대륙)별'</span>].isin([<span class="st">'미국'</span>,<span class="st">'일본'</span>,<span class="st">'중국'</span>]))<span class="op">&amp;</span>(df[<span class="st">'상품군별'</span>].isin([<span class="st">"의류 및 패션 관련상품"</span>, <span class="st">"화장품"</span>, <span class="st">"음반·비디오·악기"</span>]))</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df_top3_categorical <span class="op">=</span> df[filter_rule2].copy()</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(ncols<span class="op">=</span><span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">15</span>,<span class="dv">4</span>), <span class="co"># ncols(그래프 수), figsize(공간크기)</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>                       gridspec_kw<span class="op">=</span>{<span class="st">'wspace'</span>:<span class="fl">0.3</span>},) <span class="co">#gridspec으로 그래프 사이 여백 설정</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>ylabel_text <span class="op">=</span> {<span class="dv">0</span>:<span class="st">'백만'</span>,<span class="dv">1</span>:<span class="st">''</span>,<span class="dv">2</span>:<span class="st">''</span>}</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, country  <span class="kw">in</span> <span class="bu">enumerate</span>(df_top3_categorical[<span class="st">'국가(대륙)별'</span>].unique()):</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    sns.lineplot(data<span class="op">=</span>df_top3_categorical[df_top3_categorical[<span class="st">'국가(대륙)별'</span>] <span class="op">==</span> country], </span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>                 x<span class="op">=</span><span class="st">'연도'</span>, y<span class="op">=</span><span class="st">'백만'</span>, hue<span class="op">=</span><span class="st">'상품군별'</span>, errorbar<span class="op">=</span><span class="va">None</span>, marker<span class="op">=</span><span class="st">'o'</span>,</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>                 ax <span class="op">=</span> axs[i])</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    axs[i].set_title(<span class="st">'국가(대륙별) - '</span> <span class="op">+</span> country)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    axs[i].spines[[<span class="st">'top'</span>,<span class="st">'right'</span>]].set_visible(<span class="va">False</span>) <span class="co"># 그래프 테두리 왼쪽,위,오른쪽 안보이게(false)</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    axs[i].legend().set_visible(<span class="va">False</span>)</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    axs[i].set_ylabel(ylabel_text[i])</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">2</span>].legend(bbox_to_anchor<span class="op">=</span>(<span class="dv">2</span>,<span class="dv">1</span>), loc<span class="op">=</span><span class="dv">0</span>, borderaxespad<span class="op">=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><p>의류 분야는 세 국가 모두 `21년을 기점으로 하락세</p></li>
+<li><p>화장품은 미국/중국 하락세이나 일본이 크게 성장하여, `22년의 화장품 판매액은 일본의 영향이 크지 않을까 추측</p></li>
+<li><p>음반은 `21~22년도에 중국에서 판매액 증가가 뚜렷</p></li>
+<li><p>실제로도 확인해보니, `22년도 판매액은 일본의 비중이 컸음(하단 그래프)</p></li>
+</ul>
+<div id="5d2b047b" class="cell" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">4</span>))</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>sns.barplot(data<span class="op">=</span>df[(df[<span class="st">'연도'</span>] <span class="op">==</span> <span class="dv">2022</span>) <span class="op">&amp;</span> (df[<span class="st">'상품군별'</span>] <span class="op">==</span> <span class="st">'화장품'</span>)],</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>             x<span class="op">=</span><span class="st">'국가(대륙)별'</span>, y<span class="op">=</span><span class="st">'백만'</span>, hue<span class="op">=</span><span class="st">'상품군별'</span>, dodge<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>plt.legend(bbox_to_anchor<span class="op">=</span>(<span class="fl">1.1</span>,<span class="fl">0.5</span>), loc<span class="op">=</span><span class="dv">6</span>, borderaxespad<span class="op">=</span><span class="dv">0</span>) <span class="co">#bbox_to_anchor(그래프와의 관격, 위/아래 위치)</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>             <span class="co">#loc(좌우), borderaxespad(클수록 아래로)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-13-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="추가과제" class="level2">
+<h2 class="anchored" data-anchor-id="추가과제">추가과제</h2>
+<ul>
+<li>현재 분석과는 관계없지만, 함께 진행한 과제가 있어 기록만 해둠</li>
+</ul>
+<div id="f89a9fa3" class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Choropleth 시각화</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 불러오기 &amp; 가공(월 합계 등)</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>raw_data <span class="op">=</span> pd.read_csv(</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'국가별_수출입현황_20221119232639.csv'</span>, </span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    encoding<span class="op">=</span><span class="st">"cp949"</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>iso_table <span class="op">=</span> pd.read_excel(<span class="st">'iso_alpha.xlsx'</span>, engine<span class="op">=</span><span class="st">'openpyxl'</span>)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>iso_table <span class="op">=</span> iso_table[[<span class="st">'나라 이름'</span>,<span class="st">'alpha-3'</span>]]</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>raw_data_saved <span class="op">=</span> raw_data.copy()</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>raw_data_saved[<span class="st">'2022년합계'</span>] <span class="op">=</span> raw_data_saved[raw_data_saved.columns[<span class="dv">2</span>:]].<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Pivot table(국가별 합계) - 합계 0은 제외 (시각화되어있지않으면 0으로 간주, 메모리도 더 절약될 것이라 생각)</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>pivoted <span class="op">=</span> raw_data_saved.groupby([<span class="st">'국가별(1)'</span>])[[<span class="st">'2022년합계'</span>]].<span class="bu">sum</span>()</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>pivoted <span class="op">=</span> pivoted[pivoted[<span class="st">'2022년합계'</span>]<span class="op">!=</span><span class="dv">0</span>]</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="co"># replace로 국가명↔코드로 변환 (영문으로 변환되지 않은 국가['키리바티', '타지크' 등 생소한 국가]는 제외했습니다)</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>pivoted[<span class="st">'iso_table'</span>]<span class="op">=</span>pivoted.index</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>pivoted[<span class="st">'국가명'</span>]<span class="op">=</span>pivoted.index</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>pivoted[<span class="st">'iso_table'</span>] <span class="op">=</span> pivoted[<span class="st">'iso_table'</span>].replace(iso_table[<span class="st">'나라 이름'</span>].tolist(),iso_table[<span class="st">'alpha-3'</span>].tolist())</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>pivoted[<span class="st">'iso_table'</span>] <span class="op">=</span> pivoted[<span class="st">'iso_table'</span>][((pivoted[<span class="st">'iso_table'</span>].<span class="bu">str</span>.upper()) <span class="op">!=</span> (pivoted[<span class="st">'iso_table'</span>].<span class="bu">str</span>.lower()))]</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>pivoted</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="32">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">2022년합계</th>
+<th data-quarto-table-cell-role="th">iso_table</th>
+<th data-quarto-table-cell-role="th">국가명</th>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">국가별(1)</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">가나</td>
+<td>146268</td>
+<td>GHA</td>
+<td>가나</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">가봉</td>
+<td>-709661</td>
+<td>GAB</td>
+<td>가봉</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">가이아나</td>
+<td>20358</td>
+<td>GUY</td>
+<td>가이아나</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">감비아</td>
+<td>-1354</td>
+<td>GMB</td>
+<td>감비아</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">건지</td>
+<td>7</td>
+<td>NaN</td>
+<td>건지</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">필리핀</td>
+<td>6247769</td>
+<td>PHL</td>
+<td>필리핀</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">허드 앤 맥도날드 군도</td>
+<td>-27</td>
+<td>NaN</td>
+<td>허드 앤 맥도날드 군도</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">헝가리</td>
+<td>3696148</td>
+<td>HUN</td>
+<td>헝가리</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">호주</td>
+<td>-19871753</td>
+<td>AUS</td>
+<td>호주</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">홍콩</td>
+<td>20619857</td>
+<td>HKG</td>
+<td>홍콩</td>
+</tr>
+</tbody>
+</table>
+
+<p>244 rows × 3 columns</p>
+</div>
+</div>
+</div>
+</div>
+<div id="47e524cb" class="cell" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plotly의 choropleth를 활용</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 지도위에 마우스를 올리면 국가명/iso code / 무역수지(백만단위)를 표현</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.choropleth(pivoted, locations<span class="op">=</span><span class="st">"iso_table"</span>,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>                    color<span class="op">=</span><span class="st">"2022년합계"</span>,</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>                    hover_name<span class="op">=</span><span class="st">"국가명"</span>,</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>                    color_continuous_scale<span class="op">=</span>px.colors.sequential.Plasma,</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>                   title<span class="op">=</span><span class="st">'2022년 국가별 무역수지 현황'</span>)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>Unable to display output for mime type(s): application/vnd.plotly.v1+json</code></pre>
+</div>
+</div>
+<ul>
+<li>Quarto rendring 문제로 출력 예시 이미지 첨부 <img src="index_files/figure-html/a6343b23-1-image.png" class="img-fluid" alt="image.png"></li>
+</ul>
+
+
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/kr9268\.github\.io\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="kr9268/giscus_for_blog" data-repo-id="R_kgDOL0Sthw" data-category="General" data-category-id="DIC_kwDOL0Sth84Ce_5h" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+</div> <!-- /content -->
+<script>
+    const baseFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    const watermark = new XWatermark.XWatermark();
+    watermark.init("Kibok Park", {
+      parentSelector: "body",
+      prevent: true,
+      observer: true,
+      mode: "normal",
+      font: "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', 'Liberation Sans', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
+      fontsize: baseFontSize * 1.000000,
+      angle: -15.000000,
+      color: "#000000",
+      alpha: 0.100000,
+      cols: 10,
+      rows: 50,
+      xSpace: baseFontSize * 4.000000,
+      ySpace: baseFontSize * 4.000000,
+      zIndex: -1
+    });
+    </script>
+
+
+
+
+</body></html>
