@@ -5241,6 +5241,1541 @@ font-style: inherit;">100</span>))</span></code></pre></div>
 <item>
   <title>[간단분석] 공공데이터포털 건강검진정보 활용</title>
   <dc:creator>Kibok Park</dc:creator>
+  <link>https://kr9268.github.io/posts/coach-ds-20221113/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="개요" class="level2">
+<h2 class="anchored" data-anchor-id="개요">개요</h2>
+<ul>
+<li><p>KOSIS 지역별 / 상품군별 온라인쇼핑 해외직접판매액 데이터를 활용한 간단한 분석<br> <a href="https://kosis.kr/statHtml/statHtml.do?orgId=101&amp;tblId=DT_1KE10081&amp;vw_cd=MT_ZTITLE&amp;list_id=JF&amp;seqNo=&amp;lang_mode=ko&amp;language=kor&amp;obj_var_id=&amp;itm_id=&amp;conn_path=MT_ZTITLE">KOSIS 상품군별 온라인쇼핑 해외직접판매액</a></p></li>
+<li><p>실습 기록용으로 남깁니다.</p></li>
+</ul>
+</section>
+<section id="분석" class="level2">
+<h2 class="anchored" data-anchor-id="분석">분석</h2>
+<section id="데이터-불러오기" class="level3">
+<h3 class="anchored" data-anchor-id="데이터-불러오기">데이터 불러오기</h3>
+<div id="9576683a" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> pd</span>
+<span id="cb1-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb1-3"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> seaborn <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> sns</span>
+<span id="cb1-4"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> koreanize_matplotlib</span>
+<span id="cb1-5"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> plt</span></code></pre></div>
+</div>
+<div id="6cf74227" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.read_csv(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'online_export.csv'</span>)<span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#, encoding="cp949")</span></span></code></pre></div>
+</div>
+<div id="e3c41afb" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">df.head()</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Unnamed: 0</th>
+<th data-quarto-table-cell-role="th">국가(대륙)별</th>
+<th data-quarto-table-cell-role="th">상품군별</th>
+<th data-quarto-table-cell-role="th">판매유형별</th>
+<th data-quarto-table-cell-role="th">시점</th>
+<th data-quarto-table-cell-role="th">데이터</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>0</td>
+<td>미국</td>
+<td>컴퓨터 및 주변기기</td>
+<td>면세점 이외</td>
+<td>2017.1/4</td>
+<td>1054</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>1</td>
+<td>미국</td>
+<td>컴퓨터 및 주변기기</td>
+<td>면세점 이외</td>
+<td>2017.2/4</td>
+<td>946</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2</td>
+<td>미국</td>
+<td>컴퓨터 및 주변기기</td>
+<td>면세점 이외</td>
+<td>2017.3/4</td>
+<td>791</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>3</td>
+<td>미국</td>
+<td>컴퓨터 및 주변기기</td>
+<td>면세점 이외</td>
+<td>2017.4/4</td>
+<td>854</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>4</td>
+<td>미국</td>
+<td>컴퓨터 및 주변기기</td>
+<td>면세점 이외</td>
+<td>2018.1/4</td>
+<td>2033</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="시점-데이터의-분류-연도-분기의-구분-단위표기" class="level3">
+<h3 class="anchored" data-anchor-id="시점-데이터의-분류-연도-분기의-구분-단위표기">시점 데이터의 분류 (연도, 분기의 구분), 단위표기</h3>
+<div id="3edafd07" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'연도'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'시점'</span>].<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">map</span>(<span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">lambda</span> x : x.split(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'.'</span>)[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>])</span>
+<span id="cb4-2">df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'분기'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'시점'</span>].<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">map</span>(<span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">lambda</span> x : x.split(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'.'</span>)[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>].split(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'/'</span>)[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>])</span>
+<span id="cb4-3">df[[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'연도'</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'분기'</span>]] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df[[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'연도'</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'분기'</span>]].astype(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">int</span>)</span>
+<span id="cb4-4"></span>
+<span id="cb4-5">df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df.rename(columns<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>{<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'데이터'</span>:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'백만'</span>})</span>
+<span id="cb4-6">df</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Unnamed: 0</th>
+<th data-quarto-table-cell-role="th">국가(대륙)별</th>
+<th data-quarto-table-cell-role="th">상품군별</th>
+<th data-quarto-table-cell-role="th">판매유형별</th>
+<th data-quarto-table-cell-role="th">시점</th>
+<th data-quarto-table-cell-role="th">백만</th>
+<th data-quarto-table-cell-role="th">연도</th>
+<th data-quarto-table-cell-role="th">분기</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>0</td>
+<td>미국</td>
+<td>컴퓨터 및 주변기기</td>
+<td>면세점 이외</td>
+<td>2017.1/4</td>
+<td>1054</td>
+<td>2017</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>1</td>
+<td>미국</td>
+<td>컴퓨터 및 주변기기</td>
+<td>면세점 이외</td>
+<td>2017.2/4</td>
+<td>946</td>
+<td>2017</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2</td>
+<td>미국</td>
+<td>컴퓨터 및 주변기기</td>
+<td>면세점 이외</td>
+<td>2017.3/4</td>
+<td>791</td>
+<td>2017</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>3</td>
+<td>미국</td>
+<td>컴퓨터 및 주변기기</td>
+<td>면세점 이외</td>
+<td>2017.4/4</td>
+<td>854</td>
+<td>2017</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>4</td>
+<td>미국</td>
+<td>컴퓨터 및 주변기기</td>
+<td>면세점 이외</td>
+<td>2018.1/4</td>
+<td>2033</td>
+<td>2018</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2767</td>
+<td>2767</td>
+<td>기타</td>
+<td>기 타</td>
+<td>면세점 이외</td>
+<td>2021.2/4</td>
+<td>1278</td>
+<td>2021</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2768</td>
+<td>2768</td>
+<td>기타</td>
+<td>기 타</td>
+<td>면세점 이외</td>
+<td>2021.3/4</td>
+<td>1154</td>
+<td>2021</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2769</td>
+<td>2769</td>
+<td>기타</td>
+<td>기 타</td>
+<td>면세점 이외</td>
+<td>2021.4/4</td>
+<td>1076</td>
+<td>2021</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2770</td>
+<td>2770</td>
+<td>기타</td>
+<td>기 타</td>
+<td>면세점 이외</td>
+<td>2022.1/4</td>
+<td>2325</td>
+<td>2022</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2771</td>
+<td>2771</td>
+<td>기타</td>
+<td>기 타</td>
+<td>면세점 이외</td>
+<td>2022.2/4 p)</td>
+<td>725</td>
+<td>2022</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+
+<p>2772 rows × 8 columns</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="데이터-자체에-대한-분석-describe" class="level3">
+<h3 class="anchored" data-anchor-id="데이터-자체에-대한-분석-describe">데이터 자체에 대한 분석 (describe)</h3>
+<div id="66f4b607" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">df.describe()</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Unnamed: 0</th>
+<th data-quarto-table-cell-role="th">백만</th>
+<th data-quarto-table-cell-role="th">연도</th>
+<th data-quarto-table-cell-role="th">분기</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">count</td>
+<td>2772.000000</td>
+<td>2772.000000</td>
+<td>2772.000000</td>
+<td>2772.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">mean</td>
+<td>1385.500000</td>
+<td>1613.116522</td>
+<td>2019.272727</td>
+<td>2.409091</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">std</td>
+<td>800.351798</td>
+<td>4273.426107</td>
+<td>1.600909</td>
+<td>1.114533</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">min</td>
+<td>0.000000</td>
+<td>-10003.000000</td>
+<td>2017.000000</td>
+<td>1.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">25%</td>
+<td>692.750000</td>
+<td>41.750000</td>
+<td>2018.000000</td>
+<td>1.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">50%</td>
+<td>1385.500000</td>
+<td>291.500000</td>
+<td>2019.000000</td>
+<td>2.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">75%</td>
+<td>2078.250000</td>
+<td>1181.000000</td>
+<td>2021.000000</td>
+<td>3.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">max</td>
+<td>2771.000000</td>
+<td>47689.000000</td>
+<td>2022.000000</td>
+<td>4.000000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>특이하게도 최소값에 음수(-10003)이 있음
+<ul>
+<li>해외역직구와 같은 경향인가 추측해보았지만, 전체 국가/연도에서 단 1개값만 그렇다고 보기는 어려움</li>
+<li>이상치로 보여 제거하고 분석을 진행하면 어떨까 싶음</li>
+</ul></li>
+</ul>
+</section>
+<section id="국가별-판매액에-대한-heatmap을-통한-파악" class="level3">
+<h3 class="anchored" data-anchor-id="국가별-판매액에-대한-heatmap을-통한-파악">국가별 판매액에 대한 heatmap을 통한 파악</h3>
+<div id="bb8fc5d1" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1">sales_country <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df.pivot_table(values<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'백만'</span>, index<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'국가(대륙)별'</span>, columns<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'연도'</span>, aggfunc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sum'</span>)</span>
+<span id="cb6-2">sns.heatmap(data<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>sales_country, annot<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>, fmt<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'.0f'</span>, cmap<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Blues'</span>)</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/coach-ds-20221113/index_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>미국, 일본, 중국의 판매액이 두드러짐</li>
+</ul>
+</section>
+<section id="판매액-상위-3개국에-대한-판매액-추세-시각화" class="level3">
+<h3 class="anchored" data-anchor-id="판매액-상위-3개국에-대한-판매액-추세-시각화">판매액 상위 3개국에 대한 판매액 추세 시각화</h3>
+<div id="6b6323d5" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1">sns.lineplot(data<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>df[df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'국가(대륙)별'</span>].isin([<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'미국'</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'중국'</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'일본'</span>])], </span>
+<span id="cb7-2">             x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'연도'</span>,y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'백만'</span>,hue<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'국가(대륙)별'</span>, errorbar<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>, estimator<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sum'</span></span>
+<span id="cb7-3">            )</span>
+<span id="cb7-4">plt.legend(bbox_to_anchor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.05</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>), loc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, borderaxespad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>) <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#bbox_to_anchor(그래프와의 관격, 위/아래 위치)</span></span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/coach-ds-20221113/index_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>2020, 2021년도 급격한 하락이 보임
+<ul>
+<li>당시의 큰 이벤트로는 코로나가 있으며, 해당 시기의 국가봉쇄/여객기 항편취소/화물기 감편 등이 원인일 것으로 보임</li>
+</ul></li>
+</ul>
+</section>
+<section id="년-국가별-주요-상품군-분석" class="level3">
+<h3 class="anchored" data-anchor-id="년-국가별-주요-상품군-분석">2020년 국가별 주요 상품군 분석</h3>
+<ul>
+<li>판매액 비중이 높은 주요 국가에 대해 분석 진행</li>
+</ul>
+<div id="f507bbd5" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1">df_2020 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df[df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'연도'</span>]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2020</span>].groupby([<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'국가(대륙)별'</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'분기'</span>])[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'백만'</span>].<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">sum</span>().unstack().copy()</span>
+<span id="cb8-2">sns.heatmap(data<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>df_2020, annot<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>, fmt<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'.0f'</span>, cmap<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Blues'</span>)</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/coach-ds-20221113/index_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>주요 3개국(미국, 일본, 중국)에 대한 제품군별 판매액 분석</li>
+</ul>
+<div id="fecd188a" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1">filter_rule <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'연도'</span>]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2020</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&amp;</span> (df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'국가(대륙)별'</span>].isin([<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'미국'</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'중국'</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'일본'</span>]))</span>
+<span id="cb9-2">df_2020_top3 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df[filter_rule][[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'국가(대륙)별'</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'상품군별'</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'백만'</span>]]</span>
+<span id="cb9-3"></span>
+<span id="cb9-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 잘 팔리는 상품군을 딕셔너리에 저장</span></span>
+<span id="cb9-5">best_category <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {}</span>
+<span id="cb9-6">best2_category <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {}</span>
+<span id="cb9-7"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> i, country <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">enumerate</span>(df_2020_top3[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'국가(대륙)별'</span>].unique()):</span>
+<span id="cb9-8">    filter_country <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_2020_top3[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'국가(대륙)별'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> country</span>
+<span id="cb9-9">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">globals</span>()[country] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_2020_top3[filter_country].groupby([<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'상품군별'</span>])[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'백만'</span>].<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">sum</span>().copy()</span>
+<span id="cb9-10">    best_category[i] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">globals</span>()[country].sort_values(ascending<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>).index[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]</span>
+<span id="cb9-11">    best2_category[i]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">globals</span>()[country].sort_values(ascending<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>).index[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span>
+<span id="cb9-12"></span>
+<span id="cb9-13"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#그래프 기본 틀</span></span>
+<span id="cb9-14">fig, axs <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(ncols<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>), <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ncols(그래프 수), figsize(공간크기)</span></span>
+<span id="cb9-15">                       gridspec_kw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>{<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'wspace'</span>:<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.7</span>},) <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#gridspec으로 그래프 사이 여백 설정</span></span>
+<span id="cb9-16"></span>
+<span id="cb9-17"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#그래프 그리기 (반복문으로 그래프를 그리고, 범례설정과 국가/1위카테고리를 입력한 제목 생성)</span></span>
+<span id="cb9-18">sub_title<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[]</span>
+<span id="cb9-19"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> i, country  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">enumerate</span>(df_2020_top3[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'국가(대륙)별'</span>].unique()):</span>
+<span id="cb9-20">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">globals</span>()[country].plot(kind<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'pie'</span>,startangle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">145</span>, autopct<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%.1f%%</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'</span>, ax<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>axs[i], pctdistance<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>, <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#rotatelabels=True,</span></span>
+<span id="cb9-21">                           )</span>
+<span id="cb9-22">    sub_title.append(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"["</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span>country<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"]"</span>)  </span>
+<span id="cb9-23">    axs[i].set_title(sub_title[i]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">chr</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span>best_category[i])</span>
+<span id="cb9-24">    axs[i].set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">''</span>)</span>
+<span id="cb9-25">    axs[i].labels<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span></span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/coach-ds-20221113/index_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>국가별 판매액 상위
+<ul>
+<li>미국 : 의류 및 패션관련상품</li>
+<li>중국 : 음반 비디오 악기</li>
+<li>일본 : 의류 및 패션관련 상품</li>
+</ul></li>
+<li>4분기 판매가 두드러지는데, 특별히 비중이 많은 상품이 있는지 확인</li>
+</ul>
+<div id="29f04bb9" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1">filter_rule <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'연도'</span>]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2020</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&amp;</span> (df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'국가(대륙)별'</span>].isin([<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'미국'</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'중국'</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'일본'</span>])) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&amp;</span> (df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'분기'</span>]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>)</span>
+<span id="cb10-2">df_2020_top3_quarter4 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df[filter_rule][[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'국가(대륙)별'</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'상품군별'</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'백만'</span>]]</span>
+<span id="cb10-3"></span>
+<span id="cb10-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 잘 팔리는 상품군을 딕셔너리에 저장</span></span>
+<span id="cb10-5">best_category <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {}</span>
+<span id="cb10-6">best2_category <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {}</span>
+<span id="cb10-7"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> i, country <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">enumerate</span>(df_2020_top3_quarter4[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'국가(대륙)별'</span>].unique()):</span>
+<span id="cb10-8">    filter_country <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_2020_top3_quarter4[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'국가(대륙)별'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> country</span>
+<span id="cb10-9">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">globals</span>()[country] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_2020_top3_quarter4[filter_country].groupby([<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'상품군별'</span>])[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'백만'</span>].<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">sum</span>().copy()</span>
+<span id="cb10-10">    best_category[i] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">globals</span>()[country].sort_values(ascending<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>).index[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]</span>
+<span id="cb10-11">    best2_category[i]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">globals</span>()[country].sort_values(ascending<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>).index[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span>
+<span id="cb10-12"></span>
+<span id="cb10-13"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#그래프 기본 틀</span></span>
+<span id="cb10-14">fig, axs <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(ncols<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>), <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ncols(그래프 수), figsize(공간크기)</span></span>
+<span id="cb10-15">                       gridspec_kw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>{<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'wspace'</span>:<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.7</span>},) <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#gridspec으로 그래프 사이 여백 설정</span></span>
+<span id="cb10-16"></span>
+<span id="cb10-17"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#그래프 그리기 (반복문으로 그래프를 그리고, 범례설정과 국가/1위카테고리를 입력한 제목 생성)</span></span>
+<span id="cb10-18">sub_title<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[]</span>
+<span id="cb10-19"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> i, country  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">enumerate</span>(df_2020_top3_quarter4[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'국가(대륙)별'</span>].unique()):</span>
+<span id="cb10-20">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">globals</span>()[country].plot(kind<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'pie'</span>,startangle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">145</span>, autopct<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%.1f%%</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'</span>, ax<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>axs[i], pctdistance<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>, <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#rotatelabels=True,</span></span>
+<span id="cb10-21">                           )</span>
+<span id="cb10-22">    sub_title.append(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"["</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span>country<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"]"</span>)  </span>
+<span id="cb10-23">    axs[i].set_title(sub_title[i]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">chr</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span>best_category[i])</span>
+<span id="cb10-24">    axs[i].set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">''</span>)</span>
+<span id="cb10-25">    axs[i].labels<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span></span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/coach-ds-20221113/index_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>4분기 국가별 판매액 상위 (변동없음)
+<ul>
+<li>미국 : 의류 및 패션관련상품</li>
+<li>중국 : 음반 비디오 악기</li>
+<li>일본 : 의류 및 패션관련 상품</li>
+</ul></li>
+<li>미국, 일본은 ‘의류 및 패션상품’ 판매가 두드러지므로 해외직구활성화 방안 등을 강구한다면 해당 업종을 눈여겨 봐야할 듯 함</li>
+<li>두번째로는 ‘화장품’ 판매실적이 좋은데, 분류가 되어있지 않으니 기초/색조 여부 등을 보긴 해야겠지만
+<ul>
+<li>기초화장품 쪽 주력인 업체가 있다면 진출을 고민하는 등의 방향을 고민해보면 좋을 듯 하고</li>
+<li>색조화장품 쪽 주력인 업체라면 해당 국가들의 미의 기준(선호색 등)을 파악하며 시작하면 좋을 듯 함</li>
+</ul></li>
+<li>중국은 ‘음반 비디오 악기’ 판매 실적이 좋은데, 2020년이라면 한류가 원인 중 하나가 아닐까 싶음
+<ul>
+<li>간단히 구글링을 했을 때 ’한국구제문화교류진흥원’이란 곳의 보고서에 따르면 아래와 같은 상태 부분이 있음
+<ul>
+<li>20년 1월~7월의 한국 3대 엔터테인먼트들의 주가는 상승했고, 원인 중 하나가 글로벌 팬덤의 확대와 빌보드 차트 진입과 중국 현지화 전략의 순항이라 함 (물론 위에서 말한 원인은 구체적 자료를 제시한 내용은 아님)</li>
+<li>중국판 미생의 방영 등 한류 자체는 긍정적인 상황으로 보임(물론 중국판 미생이 `18년 제작을 마쳤으니 위의 수치엔 영향 없을듯 함)</li>
+</ul></li>
+</ul></li>
+<li>중국의 한류에 대한 내용검색을 위한 보고서였지만, 제조업(화장품)관련 보고서 내용도 있었는데,
+<ul>
+<li>화장품수출 강세는 색조화장품 뿐 아니라 기초화장품도 늘었다는 내용으로 보아 두 품목 모두 상승을 견인한 것으로 보임</li>
+<li>의류 강세관련하여, ’팬데믹으로 의류산업은 고전’중이지만 ’마스크, 방호복 등 관련 수요 증가’라는 내용이 있어 의류품목 관련 판단은 좀 더 해보아야겠음</li>
+</ul></li>
+<li>참고한 자료 : https://kofice.or.kr/b20industry/b20_industry_00_view.asp?seq=1134&amp;tblID=gongji&amp;clsID=0</li>
+</ul>
+</section>
+<section id="판매액-상위국가에-대한-주요-상품-시각화" class="level3">
+<h3 class="anchored" data-anchor-id="판매액-상위국가에-대한-주요-상품-시각화">판매액 상위국가에 대한 주요 상품 시각화</h3>
+<div id="10838bf1" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1">filter_rule2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'국가(대륙)별'</span>].isin([<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'미국'</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'일본'</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'중국'</span>]))<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&amp;</span>(df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'상품군별'</span>].isin([<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"의류 및 패션 관련상품"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"화장품"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"음반·비디오·악기"</span>]))</span>
+<span id="cb11-2">df_top3_categorical <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df[filter_rule2].copy()</span>
+<span id="cb11-3"></span>
+<span id="cb11-4">fig, axs <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(ncols<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>), <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ncols(그래프 수), figsize(공간크기)</span></span>
+<span id="cb11-5">                       gridspec_kw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>{<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'wspace'</span>:<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>},) <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#gridspec으로 그래프 사이 여백 설정</span></span>
+<span id="cb11-6"></span>
+<span id="cb11-7">ylabel_text <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'백만'</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">''</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">''</span>}</span>
+<span id="cb11-8"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> i, country  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">enumerate</span>(df_top3_categorical[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'국가(대륙)별'</span>].unique()):</span>
+<span id="cb11-9">    sns.lineplot(data<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>df_top3_categorical[df_top3_categorical[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'국가(대륙)별'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> country], </span>
+<span id="cb11-10">                 x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'연도'</span>, y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'백만'</span>, hue<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'상품군별'</span>, errorbar<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>, marker<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'o'</span>,</span>
+<span id="cb11-11">                 ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> axs[i])</span>
+<span id="cb11-12">    axs[i].set_title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'국가(대륙별) - '</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> country)</span>
+<span id="cb11-13">    axs[i].spines[[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'top'</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'right'</span>]].set_visible(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>) <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 그래프 테두리 왼쪽,위,오른쪽 안보이게(false)</span></span>
+<span id="cb11-14">    axs[i].legend().set_visible(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>)</span>
+<span id="cb11-15">    axs[i].set_ylabel(ylabel_text[i])</span>
+<span id="cb11-16">axs[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>].legend(bbox_to_anchor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>), loc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, borderaxespad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>)</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/coach-ds-20221113/index_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><p>의류 분야는 세 국가 모두 `21년을 기점으로 하락세</p></li>
+<li><p>화장품은 미국/중국 하락세이나 일본이 크게 성장하여, `22년의 화장품 판매액은 일본의 영향이 크지 않을까 추측</p></li>
+<li><p>음반은 `21~22년도에 중국에서 판매액 증가가 뚜렷</p></li>
+<li><p>실제로도 확인해보니, `22년도 판매액은 일본의 비중이 컸음(하단 그래프)</p></li>
+</ul>
+<div id="5d2b047b" class="cell" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1">plt.figure(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>))</span>
+<span id="cb12-2">sns.barplot(data<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>df[(df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'연도'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2022</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&amp;</span> (df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'상품군별'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'화장품'</span>)],</span>
+<span id="cb12-3">             x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'국가(대륙)별'</span>, y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'백만'</span>, hue<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'상품군별'</span>, dodge<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>)</span>
+<span id="cb12-4">plt.legend(bbox_to_anchor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.1</span>,<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>), loc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>, borderaxespad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>) <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#bbox_to_anchor(그래프와의 관격, 위/아래 위치)</span></span>
+<span id="cb12-5">             <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#loc(좌우), borderaxespad(클수록 아래로)</span></span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/coach-ds-20221113/index_files/figure-html/cell-13-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="추가과제" class="level2">
+<h2 class="anchored" data-anchor-id="추가과제">추가과제</h2>
+<ul>
+<li>현재 분석과는 관계없지만, 함께 진행한 과제가 있어 기록만 해둠</li>
+</ul>
+<div id="f89a9fa3" class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Choropleth 시각화</span></span>
+<span id="cb13-2"></span>
+<span id="cb13-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 데이터 불러오기 &amp; 가공(월 합계 등)</span></span>
+<span id="cb13-4">raw_data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.read_csv(</span>
+<span id="cb13-5">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'국가별_수출입현황_20221119232639.csv'</span>, </span>
+<span id="cb13-6">    encoding<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"cp949"</span>)</span>
+<span id="cb13-7"></span>
+<span id="cb13-8">iso_table <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.read_excel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'iso_alpha.xlsx'</span>, engine<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'openpyxl'</span>)</span>
+<span id="cb13-9">iso_table <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> iso_table[[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'나라 이름'</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'alpha-3'</span>]]</span>
+<span id="cb13-10"></span>
+<span id="cb13-11">raw_data_saved <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> raw_data.copy()</span>
+<span id="cb13-12">raw_data_saved[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'2022년합계'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> raw_data_saved[raw_data_saved.columns[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>:]].<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">sum</span>(axis<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb13-13"></span>
+<span id="cb13-14"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Pivot table(국가별 합계) - 합계 0은 제외 (시각화되어있지않으면 0으로 간주, 메모리도 더 절약될 것이라 생각)</span></span>
+<span id="cb13-15">pivoted <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> raw_data_saved.groupby([<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'국가별(1)'</span>])[[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'2022년합계'</span>]].<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">sum</span>()</span>
+<span id="cb13-16">pivoted <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pivoted[pivoted[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'2022년합계'</span>]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">!=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]</span>
+<span id="cb13-17"></span>
+<span id="cb13-18"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># replace로 국가명↔코드로 변환 (영문으로 변환되지 않은 국가['키리바티', '타지크' 등 생소한 국가]는 제외했습니다)</span></span>
+<span id="cb13-19">pivoted[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'iso_table'</span>]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>pivoted.index</span>
+<span id="cb13-20">pivoted[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'국가명'</span>]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>pivoted.index</span>
+<span id="cb13-21">pivoted[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'iso_table'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pivoted[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'iso_table'</span>].replace(iso_table[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'나라 이름'</span>].tolist(),iso_table[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'alpha-3'</span>].tolist())</span>
+<span id="cb13-22"></span>
+<span id="cb13-23">pivoted[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'iso_table'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pivoted[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'iso_table'</span>][((pivoted[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'iso_table'</span>].<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>.upper()) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">!=</span> (pivoted[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'iso_table'</span>].<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>.lower()))]</span>
+<span id="cb13-24">pivoted</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="32">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">2022년합계</th>
+<th data-quarto-table-cell-role="th">iso_table</th>
+<th data-quarto-table-cell-role="th">국가명</th>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">국가별(1)</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">가나</td>
+<td>146268</td>
+<td>GHA</td>
+<td>가나</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">가봉</td>
+<td>-709661</td>
+<td>GAB</td>
+<td>가봉</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">가이아나</td>
+<td>20358</td>
+<td>GUY</td>
+<td>가이아나</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">감비아</td>
+<td>-1354</td>
+<td>GMB</td>
+<td>감비아</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">건지</td>
+<td>7</td>
+<td>NaN</td>
+<td>건지</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">필리핀</td>
+<td>6247769</td>
+<td>PHL</td>
+<td>필리핀</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">허드 앤 맥도날드 군도</td>
+<td>-27</td>
+<td>NaN</td>
+<td>허드 앤 맥도날드 군도</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">헝가리</td>
+<td>3696148</td>
+<td>HUN</td>
+<td>헝가리</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">호주</td>
+<td>-19871753</td>
+<td>AUS</td>
+<td>호주</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">홍콩</td>
+<td>20619857</td>
+<td>HKG</td>
+<td>홍콩</td>
+</tr>
+</tbody>
+</table>
+
+<p>244 rows × 3 columns</p>
+</div>
+</div>
+</div>
+</div>
+<div id="47e524cb" class="cell" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># plotly의 choropleth를 활용</span></span>
+<span id="cb14-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 지도위에 마우스를 올리면 국가명/iso code / 무역수지(백만단위)를 표현</span></span>
+<span id="cb14-3"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> plotly.express <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> px</span>
+<span id="cb14-4"></span>
+<span id="cb14-5">fig <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> px.choropleth(pivoted, locations<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"iso_table"</span>,</span>
+<span id="cb14-6">                    color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2022년합계"</span>,</span>
+<span id="cb14-7">                    hover_name<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"국가명"</span>,</span>
+<span id="cb14-8">                    color_continuous_scale<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>px.colors.sequential.Plasma,</span>
+<span id="cb14-9">                   title<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'2022년 국가별 무역수지 현황'</span>)</span>
+<span id="cb14-10"></span>
+<span id="cb14-11">fig.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>Unable to display output for mime type(s): application/vnd.plotly.v1+json</code></pre>
+</div>
+</div>
+<ul>
+<li>Quarto rendring 문제로 출력 예시 이미지 첨부 <img src="https://kr9268.github.io/posts/coach-ds-20221113/index_files/figure-html/a6343b23-1-image.png" class="img-fluid" alt="image.png"></li>
+</ul>
+
+
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
+  <category>파이썬</category>
+  <category>분석</category>
+  <guid>https://kr9268.github.io/posts/coach-ds-20221113/</guid>
+  <pubDate>Sat, 12 Nov 2022 15:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>[간단분석] 공공데이터포털 건강검진정보 활용</title>
+  <dc:creator>Kibok Park</dc:creator>
   <link>https://kr9268.github.io/posts/coach-ds-20230506/</link>
   <description><![CDATA[ 
 
