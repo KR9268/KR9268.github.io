@@ -251,19 +251,19 @@ gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
 <h2 class="anchored" data-anchor-id="분석">분석</h2>
 <section id="데이터-불러오기" class="level3">
 <h3 class="anchored" data-anchor-id="데이터-불러오기">데이터 불러오기</h3>
-<div id="9576683a" class="cell" data-execution_count="8">
+<div id="9576683a" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> koreanize_matplotlib</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="6cf74227" class="cell" data-execution_count="9">
+<div id="6cf74227" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'online_export.csv'</span>)<span class="co">#, encoding="cp949")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="e3c41afb" class="cell" data-execution_count="10">
+<div id="e3c41afb" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="10">
+<div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 
 
@@ -331,17 +331,33 @@ gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
 </div>
 </div>
 </div>
+<ul>
+<li>데이터 확인 중 시점 컬럼에 p가 붙어있어서 의미를 확인해봄
+<ul>
+<li>KOSIS주석 : e: 추정치, p: 잠정치, -: 자료없음, …: 미상자료, x: 비밀보호, ▽: 시계열 불연속</li>
+</ul></li>
+</ul>
+<div id="45a8d68c" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'시점'</span>].unique()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>array(['2017.1/4', '2017.2/4', '2017.3/4', '2017.4/4', '2018.1/4',
+       '2018.2/4', '2018.3/4', '2018.4/4', '2019.1/4', '2019.2/4',
+       '2019.3/4', '2019.4/4', '2020.1/4', '2020.2/4', '2020.3/4',
+       '2020.4/4', '2021.1/4', '2021.2/4', '2021.3/4', '2021.4/4',
+       '2022.1/4', '2022.2/4 p)'], dtype=object)</code></pre>
+</div>
+</div>
 </section>
 <section id="시점-데이터의-분류-연도-분기의-구분-단위표기" class="level3">
 <h3 class="anchored" data-anchor-id="시점-데이터의-분류-연도-분기의-구분-단위표기">시점 데이터의 분류 (연도, 분기의 구분), 단위표기</h3>
-<div id="3edafd07" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'연도'</span>] <span class="op">=</span> df[<span class="st">'시점'</span>].<span class="bu">map</span>(<span class="kw">lambda</span> x : x.split(<span class="st">'.'</span>)[<span class="dv">0</span>])</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'분기'</span>] <span class="op">=</span> df[<span class="st">'시점'</span>].<span class="bu">map</span>(<span class="kw">lambda</span> x : x.split(<span class="st">'.'</span>)[<span class="dv">1</span>].split(<span class="st">'/'</span>)[<span class="dv">0</span>])</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">'연도'</span>,<span class="st">'분기'</span>]] <span class="op">=</span> df[[<span class="st">'연도'</span>,<span class="st">'분기'</span>]].astype(<span class="bu">int</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.rename(columns<span class="op">=</span>{<span class="st">'데이터'</span>:<span class="st">'백만'</span>})</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="11">
+<div id="3edafd07" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'연도'</span>] <span class="op">=</span> df[<span class="st">'시점'</span>].<span class="bu">map</span>(<span class="kw">lambda</span> x : x.split(<span class="st">'.'</span>)[<span class="dv">0</span>])</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'분기'</span>] <span class="op">=</span> df[<span class="st">'시점'</span>].<span class="bu">map</span>(<span class="kw">lambda</span> x : x.split(<span class="st">'.'</span>)[<span class="dv">1</span>].split(<span class="st">'/'</span>)[<span class="dv">0</span>])</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">'연도'</span>,<span class="st">'분기'</span>]] <span class="op">=</span> df[[<span class="st">'연도'</span>,<span class="st">'분기'</span>]].astype(<span class="bu">int</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.rename(columns<span class="op">=</span>{<span class="st">'데이터'</span>:<span class="st">'백만'</span>})</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
 <div>
 
 
@@ -491,9 +507,9 @@ gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
 </section>
 <section id="데이터-자체에-대한-분석-describe" class="level3">
 <h3 class="anchored" data-anchor-id="데이터-자체에-대한-분석-describe">데이터 자체에 대한 분석 (describe)</h3>
-<div id="66f4b607" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="12">
+<div id="66f4b607" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
 <div>
 
 
@@ -580,13 +596,13 @@ gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
 </section>
 <section id="국가별-판매액에-대한-heatmap을-통한-파악" class="level3">
 <h3 class="anchored" data-anchor-id="국가별-판매액에-대한-heatmap을-통한-파악">국가별 판매액에 대한 heatmap을 통한 파악</h3>
-<div id="bb8fc5d1" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>sales_country <span class="op">=</span> df.pivot_table(values<span class="op">=</span><span class="st">'백만'</span>, index<span class="op">=</span><span class="st">'국가(대륙)별'</span>, columns<span class="op">=</span><span class="st">'연도'</span>, aggfunc<span class="op">=</span><span class="st">'sum'</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>sns.heatmap(data<span class="op">=</span>sales_country, annot<span class="op">=</span><span class="va">True</span>, fmt<span class="op">=</span><span class="st">'.0f'</span>, cmap<span class="op">=</span><span class="st">'Blues'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="bb8fc5d1" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sales_country <span class="op">=</span> df.pivot_table(values<span class="op">=</span><span class="st">'백만'</span>, index<span class="op">=</span><span class="st">'국가(대륙)별'</span>, columns<span class="op">=</span><span class="st">'연도'</span>, aggfunc<span class="op">=</span><span class="st">'sum'</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>sns.heatmap(data<span class="op">=</span>sales_country, annot<span class="op">=</span><span class="va">True</span>, fmt<span class="op">=</span><span class="st">'.0f'</span>, cmap<span class="op">=</span><span class="st">'Blues'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="index_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -597,15 +613,15 @@ gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
 </section>
 <section id="판매액-상위-3개국에-대한-판매액-추세-시각화" class="level3">
 <h3 class="anchored" data-anchor-id="판매액-상위-3개국에-대한-판매액-추세-시각화">판매액 상위 3개국에 대한 판매액 추세 시각화</h3>
-<div id="6b6323d5" class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>sns.lineplot(data<span class="op">=</span>df[df[<span class="st">'국가(대륙)별'</span>].isin([<span class="st">'미국'</span>,<span class="st">'중국'</span>,<span class="st">'일본'</span>])], </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>             x<span class="op">=</span><span class="st">'연도'</span>,y<span class="op">=</span><span class="st">'백만'</span>,hue<span class="op">=</span><span class="st">'국가(대륙)별'</span>, errorbar<span class="op">=</span><span class="va">None</span>, estimator<span class="op">=</span><span class="st">'sum'</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>            )</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>plt.legend(bbox_to_anchor<span class="op">=</span>(<span class="fl">1.05</span>,<span class="dv">1</span>), loc<span class="op">=</span><span class="dv">2</span>, borderaxespad<span class="op">=</span><span class="dv">0</span>) <span class="co">#bbox_to_anchor(그래프와의 관격, 위/아래 위치)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="6b6323d5" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>sns.lineplot(data<span class="op">=</span>df[df[<span class="st">'국가(대륙)별'</span>].isin([<span class="st">'미국'</span>,<span class="st">'중국'</span>,<span class="st">'일본'</span>])], </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>             x<span class="op">=</span><span class="st">'연도'</span>,y<span class="op">=</span><span class="st">'백만'</span>,hue<span class="op">=</span><span class="st">'국가(대륙)별'</span>, errorbar<span class="op">=</span><span class="va">None</span>, estimator<span class="op">=</span><span class="st">'sum'</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>plt.legend(bbox_to_anchor<span class="op">=</span>(<span class="fl">1.05</span>,<span class="dv">1</span>), loc<span class="op">=</span><span class="dv">2</span>, borderaxespad<span class="op">=</span><span class="dv">0</span>) <span class="co">#bbox_to_anchor(그래프와의 관격, 위/아래 위치)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="index_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -622,13 +638,13 @@ gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
 <ul>
 <li>판매액 비중이 높은 주요 국가에 대해 분석 진행</li>
 </ul>
-<div id="f507bbd5" class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df_2020 <span class="op">=</span> df[df[<span class="st">'연도'</span>]<span class="op">==</span><span class="dv">2020</span>].groupby([<span class="st">'국가(대륙)별'</span>,<span class="st">'분기'</span>])[<span class="st">'백만'</span>].<span class="bu">sum</span>().unstack().copy()</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>sns.heatmap(data<span class="op">=</span>df_2020, annot<span class="op">=</span><span class="va">True</span>, fmt<span class="op">=</span><span class="st">'.0f'</span>, cmap<span class="op">=</span><span class="st">'Blues'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="f507bbd5" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df_2020 <span class="op">=</span> df[df[<span class="st">'연도'</span>]<span class="op">==</span><span class="dv">2020</span>].groupby([<span class="st">'국가(대륙)별'</span>,<span class="st">'분기'</span>])[<span class="st">'백만'</span>].<span class="bu">sum</span>().unstack().copy()</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>sns.heatmap(data<span class="op">=</span>df_2020, annot<span class="op">=</span><span class="va">True</span>, fmt<span class="op">=</span><span class="st">'.0f'</span>, cmap<span class="op">=</span><span class="st">'Blues'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="index_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -636,36 +652,36 @@ gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
 <ul>
 <li>주요 3개국(미국, 일본, 중국)에 대한 제품군별 판매액 분석</li>
 </ul>
-<div id="fecd188a" class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>filter_rule <span class="op">=</span> (df[<span class="st">'연도'</span>]<span class="op">==</span><span class="dv">2020</span>) <span class="op">&amp;</span> (df[<span class="st">'국가(대륙)별'</span>].isin([<span class="st">'미국'</span>,<span class="st">'중국'</span>,<span class="st">'일본'</span>]))</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>df_2020_top3 <span class="op">=</span> df[filter_rule][[<span class="st">'국가(대륙)별'</span>,<span class="st">'상품군별'</span>,<span class="st">'백만'</span>]]</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 잘 팔리는 상품군을 딕셔너리에 저장</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>best_category <span class="op">=</span> {}</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>best2_category <span class="op">=</span> {}</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, country <span class="kw">in</span> <span class="bu">enumerate</span>(df_2020_top3[<span class="st">'국가(대륙)별'</span>].unique()):</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    filter_country <span class="op">=</span> df_2020_top3[<span class="st">'국가(대륙)별'</span>] <span class="op">==</span> country</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">globals</span>()[country] <span class="op">=</span> df_2020_top3[filter_country].groupby([<span class="st">'상품군별'</span>])[<span class="st">'백만'</span>].<span class="bu">sum</span>().copy()</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    best_category[i] <span class="op">=</span> <span class="bu">globals</span>()[country].sort_values(ascending<span class="op">=</span><span class="va">False</span>).index[<span class="dv">0</span>]</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    best2_category[i]<span class="op">=</span> <span class="bu">globals</span>()[country].sort_values(ascending<span class="op">=</span><span class="va">False</span>).index[<span class="dv">1</span>]</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co">#그래프 기본 틀</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(ncols<span class="op">=</span><span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">15</span>,<span class="dv">8</span>), <span class="co"># ncols(그래프 수), figsize(공간크기)</span></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>                       gridspec_kw<span class="op">=</span>{<span class="st">'wspace'</span>:<span class="fl">0.7</span>},) <span class="co">#gridspec으로 그래프 사이 여백 설정</span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co">#그래프 그리기 (반복문으로 그래프를 그리고, 범례설정과 국가/1위카테고리를 입력한 제목 생성)</span></span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>sub_title<span class="op">=</span>[]</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, country  <span class="kw">in</span> <span class="bu">enumerate</span>(df_2020_top3[<span class="st">'국가(대륙)별'</span>].unique()):</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">globals</span>()[country].plot(kind<span class="op">=</span><span class="st">'pie'</span>,startangle<span class="op">=</span><span class="dv">145</span>, autopct<span class="op">=</span><span class="st">'</span><span class="sc">%.1f%%</span><span class="st">'</span>, ax<span class="op">=</span>axs[i], pctdistance<span class="op">=</span><span class="fl">0.8</span>, <span class="co">#rotatelabels=True,</span></span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>                           )</span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    sub_title.append(<span class="st">"["</span><span class="op">+</span>country<span class="op">+</span><span class="st">"]"</span>)  </span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    axs[i].set_title(sub_title[i]<span class="op">+</span> <span class="bu">chr</span>(<span class="dv">10</span>) <span class="op">+</span>best_category[i])</span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    axs[i].set_ylabel(<span class="st">''</span>)</span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    axs[i].labels<span class="op">=</span><span class="va">None</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fecd188a" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>filter_rule <span class="op">=</span> (df[<span class="st">'연도'</span>]<span class="op">==</span><span class="dv">2020</span>) <span class="op">&amp;</span> (df[<span class="st">'국가(대륙)별'</span>].isin([<span class="st">'미국'</span>,<span class="st">'중국'</span>,<span class="st">'일본'</span>]))</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df_2020_top3 <span class="op">=</span> df[filter_rule][[<span class="st">'국가(대륙)별'</span>,<span class="st">'상품군별'</span>,<span class="st">'백만'</span>]]</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 잘 팔리는 상품군을 딕셔너리에 저장</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>best_category <span class="op">=</span> {}</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>best2_category <span class="op">=</span> {}</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, country <span class="kw">in</span> <span class="bu">enumerate</span>(df_2020_top3[<span class="st">'국가(대륙)별'</span>].unique()):</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    filter_country <span class="op">=</span> df_2020_top3[<span class="st">'국가(대륙)별'</span>] <span class="op">==</span> country</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">globals</span>()[country] <span class="op">=</span> df_2020_top3[filter_country].groupby([<span class="st">'상품군별'</span>])[<span class="st">'백만'</span>].<span class="bu">sum</span>().copy()</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    best_category[i] <span class="op">=</span> <span class="bu">globals</span>()[country].sort_values(ascending<span class="op">=</span><span class="va">False</span>).index[<span class="dv">0</span>]</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    best2_category[i]<span class="op">=</span> <span class="bu">globals</span>()[country].sort_values(ascending<span class="op">=</span><span class="va">False</span>).index[<span class="dv">1</span>]</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co">#그래프 기본 틀</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(ncols<span class="op">=</span><span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">15</span>,<span class="dv">8</span>), <span class="co"># ncols(그래프 수), figsize(공간크기)</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>                       gridspec_kw<span class="op">=</span>{<span class="st">'wspace'</span>:<span class="fl">0.7</span>},) <span class="co">#gridspec으로 그래프 사이 여백 설정</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="co">#그래프 그리기 (반복문으로 그래프를 그리고, 범례설정과 국가/1위카테고리를 입력한 제목 생성)</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>sub_title<span class="op">=</span>[]</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, country  <span class="kw">in</span> <span class="bu">enumerate</span>(df_2020_top3[<span class="st">'국가(대륙)별'</span>].unique()):</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">globals</span>()[country].plot(kind<span class="op">=</span><span class="st">'pie'</span>,startangle<span class="op">=</span><span class="dv">145</span>, autopct<span class="op">=</span><span class="st">'</span><span class="sc">%.1f%%</span><span class="st">'</span>, ax<span class="op">=</span>axs[i], pctdistance<span class="op">=</span><span class="fl">0.8</span>, <span class="co">#rotatelabels=True,</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>                           )</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>    sub_title.append(<span class="st">"["</span><span class="op">+</span>country<span class="op">+</span><span class="st">"]"</span>)  </span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>    axs[i].set_title(sub_title[i]<span class="op">+</span> <span class="bu">chr</span>(<span class="dv">10</span>) <span class="op">+</span>best_category[i])</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>    axs[i].set_ylabel(<span class="st">''</span>)</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>    axs[i].labels<span class="op">=</span><span class="va">None</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="index_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -679,36 +695,36 @@ gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
 </ul></li>
 <li>4분기 판매가 두드러지는데, 특별히 비중이 많은 상품이 있는지 확인</li>
 </ul>
-<div id="29f04bb9" class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>filter_rule <span class="op">=</span> (df[<span class="st">'연도'</span>]<span class="op">==</span><span class="dv">2020</span>) <span class="op">&amp;</span> (df[<span class="st">'국가(대륙)별'</span>].isin([<span class="st">'미국'</span>,<span class="st">'중국'</span>,<span class="st">'일본'</span>])) <span class="op">&amp;</span> (df[<span class="st">'분기'</span>]<span class="op">==</span><span class="dv">4</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>df_2020_top3_quarter4 <span class="op">=</span> df[filter_rule][[<span class="st">'국가(대륙)별'</span>,<span class="st">'상품군별'</span>,<span class="st">'백만'</span>]]</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 잘 팔리는 상품군을 딕셔너리에 저장</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>best_category <span class="op">=</span> {}</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>best2_category <span class="op">=</span> {}</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, country <span class="kw">in</span> <span class="bu">enumerate</span>(df_2020_top3_quarter4[<span class="st">'국가(대륙)별'</span>].unique()):</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    filter_country <span class="op">=</span> df_2020_top3_quarter4[<span class="st">'국가(대륙)별'</span>] <span class="op">==</span> country</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">globals</span>()[country] <span class="op">=</span> df_2020_top3_quarter4[filter_country].groupby([<span class="st">'상품군별'</span>])[<span class="st">'백만'</span>].<span class="bu">sum</span>().copy()</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    best_category[i] <span class="op">=</span> <span class="bu">globals</span>()[country].sort_values(ascending<span class="op">=</span><span class="va">False</span>).index[<span class="dv">0</span>]</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    best2_category[i]<span class="op">=</span> <span class="bu">globals</span>()[country].sort_values(ascending<span class="op">=</span><span class="va">False</span>).index[<span class="dv">1</span>]</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co">#그래프 기본 틀</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(ncols<span class="op">=</span><span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">15</span>,<span class="dv">8</span>), <span class="co"># ncols(그래프 수), figsize(공간크기)</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>                       gridspec_kw<span class="op">=</span>{<span class="st">'wspace'</span>:<span class="fl">0.7</span>},) <span class="co">#gridspec으로 그래프 사이 여백 설정</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co">#그래프 그리기 (반복문으로 그래프를 그리고, 범례설정과 국가/1위카테고리를 입력한 제목 생성)</span></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>sub_title<span class="op">=</span>[]</span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, country  <span class="kw">in</span> <span class="bu">enumerate</span>(df_2020_top3_quarter4[<span class="st">'국가(대륙)별'</span>].unique()):</span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">globals</span>()[country].plot(kind<span class="op">=</span><span class="st">'pie'</span>,startangle<span class="op">=</span><span class="dv">145</span>, autopct<span class="op">=</span><span class="st">'</span><span class="sc">%.1f%%</span><span class="st">'</span>, ax<span class="op">=</span>axs[i], pctdistance<span class="op">=</span><span class="fl">0.8</span>, <span class="co">#rotatelabels=True,</span></span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>                           )</span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>    sub_title.append(<span class="st">"["</span><span class="op">+</span>country<span class="op">+</span><span class="st">"]"</span>)  </span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>    axs[i].set_title(sub_title[i]<span class="op">+</span> <span class="bu">chr</span>(<span class="dv">10</span>) <span class="op">+</span>best_category[i])</span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>    axs[i].set_ylabel(<span class="st">''</span>)</span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    axs[i].labels<span class="op">=</span><span class="va">None</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="29f04bb9" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>filter_rule <span class="op">=</span> (df[<span class="st">'연도'</span>]<span class="op">==</span><span class="dv">2020</span>) <span class="op">&amp;</span> (df[<span class="st">'국가(대륙)별'</span>].isin([<span class="st">'미국'</span>,<span class="st">'중국'</span>,<span class="st">'일본'</span>])) <span class="op">&amp;</span> (df[<span class="st">'분기'</span>]<span class="op">==</span><span class="dv">4</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>df_2020_top3_quarter4 <span class="op">=</span> df[filter_rule][[<span class="st">'국가(대륙)별'</span>,<span class="st">'상품군별'</span>,<span class="st">'백만'</span>]]</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 잘 팔리는 상품군을 딕셔너리에 저장</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>best_category <span class="op">=</span> {}</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>best2_category <span class="op">=</span> {}</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, country <span class="kw">in</span> <span class="bu">enumerate</span>(df_2020_top3_quarter4[<span class="st">'국가(대륙)별'</span>].unique()):</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    filter_country <span class="op">=</span> df_2020_top3_quarter4[<span class="st">'국가(대륙)별'</span>] <span class="op">==</span> country</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">globals</span>()[country] <span class="op">=</span> df_2020_top3_quarter4[filter_country].groupby([<span class="st">'상품군별'</span>])[<span class="st">'백만'</span>].<span class="bu">sum</span>().copy()</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    best_category[i] <span class="op">=</span> <span class="bu">globals</span>()[country].sort_values(ascending<span class="op">=</span><span class="va">False</span>).index[<span class="dv">0</span>]</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    best2_category[i]<span class="op">=</span> <span class="bu">globals</span>()[country].sort_values(ascending<span class="op">=</span><span class="va">False</span>).index[<span class="dv">1</span>]</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co">#그래프 기본 틀</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(ncols<span class="op">=</span><span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">15</span>,<span class="dv">8</span>), <span class="co"># ncols(그래프 수), figsize(공간크기)</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>                       gridspec_kw<span class="op">=</span>{<span class="st">'wspace'</span>:<span class="fl">0.7</span>},) <span class="co">#gridspec으로 그래프 사이 여백 설정</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="co">#그래프 그리기 (반복문으로 그래프를 그리고, 범례설정과 국가/1위카테고리를 입력한 제목 생성)</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>sub_title<span class="op">=</span>[]</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, country  <span class="kw">in</span> <span class="bu">enumerate</span>(df_2020_top3_quarter4[<span class="st">'국가(대륙)별'</span>].unique()):</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">globals</span>()[country].plot(kind<span class="op">=</span><span class="st">'pie'</span>,startangle<span class="op">=</span><span class="dv">145</span>, autopct<span class="op">=</span><span class="st">'</span><span class="sc">%.1f%%</span><span class="st">'</span>, ax<span class="op">=</span>axs[i], pctdistance<span class="op">=</span><span class="fl">0.8</span>, <span class="co">#rotatelabels=True,</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>                           )</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>    sub_title.append(<span class="st">"["</span><span class="op">+</span>country<span class="op">+</span><span class="st">"]"</span>)  </span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>    axs[i].set_title(sub_title[i]<span class="op">+</span> <span class="bu">chr</span>(<span class="dv">10</span>) <span class="op">+</span>best_category[i])</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>    axs[i].set_ylabel(<span class="st">''</span>)</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>    axs[i].labels<span class="op">=</span><span class="va">None</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="index_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -720,6 +736,26 @@ gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
 <li>중국 : 음반 비디오 악기</li>
 <li>일본 : 의류 및 패션관련 상품</li>
 </ul></li>
+<li>비중이 아닌 상품군별 규모를 확인해봄
+<ul>
+<li>음반 비디오 악기가 가장 규모가 컸고, 다음으로 의류 및 패션관련 상품의 규모가 컸음</li>
+</ul></li>
+</ul>
+<div id="b264ac6d" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 상위 3개국가에 대해 상품군별 시각화해서 분석함</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">20</span>,<span class="dv">5</span>))</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>sns.barplot(data<span class="op">=</span>df_2020_top3, x<span class="op">=</span><span class="st">'상품군별'</span>, y<span class="op">=</span><span class="st">'백만'</span>, hue<span class="op">=</span><span class="st">'국가(대륙)별'</span>, errorbar<span class="op">=</span><span class="va">None</span>, dodge<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>plt.legend(bbox_to_anchor<span class="op">=</span>(<span class="fl">1.1</span>,<span class="fl">0.5</span>), loc<span class="op">=</span><span class="dv">6</span>, borderaxespad<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-13-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
 <li>미국, 일본은 ‘의류 및 패션상품’ 판매가 두드러지므로 해외직구활성화 방안 등을 강구한다면 해당 업종을 눈여겨 봐야할 듯 함</li>
 <li>두번째로는 ‘화장품’ 판매실적이 좋은데, 분류가 되어있지 않으니 기초/색조 여부 등을 보긴 해야겠지만
 <ul>
@@ -744,27 +780,27 @@ gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
 </section>
 <section id="판매액-상위국가에-대한-주요-상품-시각화" class="level3">
 <h3 class="anchored" data-anchor-id="판매액-상위국가에-대한-주요-상품-시각화">판매액 상위국가에 대한 주요 상품 시각화</h3>
-<div id="10838bf1" class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>filter_rule2 <span class="op">=</span> (df[<span class="st">'국가(대륙)별'</span>].isin([<span class="st">'미국'</span>,<span class="st">'일본'</span>,<span class="st">'중국'</span>]))<span class="op">&amp;</span>(df[<span class="st">'상품군별'</span>].isin([<span class="st">"의류 및 패션 관련상품"</span>, <span class="st">"화장품"</span>, <span class="st">"음반·비디오·악기"</span>]))</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df_top3_categorical <span class="op">=</span> df[filter_rule2].copy()</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(ncols<span class="op">=</span><span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">15</span>,<span class="dv">4</span>), <span class="co"># ncols(그래프 수), figsize(공간크기)</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>                       gridspec_kw<span class="op">=</span>{<span class="st">'wspace'</span>:<span class="fl">0.3</span>},) <span class="co">#gridspec으로 그래프 사이 여백 설정</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>ylabel_text <span class="op">=</span> {<span class="dv">0</span>:<span class="st">'백만'</span>,<span class="dv">1</span>:<span class="st">''</span>,<span class="dv">2</span>:<span class="st">''</span>}</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, country  <span class="kw">in</span> <span class="bu">enumerate</span>(df_top3_categorical[<span class="st">'국가(대륙)별'</span>].unique()):</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    sns.lineplot(data<span class="op">=</span>df_top3_categorical[df_top3_categorical[<span class="st">'국가(대륙)별'</span>] <span class="op">==</span> country], </span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>                 x<span class="op">=</span><span class="st">'연도'</span>, y<span class="op">=</span><span class="st">'백만'</span>, hue<span class="op">=</span><span class="st">'상품군별'</span>, errorbar<span class="op">=</span><span class="va">None</span>, marker<span class="op">=</span><span class="st">'o'</span>,</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>                 ax <span class="op">=</span> axs[i])</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    axs[i].set_title(<span class="st">'국가(대륙별) - '</span> <span class="op">+</span> country)</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    axs[i].spines[[<span class="st">'top'</span>,<span class="st">'right'</span>]].set_visible(<span class="va">False</span>) <span class="co"># 그래프 테두리 왼쪽,위,오른쪽 안보이게(false)</span></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    axs[i].legend().set_visible(<span class="va">False</span>)</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    axs[i].set_ylabel(ylabel_text[i])</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">2</span>].legend(bbox_to_anchor<span class="op">=</span>(<span class="dv">2</span>,<span class="dv">1</span>), loc<span class="op">=</span><span class="dv">0</span>, borderaxespad<span class="op">=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="10838bf1" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>filter_rule2 <span class="op">=</span> (df[<span class="st">'국가(대륙)별'</span>].isin([<span class="st">'미국'</span>,<span class="st">'일본'</span>,<span class="st">'중국'</span>]))<span class="op">&amp;</span>(df[<span class="st">'상품군별'</span>].isin([<span class="st">"의류 및 패션 관련상품"</span>, <span class="st">"화장품"</span>, <span class="st">"음반·비디오·악기"</span>]))</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>df_top3_categorical <span class="op">=</span> df[filter_rule2].copy()</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(ncols<span class="op">=</span><span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">15</span>,<span class="dv">4</span>), <span class="co"># ncols(그래프 수), figsize(공간크기)</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>                       gridspec_kw<span class="op">=</span>{<span class="st">'wspace'</span>:<span class="fl">0.3</span>},) <span class="co">#gridspec으로 그래프 사이 여백 설정</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>ylabel_text <span class="op">=</span> {<span class="dv">0</span>:<span class="st">'백만'</span>,<span class="dv">1</span>:<span class="st">''</span>,<span class="dv">2</span>:<span class="st">''</span>}</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, country  <span class="kw">in</span> <span class="bu">enumerate</span>(df_top3_categorical[<span class="st">'국가(대륙)별'</span>].unique()):</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    sns.lineplot(data<span class="op">=</span>df_top3_categorical[df_top3_categorical[<span class="st">'국가(대륙)별'</span>] <span class="op">==</span> country], </span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>                 x<span class="op">=</span><span class="st">'연도'</span>, y<span class="op">=</span><span class="st">'백만'</span>, hue<span class="op">=</span><span class="st">'상품군별'</span>, errorbar<span class="op">=</span><span class="va">None</span>, marker<span class="op">=</span><span class="st">'o'</span>, palette<span class="op">=</span>[<span class="st">"b"</span>, <span class="st">"r"</span>, <span class="st">'g'</span>],  style<span class="op">=</span><span class="st">'상품군별'</span>,</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>                 ax <span class="op">=</span> axs[i])</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    axs[i].set_title(<span class="st">'국가(대륙별) - '</span> <span class="op">+</span> country)</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    axs[i].spines[[<span class="st">'top'</span>,<span class="st">'right'</span>]].set_visible(<span class="va">False</span>) <span class="co"># 그래프 테두리 왼쪽,위,오른쪽 안보이게(false)</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    axs[i].legend().set_visible(<span class="va">False</span>)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    axs[i].set_ylabel(ylabel_text[i])</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">2</span>].legend(bbox_to_anchor<span class="op">=</span>(<span class="dv">2</span>,<span class="dv">1</span>), loc<span class="op">=</span><span class="dv">0</span>, borderaxespad<span class="op">=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="index_files/figure-html/cell-14-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -776,15 +812,15 @@ gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
 <li><p>실제로도 확인해보니, `22년도 판매액은 일본의 비중이 컸음(하단 그래프)</p></li>
 </ul>
 <div id="5d2b047b" class="cell" data-execution_count="31">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">4</span>))</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>sns.barplot(data<span class="op">=</span>df[(df[<span class="st">'연도'</span>] <span class="op">==</span> <span class="dv">2022</span>) <span class="op">&amp;</span> (df[<span class="st">'상품군별'</span>] <span class="op">==</span> <span class="st">'화장품'</span>)],</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>             x<span class="op">=</span><span class="st">'국가(대륙)별'</span>, y<span class="op">=</span><span class="st">'백만'</span>, hue<span class="op">=</span><span class="st">'상품군별'</span>, dodge<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>plt.legend(bbox_to_anchor<span class="op">=</span>(<span class="fl">1.1</span>,<span class="fl">0.5</span>), loc<span class="op">=</span><span class="dv">6</span>, borderaxespad<span class="op">=</span><span class="dv">0</span>) <span class="co">#bbox_to_anchor(그래프와의 관격, 위/아래 위치)</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>             <span class="co">#loc(좌우), borderaxespad(클수록 아래로)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">4</span>))</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>sns.barplot(data<span class="op">=</span>df[(df[<span class="st">'연도'</span>] <span class="op">==</span> <span class="dv">2022</span>) <span class="op">&amp;</span> (df[<span class="st">'상품군별'</span>] <span class="op">==</span> <span class="st">'화장품'</span>)],</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>             x<span class="op">=</span><span class="st">'국가(대륙)별'</span>, y<span class="op">=</span><span class="st">'백만'</span>, hue<span class="op">=</span><span class="st">'상품군별'</span>, dodge<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>plt.legend(bbox_to_anchor<span class="op">=</span>(<span class="fl">1.1</span>,<span class="fl">0.5</span>), loc<span class="op">=</span><span class="dv">6</span>, borderaxespad<span class="op">=</span><span class="dv">0</span>) <span class="co">#bbox_to_anchor(그래프와의 관격, 위/아래 위치)</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>             <span class="co">#loc(좌우), borderaxespad(클수록 아래로)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-13-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="index_files/figure-html/cell-15-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -797,30 +833,30 @@ gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
 <li>현재 분석과는 관계없지만, 함께 진행한 과제가 있어 기록만 해둠</li>
 </ul>
 <div id="f89a9fa3" class="cell" data-execution_count="32">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Choropleth 시각화</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 불러오기 &amp; 가공(월 합계 등)</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>raw_data <span class="op">=</span> pd.read_csv(</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'국가별_수출입현황_20221119232639.csv'</span>, </span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    encoding<span class="op">=</span><span class="st">"cp949"</span>)</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>iso_table <span class="op">=</span> pd.read_excel(<span class="st">'iso_alpha.xlsx'</span>, engine<span class="op">=</span><span class="st">'openpyxl'</span>)</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>iso_table <span class="op">=</span> iso_table[[<span class="st">'나라 이름'</span>,<span class="st">'alpha-3'</span>]]</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>raw_data_saved <span class="op">=</span> raw_data.copy()</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>raw_data_saved[<span class="st">'2022년합계'</span>] <span class="op">=</span> raw_data_saved[raw_data_saved.columns[<span class="dv">2</span>:]].<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Pivot table(국가별 합계) - 합계 0은 제외 (시각화되어있지않으면 0으로 간주, 메모리도 더 절약될 것이라 생각)</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>pivoted <span class="op">=</span> raw_data_saved.groupby([<span class="st">'국가별(1)'</span>])[[<span class="st">'2022년합계'</span>]].<span class="bu">sum</span>()</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>pivoted <span class="op">=</span> pivoted[pivoted[<span class="st">'2022년합계'</span>]<span class="op">!=</span><span class="dv">0</span>]</span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="co"># replace로 국가명↔코드로 변환 (영문으로 변환되지 않은 국가['키리바티', '타지크' 등 생소한 국가]는 제외했습니다)</span></span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>pivoted[<span class="st">'iso_table'</span>]<span class="op">=</span>pivoted.index</span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>pivoted[<span class="st">'국가명'</span>]<span class="op">=</span>pivoted.index</span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>pivoted[<span class="st">'iso_table'</span>] <span class="op">=</span> pivoted[<span class="st">'iso_table'</span>].replace(iso_table[<span class="st">'나라 이름'</span>].tolist(),iso_table[<span class="st">'alpha-3'</span>].tolist())</span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>pivoted[<span class="st">'iso_table'</span>] <span class="op">=</span> pivoted[<span class="st">'iso_table'</span>][((pivoted[<span class="st">'iso_table'</span>].<span class="bu">str</span>.upper()) <span class="op">!=</span> (pivoted[<span class="st">'iso_table'</span>].<span class="bu">str</span>.lower()))]</span>
-<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>pivoted</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Choropleth 시각화</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 불러오기 &amp; 가공(월 합계 등)</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>raw_data <span class="op">=</span> pd.read_csv(</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'국가별_수출입현황_20221119232639.csv'</span>, </span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    encoding<span class="op">=</span><span class="st">"cp949"</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>iso_table <span class="op">=</span> pd.read_excel(<span class="st">'iso_alpha.xlsx'</span>, engine<span class="op">=</span><span class="st">'openpyxl'</span>)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>iso_table <span class="op">=</span> iso_table[[<span class="st">'나라 이름'</span>,<span class="st">'alpha-3'</span>]]</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>raw_data_saved <span class="op">=</span> raw_data.copy()</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>raw_data_saved[<span class="st">'2022년합계'</span>] <span class="op">=</span> raw_data_saved[raw_data_saved.columns[<span class="dv">2</span>:]].<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Pivot table(국가별 합계) - 합계 0은 제외 (시각화되어있지않으면 0으로 간주, 메모리도 더 절약될 것이라 생각)</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>pivoted <span class="op">=</span> raw_data_saved.groupby([<span class="st">'국가별(1)'</span>])[[<span class="st">'2022년합계'</span>]].<span class="bu">sum</span>()</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>pivoted <span class="op">=</span> pivoted[pivoted[<span class="st">'2022년합계'</span>]<span class="op">!=</span><span class="dv">0</span>]</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="co"># replace로 국가명↔코드로 변환 (영문으로 변환되지 않은 국가['키리바티', '타지크' 등 생소한 국가]는 제외했습니다)</span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>pivoted[<span class="st">'iso_table'</span>]<span class="op">=</span>pivoted.index</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>pivoted[<span class="st">'국가명'</span>]<span class="op">=</span>pivoted.index</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>pivoted[<span class="st">'iso_table'</span>] <span class="op">=</span> pivoted[<span class="st">'iso_table'</span>].replace(iso_table[<span class="st">'나라 이름'</span>].tolist(),iso_table[<span class="st">'alpha-3'</span>].tolist())</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>pivoted[<span class="st">'iso_table'</span>] <span class="op">=</span> pivoted[<span class="st">'iso_table'</span>][((pivoted[<span class="st">'iso_table'</span>].<span class="bu">str</span>.upper()) <span class="op">!=</span> (pivoted[<span class="st">'iso_table'</span>].<span class="bu">str</span>.lower()))]</span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>pivoted</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="32">
 <div>
 
@@ -915,17 +951,17 @@ gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
 </div>
 </div>
 <div id="47e524cb" class="cell" data-execution_count="34">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plotly의 choropleth를 활용</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 지도위에 마우스를 올리면 국가명/iso code / 무역수지(백만단위)를 표현</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.choropleth(pivoted, locations<span class="op">=</span><span class="st">"iso_table"</span>,</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>                    color<span class="op">=</span><span class="st">"2022년합계"</span>,</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>                    hover_name<span class="op">=</span><span class="st">"국가명"</span>,</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>                    color_continuous_scale<span class="op">=</span>px.colors.sequential.Plasma,</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>                   title<span class="op">=</span><span class="st">'2022년 국가별 무역수지 현황'</span>)</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plotly의 choropleth를 활용</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 지도위에 마우스를 올리면 국가명/iso code / 무역수지(백만단위)를 표현</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.choropleth(pivoted, locations<span class="op">=</span><span class="st">"iso_table"</span>,</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>                    color<span class="op">=</span><span class="st">"2022년합계"</span>,</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>                    hover_name<span class="op">=</span><span class="st">"국가명"</span>,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>                    color_continuous_scale<span class="op">=</span>px.colors.sequential.Plasma,</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>                   title<span class="op">=</span><span class="st">'2022년 국가별 무역수지 현황'</span>)</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>Unable to display output for mime type(s): application/vnd.plotly.v1+json</code></pre>
 </div>
