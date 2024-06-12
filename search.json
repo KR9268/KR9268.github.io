@@ -378,97 +378,6 @@
     "text": "Multi-class Classfication regression\n\n2가지 분류가 아닌 3가지 이상의 분류(A,B,C로 나누는 신용등급 등)\nBinary classification과 달리 하나의 Decision boundary로는 해결 불가\nOne vs All(Rest)\n\n하나의 대상과, 아닌 것’들’로 Binary Classification을 여러번 수행\n예를 들어 a, b, c 3가지를 분류하는 경우\n\n아래와 같은 같은 3개의 식으로 표현할 수 있고, \n아래와 같이 하나의 행렬로 한번에 표현할 수 있다  \n\nSoftmax : 각 결과값(\\(H_a, H_b, H_c\\))의 비율(확률)이 나오게 됨(총합이 1)\n\nCross entropy cost function\n\n정보량은 확률에 반비례한다고 정의 (정보량= $ 1 p$)\n\n특정 성씨의 사람을 뽑는다고 할 때, 한국의 주요 성씨인 김씨\\(1 \\over 10\\) vs 소수 성씨인 남궁씨\\(1 \\over 100\\)\n\n로그를 취하여 전개하면 Cross entropy 식이 된다\nEntropy : Measure for uncertainty (불확실성의 측정)  \nCase별 Cross entropy(cost function)\n\n출력값(결과값 softmax)과 실제값이 비슷한 경우 : 특정 값 산출\n출력값(결과값 softmax)과 실제값이 완전히 다른 경우 : 무한대\n출력값(결과값 softmax)과 실제값이 완전히 동일한 경우 : 0\n\nCross entropy를 개인이 직접구현한다면 놓칠 수 있는 부분(cross entropy의 무한대)의 문제\n\n파이토치 등 많은 사람이 참여한 패키지를 사용하면 방지할 수 있음\n컴퓨터에서의 Zero division error 등의 경우, 텐서플로우 등 패키지에선 분모에 0.00001등을 더하여 실제값엔 영향이 작게하며 오류 제거"
   },
   {
-    "objectID": "posts/coach-ds-20230506/index.html",
-    "href": "posts/coach-ds-20230506/index.html",
-    "title": "[간단분석] 공공데이터포털 건강검진정보 활용",
-    "section": "",
-    "text": "국민건강보험공단 건강검진정보를 활용한 간단한 분석 공공데이터포털 국민건강보험공단_건강검진정보\n실습 기록용으로 남깁니다.\nCopyright © 2024 Kibok Park All rights reserved."
-  },
-  {
-    "objectID": "posts/coach-ds-20230506/index.html#개요",
-    "href": "posts/coach-ds-20230506/index.html#개요",
-    "title": "[간단분석] 공공데이터포털 건강검진정보 활용",
-    "section": "",
-    "text": "국민건강보험공단 건강검진정보를 활용한 간단한 분석 공공데이터포털 국민건강보험공단_건강검진정보\n실습 기록용으로 남깁니다."
-  },
-  {
-    "objectID": "posts/coach-ds-20230506/index.html#데이터-불러오기",
-    "href": "posts/coach-ds-20230506/index.html#데이터-불러오기",
-    "title": "[간단분석] 공공데이터포털 건강검진정보 활용",
-    "section": "데이터 불러오기",
-    "text": "데이터 불러오기\n\nimport pandas as pd\nimport numpy as np\nimport seaborn as sns\nimport koreanize_matplotlib\nimport matplotlib.pyplot as plt\n\n\ndf = pd.read_csv('국민건강보험공단_건강검진정보_20221231.CSV', encoding=\"cp949\")\n\n\ndf.columns\n\nIndex(['기준년도', '가입자일련번호', '시도코드', '성별', '연령대코드(5세단위)', '신장(5cm단위)',\n       '체중(5kg단위)', '허리둘레', '시력(좌)', '시력(우)', '청력(좌)', '청력(우)', '수축기혈압',\n       '이완기혈압', '식전혈당(공복혈당)', '총콜레스테롤', '트리글리세라이드', 'HDL콜레스테롤', 'LDL콜레스테롤',\n       '혈색소', '요단백', '혈청크레아티닌', '혈청지오티(AST)', '혈청지피티(ALT)', '감마지티피', '흡연상태',\n       '음주여부', '구강검진수검여부', '치아우식증유무', '치석'],\n      dtype='object')\n\n\n\n음주여부, 흡연상태, 연령대코드, 성별코드간의 상관관계\n\n상관계수 구하기\n\n\nfiltered = df[['음주여부','흡연상태','연령대코드(5세단위)','성별']].copy()\nfiltered.corr()\n\n\n\n\n\n\n\n\n음주여부\n흡연상태\n연령대코드(5세단위)\n성별\n\n\n\n\n음주여부\n1.000000\n0.252058\n-0.357367\n-0.254963\n\n\n흡연상태\n0.252058\n1.000000\n-0.073601\n-0.536833\n\n\n연령대코드(5세단위)\n-0.357367\n-0.073601\n1.000000\n0.042162\n\n\n성별\n-0.254963\n-0.536833\n0.042162\n1.000000\n\n\n\n\n\n\n\n\n상관계수 시각화 (Seaborn heatmap)\n\n\n#mask옵션 사용하고, annot옵션으로 수치표기, fmt옵션으로 소수자리 지정하여 heatmap으로 표현\nmask = np.triu(np.ones_like(filtered.corr(), dtype=bool))\nsns.heatmap(filtered.corr(), annot=True, fmt='.2f', mask=mask)\n\n\n\n\n\n\n\n\n\n상관관계가 강한 순으로 나열\n\n성별과 흡연, 음주와 연령의 뚜렷한 상관관계\n흡연과 음주의 약한 상관관계 &gt; [참고] -1.0과 -0.7 사이이면, 강한 음적 선형관계 -0.7과 -0.3 사이이면, 뚜렷한 음적 선형관계 -0.3과 -0.1 사이이면, 약한 음적 선형관계 -0.1과 +0.1 사이이면, 거의 무시될 수 있는 선형관계 +0.1과 +0.3 사이이면, 약한 양적 선형관계 +0.3과 +0.7 사이이면, 뚜렷한 양적 선형관계 +0.7과 +1.0 사이이면, 강한 양적 선형관계\n\n\n\n#상관계수로 표를 만들어, 강한 상관관계가 있는 순으로 조사해보았습니다 (절대값으로 내림차순)\ncon_index = []\ncon_value = []\ncon_value_abs= []\nfor i in filtered.corr().columns:\n    for j in filtered.corr().index:\n        con_index.append(i +\"/\" + j)\n        con_value.append(filtered.corr()[i][j])\n        con_value_abs.append(abs(filtered.corr()[i][j]))\npd.DataFrame({'상관계수':con_value,\n             '절대값':con_value_abs,\n             '항목':con_index}).sort_values(by=['절대값'],ascending=False)\n\n\n\n\n\n\n\n\n상관계수\n절대값\n항목\n\n\n\n\n0\n1.000000\n1.000000\n음주여부/음주여부\n\n\n5\n1.000000\n1.000000\n흡연상태/흡연상태\n\n\n10\n1.000000\n1.000000\n연령대코드(5세단위)/연령대코드(5세단위)\n\n\n15\n1.000000\n1.000000\n성별/성별\n\n\n7\n-0.536833\n0.536833\n흡연상태/성별\n\n\n13\n-0.536833\n0.536833\n성별/흡연상태\n\n\n2\n-0.357367\n0.357367\n음주여부/연령대코드(5세단위)\n\n\n8\n-0.357367\n0.357367\n연령대코드(5세단위)/음주여부\n\n\n3\n-0.254963\n0.254963\n음주여부/성별\n\n\n12\n-0.254963\n0.254963\n성별/음주여부\n\n\n1\n0.252058\n0.252058\n음주여부/흡연상태\n\n\n4\n0.252058\n0.252058\n흡연상태/음주여부\n\n\n6\n-0.073601\n0.073601\n흡연상태/연령대코드(5세단위)\n\n\n9\n-0.073601\n0.073601\n연령대코드(5세단위)/흡연상태\n\n\n11\n0.042162\n0.042162\n연령대코드(5세단위)/성별\n\n\n14\n0.042162\n0.042162\n성별/연령대코드(5세단위)\n\n\n\n\n\n\n\n\n\n흡연과 음주에 대한 추이\n\n앞서 약한 상관관계였던 흡연과 음주에 대한 인원추이\n\n\n# 코드를 실제값으로 변환\nsmoke = {1 : \"흡연안함\", 2: \"끊음\", 3: \"흡연중\"}\ndrink = {0: \"안마심\", 1: \"마심\"}\n\ndf['흡연상태'] = df['흡연상태'].replace(smoke)\ndf['음주여부'] = df['음주여부'].replace(drink)\n\n\n# '흡연상태','음주여부'만 가져와 crosstab\nfiltered_drink_smoke = df[['흡연상태','음주여부']]\ndf_crosstab = pd.crosstab(index=filtered_drink_smoke['음주여부'],columns=filtered_drink_smoke['흡연상태'])\ndf_crosstab\n\n\n\n\n\n\n\n흡연상태\n끊음\n흡연안함\n흡연중\n\n\n음주여부\n\n\n\n\n\n\n\n마심\n132750\n360530\n161804\n\n\n안마심\n33815\n280441\n30504\n\n\n\n\n\n\n\n\n# countplot 시각화\nsns.set_style('whitegrid')\nplt.rc('font',family=\"Malgun Gothic\")\nsns.countplot(data=filtered_drink_smoke, x='흡연상태', hue='음주여부', palette='Set1').set_title('흡연상태별 음주여부') # palette = 그래프테마\n\nText(0.5, 1.0, '흡연상태별 음주여부')\n\n\n\n\n\n\n\n\n\n\n흡연중이거나 했다가 끊은 경우에는 음주하는 사람의 비중이 높음\n흡연을 안하는 경우는 음주여부의 비중 차이가 크지 않음\n\n\n\n음주여부에 따른 콜레스테롤과 감마지티피의 관계\n\n감마지티피 : 알콜에 의한 간장애의 지표를 나타내는 검사항목\n각 항목을 산점도로 시각화하여 파악\n\n\ndf_temp = df[['총콜레스테롤','감마지티피','음주여부','흡연상태']]\n\n\n# lmplot 산점도\nplt.figure(figsize=(14,14))\nsns.lmplot(data=df_temp, x='총콜레스테롤', y='감마지티피', hue='음주여부', col='흡연상태',markers=['x','o'] # markers로 음주여부에 따라 o,x로\n           ,scatter_kws={'s':20}) # 뭉쳐진부분이 잘보이도록 scatter_kws로 점크기조정\n\n&lt;Figure size 1400x1400 with 0 Axes&gt;\n\n\n\n\n\n\n\n\n\n\n대체로 특정 구역에 몰려있음, 체중 120kg 이상에 대해서 추가분석\n\n\nweight_over120 = df.loc[(df['체중(5kg단위)'] &gt;= 120), ['총콜레스테롤','감마지티피','음주여부','흡연상태']]\nplt.figure(figsize=(14,14))\nsns.lmplot(data=weight_over120, x='총콜레스테롤', y='감마지티피', hue='음주여부', col='흡연상태',markers=['x','o']\n           ,scatter_kws={'s':20})\n\n&lt;Figure size 1400x1400 with 0 Axes&gt;\n\n\n\n\n\n\n\n\n\n\n흡연중인 경우, 흡연을 안하거나 끊은 경우보다 감마지피티의 값이 높게 분포\n음주여부에 따라 콜레스테롤의 차이는 크게 보이지 않으나, 감마지티피의 경우 모두 상승하는 경향\n\n\n\n연령대별 시력 확인\n\n# 별도로 정의해둔 연령코드 딕셔너리\nage_code = {1: '0~4세',\n 2: '5~9세',\n 3: '10~14세',\n 4: '15~19세',\n 5: '20~24세',\n 6: '25~29세',\n 7: '30~34세',\n 8: '35~39세',\n 9: '40~44세',\n 10: '45~49세',\n 11: '50~54세',\n 12: '55~59세',\n 13: '60~64세',\n 14: '65~69세',\n 15: '70~74세',\n 16: '75~79세',\n 17: '80~84세',\n 18: '85세+'}\n\n# 실명(시력 9.9) 제거\nsight_right = df.drop(df.loc[df['시력(우)']==9.9,].index)\nsight_left = df.drop(df.loc[df['시력(좌)']==9.9,].index)\n\n#숫자료 표기되는 연령대코드를 연령구간으로 표기할 index 생성 후 replace로 변경 (barplot의 index로 사용)\nage_code_right = []\nfor i in np.sort(sight_right['연령대코드(5세단위)'].unique()).tolist():\n    age_code_right.append(age_code[i])\nage_code_left = []\nfor i in np.sort(sight_left['연령대코드(5세단위)'].unique()).tolist():\n    age_code_left.append(age_code[i])\n\nsight_right['연령대코드(5세단위)'] = sight_right['연령대코드(5세단위)'].replace(age_code)\nsight_left['연령대코드(5세단위)'] = sight_left['연령대코드(5세단위)'].replace(age_code)\n\n\n#시력(좌), (우) 그래프를 식별하기 용이하도록 (좌)그래프를 회전\nfig, axs = plt.subplots(ncols=2, figsize=(12,5),\n                       gridspec_kw={'wspace':0.5},)\nfig.suptitle('연령별 시력 평균(좌, 우)').set_size(20) #제목\n\nsns.set_context('talk')\n\nsns.barplot(data = sight_left, x='시력(좌)', y='연령대코드(5세단위)', hue='성별', orient='h', errorbar=None, ax=axs[0],\n            order=age_code_left).invert_xaxis()\nsns.barplot(data = sight_right, x='시력(우)', y='연령대코드(5세단위)', hue='성별', orient='h', errorbar=None, ax=axs[1],\n            order=age_code_right)\n\nfor ax in axs:\n    ax.set_ylabel('연령대') # 코드가 아니므로 y축 이름을 연령대로 변경\n\n\n\n\n\n\n\n\n\n모든 연령대에서 특정 성별의 시력이 높음\n연령이 높아질수록 시력도 낮아지며, 좌우시력의 큰 차이는 보이지 않음"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "Kibok Park",
-    "section": "",
-    "text": "I’m Kibok Park. Welcome to my blog. I’m not an expert in my favorites yet, but I’m working on becoming one. I hope you to have nice time with my blog.\nCopyright © 2024 Kibok Park All rights reserved."
-  },
-  {
-    "objectID": "about.html#hello",
-    "href": "about.html#hello",
-    "title": "Kibok Park",
-    "section": "",
-    "text": "I’m Kibok Park. Welcome to my blog. I’m not an expert in my favorites yet, but I’m working on becoming one. I hope you to have nice time with my blog."
-  },
-  {
-    "objectID": "about.html#topics",
-    "href": "about.html#topics",
-    "title": "Kibok Park",
-    "section": "Topics",
-    "text": "Topics\nPython, Quantative trading"
-  },
-  {
-    "objectID": "index_miniprojects.html",
-    "href": "index_miniprojects.html",
-    "title": "Mini Projects",
-    "section": "",
-    "text": "[Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 & 정리 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\n\nPython, win32를 활용한 SAP Scripting\n\n\n\nKibok Park\n\n\n2024-03-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] COO발급관리용 Tool\n\n\n\nPython\n\n\nwin11toast\n\n\nsqlite3\n\n\nstreamlit\n\n\npandas\n\n\nselenium\n\n\n\n[Python] selenium(웹스크레핑), sqlite3(db), win11toast(알림), streamlit(UI)\n\n\n\nKibok Park\n\n\n2024-02-20\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] LocalL/C 관리용 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\nStreamlit\n\n\nsqlite3\n\n\nBeautifulSoup\n\n\n\nPython, Streamlit을 활용한 업무자동화\n\n\n\nKibok Park\n\n\n2024-01-22\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] 아웃룩 메일열람 & pdf regex리딩 & 시스템 자동등록\n\n\n\nPython\n\n\nre\n\n\nxlwings\n\n\npandas\n\n\npdfminer\n\n\n\n[Python] re(regex), xlwings(암호화 Excel리딩), pdfminer(pdf리딩), pywin32(outlook)\n\n\n\nKibok Park\n\n\n2023-12-15\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] Peak타임 대응용 수출계약서pdf tabula리딩\n\n\n\nPython\n\n\ntabula\n\n\nxlwings\n\n\npathlib\n\n\npandas\n\n\n\n[Python] tabula(pdf리딩[표 형태], xlwings(암호화 Excel리딩)\n\n\n\nKibok Park\n\n\n2023-11-02\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Blog",
-    "section": "",
-    "text": "[M_Study_3주차] Multi-class Classification / Artificial Neural Network\n\n\n\n파이썬\n\n\n머신러닝\n\n\n딥러닝\n\n\nMStudy\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-06-09\n\n\n\n\n\n\n\n\n\n\n\n\n[M_Study_2주차] Multiple Regression / Logistic Regression\n\n\n\n파이썬\n\n\n머신러닝\n\n\n딥러닝\n\n\nMStudy\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-06-02\n\n\n\n\n\n\n\n\n\n\n\n\n[M_Study_1주차] Tensorflow / Linear Regression\n\n\n\n파이썬\n\n\n머신러닝\n\n\n딥러닝\n\n\nMStudy\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-05-26\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n[버크셔 해서웨이의 재탄생 읽고] 용어 정리\n\n\n\n경제/금융공부\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-23\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-21\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-20\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 조건에 맞는 도서 리스트 출력하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-19\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 가장 비싼 상품 구하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-18\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 평균 일일 대여 요금 구하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-17\n\n\n\n\n\n\n\n\n\n\n\n\n[간단분석] 공공데이터 상권정보로 인터랙티브 맵 시각화(folium)\n\n\n\n파이썬\n\n\n분석\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-11-07\n\n\n\n\n\n\n\n\n\n\n\n\n[Pycon2023] 짠내나는 데이터 다루기(박조은님 세션) 정리\n\n\n\n파이썬\n\n\n파이콘\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-08-13\n\n\n\n\n\n\n\n\n\n\n\n\n[Scikit-learn] Kaggle 집값예측 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-05-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Pytorch] MNIST 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-02-19\n\n\n\n\n\n\n\n\n\n\n\n\n[간단분석] KOSIS 온라인쇼핑 해외직접판매액 간단분석 (타 주제 Choropleth시각화)\n\n\n\n파이썬\n\n\n분석\n\n\n\n\n\n\n\nKibok Park\n\n\n2022-11-13\n\n\n\n\n\n\n\n\n\n\n\n\n[간단분석] 공공데이터포털 건강검진정보 활용\n\n\n\n파이썬\n\n\n분석\n\n\n\n\n\n\n\nKibok Park\n\n\n2022-11-06\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
-  },
-  {
-    "objectID": "posts/prgms-sql-20240321/index.html",
-    "href": "posts/prgms-sql-20240321/index.html",
-    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
-    "section": "",
-    "text": "프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다  (비상업적, 비영리적 용도)\n문제링크 게시가능여부\nCopyright © 2024 Kibok Park All rights reserved."
-  },
-  {
-    "objectID": "posts/prgms-sql-20240321/index.html#개요",
-    "href": "posts/prgms-sql-20240321/index.html#개요",
-    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
-    "section": "",
-    "text": "프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다  (비상업적, 비영리적 용도)\n문제링크 게시가능여부"
-  },
-  {
-    "objectID": "posts/prgms-sql-20240321/index.html#문제-3월에-태어난-여성-회원-목록-출력하기",
-    "href": "posts/prgms-sql-20240321/index.html#문제-3월에-태어난-여성-회원-목록-출력하기",
-    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
-    "section": "문제 : 3월에 태어난 여성 회원 목록 출력하기",
-    "text": "문제 : 3월에 태어난 여성 회원 목록 출력하기\n\n\n다음은 식당 리뷰 사이트의 회원 정보를 담은 MEMBER_PROFILE 테이블입니다. MEMBER_PROFILE 테이블은 다음과 같으며 MEMBER_ID, MEMBER_NAME, TLNO, GENDER, DATE_OF_BIRTH는 회원 ID, 회원 이름, 회원 연락처, 성별, 생년월일을 의미합니다.\n\n\n\n\n\nColumn name\n\n\nType\n\n\nNullable\n\n\n\n\n\n\nMEMBER_ID\n\n\nVARCHAR(100)\n\n\nFALSE\n\n\n\n\nMEMBER_NAME\n\n\nVARCHAR(50)\n\n\nFALSE\n\n\n\n\nTLNO\n\n\nVARCHAR(50)\n\n\nTRUE\n\n\n\n\nGENDER\n\n\nVARCHAR(1)\n\n\nTRUE\n\n\n\n\nDATE_OF_BIRTH\n\n\nDATE\n\n\nTRUE\n\n\n\n\n\n\n문제\n\n\nMEMBER_PROFILE 테이블에서 생일이 3월인 여성 회원의 ID, 이름, 성별, 생년월일을 조회하는 SQL문을 작성해주세요. 이때 전화번호가 NULL인 경우는 출력대상에서 제외시켜 주시고, 결과는 회원ID를 기준으로 오름차순 정렬해주세요.\n\n\n\n예시\n\n\nMEMBER_PROFILE 테이블이 다음과 같을 때\n\n\n\n\n\nMEMBER_ID\n\n\nMEMBER_NAME\n\n\nTLNO\n\n\nGENDER\n\n\nDATE_OF_BIRTH\n\n\n\n\n\n\njiho92@naver.com\n\n\n이지호\n\n\n01076432111\n\n\nW\n\n\n1992-02-12\n\n\n\n\njiyoon22@hotmail.com\n\n\n김지윤\n\n\n01032324117\n\n\nW\n\n\n1992-02-22\n\n\n\n\njihoon93@hanmail.net\n\n\n김지훈\n\n\n01023258688\n\n\nM\n\n\n1993-02-23\n\n\n\n\nseoyeons@naver.com\n\n\n박서연\n\n\n01076482209\n\n\nW\n\n\n1993-03-16\n\n\n\n\nyoonsy94@gmail.com\n\n\n윤서연\n\n\nNULL\n\n\nW\n\n\n1994-03-19\n\n\n\n\n\nSQL을 실행하면 다음과 같이 출력되어야 합니다.\n\n\n\n\n\nMEMBER_ID\n\n\nMEMBER_NAME\n\n\nGENDER\n\n\nDATE_OF_BIRTH\n\n\n\n\n\n\nseoyeons@naver.com\n\n\n박서연\n\n\nW\n\n\n1993-03-16\n\n\n\n\n\n\n주의사항\n\n\nDATE_OF_BIRTH의 데이트 포맷이 예시와 동일해야 정답처리 됩니다."
-  },
-  {
-    "objectID": "posts/prgms-sql-20240321/index.html#작성답안",
-    "href": "posts/prgms-sql-20240321/index.html#작성답안",
-    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
-    "section": "작성답안",
-    "text": "작성답안\n\n\n\nSELECT MEMBER_ID, MEMBER_NAME,  GENDER, TO_CHAR(DATE_OF_BIRTH, 'YYYY-MM-DD')\nFROM MEMBER_PROFILE\nWHERE GENDER = 'W'\n  AND TO_CHAR(DATE_OF_BIRTH, 'MON') = 'MAR'\n  AND TLNO IS NOT NULL\nORDER BY MEMBER_ID ASC\n\n\nFigure 1"
-  },
-  {
-    "objectID": "posts/prgms-sql-20240321/index.html#정리",
-    "href": "posts/prgms-sql-20240321/index.html#정리",
-    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
-    "section": "정리",
-    "text": "정리\n\nWHERE 컬럼명 IS NOT NULL\nWHERE NOT 컬럼명 IS NULL"
-  },
-  {
     "objectID": "posts/coach-ml-mnist-20230301/index.html",
     "href": "posts/coach-ml-mnist-20230301/index.html",
     "title": "[Pytorch] MNIST 실습",
@@ -509,6 +418,118 @@
     "title": "[Pytorch] MNIST 실습",
     "section": "학습된 모델 테스트",
     "text": "학습된 모델 테스트\n\nlinear.eval()\nwith torch.no_grad():\n    correct = 0\n    total = 0\n    for i, (imgs, labels) in enumerate(test_loader):\n        imgs, labels = imgs.to(device), labels.to(device)\n        imgs = imgs.view(-1, 28 * 28)\n\n        outputs = linear(imgs) # 구현\n\n        _, argmax = torch.max(outputs, 1) # max()를 통해 최종 출력이 가장 높은 class 선택\n        total += imgs.size(0)\n        correct += (labels == argmax). sum().item()\n\n    print('Test accuracy for {} images: {: .2f}%'.format(total, correct / total * 100))\n\nTest accuracy for 10000 images:  91.99%"
+  },
+  {
+    "objectID": "posts/prgms-sql-20240321/index.html",
+    "href": "posts/prgms-sql-20240321/index.html",
+    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
+    "section": "",
+    "text": "프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다  (비상업적, 비영리적 용도)\n문제링크 게시가능여부\nCopyright © 2024 Kibok Park All rights reserved."
+  },
+  {
+    "objectID": "posts/prgms-sql-20240321/index.html#개요",
+    "href": "posts/prgms-sql-20240321/index.html#개요",
+    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
+    "section": "",
+    "text": "프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다  (비상업적, 비영리적 용도)\n문제링크 게시가능여부"
+  },
+  {
+    "objectID": "posts/prgms-sql-20240321/index.html#문제-3월에-태어난-여성-회원-목록-출력하기",
+    "href": "posts/prgms-sql-20240321/index.html#문제-3월에-태어난-여성-회원-목록-출력하기",
+    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
+    "section": "문제 : 3월에 태어난 여성 회원 목록 출력하기",
+    "text": "문제 : 3월에 태어난 여성 회원 목록 출력하기\n\n\n다음은 식당 리뷰 사이트의 회원 정보를 담은 MEMBER_PROFILE 테이블입니다. MEMBER_PROFILE 테이블은 다음과 같으며 MEMBER_ID, MEMBER_NAME, TLNO, GENDER, DATE_OF_BIRTH는 회원 ID, 회원 이름, 회원 연락처, 성별, 생년월일을 의미합니다.\n\n\n\n\n\nColumn name\n\n\nType\n\n\nNullable\n\n\n\n\n\n\nMEMBER_ID\n\n\nVARCHAR(100)\n\n\nFALSE\n\n\n\n\nMEMBER_NAME\n\n\nVARCHAR(50)\n\n\nFALSE\n\n\n\n\nTLNO\n\n\nVARCHAR(50)\n\n\nTRUE\n\n\n\n\nGENDER\n\n\nVARCHAR(1)\n\n\nTRUE\n\n\n\n\nDATE_OF_BIRTH\n\n\nDATE\n\n\nTRUE\n\n\n\n\n\n\n문제\n\n\nMEMBER_PROFILE 테이블에서 생일이 3월인 여성 회원의 ID, 이름, 성별, 생년월일을 조회하는 SQL문을 작성해주세요. 이때 전화번호가 NULL인 경우는 출력대상에서 제외시켜 주시고, 결과는 회원ID를 기준으로 오름차순 정렬해주세요.\n\n\n\n예시\n\n\nMEMBER_PROFILE 테이블이 다음과 같을 때\n\n\n\n\n\nMEMBER_ID\n\n\nMEMBER_NAME\n\n\nTLNO\n\n\nGENDER\n\n\nDATE_OF_BIRTH\n\n\n\n\n\n\njiho92@naver.com\n\n\n이지호\n\n\n01076432111\n\n\nW\n\n\n1992-02-12\n\n\n\n\njiyoon22@hotmail.com\n\n\n김지윤\n\n\n01032324117\n\n\nW\n\n\n1992-02-22\n\n\n\n\njihoon93@hanmail.net\n\n\n김지훈\n\n\n01023258688\n\n\nM\n\n\n1993-02-23\n\n\n\n\nseoyeons@naver.com\n\n\n박서연\n\n\n01076482209\n\n\nW\n\n\n1993-03-16\n\n\n\n\nyoonsy94@gmail.com\n\n\n윤서연\n\n\nNULL\n\n\nW\n\n\n1994-03-19\n\n\n\n\n\nSQL을 실행하면 다음과 같이 출력되어야 합니다.\n\n\n\n\n\nMEMBER_ID\n\n\nMEMBER_NAME\n\n\nGENDER\n\n\nDATE_OF_BIRTH\n\n\n\n\n\n\nseoyeons@naver.com\n\n\n박서연\n\n\nW\n\n\n1993-03-16\n\n\n\n\n\n\n주의사항\n\n\nDATE_OF_BIRTH의 데이트 포맷이 예시와 동일해야 정답처리 됩니다."
+  },
+  {
+    "objectID": "posts/prgms-sql-20240321/index.html#작성답안",
+    "href": "posts/prgms-sql-20240321/index.html#작성답안",
+    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
+    "section": "작성답안",
+    "text": "작성답안\n\n\n\nSELECT MEMBER_ID, MEMBER_NAME,  GENDER, TO_CHAR(DATE_OF_BIRTH, 'YYYY-MM-DD')\nFROM MEMBER_PROFILE\nWHERE GENDER = 'W'\n  AND TO_CHAR(DATE_OF_BIRTH, 'MON') = 'MAR'\n  AND TLNO IS NOT NULL\nORDER BY MEMBER_ID ASC\n\n\nFigure 1"
+  },
+  {
+    "objectID": "posts/prgms-sql-20240321/index.html#정리",
+    "href": "posts/prgms-sql-20240321/index.html#정리",
+    "title": "[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기",
+    "section": "정리",
+    "text": "정리\n\nWHERE 컬럼명 IS NOT NULL\nWHERE NOT 컬럼명 IS NULL"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Blog",
+    "section": "",
+    "text": "[M_Study_3주차] Multi-class Classification / Artificial Neural Network\n\n\n\n파이썬\n\n\n머신러닝\n\n\n딥러닝\n\n\nMStudy\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-06-09\n\n\n\n\n\n\n\n\n\n\n\n\n[M_Study_2주차] Multiple Regression / Logistic Regression\n\n\n\n파이썬\n\n\n머신러닝\n\n\n딥러닝\n\n\nMStudy\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-06-02\n\n\n\n\n\n\n\n\n\n\n\n\n[M_Study_1주차] Tensorflow / Linear Regression\n\n\n\n파이썬\n\n\n머신러닝\n\n\n딥러닝\n\n\nMStudy\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-05-26\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n[버크셔 해서웨이의 재탄생 읽고] 용어 정리\n\n\n\n경제/금융공부\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-23\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-21\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-20\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 조건에 맞는 도서 리스트 출력하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-19\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 가장 비싼 상품 구하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-18\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 평균 일일 대여 요금 구하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-17\n\n\n\n\n\n\n\n\n\n\n\n\n[간단분석] 공공데이터 상권정보로 인터랙티브 맵 시각화(folium)\n\n\n\n파이썬\n\n\n분석\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-11-07\n\n\n\n\n\n\n\n\n\n\n\n\n[한빛앤] GitHub Copilot 세미나 정리\n\n\n\nCopilot\n\n\nCodeium\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-09-13\n\n\n\n\n\n\n\n\n\n\n\n\n[Pycon2023] 짠내나는 데이터 다루기(박조은님 세션) 정리\n\n\n\n파이썬\n\n\n파이콘\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-08-13\n\n\n\n\n\n\n\n\n\n\n\n\n[Scikit-learn] Kaggle 집값예측 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-05-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Pytorch] MNIST 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-02-19\n\n\n\n\n\n\n\n\n\n\n\n\n[간단분석] KOSIS 온라인쇼핑 해외직접판매액 간단분석 (타 주제 Choropleth시각화)\n\n\n\n파이썬\n\n\n분석\n\n\n\n\n\n\n\nKibok Park\n\n\n2022-11-13\n\n\n\n\n\n\n\n\n\n\n\n\n[간단분석] 공공데이터포털 건강검진정보 활용\n\n\n\n파이썬\n\n\n분석\n\n\n\n\n\n\n\nKibok Park\n\n\n2022-11-06\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
+  },
+  {
+    "objectID": "index_miniprojects.html",
+    "href": "index_miniprojects.html",
+    "title": "Mini Projects",
+    "section": "",
+    "text": "[Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 & 정리 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\n\nPython, win32를 활용한 SAP Scripting\n\n\n\nKibok Park\n\n\n2024-03-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] COO발급관리용 Tool\n\n\n\nPython\n\n\nwin11toast\n\n\nsqlite3\n\n\nstreamlit\n\n\npandas\n\n\nselenium\n\n\n\n[Python] selenium(웹스크레핑), sqlite3(db), win11toast(알림), streamlit(UI)\n\n\n\nKibok Park\n\n\n2024-02-20\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] LocalL/C 관리용 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\nStreamlit\n\n\nsqlite3\n\n\nBeautifulSoup\n\n\n\nPython, Streamlit을 활용한 업무자동화\n\n\n\nKibok Park\n\n\n2024-01-22\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] 아웃룩 메일열람 & pdf regex리딩 & 시스템 자동등록\n\n\n\nPython\n\n\nre\n\n\nxlwings\n\n\npandas\n\n\npdfminer\n\n\n\n[Python] re(regex), xlwings(암호화 Excel리딩), pdfminer(pdf리딩), pywin32(outlook)\n\n\n\nKibok Park\n\n\n2023-12-15\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] Peak타임 대응용 수출계약서pdf tabula리딩\n\n\n\nPython\n\n\ntabula\n\n\nxlwings\n\n\npathlib\n\n\npandas\n\n\n\n[Python] tabula(pdf리딩[표 형태], xlwings(암호화 Excel리딩)\n\n\n\nKibok Park\n\n\n2023-11-02\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "Kibok Park",
+    "section": "",
+    "text": "I’m Kibok Park. Welcome to my blog. I’m not an expert in my favorites yet, but I’m working on becoming one. I hope you to have nice time with my blog.\nCopyright © 2024 Kibok Park All rights reserved."
+  },
+  {
+    "objectID": "about.html#hello",
+    "href": "about.html#hello",
+    "title": "Kibok Park",
+    "section": "",
+    "text": "I’m Kibok Park. Welcome to my blog. I’m not an expert in my favorites yet, but I’m working on becoming one. I hope you to have nice time with my blog."
+  },
+  {
+    "objectID": "about.html#topics",
+    "href": "about.html#topics",
+    "title": "Kibok Park",
+    "section": "Topics",
+    "text": "Topics\nPython, Quantative trading"
+  },
+  {
+    "objectID": "posts/coach-ds-20230506/index.html",
+    "href": "posts/coach-ds-20230506/index.html",
+    "title": "[간단분석] 공공데이터포털 건강검진정보 활용",
+    "section": "",
+    "text": "국민건강보험공단 건강검진정보를 활용한 간단한 분석 공공데이터포털 국민건강보험공단_건강검진정보\n실습 기록용으로 남깁니다.\nCopyright © 2024 Kibok Park All rights reserved."
+  },
+  {
+    "objectID": "posts/coach-ds-20230506/index.html#개요",
+    "href": "posts/coach-ds-20230506/index.html#개요",
+    "title": "[간단분석] 공공데이터포털 건강검진정보 활용",
+    "section": "",
+    "text": "국민건강보험공단 건강검진정보를 활용한 간단한 분석 공공데이터포털 국민건강보험공단_건강검진정보\n실습 기록용으로 남깁니다."
+  },
+  {
+    "objectID": "posts/coach-ds-20230506/index.html#데이터-불러오기",
+    "href": "posts/coach-ds-20230506/index.html#데이터-불러오기",
+    "title": "[간단분석] 공공데이터포털 건강검진정보 활용",
+    "section": "데이터 불러오기",
+    "text": "데이터 불러오기\n\nimport pandas as pd\nimport numpy as np\nimport seaborn as sns\nimport koreanize_matplotlib\nimport matplotlib.pyplot as plt\n\n\ndf = pd.read_csv('국민건강보험공단_건강검진정보_20221231.CSV', encoding=\"cp949\")\n\n\ndf.columns\n\nIndex(['기준년도', '가입자일련번호', '시도코드', '성별', '연령대코드(5세단위)', '신장(5cm단위)',\n       '체중(5kg단위)', '허리둘레', '시력(좌)', '시력(우)', '청력(좌)', '청력(우)', '수축기혈압',\n       '이완기혈압', '식전혈당(공복혈당)', '총콜레스테롤', '트리글리세라이드', 'HDL콜레스테롤', 'LDL콜레스테롤',\n       '혈색소', '요단백', '혈청크레아티닌', '혈청지오티(AST)', '혈청지피티(ALT)', '감마지티피', '흡연상태',\n       '음주여부', '구강검진수검여부', '치아우식증유무', '치석'],\n      dtype='object')\n\n\n\n음주여부, 흡연상태, 연령대코드, 성별코드간의 상관관계\n\n상관계수 구하기\n\n\nfiltered = df[['음주여부','흡연상태','연령대코드(5세단위)','성별']].copy()\nfiltered.corr()\n\n\n\n\n\n\n\n\n음주여부\n흡연상태\n연령대코드(5세단위)\n성별\n\n\n\n\n음주여부\n1.000000\n0.252058\n-0.357367\n-0.254963\n\n\n흡연상태\n0.252058\n1.000000\n-0.073601\n-0.536833\n\n\n연령대코드(5세단위)\n-0.357367\n-0.073601\n1.000000\n0.042162\n\n\n성별\n-0.254963\n-0.536833\n0.042162\n1.000000\n\n\n\n\n\n\n\n\n상관계수 시각화 (Seaborn heatmap)\n\n\n#mask옵션 사용하고, annot옵션으로 수치표기, fmt옵션으로 소수자리 지정하여 heatmap으로 표현\nmask = np.triu(np.ones_like(filtered.corr(), dtype=bool))\nsns.heatmap(filtered.corr(), annot=True, fmt='.2f', mask=mask)\n\n\n\n\n\n\n\n\n\n상관관계가 강한 순으로 나열\n\n성별과 흡연, 음주와 연령의 뚜렷한 상관관계\n흡연과 음주의 약한 상관관계 &gt; [참고] -1.0과 -0.7 사이이면, 강한 음적 선형관계 -0.7과 -0.3 사이이면, 뚜렷한 음적 선형관계 -0.3과 -0.1 사이이면, 약한 음적 선형관계 -0.1과 +0.1 사이이면, 거의 무시될 수 있는 선형관계 +0.1과 +0.3 사이이면, 약한 양적 선형관계 +0.3과 +0.7 사이이면, 뚜렷한 양적 선형관계 +0.7과 +1.0 사이이면, 강한 양적 선형관계\n\n\n\n#상관계수로 표를 만들어, 강한 상관관계가 있는 순으로 조사해보았습니다 (절대값으로 내림차순)\ncon_index = []\ncon_value = []\ncon_value_abs= []\nfor i in filtered.corr().columns:\n    for j in filtered.corr().index:\n        con_index.append(i +\"/\" + j)\n        con_value.append(filtered.corr()[i][j])\n        con_value_abs.append(abs(filtered.corr()[i][j]))\npd.DataFrame({'상관계수':con_value,\n             '절대값':con_value_abs,\n             '항목':con_index}).sort_values(by=['절대값'],ascending=False)\n\n\n\n\n\n\n\n\n상관계수\n절대값\n항목\n\n\n\n\n0\n1.000000\n1.000000\n음주여부/음주여부\n\n\n5\n1.000000\n1.000000\n흡연상태/흡연상태\n\n\n10\n1.000000\n1.000000\n연령대코드(5세단위)/연령대코드(5세단위)\n\n\n15\n1.000000\n1.000000\n성별/성별\n\n\n7\n-0.536833\n0.536833\n흡연상태/성별\n\n\n13\n-0.536833\n0.536833\n성별/흡연상태\n\n\n2\n-0.357367\n0.357367\n음주여부/연령대코드(5세단위)\n\n\n8\n-0.357367\n0.357367\n연령대코드(5세단위)/음주여부\n\n\n3\n-0.254963\n0.254963\n음주여부/성별\n\n\n12\n-0.254963\n0.254963\n성별/음주여부\n\n\n1\n0.252058\n0.252058\n음주여부/흡연상태\n\n\n4\n0.252058\n0.252058\n흡연상태/음주여부\n\n\n6\n-0.073601\n0.073601\n흡연상태/연령대코드(5세단위)\n\n\n9\n-0.073601\n0.073601\n연령대코드(5세단위)/흡연상태\n\n\n11\n0.042162\n0.042162\n연령대코드(5세단위)/성별\n\n\n14\n0.042162\n0.042162\n성별/연령대코드(5세단위)\n\n\n\n\n\n\n\n\n\n흡연과 음주에 대한 추이\n\n앞서 약한 상관관계였던 흡연과 음주에 대한 인원추이\n\n\n# 코드를 실제값으로 변환\nsmoke = {1 : \"흡연안함\", 2: \"끊음\", 3: \"흡연중\"}\ndrink = {0: \"안마심\", 1: \"마심\"}\n\ndf['흡연상태'] = df['흡연상태'].replace(smoke)\ndf['음주여부'] = df['음주여부'].replace(drink)\n\n\n# '흡연상태','음주여부'만 가져와 crosstab\nfiltered_drink_smoke = df[['흡연상태','음주여부']]\ndf_crosstab = pd.crosstab(index=filtered_drink_smoke['음주여부'],columns=filtered_drink_smoke['흡연상태'])\ndf_crosstab\n\n\n\n\n\n\n\n흡연상태\n끊음\n흡연안함\n흡연중\n\n\n음주여부\n\n\n\n\n\n\n\n마심\n132750\n360530\n161804\n\n\n안마심\n33815\n280441\n30504\n\n\n\n\n\n\n\n\n# countplot 시각화\nsns.set_style('whitegrid')\nplt.rc('font',family=\"Malgun Gothic\")\nsns.countplot(data=filtered_drink_smoke, x='흡연상태', hue='음주여부', palette='Set1').set_title('흡연상태별 음주여부') # palette = 그래프테마\n\nText(0.5, 1.0, '흡연상태별 음주여부')\n\n\n\n\n\n\n\n\n\n\n흡연중이거나 했다가 끊은 경우에는 음주하는 사람의 비중이 높음\n흡연을 안하는 경우는 음주여부의 비중 차이가 크지 않음\n\n\n\n음주여부에 따른 콜레스테롤과 감마지티피의 관계\n\n감마지티피 : 알콜에 의한 간장애의 지표를 나타내는 검사항목\n각 항목을 산점도로 시각화하여 파악\n\n\ndf_temp = df[['총콜레스테롤','감마지티피','음주여부','흡연상태']]\n\n\n# lmplot 산점도\nplt.figure(figsize=(14,14))\nsns.lmplot(data=df_temp, x='총콜레스테롤', y='감마지티피', hue='음주여부', col='흡연상태',markers=['x','o'] # markers로 음주여부에 따라 o,x로\n           ,scatter_kws={'s':20}) # 뭉쳐진부분이 잘보이도록 scatter_kws로 점크기조정\n\n&lt;Figure size 1400x1400 with 0 Axes&gt;\n\n\n\n\n\n\n\n\n\n\n대체로 특정 구역에 몰려있음, 체중 120kg 이상에 대해서 추가분석\n\n\nweight_over120 = df.loc[(df['체중(5kg단위)'] &gt;= 120), ['총콜레스테롤','감마지티피','음주여부','흡연상태']]\nplt.figure(figsize=(14,14))\nsns.lmplot(data=weight_over120, x='총콜레스테롤', y='감마지티피', hue='음주여부', col='흡연상태',markers=['x','o']\n           ,scatter_kws={'s':20})\n\n&lt;Figure size 1400x1400 with 0 Axes&gt;\n\n\n\n\n\n\n\n\n\n\n흡연중인 경우, 흡연을 안하거나 끊은 경우보다 감마지피티의 값이 높게 분포\n음주여부에 따라 콜레스테롤의 차이는 크게 보이지 않으나, 감마지티피의 경우 모두 상승하는 경향\n\n\n\n연령대별 시력 확인\n\n# 별도로 정의해둔 연령코드 딕셔너리\nage_code = {1: '0~4세',\n 2: '5~9세',\n 3: '10~14세',\n 4: '15~19세',\n 5: '20~24세',\n 6: '25~29세',\n 7: '30~34세',\n 8: '35~39세',\n 9: '40~44세',\n 10: '45~49세',\n 11: '50~54세',\n 12: '55~59세',\n 13: '60~64세',\n 14: '65~69세',\n 15: '70~74세',\n 16: '75~79세',\n 17: '80~84세',\n 18: '85세+'}\n\n# 실명(시력 9.9) 제거\nsight_right = df.drop(df.loc[df['시력(우)']==9.9,].index)\nsight_left = df.drop(df.loc[df['시력(좌)']==9.9,].index)\n\n#숫자료 표기되는 연령대코드를 연령구간으로 표기할 index 생성 후 replace로 변경 (barplot의 index로 사용)\nage_code_right = []\nfor i in np.sort(sight_right['연령대코드(5세단위)'].unique()).tolist():\n    age_code_right.append(age_code[i])\nage_code_left = []\nfor i in np.sort(sight_left['연령대코드(5세단위)'].unique()).tolist():\n    age_code_left.append(age_code[i])\n\nsight_right['연령대코드(5세단위)'] = sight_right['연령대코드(5세단위)'].replace(age_code)\nsight_left['연령대코드(5세단위)'] = sight_left['연령대코드(5세단위)'].replace(age_code)\n\n\n#시력(좌), (우) 그래프를 식별하기 용이하도록 (좌)그래프를 회전\nfig, axs = plt.subplots(ncols=2, figsize=(12,5),\n                       gridspec_kw={'wspace':0.5},)\nfig.suptitle('연령별 시력 평균(좌, 우)').set_size(20) #제목\n\nsns.set_context('talk')\n\nsns.barplot(data = sight_left, x='시력(좌)', y='연령대코드(5세단위)', hue='성별', orient='h', errorbar=None, ax=axs[0],\n            order=age_code_left).invert_xaxis()\nsns.barplot(data = sight_right, x='시력(우)', y='연령대코드(5세단위)', hue='성별', orient='h', errorbar=None, ax=axs[1],\n            order=age_code_right)\n\nfor ax in axs:\n    ax.set_ylabel('연령대') # 코드가 아니므로 y축 이름을 연령대로 변경\n\n\n\n\n\n\n\n\n\n모든 연령대에서 특정 성별의 시력이 높음\n연령이 높아질수록 시력도 낮아지며, 좌우시력의 큰 차이는 보이지 않음"
+  },
+  {
+    "objectID": "posts/hanbitn-copilot-20230914/index.html",
+    "href": "posts/hanbitn-copilot-20230914/index.html",
+    "title": "[한빛앤] GitHub Copilot 세미나 정리",
+    "section": "",
+    "text": "한빛앤 코파일럿 세미나 다녀와서 정리\nCopyright © 2024 Kibok Park All rights reserved."
+  },
+  {
+    "objectID": "posts/hanbitn-copilot-20230914/index.html#개요",
+    "href": "posts/hanbitn-copilot-20230914/index.html#개요",
+    "title": "[한빛앤] GitHub Copilot 세미나 정리",
+    "section": "",
+    "text": "한빛앤 코파일럿 세미나 다녀와서 정리"
+  },
+  {
+    "objectID": "posts/hanbitn-copilot-20230914/index.html#내용-정리",
+    "href": "posts/hanbitn-copilot-20230914/index.html#내용-정리",
+    "title": "[한빛앤] GitHub Copilot 세미나 정리",
+    "section": "내용 정리",
+    "text": "내용 정리\n\nAuto complete : 코드를 먼저 쓰면 해주는 제안을 활용가능\n비사용자 대비 코딩시간 최대 55% 단축\n\n두 그룹에 자바스크립트 작성을 시킨 후 비교  https://github.blog/2022-09-07-research-quantifying-github-copilots-impact-on-developer-productivity-and-happiness/\n\n시간을 단축하고 개발자의 정신적에너지를 절약하여 고부가가치에 집중하게 하기\n보안이슈\n\n코파일럿은 제품 개선을 위해 데이터를 수집함(암호화 및 일부만 열람하게 한다고는 함)\n내 코드가 학습에 사용되는게 싫으면 세팅에서 수집하지 않도록 할 수 있음\n\n코파일럿 X\n\nChatGPT처럼 질문할 수 있고 답변받을 수 있음\n대화한 내용에 대해 물어볼만한 질문도 선택지로 제시\n각 프로젝트의 언어(Python 등)에 맞춰 답변\n\n대체제\n\nCodeium : 개인사용 무료, Autocomplete 가능, Chat 가능\nTabnine : 무료버전 있음, Local Machine mode(보안에 좋을 듯)\n\n사용 후기\n\nCopilot : 한달 무료 사용. Autocomplete기능 자체를 처음 써봐서 좋긴 했음 xml과 beautifulsoup관련 어려움이 있었는데 도움이 꽤 되었음\nCodeium : 개인플랜 무료 사용. Chat기능을 별도로 쓸 일이 없었음 설치형이라 회사에 도입은 어려울 것 같았음(설치는 늘 승인받으라해서)\n직업 개발자가 아니어서인지 고급기능을 쓸 일이 없어서, 내 경우는 Autocomplete정도로 충족이 되어 Codeium을 사용하기로 함\n(2024.06추가) 요즘은 코드특화된 모델이 많이 나와서 채팅 쪽은 오히려 코드스트랄 등이 체감상 더 나은 것 같음\n\nCodestral(Mistral Codemodel) : Mistral Lechat 접속 후 아래와 같이 모델을 변경하여 사용 가능"
   },
   {
     "objectID": "posts/meta-dl-creditcard-20240526/index.html",
