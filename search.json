@@ -107,21 +107,21 @@
   {
     "objectID": "posts/pycon-20230813/index.html",
     "href": "posts/pycon-20230813/index.html",
-    "title": "[Pycon2023] 짠내나는 데이터 다루기(박조은님 세션) 정리",
+    "title": "[Pycon2023] 짠내나는 데이터 다루기 세션 정리",
     "section": "",
-    "text": "파이콘 세션 듣고 간단히 정리  \n파이콘 사이트 : https://2023.pycon.kr/\nCopyright © 2024 Kibok Park All rights reserved."
+    "text": "파이콘에서 들었던 ’짠내나는 데이터 다루기’세션 내용정리입니다.\nCopyright © 2024 Kibok Park All rights reserved."
   },
   {
     "objectID": "posts/pycon-20230813/index.html#메모리-확보하기",
     "href": "posts/pycon-20230813/index.html#메모리-확보하기",
-    "title": "[Pycon2023] 짠내나는 데이터 다루기(박조은님 세션) 정리",
+    "title": "[Pycon2023] 짠내나는 데이터 다루기 세션 정리",
     "section": "메모리 확보하기",
     "text": "메모리 확보하기\n\n가상메모리 설정, 그래픽 설정 낮추기, 백그라운드 비활성화, 캐시 제거, 재부팅"
   },
   {
     "objectID": "posts/pycon-20230813/index.html#메모리-사용량-줄이기",
     "href": "posts/pycon-20230813/index.html#메모리-사용량-줄이기",
-    "title": "[Pycon2023] 짠내나는 데이터 다루기(박조은님 세션) 정리",
+    "title": "[Pycon2023] 짠내나는 데이터 다루기 세션 정리",
     "section": "메모리 사용량 줄이기",
     "text": "메모리 사용량 줄이기\n\n데이터 샘플링 (행/열 줄이기)\n\ndf.sample(n), df.sample(frac=0.1) * frac:비율\n도메인에 따라 샘플링 기준 달라짐(특정 상품군/기간/고객군 등)\n필요없는 컬럼 제거\n\n\n\n청크(Chunked Processing)\n\n메모리를 작은 청크로 나누어 처리(메모리에 청크 단위로 로드)\npd.read_csv(chunksize=100) * chunksize만큼의 row를 가져옴\n아래와 같은 형식으로 사용\n# Chunksize만큼 나누어서 리스트에 저장\nchunk_list = []\nfor chunk in pd.read_scv('sample.csv', chunksize=100):\n  # pd.to_numeric(, downcast='float)와 같은 옵션을 같이 사용하면 좋음\n  chunk_list.apppend(chunk)\n\n# 리스트를 concat을 활용하여 하나로 결합\npd.concat(chunk_list)\n추가검색해보니 Chunk size지정에 대한 용량별 가이드가 있어 참고해봄 (공식문서아님, 블로그글 참고함) 출처 : https://acepor.github.io/2017/08/03/using-chunksize/ \n\n\n\nParquet형식 사용(데이터 압축)\n\nParquet : 효율적 데이터 저장/검색을 위한 오픈소스, 열 지향 형식, Java/Python/C++ 등 지원\n샘플코드(Codestral에게 유사하게 만들어달라고 함)\n\nimport pyarrow.parquet as pq\nimport glob\n\nparquet_files = glob.glob('yourdirectory/*.parquet')\n\nfor file in parquet_files:\n    metadata = pq.read_metadata(file)\n    print('Schema:', metadata.schema)\n    print('Other Metadata:', metadata.metadata)\n\nKaggle의 Hotel booking demand로 실험한 것 보여주셨는데, 31.37GB → 4.95GB로 감소\n\n\n\n데이터 타입을 지정해서 불러오기\n\n아래와 같이 dtype을 지정해서 불러오는 경우 메모리 사용량이 절약될 수 있다\n\n  dtype_dict = {'기준년도':'uint16', '가입자일련번호':'uint32'}\n  pd.read_csv('sample.csv', dtype=dtype_dict)\n\nKaggle의 Hotel booking demand로 실험한 것 보여주셨는데, 29MB → 5.6MB로 감소\n\n\n\n분산처리 프레임워크(Dask, Vaex, PySpark 등 사용)\n\nDask : 병렬처리를 위한 분산 컴퓨팅 프레임워크, 큰 데이터를 처리할 수 있음, pandas와 유사한 API\nVaex : 디스크 기반의 컬럼 지향방식을 활용하여 대용량 데이터 처리 \nPySpark : Apache spark의 Python API (대규모 데이터 처리를 위한 분산컴퓨팅프레임워크 Spark를 파이썬에서 사용)"
   },
@@ -319,14 +319,14 @@
     "href": "posts/hanbitn-copilot-20230914/index.html",
     "title": "[한빛앤] GitHub Copilot 세미나 정리",
     "section": "",
-    "text": "한빛앤 코파일럿 세미나 다녀와서 정리\nCopyright © 2024 Kibok Park All rights reserved."
+    "text": "한빛앤 Copilot세미나 내용 정리(+Codeium, Codestral’)\nCopyright © 2024 Kibok Park All rights reserved."
   },
   {
     "objectID": "posts/hanbitn-copilot-20230914/index.html#개요",
     "href": "posts/hanbitn-copilot-20230914/index.html#개요",
     "title": "[한빛앤] GitHub Copilot 세미나 정리",
-    "section": "",
-    "text": "한빛앤 코파일럿 세미나 다녀와서 정리"
+    "section": "개요",
+    "text": "개요\n\n한빛앤 코파일럿 세미나 다녀와서 정리"
   },
   {
     "objectID": "posts/hanbitn-copilot-20230914/index.html#내용-정리",
@@ -389,7 +389,7 @@
     "href": "index.html",
     "title": "Blog",
     "section": "",
-    "text": "[M_Study_3주차] Multi-class Classification / Artificial Neural Network\n\n\n\n파이썬\n\n\n머신러닝\n\n\n딥러닝\n\n\nMStudy\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-06-09\n\n\n\n\n\n\n\n\n\n\n\n\n[공모전] 산업통상자원부 공공데이터 공모전 - 1\n\n\n\n공모전\n\n\n공공데이터\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-06-06\n\n\n\n\n\n\n\n\n\n\n\n\n[M_Study_2주차] Multiple Regression / Logistic Regression\n\n\n\n파이썬\n\n\n머신러닝\n\n\n딥러닝\n\n\nMStudy\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-06-02\n\n\n\n\n\n\n\n\n\n\n\n\n[M_Study_1주차] Tensorflow / Linear Regression\n\n\n\n파이썬\n\n\n머신러닝\n\n\n딥러닝\n\n\nMStudy\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-05-26\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n[버크셔 해서웨이의 재탄생 읽고] 용어 정리\n\n\n\n경제/금융공부\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-23\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-21\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-20\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 조건에 맞는 도서 리스트 출력하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-19\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 가장 비싼 상품 구하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-18\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 평균 일일 대여 요금 구하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-17\n\n\n\n\n\n\n\n\n\n\n\n\n[간단분석] 공공데이터 상권정보로 인터랙티브 맵 시각화(folium)\n\n\n\n파이썬\n\n\n분석\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-11-07\n\n\n\n\n\n\n\n\n\n\n\n\n[한빛앤] GitHub Copilot 세미나 정리\n\n\n\nCopilot\n\n\nCodeium\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-09-13\n\n\n\n\n\n\n\n\n\n\n\n\n[Pycon2023] 짠내나는 데이터 다루기(박조은님 세션) 정리\n\n\n\n파이썬\n\n\n파이콘\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-08-13\n\n\n\n\n\n\n\n\n\n\n\n\n[Scikit-learn] Kaggle 집값예측 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-05-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Pytorch] MNIST 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-02-19\n\n\n\n\n\n\n\n\n\n\n\n\n[간단분석] KOSIS 온라인쇼핑 해외직접판매액 간단분석 (타 주제 Choropleth시각화)\n\n\n\n파이썬\n\n\n분석\n\n\n\n\n\n\n\nKibok Park\n\n\n2022-11-13\n\n\n\n\n\n\n\n\n\n\n\n\n[간단분석] 공공데이터포털 건강검진정보 활용\n\n\n\n파이썬\n\n\n분석\n\n\n\n\n\n\n\nKibok Park\n\n\n2022-11-06\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
+    "text": "[M_Study_3주차] Multi-class Classification / Artificial Neural Network\n\n\n\n파이썬\n\n\n머신러닝\n\n\n딥러닝\n\n\nMStudy\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-06-09\n\n\n\n\n\n\n\n\n\n\n\n\n[공모전] 산업통상자원부 공공데이터 공모전 - 1\n\n\n\n공모전\n\n\n공공데이터\n\n\n분석\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-06-06\n\n\n\n\n\n\n\n\n\n\n\n\n[M_Study_2주차] Multiple Regression / Logistic Regression\n\n\n\n파이썬\n\n\n머신러닝\n\n\n딥러닝\n\n\nMStudy\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-06-02\n\n\n\n\n\n\n\n\n\n\n\n\n[M_Study_1주차] Tensorflow / Linear Regression\n\n\n\n파이썬\n\n\n머신러닝\n\n\n딥러닝\n\n\nMStudy\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-05-26\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n[버크셔 해서웨이의 재탄생 읽고] 용어 정리\n\n\n\n경제/금융공부\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-04-23\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 3월에 태어난 여성 회원 목록 출력하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-21\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 조건에 부합하는 중고거래 댓글 조회하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-20\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 조건에 맞는 도서 리스트 출력하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-19\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 가장 비싼 상품 구하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-18\n\n\n\n\n\n\n\n\n\n\n\n\n[프로그래머스SQL] 평균 일일 대여 요금 구하기\n\n\n\n프로그래머스/SQL\n\n\n\n\n\n\n\nKibok Park\n\n\n2024-03-17\n\n\n\n\n\n\n\n\n\n\n\n\n[간단분석] 공공데이터 상권정보로 인터랙티브 맵 시각화(folium)\n\n\n\n파이썬\n\n\n분석\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-11-07\n\n\n\n\n\n\n\n\n\n\n\n\n[한빛앤] GitHub Copilot 세미나 정리\n\n\n\nCopilot\n\n\nCodeium\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-09-13\n\n\n\n\n\n\n\n\n\n\n\n\n[Pycon2023] 짠내나는 데이터 다루기 세션 정리\n\n\n\n파이썬\n\n\n파이콘\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-08-13\n\n\n\n\n\n\n\n\n\n\n\n\n[Scikit-learn] Kaggle 집값예측 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-05-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Pytorch] MNIST 실습\n\n\n\n파이썬\n\n\n머신러닝\n\n\n\n\n\n\n\nKibok Park\n\n\n2023-02-19\n\n\n\n\n\n\n\n\n\n\n\n\n[간단분석] KOSIS 온라인쇼핑 해외직접판매액 간단분석 (타 주제 Choropleth시각화)\n\n\n\n파이썬\n\n\n분석\n\n\n\n\n\n\n\nKibok Park\n\n\n2022-11-13\n\n\n\n\n\n\n\n\n\n\n\n\n[간단분석] 공공데이터포털 건강검진정보 활용\n\n\n\n파이썬\n\n\n분석\n\n\n\n\n\n\n\nKibok Park\n\n\n2022-11-06\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
   },
   {
     "objectID": "posts/prgms-sql-20240321/index.html",
@@ -641,7 +641,14 @@
     "href": "posts/coach-ds-20231107/index.html",
     "title": "[간단분석] 공공데이터 상권정보로 인터랙티브 맵 시각화(folium)",
     "section": "",
-    "text": "Copyright © 2024 Kibok Park All rights reserved."
+    "text": "공공데이터포털 자료로 인터렉티브맵(folium) 시각화 연습\nCopyright © 2024 Kibok Park All rights reserved."
+  },
+  {
+    "objectID": "posts/coach-ds-20231107/index.html#개요",
+    "href": "posts/coach-ds-20231107/index.html#개요",
+    "title": "[간단분석] 공공데이터 상권정보로 인터랙티브 맵 시각화(folium)",
+    "section": "개요",
+    "text": "개요"
   },
   {
     "objectID": "posts/coach-ds-20231107/index.html#데이터-불러오기",
@@ -746,14 +753,14 @@
     "href": "posts/dtcontest-ore-20240608/index.html",
     "title": "[공모전] 산업통상자원부 공공데이터 공모전 - 1",
     "section": "",
-    "text": "2024 12회 산업통상자원부 공공데이터 활용 아이디어 공모전 참가해보기로 함\n\nhttps://datacontest.kr/apply/applyAdd/3\n\n공공데이터를 csv로 저장하지 않고 API로 활용해보기로 함\nCopyright © 2024 Kibok Park All rights reserved."
+    "text": "2024년 12회 산업통상자원부 공공데이터 활용 아이디어 공모전 참가 기록.(+공공데이터 API활용샘플)\nCopyright © 2024 Kibok Park All rights reserved."
   },
   {
     "objectID": "posts/dtcontest-ore-20240608/index.html#개요",
     "href": "posts/dtcontest-ore-20240608/index.html#개요",
     "title": "[공모전] 산업통상자원부 공공데이터 공모전 - 1",
-    "section": "",
-    "text": "2024 12회 산업통상자원부 공공데이터 활용 아이디어 공모전 참가해보기로 함\n\nhttps://datacontest.kr/apply/applyAdd/3\n\n공공데이터를 csv로 저장하지 않고 API로 활용해보기로 함"
+    "section": "개요",
+    "text": "개요\n\n2024년 12회 산업통상자원부 공공데이터 활용 아이디어 공모전 참가해보기로 함\n\nhttps://datacontest.kr/apply/applyAdd/3\n\n공공데이터를 csv로 저장하지 않고 API로 활용해보기로 함"
   },
   {
     "objectID": "posts/dtcontest-ore-20240608/index.html#내용정리",
