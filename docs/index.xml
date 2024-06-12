@@ -40802,6 +40802,68 @@ font-style: inherit;">'blind'</span>)</span>
   <pubDate>Mon, 06 Nov 2023 15:00:00 GMT</pubDate>
 </item>
 <item>
+  <title>[한빛앤] GitHub Copilot 세미나 정리</title>
+  <dc:creator>Kibok Park</dc:creator>
+  <link>https://kr9268.github.io/posts/hanbitn-copilot-20230914/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="개요" class="level2">
+<h2 class="anchored" data-anchor-id="개요">개요</h2>
+<ul>
+<li>한빛앤 코파일럿 세미나 다녀와서 정리 <br> <img src="https://kr9268.github.io/posts/hanbitn-copilot-20230914/index_files/figure-html/225d807a-1-image.png" class="img-fluid" alt="image.png"></li>
+</ul>
+</section>
+<section id="내용-정리" class="level2">
+<h2 class="anchored" data-anchor-id="내용-정리">내용 정리</h2>
+<ul>
+<li><p><code>Auto complete</code> : 코드를 먼저 쓰면 해주는 제안을 활용가능</p></li>
+<li><p><code>비사용자 대비 코딩시간 최대 55% 단축</code></p>
+<ul>
+<li>두 그룹에 자바스크립트 작성을 시킨 후 비교 <br> <a href="https://github.blog/2022-09-07-research-quantifying-github-copilots-impact-on-developer-productivity-and-happiness/">https://github.blog/2022-09-07-research-quantifying-github-copilots-impact-on-developer-productivity-and-happiness/</a></li>
+</ul></li>
+<li><p>시간을 단축하고 개발자의 정신적에너지를 절약하여 고부가가치에 집중하게 하기</p></li>
+<li><p>보안이슈</p>
+<ul>
+<li>코파일럿은 <code>제품 개선을 위해 데이터를 수집</code>함(암호화 및 일부만 열람하게 한다고는 함)</li>
+<li>내 코드가 학습에 사용되는게 싫으면 <code>세팅에서 수집하지 않도록 할 수 있음</code></li>
+</ul></li>
+<li><p>코파일럿 X</p>
+<ul>
+<li>ChatGPT처럼 질문할 수 있고 답변받을 수 있음</li>
+<li>대화한 내용에 대해 물어볼만한 질문도 선택지로 제시</li>
+<li>각 프로젝트의 언어(Python 등)에 맞춰 답변</li>
+</ul></li>
+<li><p>대체제</p>
+<ul>
+<li><code>Codeium</code> : 개인사용 무료, Autocomplete 가능, Chat 가능</li>
+<li><code>Tabnine</code> : 무료버전 있음, Local Machine mode(보안에 좋을 듯)</li>
+</ul></li>
+<li><p><code>사용 후기</code></p>
+<ul>
+<li><code>Copilot</code> : 한달 무료 사용. Autocomplete기능 자체를 처음 써봐서 좋긴 했음<br> xml과 beautifulsoup관련 어려움이 있었는데 도움이 꽤 되었음</li>
+<li><code>Codeium</code> : 개인플랜 무료 사용. Chat기능을 별도로 쓸 일이 없었음<br> 설치형이라 회사에 도입은 어려울 것 같았음(설치는 늘 승인받으라해서)</li>
+<li>직업 개발자가 아니어서인지 고급기능을 쓸 일이 없어서, <code>내 경우는 Autocomplete정도로 충족이 되어 Codeium을 사용하기로 함</code></li>
+<li><code>(2024.06추가)</code> 요즘은 코드특화된 모델이 많이 나와서 채팅 쪽은 오히려 <code>코드스트랄</code> 등이 체감상 더 나은 것 같음
+<ul>
+<li>Codestral(Mistral Codemodel) : Mistral Lechat 접속 후 아래와 같이 모델을 변경하여 사용 가능 <br> <img src="https://kr9268.github.io/posts/hanbitn-copilot-20230914/index_files/figure-html/85c8b5b1-1-image.png" class="img-fluid" alt="image.png"></li>
+</ul></li>
+</ul></li>
+</ul>
+
+
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
+  <category>Copilot</category>
+  <category>Codeium</category>
+  <guid>https://kr9268.github.io/posts/hanbitn-copilot-20230914/</guid>
+  <pubDate>Tue, 12 Sep 2023 15:00:00 GMT</pubDate>
+</item>
+<item>
   <title>[Pycon2023] 짠내나는 데이터 다루기(박조은님 세션) 정리</title>
   <dc:creator>Kibok Park</dc:creator>
   <link>https://kr9268.github.io/posts/pycon-20230813/</link>
