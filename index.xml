@@ -791,7 +791,7 @@ font-style: inherit;">'Confusion Matrix'</span>)</span>
   <pubDate>Sun, 09 Jun 2024 00:00:00 GMT</pubDate>
 </item>
 <item>
-  <title>[공모전] 산업통상자원부 공공데이터 공모전 - 1</title>
+  <title>[공모전] 공공데이터 공모전-1(대상광물 분석, 공공데이터API)</title>
   <dc:creator>Kibok Park</dc:creator>
   <link>https://kr9268.github.io/posts/dtcontest-ore-20240608/</link>
   <description><![CDATA[ 
@@ -3899,6 +3899,7 @@ font-style: inherit;">print</span>()</span></code></pre></div>
   <category>공모전</category>
   <category>공공데이터</category>
   <category>분석</category>
+  <category>공공데이터API</category>
   <guid>https://kr9268.github.io/posts/dtcontest-ore-20240608/</guid>
   <pubDate>Thu, 06 Jun 2024 00:00:00 GMT</pubDate>
 </item>
