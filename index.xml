@@ -40802,6 +40802,167 @@ font-style: inherit;">'blind'</span>)</span>
   <pubDate>Tue, 07 Nov 2023 00:00:00 GMT</pubDate>
 </item>
 <item>
+  <title>[Pycon2023] 짠내나는 데이터 다루기(박조은님 세션) 정리</title>
+  <dc:creator>Kibok Park</dc:creator>
+  <link>https://kr9268.github.io/posts/pycon-20230813/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="개요" class="level1">
+<h1>개요</h1>
+<ul>
+<li>파이콘 세션 듣고 간단히 정리 <br> <img src="https://kr9268.github.io/posts/pycon-20230813/index_files/figure-html/225d807a-1-image.png" class="img-fluid" alt="image.png"></li>
+<li><a href="https://2023.pycon.kr">파이콘 사이트</a> : https://2023.pycon.kr/</li>
+</ul>
+</section>
+<section id="세션내용-정리" class="level1">
+<h1>세션내용 정리</h1>
+<section id="메모리-확보하기" class="level2">
+<h2 class="anchored" data-anchor-id="메모리-확보하기">메모리 확보하기</h2>
+<ul>
+<li>가상메모리 설정, 그래픽 설정 낮추기, 백그라운드 비활성화, 캐시 제거, 재부팅</li>
+</ul>
+</section>
+<section id="메모리-사용량-줄이기" class="level2">
+<h2 class="anchored" data-anchor-id="메모리-사용량-줄이기">메모리 사용량 줄이기</h2>
+<section id="데이터-샘플링-행열-줄이기" class="level3">
+<h3 class="anchored" data-anchor-id="데이터-샘플링-행열-줄이기">데이터 샘플링 (행/열 줄이기)</h3>
+<ul>
+<li>df.sample(n), df.sample(frac=0.1) * <em>frac:비율</em></li>
+<li>도메인에 따라 샘플링 기준 달라짐(특정 상품군/기간/고객군 등)</li>
+<li>필요없는 컬럼 제거</li>
+</ul>
+</section>
+<section id="청크chunked-processing" class="level3">
+<h3 class="anchored" data-anchor-id="청크chunked-processing">청크(Chunked Processing)</h3>
+<ul>
+<li><p>메모리를 작은 청크로 나누어 처리(메모리에 청크 단위로 로드)</p></li>
+<li><p>pd.read_csv(chunksize=100) * <em>chunksize만큼의 row를 가져옴</em></p></li>
+<li><p>아래와 같은 형식으로 사용</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Chunksize만큼 나누어서 리스트에 저장</span></span>
+<span id="cb1-2">chunk_list <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> []</span>
+<span id="cb1-3"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> chunk <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> pd.read_scv(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sample.csv'</span>, chunksize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>):</span>
+<span id="cb1-4">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># pd.to_numeric(, downcast='float)와 같은 옵션을 같이 사용하면 좋음</span></span>
+<span id="cb1-5">  chunk_list.apppend(chunk)</span>
+<span id="cb1-6"></span>
+<span id="cb1-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 리스트를 concat을 활용하여 하나로 결합</span></span>
+<span id="cb1-8">pd.concat(chunk_list)</span></code></pre></div></li>
+<li><p>추가검색해보니 Chunk size지정에 대한 용량별 가이드가 있어 참고해봄 (공식문서아님, 블로그글 참고함)<br> 출처 : https://acepor.github.io/2017/08/03/using-chunksize/ <img src="https://kr9268.github.io/posts/pycon-20230813/index_files/figure-html/4d5c59a2-2-image.png" class="img-fluid" alt="image.png"></p></li>
+</ul>
+</section>
+<section id="parquet형식-사용데이터-압축" class="level3">
+<h3 class="anchored" data-anchor-id="parquet형식-사용데이터-압축">Parquet형식 사용(데이터 압축)</h3>
+<ul>
+<li>Parquet : 효율적 데이터 저장/검색을 위한 오픈소스, 열 지향 형식, Java/Python/C++ 등 지원</li>
+<li>샘플코드(Codestral에게 유사하게 만들어달라고 함)</li>
+</ul>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> pyarrow.parquet <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> pq</span>
+<span id="cb2-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> glob</span>
+<span id="cb2-3"></span>
+<span id="cb2-4">parquet_files <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> glob.glob(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'yourdirectory/*.parquet'</span>)</span>
+<span id="cb2-5"></span>
+<span id="cb2-6"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">file</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> parquet_files:</span>
+<span id="cb2-7">    metadata <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pq.read_metadata(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">file</span>)</span>
+<span id="cb2-8">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Schema:'</span>, metadata.schema)</span>
+<span id="cb2-9">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Other Metadata:'</span>, metadata.metadata)</span></code></pre></div>
+<ul>
+<li>Kaggle의 Hotel booking demand로 실험한 것 보여주셨는데, 31.37GB → 4.95GB로 감소</li>
+</ul>
+</section>
+<section id="데이터-타입을-지정해서-불러오기" class="level3">
+<h3 class="anchored" data-anchor-id="데이터-타입을-지정해서-불러오기">데이터 타입을 지정해서 불러오기</h3>
+<ul>
+<li>아래와 같이 dtype을 지정해서 불러오는 경우 메모리 사용량이 절약될 수 있다</li>
+</ul>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">  dtype_dict <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'기준년도'</span>:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'uint16'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'가입자일련번호'</span>:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'uint32'</span>}</span>
+<span id="cb3-2">  pd.read_csv(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sample.csv'</span>, dtype<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>dtype_dict)</span></code></pre></div>
+<ul>
+<li>Kaggle의 Hotel booking demand로 실험한 것 보여주셨는데, 29MB → 5.6MB로 감소</li>
+</ul>
+</section>
+<section id="분산처리-프레임워크dask-vaex-pyspark-등-사용" class="level3">
+<h3 class="anchored" data-anchor-id="분산처리-프레임워크dask-vaex-pyspark-등-사용">분산처리 프레임워크(Dask, Vaex, PySpark 등 사용)</h3>
+<ul>
+<li>Dask : 병렬처리를 위한 분산 컴퓨팅 프레임워크, 큰 데이터를 처리할 수 있음, pandas와 유사한 API</li>
+<li>Vaex : 디스크 기반의 컬럼 지향방식을 활용하여 대용량 데이터 처리 <img src="https://kr9268.github.io/posts/pycon-20230813/index_files/figure-html/4d5c59a2-1-image-3.png" class="img-fluid" alt="image-3.png"></li>
+<li>PySpark : Apache spark의 Python API (대규모 데이터 처리를 위한 분산컴퓨팅프레임워크 Spark를 파이썬에서 사용)</li>
+</ul>
+
+
+</section>
+</section>
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
+  <category>파이썬</category>
+  <category>파이콘</category>
+  <guid>https://kr9268.github.io/posts/pycon-20230813/</guid>
+  <pubDate>Sun, 13 Aug 2023 00:00:00 GMT</pubDate>
+</item>
+<item>
   <title>[Scikit-learn] Kaggle 집값예측 실습</title>
   <dc:creator>Kibok Park</dc:creator>
   <link>https://kr9268.github.io/posts/coach-ml-kaggle-20230506/</link>
