@@ -612,6 +612,144 @@ font-style: inherit;"># 업데이트 내역과 파일 git push</span></span>
   <pubDate>Mon, 10 Jun 2024 00:00:00 GMT</pubDate>
 </item>
 <item>
+  <title>[공모전] 공공데이터 공모전-3(github온라인db)</title>
+  <dc:creator>Kibok Park</dc:creator>
+  <link>https://kr9268.github.io/posts/dtcontest-ore-20240612/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>2024년 12회 산업통상자원부 공공데이터 활용 아이디어 공모전 참가 기록.(지표 및 사용할 데이터에 대한 고민)</p>
+<section id="개요" class="level2">
+<h2 class="anchored" data-anchor-id="개요">개요</h2>
+<ul>
+<li>2024년 12회 산업통상자원부 공공데이터 활용 아이디어 공모전 참가해보기로 함
+<ul>
+<li>https://datacontest.kr/apply/applyAdd/3</li>
+</ul></li>
+<li>사용하기로 한 지표에 대한 재조사 및 통합사용하기로 의견제안 예정</li>
+<li>모델의 Feature로 원자재의 벌크운송에 대한 운임지수(BDI)사용 의견제안 예정</li>
+</ul>
+</section>
+<section id="내용정리" class="level2">
+<h2 class="anchored" data-anchor-id="내용정리">내용정리</h2>
+<section id="지난-회의정리" class="level3">
+<h3 class="anchored" data-anchor-id="지난-회의정리">지난 회의정리</h3>
+<ul>
+<li>모델링에 사용할 지표 2가지 선정
+<ul>
+<li>수급안정화지수</li>
+<li>시장위험지수</li>
+</ul></li>
+<li>광물별 가격 영향 미치는 요소 생각해보기</li>
+<li>모델링 관련 아이디어</li>
+</ul>
+</section>
+<section id="회의내용에-대한-self고찰-및-아이디어-develope" class="level3">
+<h3 class="anchored" data-anchor-id="회의내용에-대한-self고찰-및-아이디어-develope">회의내용에 대한 Self고찰 및 아이디어 Develope</h3>
+<ul>
+<li>모델링에 사용할 지표에 대한 분석
+<ul>
+<li>데이터를 살펴보다보니 둘의 움직임이 거의 같게 나타남</li>
+<li>가격리스크, 중장기적 시계 등 공통적인 요소가 서로 많은 지표임을 발견</li>
+<li>포함항목을 좀 더 구체적으로 명시한 <code>수급안정화지수로 통합사용 하는 것으로 의견 제안 예정</code>
+<ul>
+<li>광종별 중장기 가격리스크, 세계 수급비율(공급/소비), 세계 공급(매장)편중도, 국내 수입증가율, 국내 수입국 편중도 등</li>
+</ul></li>
+</ul></li>
+</ul>
+<div id="71278759" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> pd</span>
+<span id="cb1-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> seaborn <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> sns</span>
+<span id="cb1-3"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> koreanize_matplotlib</span>
+<span id="cb1-4"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> plt</span>
+<span id="cb1-5"></span>
+<span id="cb1-6">df_source <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.read_csv(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'비교_한국광해광업공단_수급안정화지수_코발트_20240520 (1).csv'</span>, encoding<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'cp949'</span>)</span>
+<span id="cb1-7">df_source[[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'기간'</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'시장위험지수'</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'수급안정화지수'</span>]].plot(x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'기간'</span>)</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/dtcontest-ore-20240612/index_files/figure-html/cell-2-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><p>광물별 고려요소 및 모델링에 쓸 데이터 관련 아이디어</p>
+<ol type="1">
+<li>고려대상 광물들의 세계 생산량 비중 등을 고려할 때 <code>국제수송(수입)을 고려</code>해야할 것으로 보임
+<ul>
+<li>조사를 통해 <code>상하이 컨테이너 운임지수(SCFI)</code>를 확인, 국가별 운임지수에 대한 가중치를 반영한 지표로 주요 수입국에 대해 반영 고려
+<ul>
+<li>그러나 광물운송의 특성상 컨테이너로 운송하지 않기 때문에 다른 지수를 모색</li>
+</ul></li>
+<li>벌크선에 대한 지수인 <code>발틱운임지수(BDI)</code> 도입 검토
+<ul>
+<li>공급 대비 운송량에 대한 수요를 알 수 있음</li>
+<li>벌크선은 광물, 곡물 등을 운송하므로 원자재에 대한 글로벌 수요와 공급을 간접적으로 측정 원자재 소요에 대한 미래의 경제선행지표로도 간주되기도 함</li>
+<li>구체적인 운송수요가 있을 때만 예약되는 벌크선 특성상 특정 목적에 의해 조정되는 경우가 적음</li>
+<li>위키백과에서 위의 내용들 발췌 : https://en.wikipedia.org/wiki/Baltic_Dry_Index</li>
+</ul></li>
+<li><code>발틱운임지수(BDI)를 데이터로 사용하는 것으로 의견 제안 예정</code></li>
+</ul></li>
+<li>주요 생산국에 대한 여러 요소의 고려
+<ul>
+<li>전쟁, 전염병, 인건비 등을 대상으로 고려할 수는 없을지에 대한 고민
+<ul>
+<li>수치화하기 어렵거나, 자료를 구하기 어려울 것으로 보여 일단 Drop</li>
+</ul></li>
+</ul></li>
+</ol></li>
+</ul>
+
+
+</section>
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
+  <category>공모전</category>
+  <category>공공데이터</category>
+  <category>분석</category>
+  <category>공공데이터API</category>
+  <category>github</category>
+  <guid>https://kr9268.github.io/posts/dtcontest-ore-20240612/</guid>
+  <pubDate>Mon, 10 Jun 2024 00:00:00 GMT</pubDate>
+</item>
+<item>
   <title>[M_Study_3주차] Multi-class Classification / Artificial Neural Network</title>
   <dc:creator>Kibok Park</dc:creator>
   <link>https://kr9268.github.io/posts/meta-dl-creditcard-20240609/</link>
