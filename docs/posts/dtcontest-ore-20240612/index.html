@@ -9,7 +9,7 @@
 <meta name="author" content="Kibok Park">
 <meta name="dcterms.date" content="2024-06-10">
 
-<title>Blog - [Python] Github, API활용한 공공데이터 저장소 만들기</title>
+<title>Blog - [공모전] 공공데이터 공모전-3(github온라인db)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -178,13 +178,13 @@ gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">[Python] Github, API활용한 공공데이터 저장소 만들기</h1>
+      <h1 class="title">[공모전] 공공데이터 공모전-3(github온라인db)</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">Python</div>
-                <div class="quarto-category">requests</div>
-                <div class="quarto-category">json</div>
-                <div class="quarto-category">subprocess</div>
-                <div class="quarto-category">pandas</div>
+                <div class="quarto-category">공모전</div>
+                <div class="quarto-category">공공데이터</div>
+                <div class="quarto-category">분석</div>
+                <div class="quarto-category">공공데이터API</div>
+                <div class="quarto-category">github</div>
               </div>
                   </div>
   </div>
@@ -209,12 +209,6 @@ gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
       
     </div>
     
-  <div>
-    <div class="abstract">
-      <div class="block-title">Abstract</div>
-      <p>[Python] requests(공공데이터API호출용), json(json규격 자료저장), subprocess(github push자동화), pandas(csv저장)</p>
-    </div>
-  </div>
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
@@ -224,12 +218,12 @@ gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#추진배경" id="toc-추진배경" class="nav-link active" data-scroll-target="#추진배경">추진배경</a></li>
-  <li><a href="#효과" id="toc-효과" class="nav-link" data-scroll-target="#효과">효과</a></li>
-  <li><a href="#github-repository" id="toc-github-repository" class="nav-link" data-scroll-target="#github-repository">github repository</a></li>
-  <li><a href="#세부내용-구현내용-사용한-언어패키지-등" id="toc-세부내용-구현내용-사용한-언어패키지-등" class="nav-link" data-scroll-target="#세부내용-구현내용-사용한-언어패키지-등">[세부내용] 구현내용 &amp; 사용한 언어/패키지 등</a></li>
-  <li><a href="#샘플코드패키지-및-함수" id="toc-샘플코드패키지-및-함수" class="nav-link" data-scroll-target="#샘플코드패키지-및-함수">샘플코드(패키지 및 함수)</a></li>
-  <li><a href="#샘플코드패키지-및-함수-1" id="toc-샘플코드패키지-및-함수-1" class="nav-link" data-scroll-target="#샘플코드패키지-및-함수-1">샘플코드(패키지 및 함수)</a></li>
+  <li><a href="#개요" id="toc-개요" class="nav-link active" data-scroll-target="#개요">개요</a></li>
+  <li><a href="#내용정리" id="toc-내용정리" class="nav-link" data-scroll-target="#내용정리">내용정리</a>
+  <ul class="collapse">
+  <li><a href="#지난-회의정리" id="toc-지난-회의정리" class="nav-link" data-scroll-target="#지난-회의정리">지난 회의정리</a></li>
+  <li><a href="#회의내용에-대한-self고찰-및-아이디어-develope" id="toc-회의내용에-대한-self고찰-및-아이디어-develope" class="nav-link" data-scroll-target="#회의내용에-대한-self고찰-및-아이디어-develope">회의내용에 대한 Self고찰 및 아이디어 Develope</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -240,194 +234,91 @@ gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
 
 
 
-<section id="추진배경" class="level2">
-<h2 class="anchored" data-anchor-id="추진배경">추진배경</h2>
+<p>2024년 12회 산업통상자원부 공공데이터 활용 아이디어 공모전 참가 기록.(지표 및 사용할 데이터에 대한 고민)</p>
+<section id="개요" class="level2">
+<h2 class="anchored" data-anchor-id="개요">개요</h2>
 <ul>
-<li>본격적으로 모델 학습을 하기 전, 데이터 이용 편의를 증진하고자 함</li>
-<li>팀원들이 R이나 통계분석에는 익숙하나 파이썬 코딩에는 익숙하지않아, 최대한 모델링에 집중하도록 지원
+<li>2024년 12회 산업통상자원부 공공데이터 활용 아이디어 공모전 참가해보기로 함
 <ul>
-<li>하나의 repository에서 원하는 데이터를 한번에 확인 가능</li>
-<li>repository에서 바로 복사해서 사용가능한 샘플을 제공하여 쉽게 데이터로딩 가능</li>
+<li>https://datacontest.kr/apply/applyAdd/3</li>
 </ul></li>
-<li>데이터를 하나의 페이지에서 통합관리(공공데이터 홈페이지 접속 등 불필요)
-<ul>
-<li>업데이트 일자를 표기하여 얼마나 최신 데이터인지 확인 가능</li>
-<li>추가하고자 하는 데이터가 공공데이터포털의 데이터라면 쉽게 작업내역에 추가가능 (리스트 추가권한을 주거나, discord봇 접수 등 생각해보았으나 구현시간대비 효용이 작아 직접 추가진행)</li>
-</ul></li>
-<li>개인서버(NAS)에서 매일 특정시간 구동하여, github서버로 자동 push(업로드)하여 별도의 수작업없이 db 최신화</li>
+<li>사용하기로 한 지표에 대한 재조사 및 통합사용하기로 의견제안 예정</li>
+<li>모델의 Feature로 원자재의 벌크운송에 대한 운임지수(BDI)사용 의견제안 예정</li>
 </ul>
 </section>
-<section id="효과" class="level2">
-<h2 class="anchored" data-anchor-id="효과">효과</h2>
+<section id="내용정리" class="level2">
+<h2 class="anchored" data-anchor-id="내용정리">내용정리</h2>
+<section id="지난-회의정리" class="level3">
+<h3 class="anchored" data-anchor-id="지난-회의정리">지난 회의정리</h3>
 <ul>
-<li>특정 공공데이터 포털의 데이터를 사용하기 위해 했던 아래의 작업이 제거됨
+<li>모델링에 사용할 지표 2가지 선정
 <ul>
-<li>공공데이터포털에 접속하여 csv파일 저장</li>
-<li>저장해둔 csv파일 찾기</li>
-<li>해당 파일을 분석했던 jupyter파일로 찾아가 API호출주소나 키를 찾기</li>
-<li>csv파일을 저장한 뒤 추가 업데이트가 되었는지 확인하고 재다운로드</li>
-<li>한국어 데이터 로딩을 위한 encoding규격 등의 숙지가 필요없음 (저장시 규격을 지정하고, 로딩을 위한 샘플코드에 규격을 지정해둠)</li>
+<li>수급안정화지수</li>
+<li>시장위험지수</li>
 </ul></li>
-<li>위의 사항을 달성하기 위한 부가작업이 제거됨
-<ul>
-<li>csv파일 저장 및 업데이트 시기 기록, 서버에 업로드 및 파일주소 저장</li>
-</ul></li>
+<li>광물별 가격 영향 미치는 요소 생각해보기</li>
+<li>모델링 관련 아이디어</li>
 </ul>
 </section>
-<section id="github-repository" class="level2">
-<h2 class="anchored" data-anchor-id="github-repository">github repository</h2>
-<p><a href="https://github.com/KR9268/db_datagokr">관련 github레포</a></p>
+<section id="회의내용에-대한-self고찰-및-아이디어-develope" class="level3">
+<h3 class="anchored" data-anchor-id="회의내용에-대한-self고찰-및-아이디어-develope">회의내용에 대한 Self고찰 및 아이디어 Develope</h3>
 <ul>
-<li>API개인키 등 정보가 있어 레포에는 csv파일과 현황만 저장함<br> (구현을 위해 필요한 db_list나 개인키 등의 json파일은 모두 ignore리스트로 관리)</li>
-<li>git clone해둔 개인서버 디렉토리에서 자동 실행</li>
+<li>모델링에 사용할 지표에 대한 분석
+<ul>
+<li>데이터를 살펴보다보니 둘의 움직임이 거의 같게 나타남</li>
+<li>가격리스크, 중장기적 시계 등 공통적인 요소가 서로 많은 지표임을 발견</li>
+<li>포함항목을 좀 더 구체적으로 명시한 <code>수급안정화지수로 통합사용 하는 것으로 의견 제안 예정</code>
+<ul>
+<li>광종별 중장기 가격리스크, 세계 수급비율(공급/소비), 세계 공급(매장)편중도, 국내 수입증가율, 국내 수입국 편중도 등</li>
+</ul></li>
+</ul></li>
 </ul>
-</section>
-<section id="세부내용-구현내용-사용한-언어패키지-등" class="level2">
-<h2 class="anchored" data-anchor-id="세부내용-구현내용-사용한-언어패키지-등">[세부내용] 구현내용 &amp; 사용한 언어/패키지 등</h2>
+<div id="71278759" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> koreanize_matplotlib</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>df_source <span class="op">=</span> pd.read_csv(<span class="st">'비교_한국광해광업공단_수급안정화지수_코발트_20240520 (1).csv'</span>, encoding<span class="op">=</span><span class="st">'cp949'</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>df_source[[<span class="st">'기간'</span>,<span class="st">'시장위험지수'</span>,<span class="st">'수급안정화지수'</span>]].plot(x<span class="op">=</span><span class="st">'기간'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-2-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><p>광물별 고려요소 및 모델링에 쓸 데이터 관련 아이디어</p>
 <ol type="1">
-<li>json_load(<code>json</code>) : 개인키와 db_list 로딩을 위한 함수. 어려운 기능은 아니지만 여러번 쓰여 함수화 <br></li>
-<li>download_from_data_go_kr_with_json(<code>requests</code>, <code>json</code>) : 공공데이터포털 API호출용 (실제 자료 + 전체/다운 현황 등 수신)<br></li>
-<li>chk_json_status_of_data_go_kr : 전체/실제 건수 등 별도 처리용(대조하여 누락없이 전체자료 저장하기 위함)<br></li>
-<li>update_readme : README파일에 파일 현황(데이터명/주소/링크 등) 업데이트용<br></li>
-<li>git_push(<code>subprocess</code>) : 새롭게 추가된 모든사항(ignore대상 제외)을 자동으로 업로드(auto commit)하기 위한 용도<br></li>
-<li>위의 함수들을 기반으로 아래의 내용을 구현<br></li>
-</ol>
+<li>고려대상 광물들의 세계 생산량 비중 등을 고려할 때 <code>국제수송(수입)을 고려</code>해야할 것으로 보임
 <ul>
-<li>json으로 민감정보 등을 코드에 표기하지 않고 별도관리 (+ gitignore로 이중보안)<br></li>
-<li>1건만 먼저 호출하여 전체건수를 확인 후, 한번에 전체 건을 호출 (10000건 지정 등 과도한 세팅값의 하드코딩 지양)<br></li>
-<li><code>pandas</code>로 encoding cp949 지정하여 csv로 저장<br></li>
-<li>github raw링크형식을 활용하여 바로 파일로딩할 수 있도록 주소 생성(db에서 아래 형식으로 지정해둔 파일명 사용)<br></li>
-</ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">[</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">{</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"공공데이터포털의 데이터명"</span><span class="fu">,</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"base_url"</span><span class="fu">:</span> <span class="st">"API Base Url"</span><span class="fu">,</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"address_get"</span><span class="fu">:</span> <span class="st">"해당 데이터의 API주소(API목록 란에서 확인)"</span><span class="fu">,</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"file_name_to"</span><span class="fu">:</span> <span class="st">"CSV로 저장할 파일명(.csv제외)"</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span><span class="ot">,</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">{</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"공공데이터포털의 데이터명2"</span><span class="fu">,</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"base_url"</span><span class="fu">:</span> <span class="st">"API Base Url"</span><span class="fu">,</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"address_get"</span><span class="fu">:</span> <span class="st">"해당 데이터의 API주소(API목록 란에서 확인)"</span><span class="fu">,</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"file_name_to"</span><span class="fu">:</span> <span class="st">"CSV로 저장할 파일명(.csv제외)"</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ot">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<li>조사를 통해 <code>상하이 컨테이너 운임지수(SCFI)</code>를 확인, 국가별 운임지수에 대한 가중치를 반영한 지표로 주요 수입국에 대해 반영 고려
 <ul>
-<li>time.sleep()으로 너무 자주 호출하여 서버에 무리가지 않도록 세팅</li>
+<li>그러나 광물운송의 특성상 컨테이너로 운송하지 않기 때문에 다른 지수를 모색</li>
+</ul></li>
+<li>벌크선에 대한 지수인 <code>발틱운임지수(BDI)</code> 도입 검토
+<ul>
+<li>공급 대비 운송량에 대한 수요를 알 수 있음</li>
+<li>벌크선은 광물, 곡물 등을 운송하므로 원자재에 대한 글로벌 수요와 공급을 간접적으로 측정 원자재 소요에 대한 미래의 경제선행지표로도 간주되기도 함</li>
+<li>구체적인 운송수요가 있을 때만 예약되는 벌크선 특성상 특정 목적에 의해 조정되는 경우가 적음</li>
+<li>위키백과에서 위의 내용들 발췌 : https://en.wikipedia.org/wiki/Baltic_Dry_Index</li>
+</ul></li>
+<li><code>발틱운임지수(BDI)를 데이터로 사용하는 것으로 의견 제안 예정</code></li>
+</ul></li>
+<li>주요 생산국에 대한 여러 요소의 고려
+<ul>
+<li>전쟁, 전염병, 인건비 등을 대상으로 고려할 수는 없을지에 대한 고민
+<ul>
+<li>수치화하기 어렵거나, 자료를 구하기 어려울 것으로 보여 일단 Drop</li>
+</ul></li>
+</ul></li>
+</ol></li>
 </ul>
-</section>
-<section id="샘플코드패키지-및-함수" class="level2">
-<h2 class="anchored" data-anchor-id="샘플코드패키지-및-함수">샘플코드(패키지 및 함수)</h2>
-<div id="4fe3ff16" class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> subprocess</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> json_load(json_path, encoding<span class="op">=</span><span class="st">'utf-8'</span>):</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(json_path, <span class="st">'r'</span>, encoding<span class="op">=</span>encoding) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        json_data <span class="op">=</span> json.load(<span class="bu">file</span>)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> json_data</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> request_and_to_json(url):</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> requests.get(url)</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    json_ob <span class="op">=</span> json.loads(response.text)</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> json_ob</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> chk_json_status_of_data_go_kr(json_obj):</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    other_data <span class="op">=</span> [<span class="st">'currentCount'</span>, <span class="st">'matchCount'</span>, <span class="st">'page'</span>, <span class="st">'perPage'</span>, <span class="st">'totalCount'</span>]</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    result_dict <span class="op">=</span> <span class="bu">dict</span>()</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> each_column <span class="kw">in</span> other_data:</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>        result_dict[each_column] <span class="op">=</span> json_obj[each_column]  </span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> result_dict </span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> download_from_data_go_kr_with_json(url):</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    json_ob <span class="op">=</span> request_and_to_json(url)</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    json_status <span class="op">=</span> chk_json_status_of_data_go_kr(json_ob)</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> json_status[<span class="st">'currentCount'</span>] <span class="op">&lt;</span> json_status[<span class="st">'totalCount'</span>]:</span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>        url <span class="op">=</span> url.replace(<span class="st">'perPage=1'</span>,<span class="ss">f'perPage=</span><span class="sc">{</span>json_status[<span class="st">"totalCount"</span>]<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>        json_ob <span class="op">=</span> request_and_to_json(url)</span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> json_ob</span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> update_readme(new_content_list):</span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Open the README.md file in read mode</span></span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(<span class="st">'README.md'</span>, <span class="st">'r'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>        lines <span class="op">=</span> <span class="bu">file</span>.readlines()</span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Find the index of the line that starts with '* 데이터 현황'</span></span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>    index <span class="op">=</span> <span class="bu">next</span>((i <span class="cf">for</span> i, line <span class="kw">in</span> <span class="bu">enumerate</span>(lines) <span class="cf">if</span> line.startswith(<span class="st">'* 데이터 현황'</span>)), <span class="va">None</span>)</span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    <span class="co"># If the line is found, remove the following lines and insert new content</span></span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> index <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>        lines <span class="op">=</span> lines[:index<span class="op">+</span><span class="dv">1</span>] <span class="co"># Remove the following lines</span></span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>        <span class="co">#lines.extend(new_content) # Insert new content</span></span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>        lines.extend(new_content_list) <span class="co"># Insert new content</span></span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Open the README.md file in write mode and write the updated content</span></span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(<span class="st">'README.md'</span>, <span class="st">'w'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>        <span class="bu">file</span>.writelines(lines)</span>
-<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> git_push():</span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get a list of all .csv files in the current directory</span></span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>    csv_files <span class="op">=</span> [f <span class="cf">for</span> f <span class="kw">in</span> os.listdir(<span class="st">'.'</span>) <span class="cf">if</span> f.endswith(<span class="st">'.csv'</span>)]</span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Stage all .csv files</span></span>
-<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> csv_files:</span>
-<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>        subprocess.call([<span class="st">'git'</span>, <span class="st">'add'</span>, <span class="bu">file</span>])</span>
-<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>    subprocess.call([<span class="st">'git'</span>, <span class="st">'add'</span>, <span class="st">'README.md'</span>])</span>
-<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Commit the changes with a message</span></span>
-<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>    subprocess.call([<span class="st">'git'</span>, <span class="st">'commit'</span>, <span class="st">'-m'</span>, <span class="st">'Automatic commit'</span>])</span>
-<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Push the changes to the remote repository</span></span>
-<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>    subprocess.call([<span class="st">'git'</span>, <span class="st">'push'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="샘플코드패키지-및-함수-1" class="level2">
-<h2 class="anchored" data-anchor-id="샘플코드패키지-및-함수-1">샘플코드(패키지 및 함수)</h2>
-<div id="fea59f9f" class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># json load</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>serviceKey <span class="op">=</span> json_load(<span class="st">'option.json'</span>)[<span class="st">'serviceKey'</span>]</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>db_list <span class="op">=</span> json_load(<span class="st">'db_list.json'</span>, <span class="st">'cp949'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="1fc24083" class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 작업하기</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>txt_for_readme <span class="op">=</span> [<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>]</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> each <span class="kw">in</span> db_list:</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 다운로드</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    url <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>each[<span class="st">'base_url'</span>]<span class="sc">}{</span>each[<span class="st">'address_get'</span>]<span class="sc">}</span><span class="ss">?page=1&amp;perPage=1&amp;serviceKey=</span><span class="sc">{</span>serviceKey<span class="sc">}</span><span class="ss">"</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    json_data <span class="op">=</span> download_from_data_go_kr_with_json(url)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    result_data <span class="op">=</span> chk_json_status_of_data_go_kr(json_data)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 저장</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> result_data[<span class="st">'currentCount'</span>] <span class="op">==</span> result_data[<span class="st">'totalCount'</span>]:</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        pd.json_normalize(json_data[<span class="st">'data'</span>]).to_csv(<span class="ss">f"</span><span class="sc">{</span>each[<span class="st">'file_name_to'</span>]<span class="sc">}</span><span class="ss">.csv"</span>,encoding<span class="op">=</span><span class="st">'cp949'</span>, index<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 파일주소 및 이름, 업데이트시간 저장</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    owner <span class="op">=</span> <span class="st">'KR9268'</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    repo <span class="op">=</span> <span class="st">'db_datagokr'</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    branch <span class="op">=</span> <span class="st">'main'</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    file_path <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>each[<span class="st">'file_name_to'</span>]<span class="sc">}</span><span class="ss">.csv"</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    url <span class="op">=</span> <span class="ss">f"https://raw.githubusercontent.com/</span><span class="sc">{</span>owner<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>repo<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>branch<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>file_path<span class="sc">}</span><span class="ss">"</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    txt_for_readme.append(<span class="ss">f"  *  </span><span class="sc">{</span>datetime<span class="sc">.</span>strftime(datetime.now(),<span class="st">'%Y-%m-</span><span class="sc">%d</span><span class="st">'</span>)<span class="sc">}</span><span class="ss">업데이트 : </span><span class="sc">{</span>each[<span class="st">'name'</span>]<span class="sc">}</span><span class="ch">\n</span><span class="sc">{</span>url<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    time.sleep(<span class="dv">1</span>)</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="co"># 업데이트 내역과 파일 git push</span></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>update_readme(txt_for_readme)</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>git_push()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 
 
+</section>
 </section>
 
 <p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p></main> <!-- /main -->
