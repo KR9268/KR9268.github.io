@@ -473,7 +473,7 @@
     "href": "index_miniprojects.html",
     "title": "Mini Projects",
     "section": "",
-    "text": "[Python] Github, API활용한 데이터 파이프라인 구축\n\n\n\nPython\n\n\nrequests\n\n\njson\n\n\nsubprocess\n\n\npandas\n\n\n\n[Python] requests(공공데이터API호출용), json(json규격 자료저장), subprocess(github push자동화), pandas(csv저장)\n\n\n\nKibok Park\n\n\n2024-06-10\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 & 정리 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\n\nPython, win32를 활용한 SAP Scripting\n\n\n\nKibok Park\n\n\n2024-03-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] COO발급관리용 Tool\n\n\n\nPython\n\n\nwin11toast\n\n\nsqlite3\n\n\nstreamlit\n\n\npandas\n\n\nselenium\n\n\n\n[Python] selenium(웹스크레핑), sqlite3(db), win11toast(알림), streamlit(UI)\n\n\n\nKibok Park\n\n\n2024-02-20\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] LocalL/C 관리용 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\nStreamlit\n\n\nsqlite3\n\n\nBeautifulSoup\n\n\n\nPython, Streamlit을 활용한 업무자동화\n\n\n\nKibok Park\n\n\n2024-01-22\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] 아웃룩 메일열람 & pdf regex리딩 & 시스템 자동등록\n\n\n\nPython\n\n\nre\n\n\nxlwings\n\n\npandas\n\n\npdfminer\n\n\n\n[Python] re(regex), xlwings(암호화 Excel리딩), pdfminer(pdf리딩), pywin32(outlook)\n\n\n\nKibok Park\n\n\n2023-12-15\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] Peak타임 대응용 수출계약서pdf tabula리딩\n\n\n\nPython\n\n\ntabula\n\n\nxlwings\n\n\npathlib\n\n\npandas\n\n\n\n[Python] tabula(pdf리딩[표 형태], xlwings(암호화 Excel리딩)\n\n\n\nKibok Park\n\n\n2023-11-02\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
+    "text": "[Python] Github, API활용한 공공데이터 저장소 만들기\n\n\n\nPython\n\n\nrequests\n\n\njson\n\n\nsubprocess\n\n\npandas\n\n\n\n[Python] requests(공공데이터API호출용), json(json규격 자료저장), subprocess(github push자동화), pandas(csv저장)\n\n\n\nKibok Park\n\n\n2024-06-10\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 & 정리 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\n\nPython, win32를 활용한 SAP Scripting\n\n\n\nKibok Park\n\n\n2024-03-06\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] COO발급관리용 Tool\n\n\n\nPython\n\n\nwin11toast\n\n\nsqlite3\n\n\nstreamlit\n\n\npandas\n\n\nselenium\n\n\n\n[Python] selenium(웹스크레핑), sqlite3(db), win11toast(알림), streamlit(UI)\n\n\n\nKibok Park\n\n\n2024-02-20\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] LocalL/C 관리용 Tool\n\n\n\nPython\n\n\nSAP Scripting\n\n\nStreamlit\n\n\nsqlite3\n\n\nBeautifulSoup\n\n\n\nPython, Streamlit을 활용한 업무자동화\n\n\n\nKibok Park\n\n\n2024-01-22\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] 아웃룩 메일열람 & pdf regex리딩 & 시스템 자동등록\n\n\n\nPython\n\n\nre\n\n\nxlwings\n\n\npandas\n\n\npdfminer\n\n\n\n[Python] re(regex), xlwings(암호화 Excel리딩), pdfminer(pdf리딩), pywin32(outlook)\n\n\n\nKibok Park\n\n\n2023-12-15\n\n\n\n\n\n\n\n\n\n\n\n\n[Python] Peak타임 대응용 수출계약서pdf tabula리딩\n\n\n\nPython\n\n\ntabula\n\n\nxlwings\n\n\npathlib\n\n\npandas\n\n\n\n[Python] tabula(pdf리딩[표 형태], xlwings(암호화 Excel리딩)\n\n\n\nKibok Park\n\n\n2023-11-02\n\n\n\n\n\n\n\n\nNo matching items\n\nCopyright © 2024 Kibok Park All rights reserved."
   },
   {
     "objectID": "index.html",
@@ -807,49 +807,49 @@
   {
     "objectID": "posts_miniprojects/dtcontest-ore-py-datagokr/index.html",
     "href": "posts_miniprojects/dtcontest-ore-py-datagokr/index.html",
-    "title": "[Python] Github, API활용한 데이터 파이프라인 구축",
+    "title": "[Python] Github, API활용한 공공데이터 저장소 만들기",
     "section": "",
     "text": "본격적으로 모델 학습을 하기 전, 데이터 이용 편의를 증진하고자 함\n팀원들이 R이나 통계분석에는 익숙하나 파이썬 코딩에는 익숙하지않아, 최대한 모델링에 집중하도록 지원\n\n하나의 repository에서 원하는 데이터를 한번에 확인 가능\nrepository에서 바로 복사해서 사용가능한 샘플을 제공하여 쉽게 데이터로딩 가능\n\n데이터를 하나의 페이지에서 통합관리(공공데이터 홈페이지 접속 등 불필요)\n\n업데이트 일자를 표기하여 얼마나 최신 데이터인지 확인 가능\n추가하고자 하는 데이터가 공공데이터포털의 데이터라면 쉽게 작업내역에 추가가능 (리스트 추가권한을 주거나, discord봇 접수 등 생각해보았으나 구현시간대비 효용이 작아 직접 추가진행)\n\n개인서버(NAS)에서 매일 특정시간 구동하여, github서버로 자동 push(업로드)하여 별도의 수작업없이 db 최신화\nCopyright © 2024 Kibok Park All rights reserved."
   },
   {
     "objectID": "posts_miniprojects/dtcontest-ore-py-datagokr/index.html#추진배경",
     "href": "posts_miniprojects/dtcontest-ore-py-datagokr/index.html#추진배경",
-    "title": "[Python] Github, API활용한 데이터 파이프라인 구축",
+    "title": "[Python] Github, API활용한 공공데이터 저장소 만들기",
     "section": "",
     "text": "본격적으로 모델 학습을 하기 전, 데이터 이용 편의를 증진하고자 함\n팀원들이 R이나 통계분석에는 익숙하나 파이썬 코딩에는 익숙하지않아, 최대한 모델링에 집중하도록 지원\n\n하나의 repository에서 원하는 데이터를 한번에 확인 가능\nrepository에서 바로 복사해서 사용가능한 샘플을 제공하여 쉽게 데이터로딩 가능\n\n데이터를 하나의 페이지에서 통합관리(공공데이터 홈페이지 접속 등 불필요)\n\n업데이트 일자를 표기하여 얼마나 최신 데이터인지 확인 가능\n추가하고자 하는 데이터가 공공데이터포털의 데이터라면 쉽게 작업내역에 추가가능 (리스트 추가권한을 주거나, discord봇 접수 등 생각해보았으나 구현시간대비 효용이 작아 직접 추가진행)\n\n개인서버(NAS)에서 매일 특정시간 구동하여, github서버로 자동 push(업로드)하여 별도의 수작업없이 db 최신화"
   },
   {
     "objectID": "posts_miniprojects/dtcontest-ore-py-datagokr/index.html#효과",
     "href": "posts_miniprojects/dtcontest-ore-py-datagokr/index.html#효과",
-    "title": "[Python] Github, API활용한 데이터 파이프라인 구축",
+    "title": "[Python] Github, API활용한 공공데이터 저장소 만들기",
     "section": "효과",
     "text": "효과\n\n특정 공공데이터 포털의 데이터를 사용하기 위해 했던 아래의 작업이 제거됨\n\n공공데이터포털에 접속하여 csv파일 저장\n저장해둔 csv파일 찾기\n해당 파일을 분석했던 jupyter파일로 찾아가 API호출주소나 키를 찾기\ncsv파일을 저장한 뒤 추가 업데이트가 되었는지 확인하고 재다운로드\n한국어 데이터 로딩을 위한 encoding규격 등의 숙지가 필요없음 (저장시 규격을 지정하고, 로딩을 위한 샘플코드에 규격을 지정해둠)\n\n위의 사항을 달성하기 위한 부가작업이 제거됨\n\ncsv파일 저장 및 업데이트 시기 기록, 서버에 업로드 및 파일주소 저장"
   },
   {
     "objectID": "posts_miniprojects/dtcontest-ore-py-datagokr/index.html#github-repository",
     "href": "posts_miniprojects/dtcontest-ore-py-datagokr/index.html#github-repository",
-    "title": "[Python] Github, API활용한 데이터 파이프라인 구축",
+    "title": "[Python] Github, API활용한 공공데이터 저장소 만들기",
     "section": "github repository",
     "text": "github repository\n관련 github레포\n\nAPI개인키 등 정보가 있어 레포에는 csv파일과 현황만 저장함 (구현을 위해 필요한 db_list나 개인키 등의 json파일은 모두 ignore리스트로 관리)\ngit clone해둔 개인서버 디렉토리에서 자동 실행"
   },
   {
     "objectID": "posts_miniprojects/dtcontest-ore-py-datagokr/index.html#세부내용-구현내용-사용한-언어패키지-등",
     "href": "posts_miniprojects/dtcontest-ore-py-datagokr/index.html#세부내용-구현내용-사용한-언어패키지-등",
-    "title": "[Python] Github, API활용한 데이터 파이프라인 구축",
+    "title": "[Python] Github, API활용한 공공데이터 저장소 만들기",
     "section": "[세부내용] 구현내용 & 사용한 언어/패키지 등",
     "text": "[세부내용] 구현내용 & 사용한 언어/패키지 등\n\njson_load(json) : 개인키와 db_list 로딩을 위한 함수. 어려운 기능은 아니지만 여러번 쓰여 함수화 \ndownload_from_data_go_kr_with_json(requests, json) : 공공데이터포털 API호출용 (실제 자료 + 전체/다운 현황 등 수신)\nchk_json_status_of_data_go_kr : 전체/실제 건수 등 별도 처리용(대조하여 누락없이 전체자료 저장하기 위함)\nupdate_readme : README파일에 파일 현황(데이터명/주소/링크 등) 업데이트용\ngit_push(subprocess) : 새롭게 추가된 모든사항(ignore대상 제외)을 자동으로 업로드(auto commit)하기 위한 용도\n위의 함수들을 기반으로 아래의 내용을 구현\n\n\njson으로 민감정보 등을 코드에 표기하지 않고 별도관리 (+ gitignore로 이중보안)\n1건만 먼저 호출하여 전체건수를 확인 후, 한번에 전체 건을 호출 (10000건 지정 등 과도한 세팅값의 하드코딩 지양)\npandas로 encoding cp949 지정하여 csv로 저장\ngithub raw링크형식을 활용하여 바로 파일로딩할 수 있도록 주소 생성(db에서 아래 형식으로 지정해둔 파일명 사용)\n\n[\n  {\n  \"name\": \"공공데이터포털의 데이터명\",\n  \"base_url\": \"API Base Url\",\n  \"address_get\": \"해당 데이터의 API주소(API목록 란에서 확인)\",\n  \"file_name_to\": \"CSV로 저장할 파일명(.csv제외)\"\n  },\n  {\n  \"name\": \"공공데이터포털의 데이터명2\",\n  \"base_url\": \"API Base Url\",\n  \"address_get\": \"해당 데이터의 API주소(API목록 란에서 확인)\",\n  \"file_name_to\": \"CSV로 저장할 파일명(.csv제외)\"\n  }\n]\n\ntime.sleep()으로 너무 자주 호출하여 서버에 무리가지 않도록 세팅"
   },
   {
     "objectID": "posts_miniprojects/dtcontest-ore-py-datagokr/index.html#샘플코드패키지-및-함수",
     "href": "posts_miniprojects/dtcontest-ore-py-datagokr/index.html#샘플코드패키지-및-함수",
-    "title": "[Python] Github, API활용한 데이터 파이프라인 구축",
+    "title": "[Python] Github, API활용한 공공데이터 저장소 만들기",
     "section": "샘플코드(패키지 및 함수)",
     "text": "샘플코드(패키지 및 함수)\n\nimport requests\nimport json\nimport pandas as pd\nfrom datetime import datetime\nimport subprocess\nimport os\nimport time\n\ndef json_load(json_path, encoding='utf-8'):\n    with open(json_path, 'r', encoding=encoding) as file:\n        json_data = json.load(file)\n    return json_data\n\ndef request_and_to_json(url):\n    response = requests.get(url)\n    json_ob = json.loads(response.text)\n    return json_ob\n\ndef chk_json_status_of_data_go_kr(json_obj):\n    other_data = ['currentCount', 'matchCount', 'page', 'perPage', 'totalCount']\n    result_dict = dict()\n    \n    for each_column in other_data:\n        result_dict[each_column] = json_obj[each_column]  \n    return result_dict \n\ndef download_from_data_go_kr_with_json(url):\n    json_ob = request_and_to_json(url)\n\n    json_status = chk_json_status_of_data_go_kr(json_ob)\n    if json_status['currentCount'] &lt; json_status['totalCount']:\n        url = url.replace('perPage=1',f'perPage={json_status[\"totalCount\"]}')\n        json_ob = request_and_to_json(url)\n\n    return json_ob\n\ndef update_readme(new_content_list):\n    # Open the README.md file in read mode\n    with open('README.md', 'r', encoding='utf-8') as file:\n        lines = file.readlines()\n\n    # Find the index of the line that starts with '* 데이터 현황'\n    index = next((i for i, line in enumerate(lines) if line.startswith('* 데이터 현황')), None)\n\n    # If the line is found, remove the following lines and insert new content\n    if index is not None:\n        lines = lines[:index+1] # Remove the following lines\n        #lines.extend(new_content) # Insert new content\n        lines.extend(new_content_list) # Insert new content\n\n    # Open the README.md file in write mode and write the updated content\n    with open('README.md', 'w', encoding='utf-8') as file:\n        file.writelines(lines)\n\ndef git_push():\n    # Get a list of all .csv files in the current directory\n    csv_files = [f for f in os.listdir('.') if f.endswith('.csv')]\n\n    # Stage all .csv files\n    for file in csv_files:\n        subprocess.call(['git', 'add', file])\n\n    subprocess.call(['git', 'add', 'README.md'])\n    # Commit the changes with a message\n    subprocess.call(['git', 'commit', '-m', 'Automatic commit'])\n\n    # Push the changes to the remote repository\n    subprocess.call(['git', 'push'])"
   },
   {
     "objectID": "posts_miniprojects/dtcontest-ore-py-datagokr/index.html#샘플코드패키지-및-함수-1",
     "href": "posts_miniprojects/dtcontest-ore-py-datagokr/index.html#샘플코드패키지-및-함수-1",
-    "title": "[Python] Github, API활용한 데이터 파이프라인 구축",
+    "title": "[Python] Github, API활용한 공공데이터 저장소 만들기",
     "section": "샘플코드(패키지 및 함수)",
     "text": "샘플코드(패키지 및 함수)\n\n# json load\nserviceKey = json_load('option.json')['serviceKey']\ndb_list = json_load('db_list.json', 'cp949')\n\n\n# main\n\n# 작업하기\ntxt_for_readme = ['\\n']\nfor each in db_list:\n    # 다운로드\n    url = f\"{each['base_url']}{each['address_get']}?page=1&perPage=1&serviceKey={serviceKey}\"\n    json_data = download_from_data_go_kr_with_json(url)\n    result_data = chk_json_status_of_data_go_kr(json_data)\n    \n    # 저장\n    if result_data['currentCount'] == result_data['totalCount']:\n        pd.json_normalize(json_data['data']).to_csv(f\"{each['file_name_to']}.csv\",encoding='cp949', index=False)\n\n    # 파일주소 및 이름, 업데이트시간 저장\n    owner = 'KR9268'\n    repo = 'db_datagokr'\n    branch = 'main'\n    file_path = f\"{each['file_name_to']}.csv\"\n\n    url = f\"https://raw.githubusercontent.com/{owner}/{repo}/{branch}/{file_path}\"\n\n    txt_for_readme.append(f\"  *  {datetime.strftime(datetime.now(),'%Y-%m-%d')}업데이트 : {each['name']}\\n{url}\\n\")\n    time.sleep(1)\n\n# 업데이트 내역과 파일 git push\nupdate_readme(txt_for_readme)\ngit_push()"
   }
