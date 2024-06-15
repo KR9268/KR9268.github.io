@@ -83,7 +83,8 @@ ul.task-list li input[type="checkbox"] {
 
     const options = {
       valueNames: ['listing-title','listing-author','listing-date','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
+      page: 18,
+    pagination: { item: "<li class='page-item'><a class='page page-link' href='#'></a></li>" },
       searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description","listing-categories"],
     };
 
@@ -222,7 +223,7 @@ window.Quarto = {
 <h1>Kibok Park</h1>
 </section></div>
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(18)</span></div><div class="category" data-category="Codeium">Codeium <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Copilot">Copilot <span class="quarto-category-count">(1)</span></div><div class="category" data-category="MStudy">MStudy <span class="quarto-category-count">(3)</span></div><div class="category" data-category="github">github <span class="quarto-category-count">(2)</span></div><div class="category" data-category="공공데이터">공공데이터 <span class="quarto-category-count">(3)</span></div><div class="category" data-category="공공데이터API">공공데이터API <span class="quarto-category-count">(3)</span></div><div class="category" data-category="공모전">공모전 <span class="quarto-category-count">(3)</span></div><div class="category" data-category="딥러닝">딥러닝 <span class="quarto-category-count">(3)</span></div><div class="category" data-category="머신러닝">머신러닝 <span class="quarto-category-count">(5)</span></div><div class="category" data-category="분석">분석 <span class="quarto-category-count">(6)</span></div><div class="category" data-category="파이썬">파이썬 <span class="quarto-category-count">(9)</span></div><div class="category" data-category="파이콘">파이콘 <span class="quarto-category-count">(1)</span></div><div class="category" data-category="프로그래머스/SQL">프로그래머스/SQL <span class="quarto-category-count">(5)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(20)</span></div><div class="category" data-category="Codeium">Codeium <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Copilot">Copilot <span class="quarto-category-count">(1)</span></div><div class="category" data-category="MNIST">MNIST <span class="quarto-category-count">(2)</span></div><div class="category" data-category="MStudy">MStudy <span class="quarto-category-count">(5)</span></div><div class="category" data-category="github">github <span class="quarto-category-count">(2)</span></div><div class="category" data-category="공공데이터">공공데이터 <span class="quarto-category-count">(3)</span></div><div class="category" data-category="공공데이터API">공공데이터API <span class="quarto-category-count">(3)</span></div><div class="category" data-category="공모전">공모전 <span class="quarto-category-count">(3)</span></div><div class="category" data-category="딥러닝">딥러닝 <span class="quarto-category-count">(5)</span></div><div class="category" data-category="머신러닝">머신러닝 <span class="quarto-category-count">(7)</span></div><div class="category" data-category="분석">분석 <span class="quarto-category-count">(6)</span></div><div class="category" data-category="파이썬">파이썬 <span class="quarto-category-count">(11)</span></div><div class="category" data-category="파이콘">파이콘 <span class="quarto-category-count">(1)</span></div><div class="category" data-category="프로그래머스/SQL">프로그래머스/SQL <span class="quarto-category-count">(5)</span></div></div></div>
 <!-- main -->
 <main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
@@ -242,53 +243,93 @@ window.Quarto = {
     </div>
 </div>
 <div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="공모전,공공데이터,분석,공공데이터API,github" data-listing-date-sort="1717945200000" data-listing-file-modified-sort="1718204004243" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="157">
-<a href="./posts/dtcontest-ore-20240610/index.html" class="quarto-grid-link">
+<div class="g-col-1" data-index="0" data-categories="파이썬,머신러닝,딥러닝,MStudy,MNIST" data-listing-date-sort="1718377200000" data-listing-file-modified-sort="1718464974038" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="197">
+<a href="./posts/meta-dl-creditcard-20240615_1/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
-<div class="listing-item-img-placeholder card-img-top" style="height: 150px;">&nbsp;</div>
+<p class="card-img-top"><img src="posts\meta-dl-creditcard-20240615_1\index_files\figure-html\cell-10-output-1.png" style="height: 150px;"  class="thumbnail-image card-img"/></p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
-[공모전] 공공데이터 공모전-2(github온라인db)
+[M_Study_3주차과제1] Softmax로 MNIST다루기
 </h5>
 <div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('공모전'); return false;">
-공모전
+<div class="listing-category" onclick="window.quartoListingCategory('파이썬'); return false;">
+파이썬
 </div>
-<div class="listing-category" onclick="window.quartoListingCategory('공공데이터'); return false;">
-공공데이터
+<div class="listing-category" onclick="window.quartoListingCategory('머신러닝'); return false;">
+머신러닝
 </div>
-<div class="listing-category" onclick="window.quartoListingCategory('분석'); return false;">
-분석
+<div class="listing-category" onclick="window.quartoListingCategory('딥러닝'); return false;">
+딥러닝
 </div>
-<div class="listing-category" onclick="window.quartoListingCategory('공공데이터API'); return false;">
-공공데이터API
+<div class="listing-category" onclick="window.quartoListingCategory('MStudy'); return false;">
+MStudy
 </div>
-<div class="listing-category" onclick="window.quartoListingCategory('github'); return false;">
-github
+<div class="listing-category" onclick="window.quartoListingCategory('MNIST'); return false;">
+MNIST
 </div>
 </div>
 <div class="card-text listing-description">
-2024년 12회 산업통상자원부 공공데이터 활용 아이디어 공모전 참가 기록.(+github활용한 온라인db구축)
+스터디 진행하며 진행한 과제 기록(MNIST, Softmax)
 </div>
 <div class="card-attribution card-text-small justify">
 <div class="listing-author">
 Kibok Park
 </div>
 <div class="listing-date">
-2024-06-10
+2024-06-15
 </div>
 </div>
 </div>
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="1" data-categories="공모전,공공데이터,분석,공공데이터API,github" data-listing-date-sort="1717945200000" data-listing-file-modified-sort="1718275989182" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="357">
+<div class="g-col-1" data-index="1" data-categories="파이썬,머신러닝,딥러닝,MStudy,MNIST" data-listing-date-sort="1718377200000" data-listing-file-modified-sort="1718464684277" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="194">
+<a href="./posts/meta-dl-creditcard-20240615_2/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<div class="listing-item-img-placeholder card-img-top" style="height: 150px;">&nbsp;</div>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+[M_Study_3주차과제1] Softmax로 MNIST다루기
+</h5>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('파이썬'); return false;">
+파이썬
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('머신러닝'); return false;">
+머신러닝
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('딥러닝'); return false;">
+딥러닝
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('MStudy'); return false;">
+MStudy
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('MNIST'); return false;">
+MNIST
+</div>
+</div>
+<div class="card-text listing-description">
+
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Kibok Park
+</div>
+<div class="listing-date">
+2024-06-15
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="2" data-categories="공모전,공공데이터,분석,공공데이터API,github" data-listing-date-sort="1717945200000" data-listing-file-modified-sort="1718464275758" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="357">
 <a href="./posts/dtcontest-ore-20240612/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top"><img src="posts\dtcontest-ore-20240612\index_files\figure-html\cell-2-output-1.png" style="height: 150px;"  class="thumbnail-image card-img"/></p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
-[공모전] 공공데이터 공모전-3(github온라인db)
+[공모전] 공공데이터 공모전-3(사용할 피쳐 재분석)
 </h5>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('공모전'); return false;">
@@ -322,7 +363,7 @@ Kibok Park
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="2" data-categories="파이썬,머신러닝,딥러닝,MStudy" data-listing-date-sort="1717858800000" data-listing-file-modified-sort="1717944992984" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1778">
+<div class="g-col-1" data-index="3" data-categories="파이썬,머신러닝,딥러닝,MStudy" data-listing-date-sort="1717858800000" data-listing-file-modified-sort="1717944992984" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1778">
 <a href="./posts/meta-dl-creditcard-20240609/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top"><img src="posts\meta-dl-creditcard-20240609\index_files\figure-html\1b6f06d5-4-image.png" style="height: 150px;"  class="thumbnail-image card-img"/></p>
@@ -359,7 +400,47 @@ Kibok Park
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="3" data-categories="공모전,공공데이터,분석,공공데이터API" data-listing-date-sort="1717599600000" data-listing-file-modified-sort="1718200133506" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="695">
+<div class="g-col-1" data-index="4" data-categories="공모전,공공데이터,분석,공공데이터API,github" data-listing-date-sort="1717772400000" data-listing-file-modified-sort="1718410137756" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="157">
+<a href="./posts/dtcontest-ore-20240610/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<div class="listing-item-img-placeholder card-img-top" style="height: 150px;">&nbsp;</div>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+[공모전] 공공데이터 공모전-2(github온라인db)
+</h5>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('공모전'); return false;">
+공모전
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('공공데이터'); return false;">
+공공데이터
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('분석'); return false;">
+분석
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('공공데이터API'); return false;">
+공공데이터API
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('github'); return false;">
+github
+</div>
+</div>
+<div class="card-text listing-description">
+2024년 12회 산업통상자원부 공공데이터 활용 아이디어 공모전 참가 기록.(+github활용한 온라인db구축)
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Kibok Park
+</div>
+<div class="listing-date">
+2024-06-08
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="5" data-categories="공모전,공공데이터,분석,공공데이터API" data-listing-date-sort="1717599600000" data-listing-file-modified-sort="1718200133506" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="695">
 <a href="./posts/dtcontest-ore-20240608/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top"><img src="posts\dtcontest-ore-20240608\index_files\figure-html\cell-9-output-1.png" style="height: 150px;"  class="thumbnail-image card-img"/></p>
@@ -396,7 +477,7 @@ Kibok Park
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="4" data-categories="파이썬,머신러닝,딥러닝,MStudy" data-listing-date-sort="1717254000000" data-listing-file-modified-sort="1717945006049" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2019">
+<div class="g-col-1" data-index="6" data-categories="파이썬,머신러닝,딥러닝,MStudy" data-listing-date-sort="1717254000000" data-listing-file-modified-sort="1717945006049" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2019">
 <a href="./posts/meta-dl-creditcard-20240602/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top"><img src="posts\meta-dl-creditcard-20240602\index_files\figure-html\7d189a5e-2-image.png" alt="image.png" style="height: 150px;"  class="thumbnail-image card-img"/></p>
@@ -433,7 +514,7 @@ Kibok Park
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="5" data-categories="파이썬,머신러닝,딥러닝,MStudy" data-listing-date-sort="1716649200000" data-listing-file-modified-sort="1717945000389" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1166">
+<div class="g-col-1" data-index="7" data-categories="파이썬,머신러닝,딥러닝,MStudy" data-listing-date-sort="1716649200000" data-listing-file-modified-sort="1717945000389" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1166">
 <a href="./posts/meta-dl-creditcard-20240526/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top"><img src="posts\meta-dl-creditcard-20240526\index_files\figure-html\a6d10b1d-1-image.png" style="height: 150px;"  class="thumbnail-image card-img"/></p>
@@ -470,7 +551,7 @@ Kibok Park
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="6" data-categories="프로그래머스/SQL" data-listing-date-sort="1710946800000" data-listing-file-modified-sort="1716513644137" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="166">
+<div class="g-col-1" data-index="8" data-categories="프로그래머스/SQL" data-listing-date-sort="1710946800000" data-listing-file-modified-sort="1716513644137" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="166">
 <a href="./posts/prgms-sql-20240321/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <div class="listing-item-img-placeholder card-img-top" style="height: 150px;">&nbsp;</div>
@@ -498,7 +579,7 @@ Kibok Park
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="7" data-categories="프로그래머스/SQL" data-listing-date-sort="1710860400000" data-listing-file-modified-sort="1716513644111" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="327">
+<div class="g-col-1" data-index="9" data-categories="프로그래머스/SQL" data-listing-date-sort="1710860400000" data-listing-file-modified-sort="1716513644111" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="327">
 <a href="./posts/prgms-sql-20240320/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <div class="listing-item-img-placeholder card-img-top" style="height: 150px;">&nbsp;</div>
@@ -526,7 +607,7 @@ Kibok Park
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="8" data-categories="프로그래머스/SQL" data-listing-date-sort="1710774000000" data-listing-file-modified-sort="1716513644083" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="205">
+<div class="g-col-1" data-index="10" data-categories="프로그래머스/SQL" data-listing-date-sort="1710774000000" data-listing-file-modified-sort="1716513644083" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="205">
 <a href="./posts/prgms-sql-20240319/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <div class="listing-item-img-placeholder card-img-top" style="height: 150px;">&nbsp;</div>
@@ -554,7 +635,7 @@ Kibok Park
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="9" data-categories="프로그래머스/SQL" data-listing-date-sort="1710687600000" data-listing-file-modified-sort="1716111555734" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="23">
+<div class="g-col-1" data-index="11" data-categories="프로그래머스/SQL" data-listing-date-sort="1710687600000" data-listing-file-modified-sort="1716111555734" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="23">
 <a href="./posts/prgms-sql-20240318/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top"><img src="posts\prgms-sql-20240318\question.png" style="height: 150px;"  class="thumbnail-image card-img"/></p>
@@ -582,7 +663,7 @@ Kibok Park
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="10" data-categories="프로그래머스/SQL" data-listing-date-sort="1710601200000" data-listing-file-modified-sort="1716111556418" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="100">
+<div class="g-col-1" data-index="12" data-categories="프로그래머스/SQL" data-listing-date-sort="1710601200000" data-listing-file-modified-sort="1716111556418" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="100">
 <a href="./posts/prgms-sql-20240317/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top"><img src="posts\prgms-sql-20240317\question.png" style="height: 150px;"  class="thumbnail-image card-img"/></p>
@@ -610,7 +691,7 @@ Kibok Park
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="11" data-categories="파이썬,분석" data-listing-date-sort="1699282800000" data-listing-file-modified-sort="1718170994642" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="25">
+<div class="g-col-1" data-index="13" data-categories="파이썬,분석" data-listing-date-sort="1699282800000" data-listing-file-modified-sort="1718170994642" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="25">
 <a href="./posts/coach-ds-20231107/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top"><img src="posts\coach-ds-20231107\index_files\figure-html\b00dfff3-1-image.png" alt="image.png" style="height: 150px;"  class="thumbnail-image card-img"/></p>
@@ -641,7 +722,7 @@ Kibok Park
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="12" data-categories="Copilot,Codeium" data-listing-date-sort="1694530800000" data-listing-file-modified-sort="1718171069858" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="258">
+<div class="g-col-1" data-index="14" data-categories="Copilot,Codeium" data-listing-date-sort="1694530800000" data-listing-file-modified-sort="1718171069858" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="258">
 <a href="./posts/hanbitn-copilot-20230914/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top"><img src="posts\hanbitn-copilot-20230914\index_files\figure-html\225d807a-1-image.png" alt="image.png" style="height: 150px;"  class="thumbnail-image card-img"/></p>
@@ -672,7 +753,7 @@ Kibok Park
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="13" data-categories="파이썬,파이콘" data-listing-date-sort="1691852400000" data-listing-file-modified-sort="1718171184524" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="313">
+<div class="g-col-1" data-index="15" data-categories="파이썬,파이콘" data-listing-date-sort="1691852400000" data-listing-file-modified-sort="1718171184524" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="313">
 <a href="./posts/pycon-20230813/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top"><img src="posts\pycon-20230813\index_files\figure-html\225d807a-1-image.png" alt="image.png" style="height: 150px;"  class="thumbnail-image card-img"/></p>
@@ -703,7 +784,7 @@ Kibok Park
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="14" data-categories="파이썬,머신러닝" data-listing-date-sort="1683298800000" data-listing-file-modified-sort="1717940159048" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="435">
+<div class="g-col-1" data-index="16" data-categories="파이썬,머신러닝" data-listing-date-sort="1683298800000" data-listing-file-modified-sort="1717940159048" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="435">
 <a href="./posts/coach-ml-kaggle-20230506/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top"><img src="posts\coach-ml-kaggle-20230506\index_files\figure-html\cell-8-output-1.png" style="height: 150px;"  class="thumbnail-image card-img"/></p>
@@ -734,7 +815,7 @@ Kibok Park
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="15" data-categories="파이썬,머신러닝" data-listing-date-sort="1676732400000" data-listing-file-modified-sort="1714968231494" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="42">
+<div class="g-col-1" data-index="17" data-categories="파이썬,머신러닝" data-listing-date-sort="1676732400000" data-listing-file-modified-sort="1714968231494" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="42">
 <a href="./posts/coach-ml-mnist-20230301/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <div class="listing-item-img-placeholder card-img-top" style="height: 150px;">&nbsp;</div>
@@ -765,10 +846,10 @@ Kibok Park
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="16" data-categories="파이썬,분석" data-listing-date-sort="1668265200000" data-listing-file-modified-sort="1718113566898" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="500">
+<div class="g-col-1" data-index="18" data-categories="파이썬,분석" data-listing-date-sort="1668265200000" data-listing-file-modified-sort="1718113566898" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="500">
 <a href="./posts/coach-ds-20221113/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top"><img src="posts\coach-ds-20221113\index_files\figure-html\cell-8-output-1.png" style="height: 150px;"  class="thumbnail-image card-img"/></p>
+<p class="card-img-top"><img data-src="posts\coach-ds-20221113\index_files\figure-html\cell-8-output-1.png" style="height: 150px;"  class="thumbnail-image card-img"/></p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
 [간단분석] KOSIS 온라인쇼핑 해외직접판매액 간단분석 (타 주제 Choropleth시각화)
@@ -796,10 +877,10 @@ Kibok Park
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="17" data-categories="파이썬,분석" data-listing-date-sort="1667660400000" data-listing-file-modified-sort="1718029554727" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="185">
+<div class="g-col-1" data-index="19" data-categories="파이썬,분석" data-listing-date-sort="1667660400000" data-listing-file-modified-sort="1718029554727" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="185">
 <a href="./posts/coach-ds-20230506/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top"><img src="posts\coach-ds-20230506\index_files\figure-html\cell-6-output-1.png" style="height: 150px;"  class="thumbnail-image card-img"/></p>
+<p class="card-img-top"><img data-src="posts\coach-ds-20230506\index_files\figure-html\cell-6-output-1.png" style="height: 150px;"  class="thumbnail-image card-img"/></p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
 [간단분석] 공공데이터포털 건강검진정보 활용
@@ -831,6 +912,9 @@ Kibok Park
 <div class="listing-no-matching d-none">
 No matching items
 </div>
+<nav id="listing-pagination" class="listing-pagination" aria-label="Page Navigation">
+  <ul class="pagination"></ul>
+</nav>
 </div><p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {

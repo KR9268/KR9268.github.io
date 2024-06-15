@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Kibok Park">
-<meta name="dcterms.date" content="2024-06-08">
+<meta name="dcterms.date" content="2024-06-15">
 
-<title>Blog - [공모전] 공공데이터 공모전-2(github온라인db)</title>
+<title>Blog - [M_Study_3주차과제1] Softmax로 MNIST다루기</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -178,13 +178,13 @@ gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">[공모전] 공공데이터 공모전-2(github온라인db)</h1>
+      <h1 class="title">[M_Study_3주차과제1] Softmax로 MNIST다루기</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">공모전</div>
-                <div class="quarto-category">공공데이터</div>
-                <div class="quarto-category">분석</div>
-                <div class="quarto-category">공공데이터API</div>
-                <div class="quarto-category">github</div>
+                <div class="quarto-category">파이썬</div>
+                <div class="quarto-category">머신러닝</div>
+                <div class="quarto-category">딥러닝</div>
+                <div class="quarto-category">MStudy</div>
+                <div class="quarto-category">MNIST</div>
               </div>
                   </div>
   </div>
@@ -202,7 +202,7 @@ gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">June 8, 2024</p>
+        <p class="date">June 15, 2024</p>
       </div>
     </div>
     
@@ -219,13 +219,12 @@ gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
    
   <ul>
   <li><a href="#개요" id="toc-개요" class="nav-link active" data-scroll-target="#개요">개요</a></li>
-  <li><a href="#내용정리" id="toc-내용정리" class="nav-link" data-scroll-target="#내용정리">내용정리</a>
+  <li><a href="#과제-작성-softmax-linear" id="toc-과제-작성-softmax-linear" class="nav-link" data-scroll-target="#과제-작성-softmax-linear">과제 작성 (Softmax / Linear)</a>
   <ul class="collapse">
-  <li><a href="#도입목적" id="toc-도입목적" class="nav-link" data-scroll-target="#도입목적">도입목적</a></li>
-  <li><a href="#구동방식" id="toc-구동방식" class="nav-link" data-scroll-target="#구동방식">구동방식</a></li>
-  <li><a href="#github-reposiroty주소" id="toc-github-reposiroty주소" class="nav-link" data-scroll-target="#github-reposiroty주소">github reposiroty주소</a></li>
-  <li><a href="#샘플코드패키지-및-함수" id="toc-샘플코드패키지-및-함수" class="nav-link" data-scroll-target="#샘플코드패키지-및-함수">샘플코드(패키지 및 함수)</a></li>
-  <li><a href="#샘플코드메인코드" id="toc-샘플코드메인코드" class="nav-link" data-scroll-target="#샘플코드메인코드">샘플코드(메인코드)</a></li>
+  <li><a href="#mnist-dataset로딩-및-전처리" id="toc-mnist-dataset로딩-및-전처리" class="nav-link" data-scroll-target="#mnist-dataset로딩-및-전처리">Mnist Dataset로딩 및 전처리</a></li>
+  <li><a href="#함수-및-파라메터-설정" id="toc-함수-및-파라메터-설정" class="nav-link" data-scroll-target="#함수-및-파라메터-설정">함수 및 파라메터 설정</a></li>
+  <li><a href="#학습-후-validationtest" id="toc-학습-후-validationtest" class="nav-link" data-scroll-target="#학습-후-validationtest">학습 후 Validation(Test)</a></li>
+  <li><a href="#추가적으로-검증기능-구현해보기" id="toc-추가적으로-검증기능-구현해보기" class="nav-link" data-scroll-target="#추가적으로-검증기능-구현해보기">추가적으로 검증기능 구현해보기</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -237,159 +236,223 @@ gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
 
 
 
-<p>2024년 12회 산업통상자원부 공공데이터 활용 아이디어 공모전 참가 기록.(+github활용한 온라인db구축)</p>
+<p>스터디 진행하며 진행한 과제 기록(MNIST, Softmax)</p>
 <section id="개요" class="level2">
 <h2 class="anchored" data-anchor-id="개요">개요</h2>
+<p>참여중인 딥러닝 스터디 3주차 기록입니다.</p>
 <ul>
-<li>2024년 12회 산업통상자원부 공공데이터 활용 아이디어 공모전 참가해보기로 함
-<ul>
-<li>https://datacontest.kr/apply/applyAdd/3</li>
-</ul></li>
-<li>단순 API로딩이 아니라, 각자 바로 데이터를 로딩할 수 있는 매체에 대한 고민 후 구현
-<ul>
-<li>코딩이 익숙하지 않은 팀원이 쉽게 이용할 수 있도록하고, readme에 바로 사용할 수 있게 샘플코드 제공</li>
-<li>github를 활용해 pandas에서 바로 로딩할 수 있도록 구현</li>
-</ul></li>
+<li>Softmax로 MNIST다루기</li>
+<li>강사님이 주신 샘플코드 참고해서, 나에게 맞추거나 추가공부 진행</li>
 </ul>
 </section>
-<section id="내용정리" class="level2">
-<h2 class="anchored" data-anchor-id="내용정리">내용정리</h2>
-<section id="도입목적" class="level3">
-<h3 class="anchored" data-anchor-id="도입목적">도입목적</h3>
-<ul>
-<li>본격적으로 모델 학습을 하기 전, 데이터 이용 편의를 증진하고자 함</li>
-<li>팀원들이 R이나 통계분석에는 익숙하나 파이썬 코딩에는 익숙하지않아, 최대한 모델링에 집중하도록 지원
-<ul>
-<li>하나의 repository에서 원하는 데이터를 한번에 확인 가능</li>
-<li>업데이트 일자를 표기하여 얼마나 최신 데이터인지 확인 가능</li>
-</ul></li>
-<li>데이터를 하나의 페이지에서 통합관리(공공데이터 홈페이지 접속 등 불필요)</li>
-<li>개인서버(NAS)에서 매일 특정시간 구동하여 별도의 수작업없이 자동으로 최신화</li>
-</ul>
-</section>
-<section id="구동방식" class="level3">
-<h3 class="anchored" data-anchor-id="구동방식">구동방식</h3>
-<ul>
-<li>공공데이터 리스트와 API키가 저장된 json파일 로딩</li>
-<li>지정된 공공데이터를 다운로드하고 csv파일로 저장</li>
-<li>바로 로딩하기위한 파일 주소생성, 업데이트 날짜 저장</li>
-<li>README 파일에 파일주소와 업데이트 날짜 등 업데이트</li>
-<li>git_push함수로 github repository에 자동업로드</li>
-</ul>
-</section>
-<section id="github-reposiroty주소" class="level3">
-<h3 class="anchored" data-anchor-id="github-reposiroty주소">github reposiroty주소</h3>
-<p><a href="https://github.com/KR9268/db_datagokr">https://github.com/KR9268/db_datagokr</a></p>
-</section>
-<section id="샘플코드패키지-및-함수" class="level3">
-<h3 class="anchored" data-anchor-id="샘플코드패키지-및-함수">샘플코드(패키지 및 함수)</h3>
-<div id="298e7956" class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> subprocess</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> json_load(json_path, encoding<span class="op">=</span><span class="st">'utf-8'</span>):</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(json_path, <span class="st">'r'</span>, encoding<span class="op">=</span>encoding) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        json_data <span class="op">=</span> json.load(<span class="bu">file</span>)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> json_data</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> request_and_to_json(url):</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> requests.get(url)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    json_ob <span class="op">=</span> json.loads(response.text)</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> json_ob</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> chk_json_status_of_data_go_kr(json_obj):</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    other_data <span class="op">=</span> [<span class="st">'currentCount'</span>, <span class="st">'matchCount'</span>, <span class="st">'page'</span>, <span class="st">'perPage'</span>, <span class="st">'totalCount'</span>]</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    result_dict <span class="op">=</span> <span class="bu">dict</span>()</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> each_column <span class="kw">in</span> other_data:</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        result_dict[each_column] <span class="op">=</span> json_obj[each_column]  </span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> result_dict </span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> download_from_data_go_kr_with_json(url):</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    json_ob <span class="op">=</span> request_and_to_json(url)</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    json_status <span class="op">=</span> chk_json_status_of_data_go_kr(json_ob)</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> json_status[<span class="st">'currentCount'</span>] <span class="op">&lt;</span> json_status[<span class="st">'totalCount'</span>]:</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>        url <span class="op">=</span> url.replace(<span class="st">'perPage=1'</span>,<span class="ss">f'perPage=</span><span class="sc">{</span>json_status[<span class="st">"totalCount"</span>]<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>        json_ob <span class="op">=</span> request_and_to_json(url)</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> json_ob</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> update_readme(new_content_list):</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Open the README.md file in read mode</span></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(<span class="st">'README.md'</span>, <span class="st">'r'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>        lines <span class="op">=</span> <span class="bu">file</span>.readlines()</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Find the index of the line that starts with '* 데이터 현황'</span></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    index <span class="op">=</span> <span class="bu">next</span>((i <span class="cf">for</span> i, line <span class="kw">in</span> <span class="bu">enumerate</span>(lines) <span class="cf">if</span> line.startswith(<span class="st">'* 데이터 현황'</span>)), <span class="va">None</span>)</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    <span class="co"># If the line is found, remove the following lines and insert new content</span></span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> index <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>        lines <span class="op">=</span> lines[:index<span class="op">+</span><span class="dv">1</span>] <span class="co"># Remove the following lines</span></span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>        <span class="co">#lines.extend(new_content) # Insert new content</span></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>        lines.extend(new_content_list) <span class="co"># Insert new content</span></span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Open the README.md file in write mode and write the updated content</span></span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(<span class="st">'README.md'</span>, <span class="st">'w'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>        <span class="bu">file</span>.writelines(lines)</span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> git_push():</span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get a list of all .csv files in the current directory</span></span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>    csv_files <span class="op">=</span> [f <span class="cf">for</span> f <span class="kw">in</span> os.listdir(<span class="st">'.'</span>) <span class="cf">if</span> f.endswith(<span class="st">'.csv'</span>)]</span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Stage all .csv files</span></span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> csv_files:</span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>        subprocess.call([<span class="st">'git'</span>, <span class="st">'add'</span>, <span class="bu">file</span>])</span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>    subprocess.call([<span class="st">'git'</span>, <span class="st">'add'</span>, <span class="st">'README.md'</span>])</span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Commit the changes with a message</span></span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>    subprocess.call([<span class="st">'git'</span>, <span class="st">'commit'</span>, <span class="st">'-m'</span>, <span class="st">'Automatic commit'</span>])</span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Push the changes to the remote repository</span></span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>    subprocess.call([<span class="st">'git'</span>, <span class="st">'push'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="과제-작성-softmax-linear" class="level2">
+<h2 class="anchored" data-anchor-id="과제-작성-softmax-linear">과제 작성 (Softmax / Linear)</h2>
+<div id="c2c7d438" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow <span class="im">as</span> tf</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.datasets <span class="im">import</span> mnist</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="mnist-dataset로딩-및-전처리" class="level3">
+<h3 class="anchored" data-anchor-id="mnist-dataset로딩-및-전처리">Mnist Dataset로딩 및 전처리</h3>
+<div id="3cc2dc4b" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>(x_train, y_train), (x_test, y_test) <span class="op">=</span> mnist.load_data()</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> (x_train, y_train, x_test, y_test):</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(i.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(60000, 28, 28)
+(60000,)
+(10000, 28, 28)
+(10000,)</code></pre>
+</div>
+</div>
+<section id="float변환" class="level4">
+<h4 class="anchored" data-anchor-id="float변환">float변환</h4>
+<div id="d17a0531" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>x_train, x_test <span class="op">=</span> np.array(x_train, np.float32), np.array(x_test, np.float32)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="샘플코드메인코드" class="level3">
-<h3 class="anchored" data-anchor-id="샘플코드메인코드">샘플코드(메인코드)</h3>
-<div id="2a362ba2" class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># json load</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>serviceKey <span class="op">=</span> json_load(<span class="st">'option.json'</span>)[<span class="st">'serviceKey'</span>]</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>db_list <span class="op">=</span> json_load(<span class="st">'db_list.json'</span>, <span class="st">'cp949'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="flatten" class="level4">
+<h4 class="anchored" data-anchor-id="flatten">Flatten</h4>
+<div id="9ca4ba93" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Flatten (num_features=784)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>num_features <span class="op">=</span> <span class="dv">784</span> <span class="co"># 28*28 (Data의 Shape)</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Flatten전 : '</span>, x_train.shape, x_test.shape)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>x_train, x_test <span class="op">=</span> x_train.reshape(<span class="op">-</span><span class="dv">1</span>, num_features), x_test.reshape(<span class="op">-</span><span class="dv">1</span>, num_features)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Flatten후 : '</span>, x_train.shape, x_test.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Flatten전 :  (60000, 28, 28) (10000, 28, 28)
+Flatten후 :  (60000, 784) (10000, 784)</code></pre>
 </div>
-<div id="5a783f4f" class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 작업하기</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>txt_for_readme <span class="op">=</span> [<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>]</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> each <span class="kw">in</span> db_list:</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 다운로드</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    url <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>each[<span class="st">'base_url'</span>]<span class="sc">}{</span>each[<span class="st">'address_get'</span>]<span class="sc">}</span><span class="ss">?page=1&amp;perPage=1&amp;serviceKey=</span><span class="sc">{</span>serviceKey<span class="sc">}</span><span class="ss">"</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    json_data <span class="op">=</span> download_from_data_go_kr_with_json(url)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    result_data <span class="op">=</span> chk_json_status_of_data_go_kr(json_data)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 저장</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> result_data[<span class="st">'currentCount'</span>] <span class="op">==</span> result_data[<span class="st">'totalCount'</span>]:</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        pd.json_normalize(json_data[<span class="st">'data'</span>]).to_csv(<span class="ss">f"</span><span class="sc">{</span>each[<span class="st">'file_name_to'</span>]<span class="sc">}</span><span class="ss">.csv"</span>,encoding<span class="op">=</span><span class="st">'cp949'</span>, index<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 파일주소 및 이름, 업데이트시간 저장</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    owner <span class="op">=</span> <span class="st">'KR9268'</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    repo <span class="op">=</span> <span class="st">'db_datagokr'</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    branch <span class="op">=</span> <span class="st">'main'</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    file_path <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>each[<span class="st">'file_name_to'</span>]<span class="sc">}</span><span class="ss">.csv"</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    url <span class="op">=</span> <span class="ss">f"https://raw.githubusercontent.com/</span><span class="sc">{</span>owner<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>repo<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>branch<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>file_path<span class="sc">}</span><span class="ss">"</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    txt_for_readme.append(<span class="ss">f"  *  </span><span class="sc">{</span>datetime<span class="sc">.</span>strftime(datetime.now(),<span class="st">'%Y-%m-</span><span class="sc">%d</span><span class="st">'</span>)<span class="sc">}</span><span class="ss">업데이트 : </span><span class="sc">{</span>each[<span class="st">'name'</span>]<span class="sc">}</span><span class="ch">\n</span><span class="sc">{</span>url<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    time.sleep(<span class="dv">1</span>)</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="co"># 업데이트 내역과 파일 git push</span></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>update_readme(txt_for_readme)</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>git_push()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="normalize" class="level4">
+<h4 class="anchored" data-anchor-id="normalize">Normalize</h4>
+<div id="8b98cd1a" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalize (0~255사이의 값을 0~1 사이의 값으로)</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>x_train, x_test <span class="op">=</span> x_train <span class="op">/</span> <span class="fl">255.</span>, x_test <span class="op">/</span> <span class="fl">255.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="함수-및-파라메터-설정" class="level3">
+<h3 class="anchored" data-anchor-id="함수-및-파라메터-설정">함수 및 파라메터 설정</h3>
+<div id="28184919" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Parameters</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>learning_rate <span class="op">=</span> <span class="fl">0.01</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>training_steps <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>batch_size <span class="op">=</span> <span class="dv">256</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>num_classes <span class="op">=</span> <span class="dv">10</span> <span class="co"># MNIST의 0~9 숫자 10개</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>num_features <span class="op">=</span> <span class="dv">784</span> <span class="co"># 28*28 (Data의 Shape)</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Variables</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>W <span class="op">=</span> tf.Variable(tf.ones([num_features, num_classes]), name<span class="op">=</span><span class="st">'weight'</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> tf.Variable(tf.zeros([num_classes]), name<span class="op">=</span><span class="st">'bias'</span>)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Functions</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> softmax(x):</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    z <span class="op">=</span> tf.matmul(x, W) <span class="op">+</span> b</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    sm <span class="op">=</span> tf.nn.softmax(z)</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> sm</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cross_entropy(y_pred, y_true):</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    y_true <span class="op">=</span> tf.one_hot(y_true, depth<span class="op">=</span>num_classes)</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    y_pred <span class="op">=</span> tf.clip_by_value(y_pred, <span class="fl">1e-9</span>, <span class="fl">1.</span>) <span class="co"># clip_by_value에서 1e-9 최소값지정사유 : </span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> tf.reduce_mean(<span class="op">-</span>tf.reduce_sum(y_true <span class="op">*</span> tf.math.log(y_pred), axis<span class="op">=-</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><p>tf.nn.softmax : 0~1 사이로 출력</p></li>
+<li><p>tf.one_hot(y_true, depth=num_classes) : y_true인 대상을 depth에 맞춰 원핫인코딩</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 샘플</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  tf.one_hot([<span class="dv">2</span>], depth<span class="op">=</span><span class="dv">5</span>).numpy()</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">&gt;&gt;&gt;</span> array([[<span class="fl">0.</span>, <span class="fl">0.</span>, <span class="fl">1.</span>, <span class="fl">0.</span>, <span class="fl">0.</span>]], dtype<span class="op">=</span>float32)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>tf.clip_by_value(y_pred, 1e-9, 1.) : y_pred인 대상을 제시한 min, max에 맞춰 변환</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 샘플</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 변환 전</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  t <span class="op">=</span> tf.constant([[<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>], [<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>]], dtype<span class="op">=</span>tf.float32)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  t.numpy()</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">&gt;&gt;&gt;</span> array([[<span class="op">-</span><span class="fl">1.</span>,  <span class="fl">0.</span>,  <span class="fl">1.</span>],</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>     [ <span class="fl">2.</span>,  <span class="fl">3.</span>,  <span class="fl">4.</span>]], dtype<span class="op">=</span>float32)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 변환 후</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  tf.clip_by_value(t, clip_value_min<span class="op">=</span><span class="dv">0</span>, clip_value_max<span class="op">=</span><span class="dv">2</span>).numpy()</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="op">&gt;&gt;&gt;</span> array([[<span class="fl">0.</span>, <span class="fl">0.</span>, <span class="fl">1.</span>],</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>     [<span class="fl">2.</span>, <span class="fl">2.</span>, <span class="fl">2.</span>]], dtype<span class="op">=</span>float32)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+<div id="fb36658f" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Optimization</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> accuracy(y_pred, y_true):</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    correct_prediction <span class="op">=</span> tf.equal(tf.argmax(y_pred, <span class="dv">1</span>), tf.cast(y_true, tf.int64))</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> tf.reduce_mean(tf.cast(correct_prediction, tf.float32), axis <span class="op">=</span> <span class="dv">0</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> batch_maker(text, data_row, batch_size):</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    random_idx <span class="op">=</span> np.random.randint(data_row, size <span class="op">=</span> batch_size)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x_train[random_idx], y_train[random_idx]</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_optimization(x, y):</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> tf.GradientTape() <span class="im">as</span> g:</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>        pred <span class="op">=</span> softmax(x)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>        cost <span class="op">=</span> cross_entropy(pred, y)</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    gradients <span class="op">=</span> g.gradient(cost, [W, b])</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    optimizer.apply_gradients(<span class="bu">zip</span>(gradients, [W, b]))</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Optimizer (Stochastic Gradient Descent)</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>optimizer <span class="op">=</span> tf.optimizers.SGD(learning_rate)</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> step <span class="kw">in</span> <span class="bu">range</span>(training_steps): <span class="co"># training_steps = 1000로 위에서 지정해둠</span></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>    batch_x, batch_y <span class="op">=</span> batch_maker(<span class="st">'training'</span>, <span class="dv">60000</span>, batch_size) <span class="co"># batch_size = 256로 위에서 지정해둠</span></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>    run_optimization(batch_x, batch_y)</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> step <span class="op">%</span> <span class="dv">100</span> <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>        pred <span class="op">=</span> softmax(batch_x)</span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>        cost <span class="op">=</span> cross_entropy(pred, batch_y)</span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>        acc <span class="op">=</span> accuracy(pred, batch_y)</span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Step : </span><span class="sc">{</span>step<span class="sc">}</span><span class="ss"> | loss : </span><span class="sc">{</span>cost<span class="sc">}</span><span class="ss"> / accuracy : </span><span class="sc">{</span>acc<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Step : 0 | loss : 2.287696123123169 / accuracy : 0.6875
+Step : 100 | loss : 1.5578452348709106 / accuracy : 0.7578125
+Step : 200 | loss : 1.188745379447937 / accuracy : 0.8359375
+Step : 300 | loss : 1.010088324546814 / accuracy : 0.796875
+Step : 400 | loss : 0.8610934019088745 / accuracy : 0.859375
+Step : 500 | loss : 0.807215690612793 / accuracy : 0.8359375
+Step : 600 | loss : 0.7144550085067749 / accuracy : 0.8671875
+Step : 700 | loss : 0.7559677362442017 / accuracy : 0.81640625
+Step : 800 | loss : 0.6656553745269775 / accuracy : 0.8515625
+Step : 900 | loss : 0.59657222032547 / accuracy : 0.8828125</code></pre>
+</div>
+</div>
+</section>
+<section id="학습-후-validationtest" class="level3">
+<h3 class="anchored" data-anchor-id="학습-후-validationtest">학습 후 Validation(Test)</h3>
+<div id="a06dd500" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># W와 b가 학습된 model로 Validation(Test Dataset사용)</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>prediction <span class="op">=</span> softmax(x_test)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Test accuracy : </span><span class="sc">{</span>accuracy(prediction, y_test)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Test accuracy : 0.8716999888420105</code></pre>
+</div>
+</div>
+</section>
+<section id="추가적으로-검증기능-구현해보기" class="level3">
+<h3 class="anchored" data-anchor-id="추가적으로-검증기능-구현해보기">추가적으로 검증기능 구현해보기</h3>
+<ul>
+<li>추가적으로, 아래의 기능을 구현해보았음
+<ul>
+<li>number_to_look을 입력하여 원하는 횟수만큼 모델검증</li>
+<li>randint를 활용하여 랜덤추출, tested_list로 추출내역 관리하여 중복회피</li>
+<li>pyplot으로 형태/예측/정답을 시각화</li>
+</ul></li>
+</ul>
+<div id="e1bb8562" class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> koreanize_matplotlib</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 시각화로 Validation 확인</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>number_to_look <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>tested_list <span class="op">=</span> []</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(number_to_look):</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    plt.figure(figsize<span class="op">=</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 테스트할 데이터 랜덤추출</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    idx <span class="op">=</span> <span class="op">-</span><span class="dv">1</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> idx <span class="kw">not</span> <span class="kw">in</span> tested_list:</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>        idx <span class="op">=</span> np.random.randint(<span class="dv">0</span>, y_test.shape[<span class="dv">0</span>])</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>        tested_list.append(idx)</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 결과 확인</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="ss">f"예상:</span><span class="sc">{</span>np<span class="sc">.</span>argmax(prediction[idx])<span class="sc">}</span><span class="ss"> | 정답:</span><span class="sc">{</span>y_test[idx]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>    plt.imshow(np.reshape(x_test[idx], [<span class="dv">28</span>, <span class="dv">28</span>]), cmap<span class="op">=</span>plt.cm.binary)</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-10-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-10-output-3.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-10-output-4.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
 </div>
 
 
