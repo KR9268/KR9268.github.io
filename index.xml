@@ -12,6 +12,1027 @@
 <generator>quarto-1.4.555</generator>
 <lastBuildDate>Sat, 15 Jun 2024 00:00:00 GMT</lastBuildDate>
 <item>
+  <title>[M_Study_3주차과제2] Neural Network로 MNIST다루기</title>
+  <dc:creator>Kibok Park</dc:creator>
+  <link>https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>스터디 진행하며 진행한 과제 기록(MNIST, Neural Network)</p>
+<section id="개요" class="level2">
+<h2 class="anchored" data-anchor-id="개요">개요</h2>
+<p>참여중인 딥러닝 스터디 3주차 기록입니다.</p>
+<ul>
+<li>Neural Network로 MNIST다루기</li>
+<li>강사님이 주신 샘플코드 참고해서, 나에게 맞추거나 추가공부 진행</li>
+</ul>
+</section>
+<section id="과제-작성-neuralnetwork-nonlinear" class="level2">
+<h2 class="anchored" data-anchor-id="과제-작성-neuralnetwork-nonlinear">과제 작성 (NeuralNetwork / NonLinear)</h2>
+<div id="8168521b" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> tensorflow <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> tf</span>
+<span id="cb1-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb1-3"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> plt</span>
+<span id="cb1-4"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> tensorflow.keras.models <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> Sequential</span>
+<span id="cb1-5"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> tensorflow.keras <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> layers</span>
+<span id="cb1-6"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> keras.utils <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> to_categorical</span>
+<span id="cb1-7"></span>
+<span id="cb1-8"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> tensorflow.keras.datasets <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> mnist</span></code></pre></div>
+</div>
+<section id="mnist-dataset로딩-및-전처리" class="level3">
+<h3 class="anchored" data-anchor-id="mnist-dataset로딩-및-전처리">Mnist Dataset로딩 및 전처리</h3>
+<div id="71a27e70" class="cell">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">(x_train, y_train), (x_test, y_test) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> mnist.load_data()</span>
+<span id="cb2-2"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> (x_train, y_train, x_test, y_test):</span>
+<span id="cb2-3">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(i.shape)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(60000, 28, 28)
+(60000,)
+(10000, 28, 28)
+(10000,)</code></pre>
+</div>
+</div>
+<div id="a4ef5eb8" class="cell">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Shape 오류 발생하여 원핫인코딩 수행</span></span>
+<span id="cb4-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># X는 (28, 28)인데 Y는 그냥 정답(5면 5)여서 그런듯 함</span></span>
+<span id="cb4-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ValueError: Arguments `target` and `output` must have the same rank (ndim). Received: target.shape=(None,), output.shape=(None, 10)</span></span>
+<span id="cb4-4"></span>
+<span id="cb4-5">x_train <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x_train.reshape((<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">60000</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">28</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">28</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>))</span>
+<span id="cb4-6">y_train_one_hot <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> to_categorical(y_train, num_classes<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>)</span>
+<span id="cb4-7"></span>
+<span id="cb4-8">x_test <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x_test.reshape((<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10000</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">28</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">28</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>))</span>
+<span id="cb4-9">y_test_one_hot <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> to_categorical(y_test, num_classes<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>)</span></code></pre></div>
+</div>
+</section>
+<section id="모델구성" class="level3">
+<h3 class="anchored" data-anchor-id="모델구성">모델구성</h3>
+<ul>
+<li>Codestral에게 MNIST데이터셋에 적합한 파라미터와 레이어로 조정해달라고 하여 맞춤</li>
+<li>수업 때 거의 ReLU에요라고 들었는데 마지막 빼고는 거의 ReLU가 사용되었음</li>
+<li>Softmax는 주로 마지막 층에 쓰인다고 들은 적이 있는데 여기서도 동일하게 되었음<br> (추가로 알아볼때도 주로 마지막레이어에 쓰인다는 내용 다수 확인)</li>
+</ul>
+<div id="644402c8" class="cell">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 모델 구성</span></span>
+<span id="cb5-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Mistral에게 Mnist데이터셋이 적합한 레이어와 파라메터로 구성해달라고 해서 조정</span></span>
+<span id="cb5-3">model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Sequential([</span>
+<span id="cb5-4">    layers.Input((<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">28</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">28</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)),</span>
+<span id="cb5-5">    layers.Conv2D(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">32</span>, (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>), padding<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'same'</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'relu'</span>),</span>
+<span id="cb5-6">    layers.BatchNormalization(),</span>
+<span id="cb5-7">    layers.Conv2D(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">64</span>, (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>), padding<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'same'</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'relu'</span>),</span>
+<span id="cb5-8">    layers.BatchNormalization(),</span>
+<span id="cb5-9">    layers.MaxPooling2D((<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)),</span>
+<span id="cb5-10">    layers.Dropout(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.25</span>),</span>
+<span id="cb5-11">    layers.Conv2D(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">128</span>, (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>), padding<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'same'</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'relu'</span>),</span>
+<span id="cb5-12">    layers.BatchNormalization(),</span>
+<span id="cb5-13">    layers.MaxPooling2D((<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)),</span>
+<span id="cb5-14">    layers.Dropout(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.25</span>),</span>
+<span id="cb5-15">    layers.Flatten(),</span>
+<span id="cb5-16">    layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">256</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'relu'</span>),</span>
+<span id="cb5-17">    layers.BatchNormalization(),</span>
+<span id="cb5-18">    layers.Dropout(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>),</span>
+<span id="cb5-19">    layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'softmax'</span>)</span>
+<span id="cb5-20">])</span>
+<span id="cb5-21">model.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">compile</span>(optimizer<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'adam'</span>,</span>
+<span id="cb5-22">              loss<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'binary_crossentropy'</span>,</span>
+<span id="cb5-23">              metrics<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'accuracy'</span>])</span>
+<span id="cb5-24"></span>
+<span id="cb5-25">model.summary()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-weight: bold">Model: "sequential_14"</span>
+</pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> Layer (type)                    </span>┃<span style="font-weight: bold"> Output Shape           </span>┃<span style="font-weight: bold">       Param # </span>┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━┩
+│ conv2d_40 (<span style="color: #0087ff; text-decoration-color: #0087ff">Conv2D</span>)              │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">28</span>, <span style="color: #00af00; text-decoration-color: #00af00">28</span>, <span style="color: #00af00; text-decoration-color: #00af00">32</span>)     │           <span style="color: #00af00; text-decoration-color: #00af00">320</span> │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ batch_normalization_52          │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">28</span>, <span style="color: #00af00; text-decoration-color: #00af00">28</span>, <span style="color: #00af00; text-decoration-color: #00af00">32</span>)     │           <span style="color: #00af00; text-decoration-color: #00af00">128</span> │
+│ (<span style="color: #0087ff; text-decoration-color: #0087ff">BatchNormalization</span>)            │                        │               │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ conv2d_41 (<span style="color: #0087ff; text-decoration-color: #0087ff">Conv2D</span>)              │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">28</span>, <span style="color: #00af00; text-decoration-color: #00af00">28</span>, <span style="color: #00af00; text-decoration-color: #00af00">64</span>)     │        <span style="color: #00af00; text-decoration-color: #00af00">18,496</span> │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ batch_normalization_53          │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">28</span>, <span style="color: #00af00; text-decoration-color: #00af00">28</span>, <span style="color: #00af00; text-decoration-color: #00af00">64</span>)     │           <span style="color: #00af00; text-decoration-color: #00af00">256</span> │
+│ (<span style="color: #0087ff; text-decoration-color: #0087ff">BatchNormalization</span>)            │                        │               │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ max_pooling2d_27 (<span style="color: #0087ff; text-decoration-color: #0087ff">MaxPooling2D</span>) │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">14</span>, <span style="color: #00af00; text-decoration-color: #00af00">14</span>, <span style="color: #00af00; text-decoration-color: #00af00">64</span>)     │             <span style="color: #00af00; text-decoration-color: #00af00">0</span> │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dropout_39 (<span style="color: #0087ff; text-decoration-color: #0087ff">Dropout</span>)            │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">14</span>, <span style="color: #00af00; text-decoration-color: #00af00">14</span>, <span style="color: #00af00; text-decoration-color: #00af00">64</span>)     │             <span style="color: #00af00; text-decoration-color: #00af00">0</span> │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ conv2d_42 (<span style="color: #0087ff; text-decoration-color: #0087ff">Conv2D</span>)              │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">14</span>, <span style="color: #00af00; text-decoration-color: #00af00">14</span>, <span style="color: #00af00; text-decoration-color: #00af00">128</span>)    │        <span style="color: #00af00; text-decoration-color: #00af00">73,856</span> │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ batch_normalization_54          │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">14</span>, <span style="color: #00af00; text-decoration-color: #00af00">14</span>, <span style="color: #00af00; text-decoration-color: #00af00">128</span>)    │           <span style="color: #00af00; text-decoration-color: #00af00">512</span> │
+│ (<span style="color: #0087ff; text-decoration-color: #0087ff">BatchNormalization</span>)            │                        │               │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ max_pooling2d_28 (<span style="color: #0087ff; text-decoration-color: #0087ff">MaxPooling2D</span>) │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">7</span>, <span style="color: #00af00; text-decoration-color: #00af00">7</span>, <span style="color: #00af00; text-decoration-color: #00af00">128</span>)      │             <span style="color: #00af00; text-decoration-color: #00af00">0</span> │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dropout_40 (<span style="color: #0087ff; text-decoration-color: #0087ff">Dropout</span>)            │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">7</span>, <span style="color: #00af00; text-decoration-color: #00af00">7</span>, <span style="color: #00af00; text-decoration-color: #00af00">128</span>)      │             <span style="color: #00af00; text-decoration-color: #00af00">0</span> │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ flatten_14 (<span style="color: #0087ff; text-decoration-color: #0087ff">Flatten</span>)            │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">6272</span>)           │             <span style="color: #00af00; text-decoration-color: #00af00">0</span> │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dense_27 (<span style="color: #0087ff; text-decoration-color: #0087ff">Dense</span>)                │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">256</span>)            │     <span style="color: #00af00; text-decoration-color: #00af00">1,605,888</span> │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ batch_normalization_55          │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">256</span>)            │         <span style="color: #00af00; text-decoration-color: #00af00">1,024</span> │
+│ (<span style="color: #0087ff; text-decoration-color: #0087ff">BatchNormalization</span>)            │                        │               │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dropout_41 (<span style="color: #0087ff; text-decoration-color: #0087ff">Dropout</span>)            │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">256</span>)            │             <span style="color: #00af00; text-decoration-color: #00af00">0</span> │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dense_28 (<span style="color: #0087ff; text-decoration-color: #0087ff">Dense</span>)                │ (<span style="color: #00d7ff; text-decoration-color: #00d7ff">None</span>, <span style="color: #00af00; text-decoration-color: #00af00">10</span>)             │         <span style="color: #00af00; text-decoration-color: #00af00">2,570</span> │
+└─────────────────────────────────┴────────────────────────┴───────────────┘
+</pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-weight: bold"> Total params: </span><span style="color: #00af00; text-decoration-color: #00af00">1,703,050</span> (6.50 MB)
+</pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-weight: bold"> Trainable params: </span><span style="color: #00af00; text-decoration-color: #00af00">1,702,090</span> (6.49 MB)
+</pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-weight: bold"> Non-trainable params: </span><span style="color: #00af00; text-decoration-color: #00af00">960</span> (3.75 KB)
+</pre>
+</div>
+</div>
+</section>
+<section id="모델학습-및-학습과정-시각화" class="level3">
+<h3 class="anchored" data-anchor-id="모델학습-및-학습과정-시각화">모델학습 및 학습과정 시각화</h3>
+<div id="a586ca26" class="cell">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1">history <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> model.fit(x_train, y_train_one_hot, epochs<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, batch_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">64</span>, verbose<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb6-2">history.history</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>{'accuracy': [0.9526000022888184,
+  0.9849333167076111,
+  0.9872333407402039,
+  0.9904000163078308,
+  0.9906499981880188,
+  0.9917166829109192,
+  0.9925500154495239,
+  0.9933333396911621,
+  0.9935333132743835,
+  0.9948333501815796],
+ 'loss': [0.09701579809188843,
+  0.014779138378798962,
+  0.01159658282995224,
+  0.009130637161433697,
+  0.008214634843170643,
+  0.007283014710992575,
+  0.0065074339509010315,
+  0.005834747105836868,
+  0.005641818046569824,
+  0.004907044116407633]}</code></pre>
+</div>
+</div>
+<div id="57a7afcb" class="cell">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1">plt.plot(history.history[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'loss'</span>], label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Train loss'</span>)</span>
+<span id="cb8-2">plt.xlabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'The number of learning'</span>)</span>
+<span id="cb8-3">plt.ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Cost'</span>)</span>
+<span id="cb8-4">plt.legend()</span>
+<span id="cb8-5">plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="모델평가-및-모델-활용한-예측" class="level3">
+<h3 class="anchored" data-anchor-id="모델평가-및-모델-활용한-예측">모델평가 및 모델 활용한 예측</h3>
+<ul>
+<li>모델평가</li>
+</ul>
+<div id="d6872357" class="cell">
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1">model.evaluate(x_test, y_test_one_hot, verbose<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>[0.003361478913575411, 0.994700014591217]</code></pre>
+</div>
+</div>
+<ul>
+<li>예측</li>
+</ul>
+<div id="5f6ef8a1" class="cell">
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1">y_predict_one_hot <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> model.predict(x_test)</span>
+<span id="cb11-2">y_predict <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.argmax(y_predict_one_hot, axis<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb11-3">y_predict</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>313/313 ━━━━━━━━━━━━━━━━━━━━ 3s 10ms/step</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>array([7, 2, 1, ..., 4, 5, 6], dtype=int64)</code></pre>
+</div>
+</div>
+<div id="894ef30f" class="cell">
+<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1">y_test</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)</code></pre>
+</div>
+</div>
+</section>
+<section id="추가-예측치가-틀린값-추출-후-시각화해보기" class="level3">
+<h3 class="anchored" data-anchor-id="추가-예측치가-틀린값-추출-후-시각화해보기">[추가] 예측치가 틀린값 추출 후 시각화해보기</h3>
+<ul>
+<li>예측 틀린 값 확인</li>
+</ul>
+<div id="8cba8e5c" class="cell">
+<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> pd</span>
+<span id="cb16-2"></span>
+<span id="cb16-3">df_answersheet <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.DataFrame(y_test, columns<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Y_test(정답)'</span>])</span>
+<span id="cb16-4">df_answersheet[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Y_pred(예측)'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.argmax(y_predict_one_hot, axis<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb16-5">df_answersheet[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'비교'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (df_answersheet[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Y_test(정답)'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> df_answersheet[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Y_pred(예측)'</span>])</span>
+<span id="cb16-6">df_answersheet</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Y_test(정답)</th>
+<th data-quarto-table-cell-role="th">Y_pred(예측)</th>
+<th data-quarto-table-cell-role="th">비교</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>7</td>
+<td>7</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2</td>
+<td>2</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>1</td>
+<td>1</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>0</td>
+<td>0</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>4</td>
+<td>4</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">9995</td>
+<td>2</td>
+<td>2</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9996</td>
+<td>3</td>
+<td>3</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">9997</td>
+<td>4</td>
+<td>4</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9998</td>
+<td>5</td>
+<td>5</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">9999</td>
+<td>6</td>
+<td>6</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+
+<p>10000 rows × 3 columns</p>
+</div>
+</div>
+</div>
+<div id="95096666" class="cell">
+<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1">df_answersheet[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'비교'</span>].value_counts()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>비교
+True     9947
+False      53
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<ul>
+<li>예측 틀린 값들의 시각화 및 정답/예측치 비교</li>
+</ul>
+<div id="b96cc66d" class="cell">
+<div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1">idx_false <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_answersheet[df_answersheet[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'비교'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>].index</span>
+<span id="cb19-2">idx_false</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>Index([ 445,  449,  947, 1014, 1232, 1242, 1247, 1709, 1878, 1901, 2035, 2070,
+       2118, 2130, 2135, 2414, 2454, 2597, 2654, 2896, 2939, 2953, 3422, 3520,
+       3808, 3985, 4027, 4176, 4284, 4571, 4639, 4699, 4740, 4761, 5749, 5955,
+       6571, 6576, 6597, 6625, 8408, 9009, 9015, 9019, 9587, 9620, 9638, 9642,
+       9664, 9679, 9692, 9698, 9729],
+      dtype='int64')</code></pre>
+</div>
+</div>
+<div id="dc588030" class="cell">
+<div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> koreanize_matplotlib</span>
+<span id="cb21-2"></span>
+<span id="cb21-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 시각화로 Validation 확인</span></span>
+<span id="cb21-4"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> idx_false.tolist():</span>
+<span id="cb21-5">    plt.figure(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>))</span>
+<span id="cb21-6"></span>
+<span id="cb21-7">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 결과 확인</span></span>
+<span id="cb21-8">    plt.xlabel(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"정답:</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>y_test[i]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> | 예상:</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>y_predict[i]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb21-9">    plt.imshow(np.reshape(x_test[i], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">28</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">28</span>]), cmap<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>plt.cm.binary)</span>
+<span id="cb21-10">    plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-3.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-4.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-5.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-6.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-7.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-8.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-9.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-10.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-11.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-12.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-13.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-14.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-15.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-16.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-17.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-18.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-19.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-20.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-21.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-22.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-23.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-24.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-25.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-26.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-27.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-28.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-29.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-30.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-31.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-32.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-33.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-34.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-35.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-36.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-37.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-38.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-39.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-40.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-41.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-42.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-43.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-44.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-45.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-46.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-47.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-48.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-49.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-50.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-51.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-52.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index_files/figure-html/cell-14-output-53.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
+  <category>파이썬</category>
+  <category>머신러닝</category>
+  <category>딥러닝</category>
+  <category>MStudy</category>
+  <category>MNIST</category>
+  <category>Tensorflow</category>
+  <guid>https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/</guid>
+  <pubDate>Sat, 15 Jun 2024 00:00:00 GMT</pubDate>
+</item>
+<item>
   <title>[M_Study_3주차과제1] Softmax로 MNIST다루기</title>
   <dc:creator>Kibok Park</dc:creator>
   <link>https://kr9268.github.io/posts/meta-dl-creditcard-20240615_1/</link>
