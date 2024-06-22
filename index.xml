@@ -2186,6 +2186,1355 @@ font-style: inherit;">0.00</span> Byte)</span></code></pre></div></li>
   <pubDate>Sun, 16 Jun 2024 00:00:00 GMT</pubDate>
 </item>
 <item>
+  <title>[공모전] 공공데이터 공모전-5(UN Comtrade API)</title>
+  <dc:creator>Kibok Park</dc:creator>
+  <link>https://kr9268.github.io/posts/dtcontest-ore-20240616/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>2024년 12회 산업통상자원부 공공데이터 활용 아이디어 공모전 참가 기록.(UNComtradeAPI)</p>
+<section id="개요" class="level2">
+<h2 class="anchored" data-anchor-id="개요">개요</h2>
+<ul>
+<li>2024년 12회 산업통상자원부 공공데이터 활용 아이디어 공모전 참가해보기로 함
+<ul>
+<li>https://datacontest.kr/apply/applyAdd/3</li>
+</ul></li>
+<li>UN Comtrade 사이트로 데이터 받기가 너무 번거로워서 API쪽 확인 후 Jupyter제작</li>
+</ul>
+</section>
+<section id="내용정리" class="level2">
+<h2 class="anchored" data-anchor-id="내용정리">내용정리</h2>
+<section id="도입목적" class="level3">
+<h3 class="anchored" data-anchor-id="도입목적">도입목적</h3>
+<ul>
+<li>US Comtrade Database 사이트에서 직접 데이터를 받는 경우, 오류가 여러번 발생
+<ul>
+<li>정확한 사유없이 다시 시도하라는 메시지여서 해결방법 찾기가 어려움</li>
+</ul></li>
+<li>API를 제공하는 것을 확인
+<ul>
+<li>비용없이 사용가능한 API도 있는 것으로 확인하여 활용</li>
+</ul></li>
+</ul>
+</section>
+<section id="필수사항" class="level3">
+<h3 class="anchored" data-anchor-id="필수사항">필수사항</h3>
+<ul>
+<li>comtradeapicall 파이썬 패키지 설치</li>
+<li>API Subscription Key 발급 : UN Comtrade Developer에서 발급 (https://comtradedeveloper.un.org/)
+<ul>
+<li>가입 후 사용하고자 하는 API를 Subscription</li>
+<li>Profile 메뉴에서 Subscription내역이 보이고, Show로 Key를 확인할 수 있음</li>
+</ul></li>
+</ul>
+</section>
+<section id="사용방법" class="level3">
+<h3 class="anchored" data-anchor-id="사용방법">사용방법</h3>
+<ul>
+<li>첫번째 칸에서 필수정보 입력 후 실행</li>
+</ul>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1">    subscription_key <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'your api key'</span></span>
+<span id="cb1-2">    directory <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'your download directory'</span></span></code></pre></div>
+<ul>
+<li>두번째 칸에서 조회정보 입력 후 실행</li>
+</ul>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">    hscode <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'288512,281325'</span></span>
+<span id="cb2-2">    flow_code <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'M,X'</span> <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># M : Import / X : Export</span></span></code></pre></div>
+<ul>
+<li>원하는 기능으로 이동하여 진행
+<ul>
+<li>저장없이 데이터 일부 확인 → <code>Subscription key 필요없는 일부 데이터 확인용 코드</code>로 이동
+<ul>
+<li>조회조건(월)입력 후 바로 아래 칸 실행</li>
+</ul></li>
+<li><strong>특정 연도</strong> 데이터 저장 필요 → <code>Subscription key 필요한 다운로드 코드</code>로 이동
+<ul>
+<li><code>조회조건 입력 (연단위)</code>에서 <code>4자리 연도</code> 입력하거나, <code>조회조건 입력 (월단위)</code>에서 <code>6자리 연월</code> 입력</li>
+<li>입력 후 <code>CSV파일 저장(1개월씩 저장)</code> 부분 실행</li>
+</ul></li>
+<li><strong>특정 월</strong> 데이터 저장 필요 → <code>Subscription key 필요한 다운로드 코드</code> (반복문없이 1건 실행)`로 이동
+<ul>
+<li><code># 조회조건 입력 (월단위)</code>에서 <code>6자리 연월</code> 입력</li>
+<li>입력 후 <code>CSV파일 저장(1개월씩 저장)</code> 부분 실행</li>
+</ul></li>
+</ul></li>
+<li>받아진 데이터의 Row 확인 (한번에 너무 많은 행 받으면 Block당하므로 점검용)
+<ul>
+<li>실행하면 저장된 파일들에 대해 정보 제공</li>
+</ul>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">  The <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">file</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">282540</span>,<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">283324_202404.</span><span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">csv</span> has <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">136</span> rows.</span>
+<span id="cb3-2">  The total : <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">970.</span></span></code></pre></div></li>
+<li>데이터 프레임 합치기
+<ul>
+<li>실행하면 저장되어있는 파일을 하나로 합친다</li>
+</ul></li>
+</ul>
+</section>
+<section id="github-reposiroty주소" class="level3">
+<h3 class="anchored" data-anchor-id="github-reposiroty주소">github reposiroty주소</h3>
+<p><a href="https://github.com/KR9268/UnComtradeAPI">https://github.com/KR9268/UnComtradeAPI</a></p>
+</section>
+<section id="샘플코드패키지-및-함수" class="level3">
+<h3 class="anchored" data-anchor-id="샘플코드패키지-및-함수">샘플코드(패키지 및 함수)</h3>
+</section>
+</section>
+<section id="기본실행코드-api-key-및-조회조건-등-입력" class="level2">
+<h2 class="anchored" data-anchor-id="기본실행코드-api-key-및-조회조건-등-입력">기본실행코드 (API Key 및 조회조건 등 입력)</h2>
+<div id="1760335c" class="cell">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> pd</span>
+<span id="cb4-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> requests</span>
+<span id="cb4-3"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> comtradeapicall</span>
+<span id="cb4-4"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> time</span>
+<span id="cb4-5"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> random</span>
+<span id="cb4-6"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> IPython.display <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> clear_output</span>
+<span id="cb4-7"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> os</span>
+<span id="cb4-8"></span>
+<span id="cb4-9">subscription_key <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'your api key'</span> <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># comtrade api subscription key (from comtradedeveloper.un.org)</span></span>
+<span id="cb4-10"></span>
+<span id="cb4-11">directory <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'your download directory'</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># output directory for downloaded files </span></span>
+<span id="cb4-12">proxy_url <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'&lt;PROXY URL&gt;'</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># optional if you need proxy url</span></span></code></pre></div>
+</div>
+<section id="조회조건-입력" class="level3">
+<h3 class="anchored" data-anchor-id="조회조건-입력">조회조건 입력</h3>
+<div id="4e292ab4" class="cell">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">hscode <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'282540,283324'</span></span>
+<span id="cb5-2">flow_code <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'M,X'</span> <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># M : Import / X : Export</span></span></code></pre></div>
+</div>
+</section>
+<section id="subscription-key-필요없는-일부-데이터-확인용-코드" class="level3">
+<h3 class="anchored" data-anchor-id="subscription-key-필요없는-일부-데이터-확인용-코드">Subscription key 필요없는 일부 데이터 확인용 코드</h3>
+<div id="4cec9a99" class="cell">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 조회조건 입력</span></span>
+<span id="cb6-2">total_period <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'202401,202402,202403,202404'</span></span></code></pre></div>
+</div>
+<div id="256a19d8" class="cell">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1">mydf <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> comtradeapicall.previewFinalData(typeCode<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'C'</span>, freqCode<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'M'</span>, clCode<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'HS'</span>, period<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>total_period,</span>
+<span id="cb7-2">                                        reporterCode<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>, cmdCode<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>hscode, flowCode<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>flow_code, partnerCode<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>,</span>
+<span id="cb7-3">                                        partner2Code<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>,</span>
+<span id="cb7-4">                                        customsCode<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>, motCode<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>, maxRecords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50000</span>, format_output<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'JSON'</span>,</span>
+<span id="cb7-5">                                        aggregateBy<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>, breakdownMode<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'classic'</span>, countOnly<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>, includeDesc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb7-6">mydf</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">typeCode</th>
+<th data-quarto-table-cell-role="th">freqCode</th>
+<th data-quarto-table-cell-role="th">refPeriodId</th>
+<th data-quarto-table-cell-role="th">refYear</th>
+<th data-quarto-table-cell-role="th">refMonth</th>
+<th data-quarto-table-cell-role="th">period</th>
+<th data-quarto-table-cell-role="th">reporterCode</th>
+<th data-quarto-table-cell-role="th">reporterISO</th>
+<th data-quarto-table-cell-role="th">reporterDesc</th>
+<th data-quarto-table-cell-role="th">flowCode</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">netWgt</th>
+<th data-quarto-table-cell-role="th">isNetWgtEstimated</th>
+<th data-quarto-table-cell-role="th">grossWgt</th>
+<th data-quarto-table-cell-role="th">isGrossWgtEstimated</th>
+<th data-quarto-table-cell-role="th">cifvalue</th>
+<th data-quarto-table-cell-role="th">fobvalue</th>
+<th data-quarto-table-cell-role="th">primaryValue</th>
+<th data-quarto-table-cell-role="th">legacyEstimationFlag</th>
+<th data-quarto-table-cell-role="th">isReported</th>
+<th data-quarto-table-cell-role="th">isAggregate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>C</td>
+<td>M</td>
+<td>20240101</td>
+<td>2024</td>
+<td>1</td>
+<td>202401</td>
+<td>36</td>
+<td>AUS</td>
+<td>Australia</td>
+<td>M</td>
+<td>...</td>
+<td>20000.00</td>
+<td>False</td>
+<td>20600.0</td>
+<td>False</td>
+<td>291960.098</td>
+<td>290906.941</td>
+<td>291960.098</td>
+<td>0</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>C</td>
+<td>M</td>
+<td>20240101</td>
+<td>2024</td>
+<td>1</td>
+<td>202401</td>
+<td>36</td>
+<td>AUS</td>
+<td>Australia</td>
+<td>M</td>
+<td>...</td>
+<td>20000.00</td>
+<td>False</td>
+<td>20600.0</td>
+<td>False</td>
+<td>291960.098</td>
+<td>290906.941</td>
+<td>291960.098</td>
+<td>0</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>C</td>
+<td>M</td>
+<td>20240101</td>
+<td>2024</td>
+<td>1</td>
+<td>202401</td>
+<td>76</td>
+<td>BRA</td>
+<td>Brazil</td>
+<td>M</td>
+<td>...</td>
+<td>1576.83</td>
+<td>True</td>
+<td>0.0</td>
+<td>False</td>
+<td>47901.000</td>
+<td>47267.000</td>
+<td>47901.000</td>
+<td>6</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>C</td>
+<td>M</td>
+<td>20240101</td>
+<td>2024</td>
+<td>1</td>
+<td>202401</td>
+<td>76</td>
+<td>BRA</td>
+<td>Brazil</td>
+<td>M</td>
+<td>...</td>
+<td>1520.00</td>
+<td>False</td>
+<td>0.0</td>
+<td>False</td>
+<td>45083.000</td>
+<td>44570.000</td>
+<td>45083.000</td>
+<td>0</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>C</td>
+<td>M</td>
+<td>20240101</td>
+<td>2024</td>
+<td>1</td>
+<td>202401</td>
+<td>76</td>
+<td>BRA</td>
+<td>Brazil</td>
+<td>M</td>
+<td>...</td>
+<td>55.83</td>
+<td>True</td>
+<td>0.0</td>
+<td>False</td>
+<td>1696.000</td>
+<td>1580.000</td>
+<td>1696.000</td>
+<td>6</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">495</td>
+<td>C</td>
+<td>M</td>
+<td>20240101</td>
+<td>2024</td>
+<td>1</td>
+<td>202401</td>
+<td>842</td>
+<td>USA</td>
+<td>USA</td>
+<td>M</td>
+<td>...</td>
+<td>23000.00</td>
+<td>False</td>
+<td>0.0</td>
+<td>False</td>
+<td>384800.000</td>
+<td>381720.000</td>
+<td>384800.000</td>
+<td>0</td>
+<td>True</td>
+<td>False</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">496</td>
+<td>C</td>
+<td>M</td>
+<td>20240101</td>
+<td>2024</td>
+<td>1</td>
+<td>202401</td>
+<td>792</td>
+<td>TUR</td>
+<td>Türkiye</td>
+<td>M</td>
+<td>...</td>
+<td>133887.00</td>
+<td>False</td>
+<td>0.0</td>
+<td>False</td>
+<td>599898.000</td>
+<td>448243.000</td>
+<td>599898.000</td>
+<td>0</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">497</td>
+<td>C</td>
+<td>M</td>
+<td>20240101</td>
+<td>2024</td>
+<td>1</td>
+<td>202401</td>
+<td>792</td>
+<td>TUR</td>
+<td>Türkiye</td>
+<td>M</td>
+<td>...</td>
+<td>19887.00</td>
+<td>False</td>
+<td>0.0</td>
+<td>False</td>
+<td>89176.000</td>
+<td>65031.000</td>
+<td>89176.000</td>
+<td>0</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">498</td>
+<td>C</td>
+<td>M</td>
+<td>20240101</td>
+<td>2024</td>
+<td>1</td>
+<td>202401</td>
+<td>792</td>
+<td>TUR</td>
+<td>Türkiye</td>
+<td>M</td>
+<td>...</td>
+<td>30000.00</td>
+<td>False</td>
+<td>0.0</td>
+<td>False</td>
+<td>140402.000</td>
+<td>101488.000</td>
+<td>140402.000</td>
+<td>0</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">499</td>
+<td>C</td>
+<td>M</td>
+<td>20240101</td>
+<td>2024</td>
+<td>1</td>
+<td>202401</td>
+<td>792</td>
+<td>TUR</td>
+<td>Türkiye</td>
+<td>M</td>
+<td>...</td>
+<td>48000.00</td>
+<td>False</td>
+<td>0.0</td>
+<td>False</td>
+<td>217920.000</td>
+<td>157511.000</td>
+<td>217920.000</td>
+<td>0</td>
+<td>False</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+
+<p>500 rows × 47 columns</p>
+</div>
+</div>
+</div>
+</section>
+<section id="subscription-key-필요한-다운로드-코드" class="level3">
+<h3 class="anchored" data-anchor-id="subscription-key-필요한-다운로드-코드">Subscription key 필요한 다운로드 코드</h3>
+<ul>
+<li><strong>너무 자주, 많이 호출하면 밴당할 수 있음</strong></li>
+<li>조회조건 입력은 연단위, 월단위 중 하나만 실행</li>
+</ul>
+<div id="afb9ae30" class="cell">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 조회조건 입력 (연단위) - Year Total Period생성기</span></span>
+<span id="cb8-2">year_txt <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'2017'</span></span>
+<span id="cb8-3">total_period <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> []</span>
+<span id="cb8-4"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>):</span>
+<span id="cb8-5">    total_period.append(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>year_txt<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}{</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>(i)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>zfill(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>['201712',
+ '201711',
+ '201710',
+ '201709',
+ '201708',
+ '201707',
+ '201706',
+ '201705',
+ '201704',
+ '201703',
+ '201702',
+ '201701']</code></pre>
+</div>
+</div>
+<div id="d60987bf" class="cell">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 조회조건 입력 (월단위)</span></span>
+<span id="cb10-2">total_period <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'201706'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'201705'</span>]</span></code></pre></div>
+</div>
+<div id="ce586ea7" class="cell">
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># CSV파일 저장(1개월씩 저장)</span></span>
+<span id="cb11-2"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> each_period <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> total_period:</span>
+<span id="cb11-3">    mydf <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> comtradeapicall.getFinalData(subscription_key, typeCode<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'C'</span>, freqCode<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'M'</span>, clCode<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'HS'</span>, period<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>each_period,</span>
+<span id="cb11-4">                                        reporterCode<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>, cmdCode<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>hscode, flowCode<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>flow_code, partnerCode<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>,</span>
+<span id="cb11-5">                                        partner2Code<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>,</span>
+<span id="cb11-6">                                        customsCode<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>, motCode<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>, maxRecords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'250000'</span>, format_output<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'JSON'</span>,</span>
+<span id="cb11-7">                                        aggregateBy<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>, breakdownMode<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'classic'</span>, countOnly<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>, includeDesc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb11-8">    mydf.to_csv(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f'</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>hscode<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">_</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>each_period<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">.csv'</span>, index<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>)</span>
+<span id="cb11-9">    clear_output()</span>
+<span id="cb11-10">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f'</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>hscode<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">_</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>each_period<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">.csv'</span>)</span>
+<span id="cb11-11">    time.sleep(random.randint(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>))</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>282540,283324_201705.csv</code></pre>
+</div>
+</div>
+</section>
+<section id="subscription-key-필요한-다운로드-코드-반복문없이-1건-실행" class="level3">
+<h3 class="anchored" data-anchor-id="subscription-key-필요한-다운로드-코드-반복문없이-1건-실행">Subscription key 필요한 다운로드 코드 (반복문없이 1건 실행)</h3>
+<div id="ccae520a" class="cell">
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 조회조건 입력 (월단위)</span></span>
+<span id="cb13-2">period_manual <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'202404'</span></span></code></pre></div>
+</div>
+<div id="65cbdaf5" class="cell">
+<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># CSV파일 저장(1개월씩 저장)</span></span>
+<span id="cb14-2">mydf <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> comtradeapicall.getFinalData(subscription_key, typeCode<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'C'</span>, freqCode<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'M'</span>, clCode<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'HS'</span>, period<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>period_manual,</span>
+<span id="cb14-3">                                        reporterCode<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>, cmdCode<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>hscode, flowCode<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>flow_code, partnerCode<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>,</span>
+<span id="cb14-4">                                        partner2Code<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>,</span>
+<span id="cb14-5">                                        customsCode<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>, motCode<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>, maxRecords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'250000'</span>, format_output<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'JSON'</span>,</span>
+<span id="cb14-6">                                        aggregateBy<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>, breakdownMode<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'classic'</span>, countOnly<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>, includeDesc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb14-7">mydf.to_csv(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f'</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>hscode<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">_</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>period_manual<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">.csv'</span>, index<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>)</span>
+<span id="cb14-8">mydf</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">typeCode</th>
+<th data-quarto-table-cell-role="th">freqCode</th>
+<th data-quarto-table-cell-role="th">refPeriodId</th>
+<th data-quarto-table-cell-role="th">refYear</th>
+<th data-quarto-table-cell-role="th">refMonth</th>
+<th data-quarto-table-cell-role="th">period</th>
+<th data-quarto-table-cell-role="th">reporterCode</th>
+<th data-quarto-table-cell-role="th">reporterISO</th>
+<th data-quarto-table-cell-role="th">reporterDesc</th>
+<th data-quarto-table-cell-role="th">flowCode</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">netWgt</th>
+<th data-quarto-table-cell-role="th">isNetWgtEstimated</th>
+<th data-quarto-table-cell-role="th">grossWgt</th>
+<th data-quarto-table-cell-role="th">isGrossWgtEstimated</th>
+<th data-quarto-table-cell-role="th">cifvalue</th>
+<th data-quarto-table-cell-role="th">fobvalue</th>
+<th data-quarto-table-cell-role="th">primaryValue</th>
+<th data-quarto-table-cell-role="th">legacyEstimationFlag</th>
+<th data-quarto-table-cell-role="th">isReported</th>
+<th data-quarto-table-cell-role="th">isAggregate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>C</td>
+<td>M</td>
+<td>20240401</td>
+<td>2024</td>
+<td>4</td>
+<td>202404</td>
+<td>757</td>
+<td>CHE</td>
+<td>Switzerland</td>
+<td>M</td>
+<td>...</td>
+<td>130.000</td>
+<td>False</td>
+<td>0.0</td>
+<td>False</td>
+<td>1866.447</td>
+<td>NaN</td>
+<td>1866.447</td>
+<td>0</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>C</td>
+<td>M</td>
+<td>20240401</td>
+<td>2024</td>
+<td>4</td>
+<td>202404</td>
+<td>757</td>
+<td>CHE</td>
+<td>Switzerland</td>
+<td>X</td>
+<td>...</td>
+<td>11.638</td>
+<td>True</td>
+<td>0.0</td>
+<td>False</td>
+<td>NaN</td>
+<td>1203.627</td>
+<td>1203.627</td>
+<td>6</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>C</td>
+<td>M</td>
+<td>20240401</td>
+<td>2024</td>
+<td>4</td>
+<td>202404</td>
+<td>757</td>
+<td>CHE</td>
+<td>Switzerland</td>
+<td>X</td>
+<td>...</td>
+<td>11.000</td>
+<td>False</td>
+<td>0.0</td>
+<td>False</td>
+<td>NaN</td>
+<td>1137.675</td>
+<td>1137.675</td>
+<td>0</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>C</td>
+<td>M</td>
+<td>20240401</td>
+<td>2024</td>
+<td>4</td>
+<td>202404</td>
+<td>757</td>
+<td>CHE</td>
+<td>Switzerland</td>
+<td>X</td>
+<td>...</td>
+<td>0.638</td>
+<td>True</td>
+<td>0.0</td>
+<td>False</td>
+<td>NaN</td>
+<td>65.952</td>
+<td>65.952</td>
+<td>6</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>C</td>
+<td>M</td>
+<td>20240401</td>
+<td>2024</td>
+<td>4</td>
+<td>202404</td>
+<td>842</td>
+<td>USA</td>
+<td>USA</td>
+<td>M</td>
+<td>...</td>
+<td>217523.000</td>
+<td>False</td>
+<td>0.0</td>
+<td>False</td>
+<td>4915370.000</td>
+<td>4866083.000</td>
+<td>4915370.000</td>
+<td>0</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">131</td>
+<td>C</td>
+<td>M</td>
+<td>20240401</td>
+<td>2024</td>
+<td>4</td>
+<td>202404</td>
+<td>300</td>
+<td>GRC</td>
+<td>Greece</td>
+<td>M</td>
+<td>...</td>
+<td>24.000</td>
+<td>False</td>
+<td>0.0</td>
+<td>False</td>
+<td>26.819</td>
+<td>NaN</td>
+<td>26.819</td>
+<td>0</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">132</td>
+<td>C</td>
+<td>M</td>
+<td>20240401</td>
+<td>2024</td>
+<td>4</td>
+<td>202404</td>
+<td>300</td>
+<td>GRC</td>
+<td>Greece</td>
+<td>M</td>
+<td>...</td>
+<td>24.000</td>
+<td>False</td>
+<td>0.0</td>
+<td>False</td>
+<td>26.819</td>
+<td>NaN</td>
+<td>26.819</td>
+<td>0</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">133</td>
+<td>C</td>
+<td>M</td>
+<td>20240401</td>
+<td>2024</td>
+<td>4</td>
+<td>202404</td>
+<td>36</td>
+<td>AUS</td>
+<td>Australia</td>
+<td>M</td>
+<td>...</td>
+<td>495415.000</td>
+<td>False</td>
+<td>502653.0</td>
+<td>False</td>
+<td>303606.306</td>
+<td>276999.633</td>
+<td>303606.306</td>
+<td>0</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">134</td>
+<td>C</td>
+<td>M</td>
+<td>20240401</td>
+<td>2024</td>
+<td>4</td>
+<td>202404</td>
+<td>36</td>
+<td>AUS</td>
+<td>Australia</td>
+<td>M</td>
+<td>...</td>
+<td>600.000</td>
+<td>False</td>
+<td>1038.0</td>
+<td>False</td>
+<td>2845.630</td>
+<td>2153.520</td>
+<td>2845.630</td>
+<td>0</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">135</td>
+<td>C</td>
+<td>M</td>
+<td>20240401</td>
+<td>2024</td>
+<td>4</td>
+<td>202404</td>
+<td>36</td>
+<td>AUS</td>
+<td>Australia</td>
+<td>M</td>
+<td>...</td>
+<td>494815.000</td>
+<td>False</td>
+<td>501615.0</td>
+<td>False</td>
+<td>300760.676</td>
+<td>274846.113</td>
+<td>300760.676</td>
+<td>0</td>
+<td>False</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+
+<p>136 rows × 47 columns</p>
+</div>
+</div>
+</div>
+</section>
+<section id="받아진-데이터의-row수-확인" class="level3">
+<h3 class="anchored" data-anchor-id="받아진-데이터의-row수-확인">받아진 데이터의 Row수 확인</h3>
+<ul>
+<li>한번에 너무 많이 받으면 Block당할 수 있으니 받은 데이터 Row수 확인 필요</li>
+</ul>
+<div id="9a82b42e" class="cell">
+<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1">total_rows <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span></span>
+<span id="cb15-2"></span>
+<span id="cb15-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Iterate over all files in the directory</span></span>
+<span id="cb15-4"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> filename <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> os.listdir(directory):</span>
+<span id="cb15-5">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">if</span> filename.startswith((hscode)) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">and</span> filename.endswith(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'.csv'</span>):  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Check if the file is a CSV file and starts with the specified prefixes</span></span>
+<span id="cb15-6">        filepath <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> os.path.join(directory, filename)</span>
+<span id="cb15-7">        df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.read_csv(filepath)</span>
+<span id="cb15-8">        num_rows <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(df)</span>
+<span id="cb15-9">        total_rows <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+=</span> num_rows</span>
+<span id="cb15-10">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f'The file </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>filename<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> has </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>num_rows<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> rows.'</span>)</span>
+<span id="cb15-11"></span>
+<span id="cb15-12"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Print the total number of rows</span></span>
+<span id="cb15-13"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f'The total : </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>total_rows<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">.'</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The file 282540,283324_201705.csv has 136 rows.
+The file 282540,283324_201706.csv has 698 rows.
+The file 282540,283324_202404.csv has 136 rows.
+The total : 970.</code></pre>
+</div>
+</div>
+</section>
+<section id="데이터프레임합치기" class="level3">
+<h3 class="anchored" data-anchor-id="데이터프레임합치기">데이터프레임합치기</h3>
+<div id="b6ebb997" class="cell">
+<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Initialize an empty list to store the dataframes</span></span>
+<span id="cb17-2">dfs <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> []</span>
+<span id="cb17-3"></span>
+<span id="cb17-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Iterate over all files in the directory</span></span>
+<span id="cb17-5"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> filename <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> os.listdir(directory):</span>
+<span id="cb17-6">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">if</span> filename.startswith((hscode)) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">and</span> filename.endswith(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'.csv'</span>):  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Check if the file is a CSV file and starts with the specified prefixes</span></span>
+<span id="cb17-7">        filepath <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> os.path.join(directory, filename)</span>
+<span id="cb17-8">        df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.read_csv(filepath)</span>
+<span id="cb17-9">        dfs.append(df)</span>
+<span id="cb17-10"></span>
+<span id="cb17-11"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Concatenate all the dataframes in the list into a single dataframe</span></span>
+<span id="cb17-12">merged_df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.concat(dfs, ignore_index<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb17-13">merged_df.to_csv(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f'</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>hscode<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">_merged.csv'</span>, index<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>)</span></code></pre></div>
+</div>
+
+
+</section>
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
+  <category>공모전</category>
+  <category>공공데이터</category>
+  <category>분석</category>
+  <category>UN ComtradeAPI</category>
+  <guid>https://kr9268.github.io/posts/dtcontest-ore-20240616/</guid>
+  <pubDate>Sun, 16 Jun 2024 00:00:00 GMT</pubDate>
+</item>
+<item>
   <title>[공모전] 공공데이터 공모전-4(모델에 대한 Feature개발 및 평가지표)</title>
   <dc:creator>Kibok Park</dc:creator>
   <link>https://kr9268.github.io/posts/dtcontest-ore-20240615/</link>
@@ -2242,7 +3591,7 @@ font-style: inherit;">0.00</span> Byte)</span></code></pre></div></li>
 <ul>
 <li>한국무역통계진흥원에서 제공하는 <a href="https://www.bandtrass.or.kr/hsnavi.do?page=F&amp;site=">HSCODE분류서비스</a>를 활용해, 가장 신고율이 높은 HSCODE 채택
 <ul>
-<li>‘이차전지용’ 등 여러 용도가 있음에도 가장 높은 신고율은 ’기타’인 것으로 확인해 이 로직은 Drop</li>
+<li>‘이차전지용’ 등 여러 용도가 있음에도 가장 높은 신고율은 ’기타’인 것으로 확인해 이 로직은 <code>Drop</code></li>
 </ul></li>
 <li>현대경제연구원의 <a href="https://www.hri.co.kr/kor/report/report-view.html?mode=2&amp;uid=97723&amp;find_field=total&amp;find_word=2%EC%B0%A8%EC%A0%84%EC%A7%80&amp;page=1">2차전지 보고서</a> 중 품목별 HSCODE 내용이 있어 활용 검토
 <ul>
@@ -48640,1289 +49989,6 @@ font-style: inherit;">=</span>dtype_dict)</span></code></pre></div>
   <category>파이콘</category>
   <guid>https://kr9268.github.io/posts/pycon-20230813/</guid>
   <pubDate>Sun, 13 Aug 2023 00:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>[Scikit-learn] Kaggle 집값예측 실습</title>
-  <dc:creator>Kibok Park</dc:creator>
-  <link>https://kr9268.github.io/posts/coach-ml-kaggle-20230506/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<section id="개요" class="level2">
-<h2 class="anchored" data-anchor-id="개요">개요</h2>
-<p>Kaggle Korea - House price prediction 실습 기록용으로 남깁니다.</p>
-<p><a href="https://www.kaggle.com/c/2019-2nd-ml-month-with-kakr">Kaggle 원문 링크</a></p>
-</section>
-<section id="개념" class="level2">
-<h2 class="anchored" data-anchor-id="개념">개념</h2>
-<p><strong>RMSE(Root Mean Squeare Error)</strong></p>
-<pre><code>Root    (4)
-Mean    (3)
-Square  (2)
-Error   (1)
-(1) 실제값에서 예측값을 뺀 '오차'를
-(2) 합했을 때 음수의 영향을 제거하기 위해 '제곱'하고
-(3) '평균'오차로 만든 후
-(4) '루트'를 씌워 값의 크기를 작게 한다 (값을 작게하여 연산속도에 이점이 있다)</code></pre>
-</section>
-<section id="파일-다운로드-및-알아보기" class="level2">
-<h2 class="anchored" data-anchor-id="파일-다운로드-및-알아보기">파일 다운로드 및 알아보기</h2>
-<p><strong>File descriptions</strong></p>
-<pre><code>train.csv - 예측 모델을 만들기 위해 사용하는 학습 데이터입니다. 
-    집의 정보와 예측할 변수인 가격(Price) 변수를 가지고 있습니다.
-test.csv - 학습셋으로 만든 모델을 가지고 예측할 가격(Price) 변수를 제외한 집의 정보가
-    담긴 테스트 데이터 입니다.
-sample_submission.csv - 제출시 사용할 수 있는 예시 submission.csv 파일입니다.</code></pre>
-<p><strong>Data fields</strong></p>
-<pre><code>ID : 집을 구분하는 번호
-date : 집을 구매한 날짜
-price : 집의 가격(Target variable)
-bedrooms : 침실의 수
-bathrooms : 화장실의 수
-sqft_living : 주거 공간의 평방 피트(면적)
-sqft_lot : 부지의 평방 피트(면적)
-floors : 집의 층 수
-waterfront : 집의 전방에 강이 흐르는지 유무 (a.k.a. 리버뷰)
-view : 집이 얼마나 좋아 보이는지의 정도
-condition : 집의 전반적인 상태
-grade : King County grading 시스템 기준으로 매긴 집의 등급
-sqft_above : 지하실을 제외한 평방 피트(면적)
-sqft_basement : 지하실의 평방 피트(면적)
-yr_built : 지어진 년도
-yr_renovated : 집을 재건축한 년도
-zipcode : 우편번호
-lat : 위도
-long : 경도
-sqft_living15 : 2015년 기준 주거 공간의 평방 피트(면적, 집을 재건축했다면, 변화가 있을 수 있음)
-sqft_lot15 : 2015년 기준 부지의 평방 피트(면적, 집을 재건축했다면, 변화가 있을 수 있음)</code></pre>
-</section>
-<section id="패키지-및-데이터-불러오기" class="level2">
-<h2 class="anchored" data-anchor-id="패키지-및-데이터-불러오기">패키지 및 데이터 불러오기</h2>
-<div id="7e7d960b" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> pd</span>
-<span id="cb4-2"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> np</span>
-<span id="cb4-3"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> plt</span>
-<span id="cb4-4"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> seaborn <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> sns</span>
-<span id="cb4-5"></span>
-<span id="cb4-6">train_data_path <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'./data/train.csv'</span></span>
-<span id="cb4-7">test_data_path <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'./data/test.csv'</span></span>
-<span id="cb4-8"></span>
-<span id="cb4-9">data <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> pd.read_csv(train_data_path)</span>
-<span id="cb4-10">test <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> pd.read_csv(test_data_path)</span>
-<span id="cb4-11"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'train data : </span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'</span>.<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">format</span>(data.shape))</span>
-<span id="cb4-12"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'test data : </span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'</span>.<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">format</span>(test.shape))</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>train data : (15035, 21)
-test data : (6555, 20)</code></pre>
-</div>
-</div>
-</section>
-<section id="데이터-전처리" class="level2">
-<h2 class="anchored" data-anchor-id="데이터-전처리">데이터 전처리</h2>
-<section id="정답컬럼-분리" class="level3">
-<h3 class="anchored" data-anchor-id="정답컬럼-분리">정답컬럼 분리</h3>
-<ul>
-<li>test데이터와 달리 train data에는 컬럼이 1개 더 있음 (정답컬럼인 price)</li>
-<li>별도의 정답 데이터(y)로 분리</li>
-</ul>
-<div id="374ca92e" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'컬럼 분리 전'</span>)</span>
-<span id="cb6-2"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(data.columns)</span>
-<span id="cb6-3"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(test.columns)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>컬럼 분리 전
-Index(['id', 'date', 'price', 'bedrooms', 'bathrooms', 'sqft_living',
-       'sqft_lot', 'floors', 'waterfront', 'view', 'condition', 'grade',
-       'sqft_above', 'sqft_basement', 'yr_built', 'yr_renovated', 'zipcode',
-       'lat', 'long', 'sqft_living15', 'sqft_lot15'],
-      dtype='object')
-Index(['id', 'date', 'bedrooms', 'bathrooms', 'sqft_living', 'sqft_lot',
-       'floors', 'waterfront', 'view', 'condition', 'grade', 'sqft_above',
-       'sqft_basement', 'yr_built', 'yr_renovated', 'zipcode', 'lat', 'long',
-       'sqft_living15', 'sqft_lot15'],
-      dtype='object')</code></pre>
-</div>
-</div>
-<div id="56fa7e98" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># y라는 변수에 price(정답)을 옮기고, 전체데이터를 백업(data_backup에 할당)하고 price컬럼 삭제</span></span>
-<span id="cb8-2">y <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> data[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'price'</span>] </span>
-<span id="cb8-3">data_backup <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> data.copy()</span>
-<span id="cb8-4">data.drop(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'price'</span>,axis<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>, inplace<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">True</span>)</span></code></pre></div>
-</div>
-<div id="090eda7a" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'컬럼 분리 후'</span>)</span>
-<span id="cb9-2"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(data.columns)</span>
-<span id="cb9-3"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(test.columns)</span>
-<span id="cb9-4"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(y.name)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>컬럼 분리 후
-Index(['id', 'date', 'bedrooms', 'bathrooms', 'sqft_living', 'sqft_lot',
-       'floors', 'waterfront', 'view', 'condition', 'grade', 'sqft_above',
-       'sqft_basement', 'yr_built', 'yr_renovated', 'zipcode', 'lat', 'long',
-       'sqft_living15', 'sqft_lot15'],
-      dtype='object')
-Index(['id', 'date', 'bedrooms', 'bathrooms', 'sqft_living', 'sqft_lot',
-       'floors', 'waterfront', 'view', 'condition', 'grade', 'sqft_above',
-       'sqft_basement', 'yr_built', 'yr_renovated', 'zipcode', 'lat', 'long',
-       'sqft_living15', 'sqft_lot15'],
-      dtype='object')
-price</code></pre>
-</div>
-</div>
-</section>
-<section id="결측치-확인-및-제거" class="level3">
-<h3 class="anchored" data-anchor-id="결측치-확인-및-제거">결측치 확인 및 제거</h3>
-<ul>
-<li>train, test 데이터를 합쳐서 한번에 확인</li>
-</ul>
-<div id="26ca0d11" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 합치기</span></span>
-<span id="cb11-2">df_chk_missing <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> pd.concat((data, test), axis<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>)</span>
-<span id="cb11-3"></span>
-<span id="cb11-4"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 향후 분할을 대비한 행 수 저장</span></span>
-<span id="cb11-5">train_length <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">len</span>(data)</span>
-<span id="cb11-6">test_length <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">len</span>(test)</span>
-<span id="cb11-7"></span>
-<span id="cb11-8"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(train_length, test_length)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>15035 6555</code></pre>
-</div>
-</div>
-<section id="결측치-확인방법1pandas" class="level4">
-<h4 class="anchored" data-anchor-id="결측치-확인방법1pandas">결측치 확인방법1(pandas)</h4>
-<ul>
-<li>isna()로 결측치를 확인</li>
-</ul>
-<div id="d7834677" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(df_chk_missing.isna().<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">sum</span>())</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>id               0
-date             0
-bedrooms         0
-bathrooms        0
-sqft_living      0
-sqft_lot         0
-floors           0
-waterfront       0
-view             0
-condition        0
-grade            0
-sqft_above       0
-sqft_basement    0
-yr_built         0
-yr_renovated     0
-zipcode          0
-lat              0
-long             0
-sqft_living15    0
-sqft_lot15       0
-dtype: int64</code></pre>
-</div>
-</div>
-</section>
-<section id="결측치-확인방법2missingno" class="level4">
-<h4 class="anchored" data-anchor-id="결측치-확인방법2missingno">결측치 확인방법2(missingno)</h4>
-<ul>
-<li>missingno 패키지로 컬럼별 결측치 시각화</li>
-</ul>
-<div id="704c8e19" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> missingno</span>
-<span id="cb15-2"></span>
-<span id="cb15-3">missingno.matrix(df_chk_missing)</span></code></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="https://kr9268.github.io/posts/coach-ml-kaggle-20230506/index_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="결측치-확인방법3ydata_profiling" class="level4">
-<h4 class="anchored" data-anchor-id="결측치-확인방법3ydata_profiling">결측치 확인방법3(ydata_profiling)</h4>
-<ul>
-<li>ydata_profiling 패키지로 결측치 및 다양한 값 확인 가능</li>
-<li>렌더링 용량 문제로 실행결과는 이미지로 대체(RangeError: Maximum call stack size exceeded)</li>
-</ul>
-<div id="48fc58f2" class="cell">
-<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> ydata_profiling <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> ProfileReport</span>
-<span id="cb16-2"></span>
-<span id="cb16-3">profile <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> ProfileReport(df_chk_missing, title<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Profiling Report"</span>)</span>
-<span id="cb16-4">profile</span></code></pre></div>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://kr9268.github.io/posts/coach-ml-kaggle-20230506/index_files/figure-html/f815fcd4-1-y_data_profileing_sample.png" class="img-fluid figure-img"></p>
-<figcaption>실행결과 샘플</figcaption>
-</figure>
-</div>
-<ul>
-<li>결측치가 없으므로 다음 과정을 진행</li>
-</ul>
-</section>
-</section>
-<section id="불필요한-변수-제거-데이터-변환-등" class="level3">
-<h3 class="anchored" data-anchor-id="불필요한-변수-제거-데이터-변환-등">불필요한 변수 제거, 데이터 변환 등</h3>
-<section id="단순식별용-데이터-삭제" class="level4">
-<h4 class="anchored" data-anchor-id="단순식별용-데이터-삭제">단순식별용 데이터 삭제</h4>
-<ul>
-<li>가격과 관계없는 단순식별용 데이터인 id 삭제</li>
-</ul>
-<div id="1172ccf8" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1">main_id <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> df_chk_missing[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'id'</span>][:train_length]</span>
-<span id="cb17-2">test_id <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> df_chk_missing[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'id'</span>][train_length:]</span>
-<span id="cb17-3"><span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">del</span> df_chk_missing[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'id'</span>]</span></code></pre></div>
-</div>
-</section>
-<section id="불필요한-데이터-삭제" class="level4">
-<h4 class="anchored" data-anchor-id="불필요한-데이터-삭제">불필요한 데이터 삭제</h4>
-<ul>
-<li>날짜 뒤에 T00000과 같이 시간데이터(로 추정됨)가 있는데, 모두 T00000으로만 되어있으므로 삭제</li>
-</ul>
-<div id="d8004c60" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># T000000으로 되어있는 값 세기</span></span>
-<span id="cb18-2">df_chk_missing[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'date'</span>].<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">str</span>.contains(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'T000000'</span>).value_counts()</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="10">
-<pre><code>date
-True    21590
-Name: count, dtype: int64</code></pre>
-</div>
-</div>
-<div id="49494527" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># apply로 lambda함수를 사용하여, date컬럼의 앞자리만 저장</span></span>
-<span id="cb20-2">df_chk_missing[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'date'</span>] <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> df_chk_missing[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'date'</span>].<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">apply</span>(<span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">lambda</span> x : <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">str</span>(x[:<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">6</span>]))</span>
-<span id="cb20-3">df_chk_missing.head()</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="11">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">date</th>
-<th data-quarto-table-cell-role="th">bedrooms</th>
-<th data-quarto-table-cell-role="th">bathrooms</th>
-<th data-quarto-table-cell-role="th">sqft_living</th>
-<th data-quarto-table-cell-role="th">sqft_lot</th>
-<th data-quarto-table-cell-role="th">floors</th>
-<th data-quarto-table-cell-role="th">waterfront</th>
-<th data-quarto-table-cell-role="th">view</th>
-<th data-quarto-table-cell-role="th">condition</th>
-<th data-quarto-table-cell-role="th">grade</th>
-<th data-quarto-table-cell-role="th">sqft_above</th>
-<th data-quarto-table-cell-role="th">sqft_basement</th>
-<th data-quarto-table-cell-role="th">yr_built</th>
-<th data-quarto-table-cell-role="th">yr_renovated</th>
-<th data-quarto-table-cell-role="th">zipcode</th>
-<th data-quarto-table-cell-role="th">lat</th>
-<th data-quarto-table-cell-role="th">long</th>
-<th data-quarto-table-cell-role="th">sqft_living15</th>
-<th data-quarto-table-cell-role="th">sqft_lot15</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>201410</td>
-<td>3</td>
-<td>1.00</td>
-<td>1180</td>
-<td>5650</td>
-<td>1.0</td>
-<td>0</td>
-<td>0</td>
-<td>3</td>
-<td>7</td>
-<td>1180</td>
-<td>0</td>
-<td>1955</td>
-<td>0</td>
-<td>98178</td>
-<td>47.5112</td>
-<td>-122.257</td>
-<td>1340</td>
-<td>5650</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>201502</td>
-<td>2</td>
-<td>1.00</td>
-<td>770</td>
-<td>10000</td>
-<td>1.0</td>
-<td>0</td>
-<td>0</td>
-<td>3</td>
-<td>6</td>
-<td>770</td>
-<td>0</td>
-<td>1933</td>
-<td>0</td>
-<td>98028</td>
-<td>47.7379</td>
-<td>-122.233</td>
-<td>2720</td>
-<td>8062</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>201502</td>
-<td>3</td>
-<td>2.00</td>
-<td>1680</td>
-<td>8080</td>
-<td>1.0</td>
-<td>0</td>
-<td>0</td>
-<td>3</td>
-<td>8</td>
-<td>1680</td>
-<td>0</td>
-<td>1987</td>
-<td>0</td>
-<td>98074</td>
-<td>47.6168</td>
-<td>-122.045</td>
-<td>1800</td>
-<td>7503</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>201406</td>
-<td>3</td>
-<td>2.25</td>
-<td>1715</td>
-<td>6819</td>
-<td>2.0</td>
-<td>0</td>
-<td>0</td>
-<td>3</td>
-<td>7</td>
-<td>1715</td>
-<td>0</td>
-<td>1995</td>
-<td>0</td>
-<td>98003</td>
-<td>47.3097</td>
-<td>-122.327</td>
-<td>2238</td>
-<td>6819</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>201501</td>
-<td>3</td>
-<td>1.50</td>
-<td>1060</td>
-<td>9711</td>
-<td>1.0</td>
-<td>0</td>
-<td>0</td>
-<td>3</td>
-<td>7</td>
-<td>1060</td>
-<td>0</td>
-<td>1963</td>
-<td>0</td>
-<td>98198</td>
-<td>47.4095</td>
-<td>-122.315</td>
-<td>1650</td>
-<td>9711</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-</section>
-<section id="로그변환" class="level4">
-<h4 class="anchored" data-anchor-id="로그변환">로그변환</h4>
-<ul>
-<li>치우친 분포를 정규분포에 가깝게 만들기</li>
-</ul>
-<section id="분포가-치우쳐져-있는-항목-찾기시각화" class="level5">
-<h5 class="anchored" data-anchor-id="분포가-치우쳐져-있는-항목-찾기시각화">분포가 치우쳐져 있는 항목 찾기(시각화)</h5>
-<div id="9cd20f17" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1">row_plot <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">5</span></span>
-<span id="cb21-2">col_plot <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">4</span></span>
-<span id="cb21-3">fig, ax <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> plt.subplots(row_plot, col_plot, figsize<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">24</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">35</span>)) </span>
-<span id="cb21-4"></span>
-<span id="cb21-5">columns <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> df_chk_missing.columns</span>
-<span id="cb21-6">columns_idx <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span> <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 첫 컬럼인 date(날짜)는 제외하기 위해 0이 아닌 1부터 시작</span></span>
-<span id="cb21-7"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">for</span> row <span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">in</span> <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">range</span>(row_plot):</span>
-<span id="cb21-8">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">for</span> col <span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">in</span> <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">range</span>(col_plot):</span>
-<span id="cb21-9">        sns.kdeplot(data<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>df_chk_missing[columns[columns_idx]], ax<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>ax[row][col])</span>
-<span id="cb21-10">        ax[row][col].set_title(columns[columns_idx])</span>
-<span id="cb21-11">        columns_idx <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span></span>
-<span id="cb21-12">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">if</span> columns_idx <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">len</span>(columns) :</span>
-<span id="cb21-13">            <span class="cf" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">break</span></span></code></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="https://kr9268.github.io/posts/coach-ml-kaggle-20230506/index_files/figure-html/cell-13-output-1.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<ul>
-<li>아래의 항목들이 치우쳐져 있음
-<ul>
-<li>sqft_living</li>
-<li>sqft_lot</li>
-<li>waterfront (→유/무 지표로 0,1만 있는게 정상이므로 제외)</li>
-<li>sqft_above</li>
-<li>sqft_basement</li>
-<li>sqft_living15</li>
-<li>sqft_lot15</li>
-</ul></li>
-</ul>
-<div id="74772982" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 변환대상 리스트에 저장</span></span>
-<span id="cb22-2">skewed_columns <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'sqft_living'</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'sqft_lot'</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'sqft_above'</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'sqft_basement'</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'sqft_living15'</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'sqft_lot15'</span>]</span>
-<span id="cb22-3"></span>
-<span id="cb22-4"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 그래프로 그리기 (변환 전/후 그래프를 함께 그릴 예정이므로 plot의 수는 두배)</span></span>
-<span id="cb22-5">row_plot <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">6</span></span>
-<span id="cb22-6">col_plot <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span></span>
-<span id="cb22-7">fig, ax <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> plt.subplots(row_plot, col_plot, figsize<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">15</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">35</span>)) </span>
-<span id="cb22-8"></span>
-<span id="cb22-9">columns <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> skewed_columns</span>
-<span id="cb22-10">columns_idx <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span></span>
-<span id="cb22-11"></span>
-<span id="cb22-12"></span>
-<span id="cb22-13"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">for</span> row <span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">in</span> <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">range</span>(row_plot):</span>
-<span id="cb22-14">    <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 로그변환 대상만 식별 후 진행</span></span>
-<span id="cb22-15">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">if</span> columns[row] <span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">in</span> skewed_columns:</span>
-<span id="cb22-16">        <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 기존 그래프 그리기</span></span>
-<span id="cb22-17">        sns.kdeplot(data<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>df_chk_missing[columns[row]], ax<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>ax[row][<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>])</span>
-<span id="cb22-18">        ax[row][<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>].set_title(columns[row])</span>
-<span id="cb22-19"></span>
-<span id="cb22-20">        <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 로그변환</span></span>
-<span id="cb22-21">        df_chk_missing[columns[row]] <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> np.log1p(df_chk_missing[columns[row]])</span>
-<span id="cb22-22"></span>
-<span id="cb22-23">        <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 변환된 그래프 그리기</span></span>
-<span id="cb22-24">        sns.kdeplot(data<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>df_chk_missing[columns[row]], ax<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>ax[row][<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>])</span>
-<span id="cb22-25">        ax[row][<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>].set_title(columns[row]<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'_log'</span>)</span></code></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="https://kr9268.github.io/posts/coach-ml-kaggle-20230506/index_files/figure-html/cell-14-output-1.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="train-test-데이터로-정리" class="level4">
-<h4 class="anchored" data-anchor-id="train-test-데이터로-정리">train, test 데이터로 정리</h4>
-<div id="72bcf9f1" class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1">preprocessed_train <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> df_chk_missing[:train_length].copy()</span>
-<span id="cb23-2">preprocessed_test <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> df_chk_missing[train_length:].copy()</span>
-<span id="cb23-3">price_train <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> y.copy()</span>
-<span id="cb23-4"></span>
-<span id="cb23-5"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># date(날짜)의 타입을 int로 변경 (변경하지 않는 경우 object타입으로 인한 오류 발생)</span></span>
-<span id="cb23-6">preprocessed_train[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'date'</span>] <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> preprocessed_train[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'date'</span>].astype(<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">int</span>)</span>
-<span id="cb23-7">preprocessed_test[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'date'</span>] <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> preprocessed_test[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'date'</span>].astype(<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">int</span>)</span>
-<span id="cb23-8"></span>
-<span id="cb23-9"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(preprocessed_train.shape)</span>
-<span id="cb23-10"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(preprocessed_test.shape)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>(15035, 19)
-(6555, 19)</code></pre>
-</div>
-</div>
-</section>
-</section>
-</section>
-<section id="scikit-learn-등-관련-패키지-불러오기" class="level2">
-<h2 class="anchored" data-anchor-id="scikit-learn-등-관련-패키지-불러오기">Scikit-learn 등 관련 패키지 불러오기</h2>
-<ul>
-<li>본래 사용하는 패키지는 모두 최상단에서 불러오는게 맞음!</li>
-</ul>
-<div id="17630aef" class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> sklearn.ensemble <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> GradientBoostingRegressor</span>
-<span id="cb25-2"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> sklearn.model_selection <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> KFold, cross_val_score</span>
-<span id="cb25-3"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> xgboost <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> xgb</span>
-<span id="cb25-4"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> lightgbm <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> lgb</span></code></pre></div>
-</div>
-<section id="모델-불러오고-cross-validation으로-모델성능-측청" class="level3">
-<h3 class="anchored" data-anchor-id="모델-불러오고-cross-validation으로-모델성능-측청">모델 불러오고 Cross Validation으로 모델성능 측청</h3>
-<div id="5fa4f06c" class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1">gboost <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> GradientBoostingRegressor(random_state<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1210</span>)</span>
-<span id="cb26-2">xgboost <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> xgb.XGBRegressor(random_state<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1210</span>)</span>
-<span id="cb26-3">lightgbm <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> lgb.LGBMRegressor(random_state<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1210</span>)</span>
-<span id="cb26-4"></span>
-<span id="cb26-5">model_dict <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> {<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'GradientBoosting'</span>:gboost,</span>
-<span id="cb26-6">              <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'XGBoost'</span>:xgboost,</span>
-<span id="cb26-7">              <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'LigntGBM'</span>:lightgbm}</span>
-<span id="cb26-8"></span>
-<span id="cb26-9"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># LightGBM의 메시지가 나오지 않도록 별도로 저장 후 출력</span></span>
-<span id="cb26-10">model_cv_score <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">dict</span>()</span>
-<span id="cb26-11"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">for</span> model <span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">in</span> model_dict.keys():</span>
-<span id="cb26-12">    model_cv_score[model] <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> np.mean(cross_val_score(model_dict[model], X<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>preprocessed_train, y<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>price_train))</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.001070 seconds.
-You can set `force_col_wise=true` to remove the overhead.
-[LightGBM] [Info] Total Bins 2296
-[LightGBM] [Info] Number of data points in the train set: 12028, number of used features: 19
-[LightGBM] [Info] Start training from score 540497.991270
-[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000462 seconds.
-You can set `force_col_wise=true` to remove the overhead.
-[LightGBM] [Info] Total Bins 2327
-[LightGBM] [Info] Number of data points in the train set: 12028, number of used features: 19
-[LightGBM] [Info] Start training from score 542956.681826
-[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000355 seconds.
-You can set `force_col_wise=true` to remove the overhead.
-[LightGBM] [Info] Total Bins 2331
-[LightGBM] [Info] Number of data points in the train set: 12028, number of used features: 19
-[LightGBM] [Info] Start training from score 543149.529265
-[LightGBM] [Info] Auto-choosing row-wise multi-threading, the overhead of testing was 0.000627 seconds.
-You can set `force_row_wise=true` to remove the overhead.
-And if memory is not enough, you can set `force_col_wise=true`.
-[LightGBM] [Info] Total Bins 2332
-[LightGBM] [Info] Number of data points in the train set: 12028, number of used features: 19
-[LightGBM] [Info] Start training from score 542032.619305
-[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000316 seconds.
-You can set `force_col_wise=true` to remove the overhead.
-[LightGBM] [Info] Total Bins 2298
-[LightGBM] [Info] Number of data points in the train set: 12028, number of used features: 19
-[LightGBM] [Info] Start training from score 534776.444047</code></pre>
-</div>
-</div>
-<div id="f2d2cc36" class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">for</span> model <span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">in</span> model_dict.keys():</span>
-<span id="cb28-2">    <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">f'</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span>model<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;"> : </span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span>model_cv_score[model]<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'</span>)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>GradientBoosting : 0.8613647608814923
-XGBoost : 0.8762617283884332
-LigntGBM : 0.8818569800403846</code></pre>
-</div>
-</div>
-</section>
-<section id="모델학습-및-예측" class="level3">
-<h3 class="anchored" data-anchor-id="모델학습-및-예측">모델학습 및 예측</h3>
-<ul>
-<li>Score가 가장 높았던 lightGBM으로 진행해보기</li>
-</ul>
-<div id="7d1a0715" class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb30" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1">model_dict[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'LigntGBM'</span>].fit(preprocessed_train.values, y)</span>
-<span id="cb30-2">prediction <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> model_dict[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'LigntGBM'</span>].predict(preprocessed_test.values)</span>
-<span id="cb30-3">prediction</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000727 seconds.
-You can set `force_col_wise=true` to remove the overhead.
-[LightGBM] [Info] Total Bins 2338
-[LightGBM] [Info] Number of data points in the train set: 15035, number of used features: 19
-[LightGBM] [Info] Start training from score 540682.653143</code></pre>
-</div>
-<div class="cell-output cell-output-display" data-execution_count="18">
-<pre><code>array([1296687.09405506,  311847.90404507,  806735.28228208, ...,
-       1726006.82963994,  395020.94053356,  333594.29000994])</code></pre>
-</div>
-</div>
-</section>
-<section id="제출용-dataframe-및-csv파일-생성" class="level3">
-<h3 class="anchored" data-anchor-id="제출용-dataframe-및-csv파일-생성">제출용 DataFrame 및 csv파일 생성</h3>
-<div id="92579a95" class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb33" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1">df_submission <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> pd.DataFrame({<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'id'</span> : test_id, </span>
-<span id="cb33-2">                              <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'price'</span> : prediction})</span>
-<span id="cb33-3">df_submission</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="19">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">id</th>
-<th data-quarto-table-cell-role="th">price</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>15208</td>
-<td>1.296687e+06</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>15209</td>
-<td>3.118479e+05</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>15210</td>
-<td>8.067353e+05</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>15211</td>
-<td>2.098083e+05</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>15212</td>
-<td>4.343237e+05</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">...</td>
-<td>...</td>
-<td>...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">6550</td>
-<td>21758</td>
-<td>4.230647e+05</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">6551</td>
-<td>21759</td>
-<td>5.111171e+05</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">6552</td>
-<td>21760</td>
-<td>1.726007e+06</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">6553</td>
-<td>21761</td>
-<td>3.950209e+05</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">6554</td>
-<td>21762</td>
-<td>3.335943e+05</td>
-</tr>
-</tbody>
-</table>
-
-<p>6555 rows × 2 columns</p>
-</div>
-</div>
-</div>
-<div id="bff541a2" class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb34" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1">df_submission.to_csv(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'submission.csv'</span>, index<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">False</span>)</span></code></pre></div>
-</div>
-</section>
-</section>
-<section id="gridsearch" class="level2">
-<h2 class="anchored" data-anchor-id="gridsearch">GridSearch</h2>
-<section id="lightgbm에-grid-search-적용해보기" class="level3">
-<h3 class="anchored" data-anchor-id="lightgbm에-grid-search-적용해보기">LightGBM에 Grid Search 적용해보기</h3>
-<ul>
-<li>fit 후 결과값 부연설명
-<ul>
-<li>5 folds : cv = 5</li>
-<li>4 candidates : 2(max_depth) X 2(n_estimators)</li>
-<li>20 fits : 5 folds X 4 candidates</li>
-</ul></li>
-</ul>
-<div id="4b8796c8" class="cell">
-<div class="sourceCode cell-code" id="cb35" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> sklearn.model_selection <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> GridSearchCV</span>
-<span id="cb35-2"></span>
-<span id="cb35-3">grid_param <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> {</span>
-<span id="cb35-4">    <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'n_estimators'</span>: [<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">50</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">100</span>], <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#트리수</span></span>
-<span id="cb35-5">    <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'max_depth'</span>: [<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span>], <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#트리깊이</span></span>
-<span id="cb35-6">}</span>
-<span id="cb35-7"></span>
-<span id="cb35-8">grid_model <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> GridSearchCV(lgb.LGBMRegressor(random_state<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1210</span>), </span>
-<span id="cb35-9">                          param_grid<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>grid_param, </span>
-<span id="cb35-10">                          scoring<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'neg_mean_squared_error'</span>,</span>
-<span id="cb35-11">                           cv<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">5</span>, verbose<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>, n_jobs<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">5</span>)</span></code></pre></div>
-</div>
-<div id="0234cec0" class="cell">
-<div class="sourceCode cell-code" id="cb36" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1">grid_model.fit(preprocessed_train.values, y)</span></code></pre></div>
-</div>
-<div id="6e05acac" class="cell">
-<div class="sourceCode cell-code" id="cb37" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1">grid_model.cv_results_</span>
-<span id="cb37-2">params <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> grid_model.cv_results_[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'params'</span>]</span>
-<span id="cb37-3"></span>
-<span id="cb37-4">df_grid_result <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> pd.DataFrame(params)</span>
-<span id="cb37-5">df_grid_result[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'score'</span>] <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> grid_model.cv_results_[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'mean_test_score'</span>]</span></code></pre></div>
-</div>
-<div id="19f3be96" class="cell">
-<div class="sourceCode cell-code" id="cb38" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1">df_grid_result</span></code></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">max_depth</th>
-<th data-quarto-table-cell-role="th">n_estimators</th>
-<th data-quarto-table-cell-role="th">score</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>1</td>
-<td>50</td>
-<td>-4.787553e+10</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>1</td>
-<td>100</td>
-<td>-3.851269e+10</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>10</td>
-<td>50</td>
-<td>-1.723322e+10</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>10</td>
-<td>100</td>
-<td>-1.636420e+10</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-<ul>
-<li>GridSearch 기준 Score가 가장 좋은 파라메터로 진행해보기</li>
-</ul>
-<div id="adc1dff5" class="cell">
-<div class="sourceCode cell-code" id="cb39" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1">model <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> lgb.LGBMRegressor(max_depth<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span>, n_estimators<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">100</span>, random_state<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1210</span>)</span>
-<span id="cb39-2">model.fit(preprocessed_train.values, y)</span>
-<span id="cb39-3">prediction <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> model.predict(preprocessed_test.values)</span>
-<span id="cb39-4">prediction</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[LightGBM] [Warning] Accuracy may be bad since you didn't explicitly set num_leaves OR 2^max_depth &gt; num_leaves. (num_leaves=31).
-[LightGBM] [Warning] Accuracy may be bad since you didn't explicitly set num_leaves OR 2^max_depth &gt; num_leaves. (num_leaves=31).
-[LightGBM] [Info] Auto-choosing row-wise multi-threading, the overhead of testing was 0.000693 seconds.
-You can set `force_row_wise=true` to remove the overhead.
-And if memory is not enough, you can set `force_col_wise=true`.
-[LightGBM] [Info] Total Bins 2338
-[LightGBM] [Info] Number of data points in the train set: 15035, number of used features: 19
-[LightGBM] [Info] Start training from score 540682.653143
-[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
-[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
-[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
-[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
-[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
-[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
-[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
-[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
-[LightGBM] [Warning] No further splits with positive gain, best gain: -inf
-[LightGBM] [Warning] Accuracy may be bad since you didn't explicitly set num_leaves OR 2^max_depth &gt; num_leaves. (num_leaves=31).</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<pre><code>array([1291842.41370212,  314132.92290945,  817260.44452776, ...,
-       1713971.79620206,  389405.58625426,  332109.32763046])</code></pre>
-</div>
-</div>
-
-
-</section>
-</section>
-
-<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
-  <category>파이썬</category>
-  <category>머신러닝</category>
-  <guid>https://kr9268.github.io/posts/coach-ml-kaggle-20230506/</guid>
-  <pubDate>Sat, 06 May 2023 00:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
