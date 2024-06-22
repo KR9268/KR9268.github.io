@@ -2186,6 +2186,107 @@ font-style: inherit;">0.00</span> Byte)</span></code></pre></div></li>
   <pubDate>Sun, 16 Jun 2024 00:00:00 GMT</pubDate>
 </item>
 <item>
+  <title>[공모전] 공공데이터 공모전-4(모델에 대한 Feature개발 및 평가지표)</title>
+  <dc:creator>Kibok Park</dc:creator>
+  <link>https://kr9268.github.io/posts/dtcontest-ore-20240615/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>2024년 12회 산업통상자원부 공공데이터 활용 아이디어 공모전 참가 기록.(모델에 대한 Feature개발 및 평가지표)</p>
+<section id="개요" class="level2">
+<h2 class="anchored" data-anchor-id="개요">개요</h2>
+<ul>
+<li>2024년 12회 산업통상자원부 공공데이터 활용 아이디어 공모전 참가해보기로 함
+<ul>
+<li>https://datacontest.kr/apply/applyAdd/3</li>
+</ul></li>
+<li>분석 대상 광물에 대한 HSCODE 등 기준 고민</li>
+<li>모델 평가지표에 대한 고민 : Recall</li>
+<li>모델에 사용할 지표 개발에 대한 부분 (UN Comtrade 활용)
+<ul>
+<li>생산국 수출량</li>
+<li>생산국 판매가격</li>
+<li>수입국 수입량</li>
+</ul></li>
+</ul>
+</section>
+<section id="내용정리" class="level2">
+<h2 class="anchored" data-anchor-id="내용정리">내용정리</h2>
+<section id="지난-회의정리" class="level3">
+<h3 class="anchored" data-anchor-id="지난-회의정리">지난 회의정리</h3>
+<ul>
+<li>모델링에 사용할 지표 중 <code>시장위험지수</code> 제거에 대한 동의
+<ul>
+<li>수급안정화지수에 공통항목이 많아 추이가 비슷하여 제외</li>
+</ul></li>
+<li>Feature 중 하나로 <code>BDI지수</code> 추가</li>
+<li>Feature로 사용할 데이터를 추가로 발굴
+<ul>
+<li><a href="https://comtradeplus.un.org/TradeFlow">UN Comtrade database</a>에서도 활용할 데이터 있는지 검토(타 팀원 제보)</li>
+</ul></li>
+<li>잘 만들어진 기존 모델들을 잘 사용하는 방안 고려
+<ul>
+<li>이상요소 탐지에 R AnomalyDetection패키지 사용 (타 팀원이 적용예정)</li>
+</ul></li>
+</ul>
+</section>
+<section id="회의내용에-대한-self고찰-및-아이디어-develope" class="level3">
+<h3 class="anchored" data-anchor-id="회의내용에-대한-self고찰-및-아이디어-develope">회의내용에 대한 Self고찰 및 아이디어 Develope</h3>
+<ul>
+<li>분석할 광물에 대해 어떤 기준을 적용할지 고민
+<ul>
+<li>UN Comtrade를 활용할 때 어떤 HSCODE를 적용할지에 대한 고민
+<ul>
+<li>한국무역통계진흥원에서 제공하는 <a href="https://www.bandtrass.or.kr/hsnavi.do?page=F&amp;site=">HSCODE분류서비스</a>를 활용해, 가장 신고율이 높은 HSCODE 채택
+<ul>
+<li>‘이차전지용’ 등 여러 용도가 있음에도 가장 높은 신고율은 ’기타’인 것으로 확인해 이 로직은 Drop</li>
+</ul></li>
+<li>현대경제연구원의 <a href="https://www.hri.co.kr/kor/report/report-view.html?mode=2&amp;uid=97723&amp;find_field=total&amp;find_word=2%EC%B0%A8%EC%A0%84%EC%A7%80&amp;page=1">2차전지 보고서</a> 중 품목별 HSCODE 내용이 있어 활용 검토
+<ul>
+<li><strong>핵심사업에 사용될 광물에 대한 분석</strong>이라는 점에서, 2차전지 컨셉 차용이 나쁘지 않은 것으로 보여 <code>활용제안 예정</code>
+<ul>
+<li>산화/수산화리튬(282520), 산화/수산화코발트(282200), 황산코발트(283329)</li>
+<li>탄산리튬(283691), 이산화망간(850610), 산화/수산화니켈(282540), 황산니켈(283324)</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>모델링에 사용할 평가기준에 대한 분석
+<ul>
+<li>위험요소 탐지에 대한 모델이므로 <code>Recall 사용으로 제안 예정</code>
+<ul>
+<li>위기로 ’판정’하는게 많아져야 위기를 놓치지 않을 확률이 크므로 Recall이 맞다고 생각했음</li>
+</ul></li>
+</ul></li>
+<li>모델링에 사용할 Feature에 대한 생각 (<code>아래의 3개 지표를 개발하여 활용하도록 의견제안 예정</code>)
+<ul>
+<li>UN Comtrade의 요소를 바탕으로 아래의 지표를 생성하는 것을 고려
+<ul>
+<li><code>생산국 수출량</code> : 각 광물의 생산량 상위 국가를 from기준으로 하여 수출(공급)량 판단</li>
+<li><code>생산국 판매가격</code> : 각 광물의 판매가격을 수출량으로 나누어 kg당 단가로 판단
+<ul>
+<li>가격은 CIF, FOB중 기타비용을 제외하는 FOB를 우선고려, 데이터를 보고 추가결정</li>
+</ul></li>
+<li><code>수입국 수입량</code> : 특정 국가에서 수입량 변동이 급격히 변동(상승)하는 것 탐지</li>
+</ul></li>
+</ul></li>
+</ul>
+
+
+</section>
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
+  <category>공모전</category>
+  <category>공공데이터</category>
+  <category>분석</category>
+  <guid>https://kr9268.github.io/posts/dtcontest-ore-20240615/</guid>
+  <pubDate>Sat, 15 Jun 2024 00:00:00 GMT</pubDate>
+</item>
+<item>
   <title>[M_Study_3주차과제1] Softmax로 MNIST다루기</title>
   <dc:creator>Kibok Park</dc:creator>
   <link>https://kr9268.github.io/posts/meta-dl-creditcard-20240615_1/</link>
@@ -49822,446 +49923,6 @@ And if memory is not enough, you can set `force_col_wise=true`.
   <category>머신러닝</category>
   <guid>https://kr9268.github.io/posts/coach-ml-kaggle-20230506/</guid>
   <pubDate>Sat, 06 May 2023 00:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>[Pytorch] MNIST 실습</title>
-  <dc:creator>Kibok Park</dc:creator>
-  <link>https://kr9268.github.io/posts/coach-ml-mnist-20230301/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<section id="개요" class="level2">
-<h2 class="anchored" data-anchor-id="개요">개요</h2>
-<p>파이토치로 MNIST 머신러닝 실습해본 코드 기록용으로 남깁니다.</p>
-</section>
-<section id="pytorch활용한-mnist-데이터셋-로딩" class="level2">
-<h2 class="anchored" data-anchor-id="pytorch활용한-mnist-데이터셋-로딩">Pytorch활용한 MNIST 데이터셋 로딩</h2>
-<div id="fig-polar" class="cell quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-polar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="sourceCode cell-code" id="fig-polar" style="background: #f1f3f5;"><pre class="sourceCode python cell code-with-copy"><code class="sourceCode python"><span id="fig-polar-1"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> torch</span>
-<span id="fig-polar-2"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> torch.nn <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> nn</span>
-<span id="fig-polar-3"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> torch.utils.data <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> DataLoader</span>
-<span id="fig-polar-4"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> torchvision</span>
-<span id="fig-polar-5"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> torchvision.datasets <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> dset</span>
-<span id="fig-polar-6"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> torchvision.transforms <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> transforms</span>
-<span id="fig-polar-7"></span>
-<span id="fig-polar-8">root <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'./data'</span></span>
-<span id="fig-polar-9">mnist_train <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> dset.MNIST (root<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>root, train<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">True</span>, transform<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>transforms.ToTensor(), download<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">True</span> )</span>
-<span id="fig-polar-10">mnist_test <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> dset.MNIST (root<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>root, train<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">False</span>, transform<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>transforms.ToTensor(), download<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">True</span>)</span>
-<span id="fig-polar-11"></span>
-<span id="fig-polar-12"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Train용 / Test용 데이터셋</span></span>
-<span id="fig-polar-13">train_loader <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> DataLoader(mnist_train, batch_size<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span>, shuffle<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">True</span>)</span>
-<span id="fig-polar-14">test_loader <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> DataLoader(mnist_test, batch_size<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span>, shuffle<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">True</span>)</span></code></pre></div>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-polar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1
-</figcaption>
-</figure>
-</div>
-</section>
-<section id="학습준비가중치-초기화-등" class="level2">
-<h2 class="anchored" data-anchor-id="학습준비가중치-초기화-등">학습준비(가중치 초기화 등)</h2>
-<ul>
-<li>MNIST의 크기 : 28 * 28</li>
-<li>Loss : Cross Entropy</li>
-<li>Optimizer - SGD(Stochastic Gradient Descent)</li>
-<li>Learning rate = 0.1</li>
-</ul>
-<div id="db135b1a" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1">device <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> torch.device(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'cuda'</span> <span class="cf" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">if</span> torch.cuda.is_available() <span class="cf" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">else</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'cpu'</span>)</span>
-<span id="cb1-2"></span>
-<span id="cb1-3"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 모델 구현 (28*28 = 784 / 0~9라서 10개 / 가중치 사용하므로 bias)</span></span>
-<span id="cb1-4">linear <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> torch.nn.Linear(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">784</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span>, bias<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">True</span>).to(device) </span>
-<span id="cb1-5"></span>
-<span id="cb1-6"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># weight init 가중치 초기화</span></span>
-<span id="cb1-7">torch.nn.init.normal_(linear.weight)</span>
-<span id="cb1-8"></span>
-<span id="cb1-9"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Loss fn - Cross Entropy Loss</span></span>
-<span id="cb1-10">criterion <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> torch.nn.CrossEntropyLoss().to(device)</span>
-<span id="cb1-11"></span>
-<span id="cb1-12"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># optimizer - SGD</span></span>
-<span id="cb1-13">optimizer <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> torch.optim.SGD(linear.parameters(), lr<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.1</span>)</span></code></pre></div>
-</div>
-</section>
-<section id="모델-학습" class="level2">
-<h2 class="anchored" data-anchor-id="모델-학습">모델 학습</h2>
-<div id="683a020b" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">training_epochs <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">20</span> <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># training 반복 횟수</span></span>
-<span id="cb2-2"></span>
-<span id="cb2-3"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">for</span> epoch <span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">in</span> <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">range</span>(training_epochs):</span>
-<span id="cb2-4">  <span class="cf" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">for</span> i, (imgs, labels) <span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">in</span> <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">enumerate</span>(train_loader):</span>
-<span id="cb2-5">    labels <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> labels.to(device)</span>
-<span id="cb2-6">    imgs <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> imgs.view(<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">28</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">28</span>).to(device)</span>
-<span id="cb2-7"></span>
-<span id="cb2-8">    outputs <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> linear(imgs) </span>
-<span id="cb2-9">    loss <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> criterion(outputs, labels) </span>
-<span id="cb2-10"></span>
-<span id="cb2-11">    optimizer.zero_grad()<span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># optimzier zero grad</span></span>
-<span id="cb2-12"></span>
-<span id="cb2-13">    loss.backward() <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># loss backward</span></span>
-<span id="cb2-14">    optimizer.step() <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># optimzier step</span></span>
-<span id="cb2-15"></span>
-<span id="cb2-16">    _,argmax <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> torch.<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">max</span>(outputs, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>)</span>
-<span id="cb2-17">    accuracy <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> (labels <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> argmax).<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">float</span>().mean()</span>
-<span id="cb2-18"></span>
-<span id="cb2-19">  <span class="cf" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">if</span> (i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>) <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">100</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>:</span>
-<span id="cb2-20">    <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'Epoch [</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">/</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">], Step [</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">/</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">], Loss: </span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{: .4f}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">, Accuracy: </span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{: .2f}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">%'</span>.<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">format</span>(</span>
-<span id="cb2-21">    epoch<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>, training_epochs, i<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>, <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">len</span>(train_loader), loss.item(), accuracy.item()<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">100</span>))</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Epoch [1/20], Step [6000/6000], Loss:  0.0273, Accuracy:  100.00%
-Epoch [2/20], Step [6000/6000], Loss:  0.0762, Accuracy:  100.00%
-Epoch [3/20], Step [6000/6000], Loss:  0.5928, Accuracy:  80.00%
-Epoch [4/20], Step [6000/6000], Loss:  0.2854, Accuracy:  90.00%
-Epoch [5/20], Step [6000/6000], Loss:  0.1373, Accuracy:  90.00%
-Epoch [6/20], Step [6000/6000], Loss:  0.0668, Accuracy:  100.00%
-Epoch [7/20], Step [6000/6000], Loss:  0.0253, Accuracy:  100.00%
-Epoch [8/20], Step [6000/6000], Loss:  0.0542, Accuracy:  100.00%
-Epoch [9/20], Step [6000/6000], Loss:  0.9203, Accuracy:  80.00%
-Epoch [10/20], Step [6000/6000], Loss:  0.1244, Accuracy:  90.00%
-Epoch [11/20], Step [6000/6000], Loss:  0.6108, Accuracy:  90.00%
-Epoch [12/20], Step [6000/6000], Loss:  0.1312, Accuracy:  100.00%
-Epoch [13/20], Step [6000/6000], Loss:  0.0705, Accuracy:  100.00%
-Epoch [14/20], Step [6000/6000], Loss:  1.6259, Accuracy:  70.00%
-Epoch [15/20], Step [6000/6000], Loss:  0.0538, Accuracy:  100.00%
-Epoch [16/20], Step [6000/6000], Loss:  0.2435, Accuracy:  80.00%
-Epoch [17/20], Step [6000/6000], Loss:  0.0061, Accuracy:  100.00%
-Epoch [18/20], Step [6000/6000], Loss:  0.1091, Accuracy:  100.00%
-Epoch [19/20], Step [6000/6000], Loss:  0.0157, Accuracy:  100.00%
-Epoch [20/20], Step [6000/6000], Loss:  0.1413, Accuracy:  90.00%</code></pre>
-</div>
-</div>
-</section>
-<section id="학습된-모델-테스트" class="level2">
-<h2 class="anchored" data-anchor-id="학습된-모델-테스트">학습된 모델 테스트</h2>
-<div id="1d05ac8c" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">linear.<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">eval</span>()</span>
-<span id="cb4-2"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">with</span> torch.no_grad():</span>
-<span id="cb4-3">    correct <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span></span>
-<span id="cb4-4">    total <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span></span>
-<span id="cb4-5">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">for</span> i, (imgs, labels) <span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">in</span> <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">enumerate</span>(test_loader):</span>
-<span id="cb4-6">        imgs, labels <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> imgs.to(device), labels.to(device)</span>
-<span id="cb4-7">        imgs <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> imgs.view(<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">28</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">28</span>)</span>
-<span id="cb4-8"></span>
-<span id="cb4-9">        outputs <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> linear(imgs) <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 구현</span></span>
-<span id="cb4-10"></span>
-<span id="cb4-11">        _, argmax <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> torch.<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">max</span>(outputs, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>) <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># max()를 통해 최종 출력이 가장 높은 class 선택</span></span>
-<span id="cb4-12">        total <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+=</span> imgs.size(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>)</span>
-<span id="cb4-13">        correct <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+=</span> (labels <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> argmax). <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">sum</span>().item()</span>
-<span id="cb4-14"></span>
-<span id="cb4-15">    <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'Test accuracy for </span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;"> images: </span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{: .2f}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">%'</span>.<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">format</span>(total, correct <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/</span> total <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">100</span>))</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Test accuracy for 10000 images:  91.99%</code></pre>
-</div>
-</div>
-
-
-</section>
-
-<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
-  <category>파이썬</category>
-  <category>머신러닝</category>
-  <guid>https://kr9268.github.io/posts/coach-ml-mnist-20230301/</guid>
-  <pubDate>Sun, 19 Feb 2023 00:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
