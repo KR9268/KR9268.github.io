@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.553">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Kibok Park">
+<meta name="dcterms.date" content="2024-06-16">
+
+<title>Blog - [M_Study_4주차] Convolutional Neural Network</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.jpg" rel="icon" type="image/jpeg">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/watermark-1.0.11/watermark.min.js"></script>
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-LPL499WQBH"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
+</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Blog</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index_dashboards.html"> 
+<span class="menu-text">Dashboards</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index_miniprojects.html"> 
+<span class="menu-text">Mini Projects</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About me</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/KR9268"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/%EA%B8%B0%EB%B3%B5-%EB%B0%95-573a68268/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">[M_Study_4주차] Convolutional Neural Network</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">파이썬</div>
+                <div class="quarto-category">머신러닝</div>
+                <div class="quarto-category">딥러닝</div>
+                <div class="quarto-category">MStudy</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Kibok Park </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">June 16, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#개요" id="toc-개요" class="nav-link active" data-scroll-target="#개요">개요</a></li>
+  <li><a href="#주차-과제-설명mnist-설명" id="toc-주차-과제-설명mnist-설명" class="nav-link" data-scroll-target="#주차-과제-설명mnist-설명">3주차 과제 설명(MNIST 설명)</a></li>
+  <li><a href="#주차-과제-설명mnist의-softmax구현" id="toc-주차-과제-설명mnist의-softmax구현" class="nav-link" data-scroll-target="#주차-과제-설명mnist의-softmax구현">3주차 과제 설명(MNIST의 Softmax구현)</a></li>
+  <li><a href="#주차-과제-설명mnist의-neural-network구현" id="toc-주차-과제-설명mnist의-neural-network구현" class="nav-link" data-scroll-target="#주차-과제-설명mnist의-neural-network구현">3주차 과제 설명(MNIST의 Neural Network구현)</a></li>
+  <li><a href="#주차-정리" id="toc-주차-정리" class="nav-link" data-scroll-target="#주차-정리">4주차 정리</a>
+  <ul class="collapse">
+  <li><a href="#deep-neural-network-convolution-nn" id="toc-deep-neural-network-convolution-nn" class="nav-link" data-scroll-target="#deep-neural-network-convolution-nn">Deep Neural Network (Convolution NN)</a></li>
+  <li><a href="#final-project-설명" id="toc-final-project-설명" class="nav-link" data-scroll-target="#final-project-설명">Final project 설명</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="개요" class="level2">
+<h2 class="anchored" data-anchor-id="개요">개요</h2>
+<p>참여중인 딥러닝 스터디 4주차 기록입니다.</p>
+</section>
+<section id="주차-과제-설명mnist-설명" class="level2">
+<h2 class="anchored" data-anchor-id="주차-과제-설명mnist-설명">3주차 과제 설명(MNIST 설명)</h2>
+<ul>
+<li><p>Binary(Hypothesis : Sigmoid, CrossEntropy : Y, 1-Y) <br> → Multiclass(Hypothesis : Softmax, CrossEntropy : <span class="math inline">\(Y_1\)</span>, <span class="math inline">\(Y_2\)</span>…)</p></li>
+<li><p>MNIST</p>
+<ul>
+<li>데이터사이언스, 딥러닝에서의 기초(코딩의 Hello world와 같음)</li>
+<li>사람들의 손글씨 데이터를 모아둔 유명한 데이터 셋</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># tensorflow MNIST로딩 샘플코드</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="im">from</span> tensorflow.keras.datasets <span class="im">import</span> mnist</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  (x_train, y_train), (x_test, y_test) <span class="op">=</span> mnist.load_data()</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(x_train.shape, y_train.shape, y_train[<span class="dv">0</span>])</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="op">&gt;&gt;&gt;</span>(<span class="dv">60000</span>, <span class="dv">28</span>, <span class="dv">28</span>) (<span class="dv">60000</span>,) <span class="dv">5</span> </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 6만건의 28*28형태의 데이터 (x_train.shape), 6만건의 0차원 형태 데이터(y_train.shape), 0번째 y_train 정답값(5)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+</section>
+<section id="주차-과제-설명mnist의-softmax구현" class="level2">
+<h2 class="anchored" data-anchor-id="주차-과제-설명mnist의-softmax구현">3주차 과제 설명(MNIST의 Softmax구현)</h2>
+<ul>
+<li>MNIST의 Softmax구현
+<ul>
+<li><p>reshape을 사용하는 이유</p>
+<ul>
+<li>모델에 통과시키기 위해 행렬을 flatten(28*28 → 784*1)한 후, 다시 Visualize할 때 사용</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>  img <span class="op">=</span> x_train[i].reshape(<span class="dv">28</span>,<span class="dv">28</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  plt.imshow(img, cmap<span class="op">=</span>plt.cm.binary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Hyper parameter</p>
+<ul>
+<li>Parameter : W와 b와 같은 학습을 통해 최적화하는 값</li>
+<li>Hyper parameter : 모델의 선택(Linear vs Logistic regression), learning_rate, epoch, class(몇개로 나눌지), feature(input data) 등</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># MNIST dataset parameters</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  num_classes <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  num_features <span class="op">=</span> <span class="dv">28</span> <span class="op">*</span> <span class="dv">28</span> <span class="co"># 784</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Training parameters</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  learning_rate <span class="op">=</span> <span class="fl">0.01</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  steps <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  batch_size <span class="op">=</span> <span class="dv">256</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>np.array : list형태의 train data를 수학적 연산에 유리한 numpy로 변환하기 위해 사용</p>
+<ul>
+<li>권장하는 코딩습관 : 아래와 같이 데이터타입을 명시 (안적어도 float32로 기본지정되긴 함)
+<ul>
+<li>np.array(x_train) → np.array(x_train, np.float32)</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>x_train, x_test <span class="op">=</span> np.array(x_train, np.float32), np.array(x_test, np.float32)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul></li>
+<li><p>구조변경(flatten)</p>
+<ul>
+<li>reshape([-1, num_features]) : flatten 구현
+<ul>
+<li>784 data에 reshape([-1, 28]) : reshape의 -1 부분은 28이 됨</li>
+<li>784 data에 reshape([-1, 784]) : reshape의 -1 부분은 1이 됨</li>
+</ul>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data 구조를 통일</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>x_train <span class="op">=</span> x_train.reshape([<span class="op">-</span><span class="dv">1</span>, num_features])</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>x_test <span class="op">=</span> x_test.reshape([<span class="op">-</span><span class="dv">1</span>, num_features])</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x_train.shape, x_test.shape)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> (<span class="dv">60000</span>, <span class="dv">784</span>) (<span class="dv">10000</span>, <span class="dv">784</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul></li>
+<li><p>데이터 전처리(Normalize, Zero-centering)</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>  x_train, x_test  <span class="op">=</span> x_train <span class="op">/</span> <span class="fl">255.</span> , x_test <span class="op">/</span> <span class="fl">255.</span> <span class="co"># Normalizd</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  x_train, x_test <span class="op">=</span> (x_train<span class="op">-</span>np.mean(x_train)), (x_test<span class="op">-</span>np.mean(x_test)) <span class="co"># Zero-Centering</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Variable 설정</p>
+<ul>
+<li>W와 b의 Shape은 결정해주어야 함 (W의 차원파악 중요)
+<ul>
+<li>W : input dimesion, output dimesion</li>
+<li>b : number of classes(output dimesion)</li>
+</ul>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>  W <span class="op">=</span> tf.Variable(tf.ones([num_features, num_classes]), name <span class="op">=</span> <span class="st">'weight'</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  b <span class="op">=</span> tf.Variable(tf.zeros([num_classes]), name<span class="op">=</span><span class="st">'bias'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul></li>
+<li><p>Hypothesis와 평가방법(accuracy) 등 설정</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> softmax(x):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    z <span class="op">=</span> tf.matmul(x, W) <span class="op">+</span> b</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    sm <span class="op">=</span> tf.nn.softmax(z)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> sm</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> cross_entropy(y_pred, y_true):</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    y_true <span class="op">=</span> tf.one_hot(y_true, depth<span class="op">=</span>num_classes)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    y_pred <span class="op">=</span> tf.clip_by_value(y_pred, <span class="fl">1e-9</span>, <span class="fl">1.</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> tf.reduce_mean(<span class="op">-</span>tf.reduce_sum(y_true <span class="op">*</span> tf.math.log(y_pred), axis <span class="op">=</span> <span class="dv">1</span>))</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> accuracy(y_pred, y_true):</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    correct_prediction <span class="op">=</span> tf.equal(tf.argmax(y_pred, axis<span class="op">=</span><span class="dv">1</span>), tf.cast(y_true, tf.int64))</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> tf.reduce_mean(tf.cast(correct_prediction, tf.float32))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Optimizer</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>  optimizer <span class="op">=</span> tf.optimizers.SGD(learning_rate)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> run_optimization(x,y):</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> tf.GradientTape() <span class="im">as</span> tape:</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>      pred <span class="op">=</span> softmax(x)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>      loss <span class="op">=</span> cross_entropy(pred, y)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    gradients <span class="op">=</span> tape.gradient(loss, [W,b])</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    optimizer.apply_gradients(<span class="bu">zip</span>(gradients, [W,b]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Batch size구현</p>
+<ul>
+<li><p>아래 코드는 기초적 구현이며, 중복제거나 차례대로 진행되는 기능 등도 있음</p>
+<ul>
+<li>왜? 데이터가 시점 등에 따라 패턴이 있을 수 있다
+<ul>
+<li>100개의 데이터를 10등분했을 때, 각 데이터마다 패턴이 있을 수 있음</li>
+<li>편향되지 않게 섞는 것이 batch_size의 기본적 컨셉 ```python n_train = x_train.shape[0] # 60000 n_test = x_test.shape[0] # 10000</li>
+</ul></li>
+</ul>
+<p>def train_batch_maker(batch_size): random_idx = np.random.randint(n_train, size = batch_size) # (batch_size,) vector return x_train[random_idx], y_train[random_idx] # (batch_size, 28*28)</p>
+<p>def test_batch_maker(batch_size): random_idx = np.random.randint(n_test, size = batch_size) # (batch_size,) vector return x_test[random_idx], y_test[random_idx] # (batch_size, 28*28) ```</p></li>
+</ul></li>
+<li><p>학습 및 Test</p></li>
+</ul>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> step <span class="kw">in</span> <span class="bu">range</span>(steps):</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  batch_x, batch_y <span class="op">=</span> train_batch_maker(batch_size)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Run the optimization to update W and b values</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  run_optimization(batch_x, batch_y)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> step <span class="op">%</span> <span class="dv">100</span> <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    pred <span class="op">=</span> softmax(batch_x)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> cross_entropy(pred, batch_y)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    acc <span class="op">=</span> accuracy(pred, batch_y)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"step: </span><span class="sc">{</span>step<span class="sc">}</span><span class="ss"> loss: </span><span class="sc">{</span>loss<span class="sc">}</span><span class="ss"> accuracy: </span><span class="sc">{</span>acc<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  pred <span class="op">=</span> softmax(x_test)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="ss">f"Test Accuracy: </span><span class="sc">{</span>accuracy(pred, y_test)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  <span class="op">&gt;&gt;&gt;</span> Test Accuracy: <span class="fl">0.8712000250816345</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Predict 5 images from validaton set.</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  num_images <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  test_images <span class="op">=</span> x_test[:num_images]</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>  predictions <span class="op">=</span> softmax(test_images)</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Visualize image and model predcition</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>  plt.figure(figsize <span class="op">=</span> (<span class="dv">5</span>,<span class="dv">5</span>))</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(num_images):</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    plt.subplot(<span class="dv">1</span>, num_images, i<span class="op">+</span><span class="dv">1</span>)</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>    plt.imshow(np.reshape(test_images[i], [<span class="dv">28</span>,<span class="dv">28</span>]), cmap<span class="op">=</span>plt.cm.binary)</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(np.argmax(predictions.numpy()[i]))</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>  plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/8027d92f-1-image.png" class="img-fluid figure-img"></p>
+<figcaption>image.png</figcaption>
+</figure>
+</div></li>
+</ul>
+</section>
+<section id="주차-과제-설명mnist의-neural-network구현" class="level2">
+<h2 class="anchored" data-anchor-id="주차-과제-설명mnist의-neural-network구현">3주차 과제 설명(MNIST의 Neural Network구현)</h2>
+<ul>
+<li>MNIST의 Neural Network구현(기초)
+<ul>
+<li>Sequential : Python의 list 선언과 유사함
+<ul>
+<li>아래 코드의 경우, 사실상 Hidden layer가 없는 단층 Perceptron</li>
+<li>GPT의 경우 하단 모델표에서 Total params가 엄청 많음</li>
+</ul>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>  <span class="im">from</span> tensorflow.keras.models <span class="im">import</span> Sequential</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="im">from</span> tensorflow.keras.layers <span class="im">import</span> Dense</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  model <span class="op">=</span> Sequential()</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  model.add(Dense(<span class="dv">2</span>, activation <span class="op">=</span> <span class="st">"sigmoid"</span>, input_dim<span class="op">=</span><span class="dv">2</span>)) <span class="co"># neuron=2, input_dim=2</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  model.add(Dense(<span class="dv">1</span>, activation <span class="op">=</span> <span class="st">"sigmoid"</span>))              <span class="co"># output_dim = 1</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  model.summary()</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="op">&gt;&gt;&gt;</span>Model: <span class="st">"sequential"</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    _________________________________________________________________</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    Layer (<span class="bu">type</span>)                Output Shape              Param <span class="co">#   </span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">=================================================================</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    dense (Dense)               (<span class="va">None</span>, <span class="dv">2</span>)                 <span class="dv">6</span>         </span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    dense_1 (Dense)             (<span class="va">None</span>, <span class="dv">1</span>)                 <span class="dv">3</span>         </span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">=================================================================</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    Total params: <span class="dv">9</span> (<span class="fl">36.00</span> Byte)</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>    Trainable params: <span class="dv">9</span> (<span class="fl">36.00</span> Byte)</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>    Non<span class="op">-</span>trainable params: <span class="dv">0</span> (<span class="fl">0.00</span> Byte)</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    _________________________________________________________________</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>라이브러리를 활용하여 아래와 같이 코드가 간단해짐 (verbose을 0이 아닌값 지정시 진행상태 확인가능)</li>
+</ul>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>  model.<span class="bu">compile</span>(optimizer <span class="op">=</span> <span class="st">"SGD"</span>,</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                loss <span class="op">=</span> <span class="st">'binary_crossentropy'</span>,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                metrics<span class="op">=</span>[<span class="st">'accuracy'</span>])</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  history <span class="op">=</span> model.fit(x_data, y_data, epochs<span class="op">=</span><span class="dv">1000</span>, batch_size<span class="op">=</span><span class="dv">32</span>, verbose<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>모델평가
+<ul>
+<li>아래와 같이 acc가 낮은 이유는, XOR문제처럼 현재와 같은 단층레이어로는 해결이 어렵기 때문</li>
+</ul>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>loss, train_acc <span class="op">=</span> model.evaluate(x_data, y_data, verbose<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"train_acc = </span><span class="sc">{</span>train_acc<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"loss = </span><span class="sc">{</span>loss<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>predict <span class="op">=</span> model.predict(x_data)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(predict)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span>train_acc <span class="op">=</span> <span class="fl">0.5</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  loss <span class="op">=</span> <span class="fl">0.6908708810806274</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul></li>
+</ul></li>
+<li>MNIST의 Neural Network구현(ANN, 인공신경망 Artificial Neural Network)
+<ul>
+<li>Dense(10, activation = “sigmoid”) : 뉴런이 10개이며 활성화함수가 Sigmoid</li>
+<li>Dense(1, activation = “softmax”) : 활성화 함수로 Softmax 사용</li>
+<li><strong>중요 포인트</strong>
+<ul>
+<li>input data의 shape와 일치시키기</li>
+<li>output activation은 내가 풀고자 하는 문제에 맞춰 잘 지정해야함
+<ul>
+<li>Multi-class인데 Sigmoid를 사용한다면 돌아가지 않을 것임 ```python from tensorflow.keras.layers import Flatten</li>
+</ul></li>
+</ul>
+model = Sequential() model.add(Flatten(input_shape=(28,28))) model.add(Dense(10, activation = “sigmoid”)) model.add(Dense(10, activation = “sigmoid”)) model.add(Dense(1, activation = “softmax”)) model.summary() ```</li>
+<li>하단 모델표의 dense_2 (Dense)의 Param #의 의미
+<ul>
+<li>784*10 + 10(bias) : fully-connected layer</li>
+</ul>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Model: <span class="st">"sequential_1"</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>_________________________________________________________________</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>Layer (<span class="bu">type</span>)                Output Shape              Param <span class="co">#   </span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="op">=================================================================</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>flatten (Flatten)           (<span class="va">None</span>, <span class="dv">784</span>)               <span class="dv">0</span>         </span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>dense_2 (Dense)             (<span class="va">None</span>, <span class="dv">10</span>)                <span class="dv">7850</span>      </span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>dense_3 (Dense)             (<span class="va">None</span>, <span class="dv">10</span>)                <span class="dv">110</span>       </span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>dense_4 (Dense)             (<span class="va">None</span>, <span class="dv">1</span>)                 <span class="dv">11</span>        </span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="op">=================================================================</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>Total params: <span class="dv">7971</span> (<span class="fl">31.14</span> KB)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>Trainable params: <span class="dv">7971</span> (<span class="fl">31.14</span> KB)</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>Non<span class="op">-</span>trainable params: <span class="dv">0</span> (<span class="fl">0.00</span> Byte)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul></li>
+<li>Neural Network를 잘 사용하려면
+<ul>
+<li>하이퍼 파라미터 튜닝 : Activation fuction 어떤 것, 뉴런/레이어 갯수 등 설정
+<ul>
+<li>일반적으로 괜찮다고 알려진 값으로 지정해야 모델성능이 쓸만해짐</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="주차-정리" class="level2">
+<h2 class="anchored" data-anchor-id="주차-정리">4주차 정리</h2>
+<section id="deep-neural-network-convolution-nn" class="level3">
+<h3 class="anchored" data-anchor-id="deep-neural-network-convolution-nn">Deep Neural Network (Convolution NN)</h3>
+<ul>
+<li>딥러닝은 비선형적 관계를 잘 묘사함
+<ul>
+<li>과거에는 숫자데이터(금리, 고용률 등)만 다룰 수 있었음</li>
+<li>이미지 등 비정형데이터를 잘 다룰 수 있게됨</li>
+</ul></li>
+<li>CNN(Convolutional Neural Network)
+<ul>
+<li><p>이미지를 분류, 처리하는 기술</p>
+<ul>
+<li>분류(Classification) : 대상이 어디에 속하는지 분류</li>
+<li>식별(Detection) : 사진에서의 어떤 객체를 분류하고, 그 객체가 어디에 속하는지 분류</li>
+<li>이러한 분류와 식별을 응용하여 자율주행 자동차, 얼굴인식App 등 구현 가능 (CNN Architecture영향을 받아 발전)<br>
+</li>
+</ul></li>
+<li><p>CNN의 구성</p>
+<ul>
+<li>특성추출(feature learning)
+<ul>
+<li>사진은 많은 정보를 포함해 계산량이 너무 많아지므로, 특성추출을 통해 압축이 필요함</li>
+<li>CNN은 모델이 이런 정보에서 어느 부분이 중요한지 찾게 만듦</li>
+<li><strong>특성추출로 압축된 정보를 Neural Network에 넣어, 원본사진 넣은 것과 동일한 것처럼, 빠르고 가볍게 돌아감</strong><br> (예를 들어 자율주행에 활용하기 위해서는 짧은 시간에 처리해야함)</li>
+<li>Convolution alyer(정보압축) / Pooling layer(정보버림) 등의 반복</li>
+</ul></li>
+<li>Classification
+<ul>
+<li>Flatten / Fully-connected / Softmax 등 3주차까지 배운 내용</li>
+</ul></li>
+</ul></li>
+<li><p>Convolution layer</p>
+<ul>
+<li>Source(X)에 Kernel(W)행렬을 곱해 Result(Y)를 만드는것과 같음
+<ul>
+<li>원본이미지(Source)의 손실을 최소화하며 잘 압축하는 좋은Kernel값을 찾고자 함</li>
+<li>아다마르곱 활용 : 매칭되는 칸의 숫자끼리 곱하여 더함<br> <img src="index_files/figure-html/00653178-1-image-4.png" class="img-fluid" alt="image-4.png"></li>
+</ul></li>
+<li>Convolution layer를 통과해 (28,28)이 (14,14)가 되어도 특징 식별 가능
+<ul>
+<li>CNN은, 마스크 쓴 사람의 일부 얼굴 특징만으로 사람을 판단하는 것과 같은 방법을 차용</li>
+</ul></li>
+<li>CNN이 잘 작동하기 위한 가정
+<ul>
+<li>Spatial Locality : 사진의 일부만 봐도 식별이 가능하다</li>
+<li>Positional invariance : 이미지에서 사과 등 객체가 어디에 있던 사과임
+<ul>
+<li>예외 상황 : 엑스레이의 흰색이 위치에 따라 심장, 간 등 다름</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><p>Convolution layer 추가설명</p>
+<ul>
+<li>image(32,32,3)를 filter(3,3,3)가 움직이며 아다마르곱으로 처리
+<ul>
+<li>kernel과 filter는 동일한 의미로 사용 <img src="index_files/figure-html/00653178-2-image-5.png" class="img-fluid" alt="image-5.png"></li>
+<li>(32X32X3)image에 (5X5X3)filter 적용시 output은 (28X28X1)
+<ul>
+<li>output은 activation map임(매핑을 했다는 것)</li>
+</ul></li>
+<li>(32X32X3)image에 (5X5X3)filter 4개를 적용하는 이유? <img src="index_files/figure-html/00653178-3-image-6.png" class="img-fluid" alt="image-6.png">
+<ul>
+<li>필터가 필요했던 이유는 정보 압축 → 정보가 작아지며 손실 발생 (코끼리의 일부만을 보는 것과 같음)</li>
+<li>각 부분의 정보(4개의 filter)를 모두 모아서 정확히 알 수 있음 (4개의 filter라는 서로 다른 각도에서 본 코끼리를 합쳐서 보게되는 것)</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><p>Nested Conv-layers(Convolution layer에 대한 문제)</p>
+<ul>
+<li>Layer를 여러번 통과하여 너무 작아지는 문제(get smaller quickly) + 4k와 같은 큰 데이터의 계산량 문제</li>
+<li>이러한 문제를 방지하기 위해 stride와 padding이라는 parameter를 추가</li>
+</ul></li>
+<li><p>Stride</p>
+<ul>
+<li>(Input - Filter) / stride + 1
+<ul>
+<li>(7x7)image에 (3X3)filter, stride 1 → (7-3)/1 + 1 = (5X5)</li>
+<li>(7x7)image에 (3X3)filter, stride 2 → (7-3)/2 + 1 = (3X3)</li>
+<li>(7x7)image에 (3X3)filter, stride 3 → (7-3)/3 + 1 = (2.33X2.33)
+<ul>
+<li>output 소수인 것은 불가, padding(가장 자리에 0을 붙여줌)을 사용</li>
+</ul></li>
+</ul></li>
+<li><strong>(Input - Filter + 2 <span class="math inline">\(*\)</span> Padding) / stride + 1</strong>
+<ul>
+<li>Padding을 2배하는 이유는 양쪽 테두리에 각 1개씩 추가되기 때문</li>
+</ul></li>
+</ul></li>
+<li><p>예시</p>
+<ul>
+<li>Input (32x32x3) / 10 Filter(5X5) / stride 1, pad 2
+<ul>
+<li>Output size(=32X32X10) : (32-5+2*2)/1 + 1 → (32X32) → 10개의 필터</li>
+<li>Number of Parameter(=760) : (Filter (5X5) * Input의 차원 3 + Bias 1) → (5<em>5</em>3+1) → 필터 10개 → (5<em>5</em>3+1) * 10</li>
+<li>Number of Parameter if fully-connected(=31,467,520) : (32<em>32</em>10)<em>(32</em>32*3_1)
+<ul>
+<li>Fully-connected로 31,467,520개 파라미터가 필요했다면, CNN으로 760개 파라미터로 가능해짐</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><p>관례적으로 filter size는 정사각형이지만 직사각형도 가능하다</p></li>
+<li><p>Pooling Layer : 쓸모없는 정보를 버림</p>
+<ul>
+<li>Pooling Layer의 종류
+<ul>
+<li>Max pooling : 제일 큰 수만 가져옴</li>
+<li>Average pooling : 평균 가져옴</li>
+<li>Parameters 0개 (숫자를 찾는게 아닌 버림. 학습이 일어나지 않음)</li>
+</ul></li>
+<li>Pooling Layer의 특징
+<ul>
+<li>파라미터수가 0 (학습이 일어나지 않는다, Kernel[Filter]처럼 좋은 숫자를 찾는 작업이 없기 때문)</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="final-project-설명" class="level3">
+<h3 class="anchored" data-anchor-id="final-project-설명">Final project 설명</h3>
+<ul>
+<li><p>28만건의 신용카드 데이터로 만들기</p></li>
+<li><p>금융데이터는 privacy이슈가 있어 공개시 익명화되어있음</p>
+<ul>
+<li>단위가 다르면 연봉, 자산 여부를 역추적할 수 있어, PCA를 통해 익명화 가능
+<ul>
+<li>PCA : 데이터 익명화기법은 아니고 처리기법</li>
+<li>V1, V2와 같은 세상에 존재하지 않는 축으로 변환하기때문에 익명화에 좋다</li>
+<li>원래는 상관관계를 0이 되게만드는 테크닉</li>
+</ul></li>
+</ul></li>
+<li><p>Missing value 처리</p>
+<ul>
+<li>평균,최빈,중앙 값 중 프로젝트에 가장 적합한 값 사용하여 대치</li>
+</ul></li>
+<li><p>상관관계 파악 (Heatmap 분석)</p>
+<ul>
+<li>과제의 금융데이터는 PCA로 인해 상관관계가 이미 사라져있음</li>
+</ul></li>
+<li><p>데이터의 구조 파악</p>
+<ul>
+<li>class : 0정상 1이상거래 (0.17%만이 이상거래 → 모델평가시 고려)</li>
+</ul></li>
+<li><p>불필요한 컬럼 삭제</p></li>
+<li><p>Target이 합쳐져있는 원본데이터이므로 X, Y로 나누는 작업 필요</p></li>
+<li><p>모델 평가</p>
+<ul>
+<li>99프로가 정상거래인데 99프로 정상임을 맞췄다면, 단순히 모델이 좋다고 보기 어려움
+<ul>
+<li>Precision, Recall, F1-Score → 이상거래를 몇건 맞췄는지 볼 수 있음</li>
+</ul></li>
+</ul></li>
+<li><p>평가지표는 f1-score를 사용 예정</p>
+<ul>
+<li>바꾸고싶다면 사유 명시(어떤 부분을 중요하게 생각하여 Recall을 기준으로 삼았다)</li>
+</ul></li>
+</ul>
+
+
+</section>
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/kr9268\.github\.io\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="kr9268/giscus_for_blog" data-repo-id="R_kgDOL0Sthw" data-category="General" data-category-id="DIC_kwDOL0Sth84Ce_5h" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+</div> <!-- /content -->
+<script>
+    const baseFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    const watermark = new XWatermark.XWatermark();
+    watermark.init("Kibok Park", {
+      parentSelector: "body",
+      prevent: true,
+      observer: true,
+      mode: "normal",
+      font: "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', 'Liberation Sans', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
+      fontsize: baseFontSize * 1.000000,
+      angle: -15.000000,
+      color: "#000000",
+      alpha: 0.100000,
+      cols: 10,
+      rows: 50,
+      xSpace: baseFontSize * 4.000000,
+      ySpace: baseFontSize * 4.000000,
+      zIndex: -1
+    });
+    </script>
+
+
+
+
+</body></html>
