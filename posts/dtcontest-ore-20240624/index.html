@@ -1,0 +1,2694 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.556">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Kibok Park">
+<meta name="dcterms.date" content="2024-06-24">
+
+<title>Blog - [공모전] 공공데이터 공모전-7(광물 전체 제안배경 작성)</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.jpg" rel="icon" type="image/jpeg">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/watermark-1.0.11/watermark.min.js"></script>
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-LPL499WQBH"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Blog</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index_dashboards.html"> 
+<span class="menu-text">Dashboards</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index_miniprojects.html"> 
+<span class="menu-text">Mini Projects</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About me</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/KR9268"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/%EA%B8%B0%EB%B3%B5-%EB%B0%95-573a68268/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">[공모전] 공공데이터 공모전-7(광물 전체 제안배경 작성)</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">공모전</div>
+                <div class="quarto-category">공공데이터</div>
+                <div class="quarto-category">분석</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Kibok Park </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">June 24, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#개요" id="toc-개요" class="nav-link active" data-scroll-target="#개요">개요</a></li>
+  <li><a href="#내용정리" id="toc-내용정리" class="nav-link" data-scroll-target="#내용정리">내용정리</a>
+  <ul class="collapse">
+  <li><a href="#지난-회의정리" id="toc-지난-회의정리" class="nav-link" data-scroll-target="#지난-회의정리">지난 회의정리</a></li>
+  </ul></li>
+  <li><a href="#보고서제안배경-초안" id="toc-보고서제안배경-초안" class="nav-link" data-scroll-target="#보고서제안배경-초안">보고서(제안배경) 초안</a>
+  <ul class="collapse">
+  <li><a href="#제안배경" id="toc-제안배경" class="nav-link" data-scroll-target="#제안배경">제안배경</a>
+  <ul class="collapse">
+  <li><a href="#현황-및-제안목적" id="toc-현황-및-제안목적" class="nav-link" data-scroll-target="#현황-및-제안목적">현황 및 제안목적</a></li>
+  <li><a href="#도입-방법" id="toc-도입-방법" class="nav-link" data-scroll-target="#도입-방법">도입 방법</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#작성에-사용된-분석-코드" id="toc-작성에-사용된-분석-코드" class="nav-link" data-scroll-target="#작성에-사용된-분석-코드">작성에 사용된 분석 코드</a>
+  <ul class="collapse">
+  <li><a href="#usgs-자료분석-광물별-매장량-산출" id="toc-usgs-자료분석-광물별-매장량-산출" class="nav-link" data-scroll-target="#usgs-자료분석-광물별-매장량-산출">USGS 자료분석 (광물별 매장량 산출)</a></li>
+  <li><a href="#un-comtrade-자료분석광물별-top5수입국" id="toc-un-comtrade-자료분석광물별-top5수입국" class="nav-link" data-scroll-target="#un-comtrade-자료분석광물별-top5수입국">UN Comtrade 자료분석(광물별 Top5수입국)</a></li>
+  <li><a href="#un-comtrade-자료분석연도별-광물수입량-산출" id="toc-un-comtrade-자료분석연도별-광물수입량-산출" class="nav-link" data-scroll-target="#un-comtrade-자료분석연도별-광물수입량-산출">UN Comtrade 자료분석(연도별 광물수입량 산출)</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>2024년 12회 산업통상자원부 공공데이터 활용 아이디어 공모전 참가 기록.(광물 전체 제안배경 작성)</p>
+<section id="개요" class="level1">
+<h1>개요</h1>
+<ul>
+<li>2024년 12회 산업통상자원부 공공데이터 활용 아이디어 공모전 참가해보기로 함
+<ul>
+<li>https://datacontest.kr/apply/applyAdd/3</li>
+</ul></li>
+<li>니켈 뿐 아니라 타 광석에 대해 분석하여 제안배경에 대해 작성하기로 함</li>
+</ul>
+</section>
+<section id="내용정리" class="level1">
+<h1>내용정리</h1>
+<section id="지난-회의정리" class="level2">
+<h2 class="anchored" data-anchor-id="지난-회의정리">지난 회의정리</h2>
+<ul>
+<li>내가 진행할 과업
+<ul>
+<li>UN Comtreade API개발한 것을 기반으로 광물별 데이터 저장 및 바로 사용할수 있도록 db화
+<ul>
+<li>기존에 만들어둔 공공데이터포털 데이터 공유용 git을 활용하여 모든 데이터 관리 예정
+<ul>
+<li>링크 : https://github.com/KR9268/db_datagokr</li>
+</ul></li>
+</ul></li>
+<li>분석을 구상하고 제안한 배경에 대해 작성
+<ul>
+<li>기존의 니켈뿐 아니라 분석 대상 광석 전체에 대해 분석 진행</li>
+<li>해당 내용 기반으로 분석의 당위성 부여 예정</li>
+</ul></li>
+<li>활용데이터에 대한 정리
+<ul>
+<li>활용한 외부데이터와 내용, 활용이유 정리</li>
+</ul></li>
+</ul></li>
+<li>타 팀원들 진행할 과업
+<ul>
+<li>LSTM 등 예측 모델에 대한 설명</li>
+<li>Prophet 등 이상탐지 모델에 대한 설명</li>
+<li>만들어둔 db활용하여 데이터 추가가공 및 전처리</li>
+<li>모델링 및 모델학습</li>
+</ul></li>
+<li>다같이 진행할 과업
+<ul>
+<li>분석으로 인한 기대(파급)효과</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="보고서제안배경-초안" class="level1">
+<h1>보고서(제안배경) 초안</h1>
+<section id="제안배경" class="level2">
+<h2 class="anchored" data-anchor-id="제안배경">제안배경</h2>
+<section id="현황-및-제안목적" class="level3">
+<h3 class="anchored" data-anchor-id="현황-및-제안목적">현황 및 제안목적</h3>
+<section id="탄소중립-등-환경에-대한-관심과-전기차-배터리-등-미래-유망산업의-핵심광물-수요-증가" class="level4">
+<h4 class="anchored" data-anchor-id="탄소중립-등-환경에-대한-관심과-전기차-배터리-등-미래-유망산업의-핵심광물-수요-증가">탄소중립 등 환경에 대한 관심과, 전기차 배터리 등 미래 유망산업의 핵심광물 수요 증가</h4>
+<ul>
+<li>리튬, 니켈, 코발트, 망간은 전기차 이차전지의 원료로, 배터리 양극재 등에 필요한 핵심금속</li>
+<li>세계은행 예상에 따르면 배터리 시장은 2050년까지 크게 성장할 전망<br> (2050년에는 2018년 기준 450%이상 수요증가할 것으로 예상)<br> <img src="index_files/figure-html/5dcda823-5-image.png" class="img-fluid" alt="image.png"><br> <strong>출처</strong> : Minerals for Climate Action: The Mineral Intensity of the Clean Energy Transition(2020), The World Bank</li>
+</ul>
+</section>
+<section id="핵심광물-매장이-특정-국가에-심하게-편중되어-있어-상당한-공급망-리스크-존재" class="level4">
+<h4 class="anchored" data-anchor-id="핵심광물-매장이-특정-국가에-심하게-편중되어-있어-상당한-공급망-리스크-존재">핵심광물 매장이 특정 국가에 심하게 편중되어 있어 상당한 공급망 리스크 존재</h4>
+<ul>
+<li>광물/국가별 매장량 추이
+<ul>
+<li>니켈 : 인도네시아(42%), 호주(18.3%), 브라질(12.2%) 등<br> <img src="index_files/figure-html/5dcda823-1-image-2.png" class="img-fluid" alt="image-2.png"></li>
+<li>코발트 : 콩고(57%), 호주(16.1%) 등<br> <img src="index_files/figure-html/5dcda823-2-image-3.png" class="img-fluid" alt="image-3.png"></li>
+<li>리튬 : 칠레(33.6%), 호주(22.4%), 아르헨티나(13%) 등<br> <img src="index_files/figure-html/5dcda823-3-image-4.png" class="img-fluid" alt="image-4.png"></li>
+<li>망간 : 남아프리카(31.4%), 호주(26.2%), 중국(14.7%) 등<br> <img src="index_files/figure-html/5dcda823-4-image-5.png" class="img-fluid" alt="image-5.png"><br> <strong>출처</strong> : USGS Mineral Commodity Summaries 2024 데이터로 가공<br> https://www.sciencebase.gov/catalog/item/65a6e45fd34e5af967a46749</li>
+</ul></li>
+</ul>
+</section>
+<section id="핵심광물-조달에-대한-수입경쟁-심화" class="level4">
+<h4 class="anchored" data-anchor-id="핵심광물-조달에-대한-수입경쟁-심화">핵심광물 조달에 대한 수입경쟁 심화</h4>
+<ul>
+<li>각 광물에 대한 국가별 수입량은 2014년 대비 상승세를 보이고 있음
+<ul>
+<li>다만, 리튬은 전기차 캐즘이나 배터리시장 경쟁심화 등 여러 요소로 감소된 것으로 추정
+<ul>
+<li>배터리시장의 한국업체 점유율 전년비 5.3%하락</li>
+<li>전기차 캐즘 : Chasm, 대중화 전 수요가 감소하는 것</li>
+</ul></li>
+</ul></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/874c8c3a-1-image.png" class="img-fluid figure-img"></p>
+<figcaption>image.png</figcaption>
+</figure>
+</div>
+<p><strong>출처</strong> : USGS Mineral Commodity Summaries 2024 데이터로 가공<br> https://www.sciencebase.gov/catalog/item/65a6e45fd34e5af967a46749</p>
+<ul>
+<li>각 광물에 대한 국가별 수입량은 2014년 대비 상승세를 보이고 있음
+<ul>
+<li>한국 : 희소금속 산업 발전대책 2.0 추진 (확보-비축-순환 수급에 대한 3중 안정망 등)</li>
+<li>미국 : 중요 광물 공급을 위한 연방정부 전략 추진 (수입의존 저감 및 공급망 확보 등)</li>
+<li>일본 : 신 국제자원 전략 추진 (비축제도 재검토, 광종별 확보책 구축, 확보를 위한 국제협력 도출 등)</li>
+<li>EU : EIP Raw materials 추진 (자원의 채광,재활용 등에 대한 시험적 대응, 희소자원에 대한 대체 이용처 도출 등)</li>
+</ul></li>
+</ul>
+<p><strong>출처</strong> : 한눈에 보는 6대 핵심광물 이슈분석, 한국지질자원연구원</p>
+<ul>
+<li><p>광물별 상위 수입국 현황(하단 참조)</p>
+<ul>
+<li>광물별 상위 수입국 현황 - 니켈 (단위 : kt[킬로톤])
+<ul>
+<li>Index 0~4 : 1~5순위 / Index 5 : 합계</li>
+</ul></li>
+</ul></li>
+</ul>
+<div id="c54b480c" class="cell">
+<details open="" class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>target_ore <span class="op">=</span> <span class="st">'니켈'</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>ores_uncomtrade_url[target_ore][<span class="st">'df_top5_html'</span>] <span class="op">=</span> ores_uncomtrade_url[target_ore][<span class="st">'df_top5'</span>].copy()</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> each_year <span class="kw">in</span> ores_uncomtrade_url[target_ore][<span class="st">'df_top5'</span>].columns:</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    ores_uncomtrade_url[target_ore][<span class="st">'df_top5_html'</span>][each_year] <span class="op">=</span> ores_uncomtrade_url[target_ore][<span class="st">'df_top5_html'</span>][each_year].<span class="bu">str</span>.replace(<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>,<span class="st">'&lt;br&gt;'</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># HWP파일 작성용 CSV저장, 자동 줄바꿈 적용시 아래 표기처럼 복사/붙여넣기 가능</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>ores_uncomtrade_url[target_ore][<span class="st">'df_top5'</span>].to_excel(<span class="ss">f"Top5Country_</span><span class="sc">{</span>target_ore<span class="sc">}</span><span class="ss">.xlsx"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>display(HTML(ores_uncomtrade_url[target_ore][<span class="st">'df_top5_html'</span>].to_html(escape<span class="op">=</span><span class="va">False</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">2014</th>
+<th data-quarto-table-cell-role="th">2015</th>
+<th data-quarto-table-cell-role="th">2016</th>
+<th data-quarto-table-cell-role="th">2017</th>
+<th data-quarto-table-cell-role="th">2018</th>
+<th data-quarto-table-cell-role="th">2019</th>
+<th data-quarto-table-cell-role="th">2020</th>
+<th data-quarto-table-cell-role="th">2021</th>
+<th data-quarto-table-cell-role="th">2022</th>
+<th data-quarto-table-cell-role="th">2023</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Brazil<br>
+29,012</td>
+<td>Brazil<br>
+34,127</td>
+<td>Brazil<br>
+19,720</td>
+<td>Japan<br>
+112,033</td>
+<td>Japan<br>
+135,167</td>
+<td>Japan<br>
+191,793</td>
+<td>Japan<br>
+200,127</td>
+<td>Japan<br>
+206,021</td>
+<td>Japan<br>
+173,627</td>
+<td>China<br>
+256,142</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Germany<br>
+11,705</td>
+<td>Rep. of Korea<br>
+27,394</td>
+<td>China<br>
+15,197</td>
+<td>Rep. of Korea<br>
+53,085</td>
+<td>Rep. of Korea<br>
+52,446</td>
+<td>Belgium<br>
+34,111</td>
+<td>Belgium<br>
+31,329</td>
+<td>China<br>
+98,853</td>
+<td>China<br>
+119,071</td>
+<td>Japan<br>
+124,779</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Turkiye<br>
+2,203</td>
+<td>Canada<br>
+16,517</td>
+<td>Germany<br>
+14,054</td>
+<td>China<br>
+21,639</td>
+<td>Australia<br>
+21,776</td>
+<td>Rep. of Korea<br>
+31,817</td>
+<td>Canada<br>
+21,353</td>
+<td>Belgium<br>
+41,121</td>
+<td>Belgium<br>
+43,286</td>
+<td>Belgium<br>
+41,815</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Switzerland<br>
+1,344</td>
+<td>Germany<br>
+12,654</td>
+<td>Canada<br>
+13,500</td>
+<td>Germany<br>
+13,939</td>
+<td>Belgium<br>
+20,963</td>
+<td>Canada<br>
+25,360</td>
+<td>China<br>
+16,340</td>
+<td>Canada<br>
+21,410</td>
+<td>Canada<br>
+18,103</td>
+<td>Malaysia<br>
+26,280</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Spain<br>
+1,292</td>
+<td>Thailand<br>
+4,923</td>
+<td>Rep. of Korea<br>
+8,951</td>
+<td>India<br>
+11,978</td>
+<td>China<br>
+20,569</td>
+<td>Australia<br>
+19,640</td>
+<td>Australia<br>
+13,834</td>
+<td>Malaysia<br>
+10,150</td>
+<td>Rep. of Korea<br>
+14,469</td>
+<td>Canada<br>
+13,364</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>45,555</td>
+<td>95,615</td>
+<td>71,421</td>
+<td>212,674</td>
+<td>250,921</td>
+<td>302,721</td>
+<td>282,983</td>
+<td>377,554</td>
+<td>368,556</td>
+<td>462,380</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li>광물별 상위 수입국 현황 - 코발트 (단위 : kt[킬로톤])</li>
+</ul>
+<div id="f97f66c5" class="cell">
+<details open="" class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>target_ore <span class="op">=</span> <span class="st">'코발트'</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>ores_uncomtrade_url[target_ore][<span class="st">'df_top5_html'</span>] <span class="op">=</span> ores_uncomtrade_url[target_ore][<span class="st">'df_top5'</span>].copy()</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> each_year <span class="kw">in</span> ores_uncomtrade_url[target_ore][<span class="st">'df_top5'</span>].columns:</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    ores_uncomtrade_url[target_ore][<span class="st">'df_top5_html'</span>][each_year] <span class="op">=</span> ores_uncomtrade_url[target_ore][<span class="st">'df_top5_html'</span>][each_year].<span class="bu">str</span>.replace(<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>,<span class="st">'&lt;br&gt;'</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># HWP파일 작성용 CSV저장, 자동 줄바꿈 적용시 아래 표기처럼 복사/붙여넣기 가능</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>ores_uncomtrade_url[target_ore][<span class="st">'df_top5'</span>].to_excel(<span class="ss">f"Top5Country_</span><span class="sc">{</span>target_ore<span class="sc">}</span><span class="ss">.xlsx"</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>display(HTML(ores_uncomtrade_url[target_ore][<span class="st">'df_top5_html'</span>].to_html(escape<span class="op">=</span><span class="va">False</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">2014</th>
+<th data-quarto-table-cell-role="th">2015</th>
+<th data-quarto-table-cell-role="th">2016</th>
+<th data-quarto-table-cell-role="th">2017</th>
+<th data-quarto-table-cell-role="th">2018</th>
+<th data-quarto-table-cell-role="th">2019</th>
+<th data-quarto-table-cell-role="th">2020</th>
+<th data-quarto-table-cell-role="th">2021</th>
+<th data-quarto-table-cell-role="th">2022</th>
+<th data-quarto-table-cell-role="th">2023</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Germany<br>
+360,060</td>
+<td>Germany<br>
+366,375</td>
+<td>USA<br>
+444,837</td>
+<td>USA<br>
+496,572</td>
+<td>USA<br>
+471,603</td>
+<td>United Kingdom<br>
+546,036</td>
+<td>Germany<br>
+571,008</td>
+<td>Germany<br>
+660,773</td>
+<td>Germany<br>
+488,970</td>
+<td>Germany<br>
+529,288</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Sweden<br>
+213,809</td>
+<td>Sweden<br>
+220,380</td>
+<td>Germany<br>
+347,106</td>
+<td>United Kingdom<br>
+345,329</td>
+<td>Germany<br>
+329,296</td>
+<td>Germany<br>
+380,888</td>
+<td>USA<br>
+472,193</td>
+<td>USA<br>
+295,225</td>
+<td>Italy<br>
+250,075</td>
+<td>United Kingdom<br>
+395,371</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Brazil<br>
+154,625</td>
+<td>Brazil<br>
+124,744</td>
+<td>Sweden<br>
+201,729</td>
+<td>Germany<br>
+299,495</td>
+<td>Finland<br>
+277,965</td>
+<td>USA<br>
+348,198</td>
+<td>United Kingdom<br>
+371,668</td>
+<td>Italy<br>
+232,667</td>
+<td>Brazil<br>
+191,783</td>
+<td>USA<br>
+219,089</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Netherlands<br>
+124,798</td>
+<td>Canada<br>
+93,406</td>
+<td>Brazil<br>
+137,948</td>
+<td>Italy<br>
+195,547</td>
+<td>United Kingdom<br>
+264,720</td>
+<td>Italy<br>
+217,586</td>
+<td>Italy<br>
+217,804</td>
+<td>United Kingdom<br>
+198,261</td>
+<td>Austria<br>
+186,431</td>
+<td>Japan<br>
+189,547</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Belgium<br>
+90,674</td>
+<td>Rep. of Korea<br>
+76,266</td>
+<td>Netherlands<br>
+101,162</td>
+<td>Sweden<br>
+182,634</td>
+<td>Italy<br>
+228,860</td>
+<td>France<br>
+176,344</td>
+<td>Sweden<br>
+159,068</td>
+<td>Sweden<br>
+187,343</td>
+<td>Sweden<br>
+164,849</td>
+<td>Sweden<br>
+180,823</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>943,966</td>
+<td>881,171</td>
+<td>1,232,782</td>
+<td>1,519,578</td>
+<td>1,572,444</td>
+<td>1,669,052</td>
+<td>1,791,741</td>
+<td>1,574,269</td>
+<td>1,282,108</td>
+<td>1,514,119</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li>광물별 상위 수입국 현황 - 리튬 (단위 : kt[킬로톤])</li>
+</ul>
+<div id="11fc602a" class="cell">
+<details open="" class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>target_ore <span class="op">=</span> <span class="st">'리튬'</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>ores_uncomtrade_url[target_ore][<span class="st">'df_top5_html'</span>] <span class="op">=</span> ores_uncomtrade_url[target_ore][<span class="st">'df_top5'</span>].copy()</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> each_year <span class="kw">in</span> ores_uncomtrade_url[target_ore][<span class="st">'df_top5'</span>].columns:</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    ores_uncomtrade_url[target_ore][<span class="st">'df_top5_html'</span>][each_year] <span class="op">=</span> ores_uncomtrade_url[target_ore][<span class="st">'df_top5_html'</span>][each_year].<span class="bu">str</span>.replace(<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>,<span class="st">'&lt;br&gt;'</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># HWP파일 작성용 CSV저장, 자동 줄바꿈 적용시 아래 표기처럼 복사/붙여넣기 가능</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>ores_uncomtrade_url[target_ore][<span class="st">'df_top5'</span>].to_excel(<span class="ss">f"Top5Country_</span><span class="sc">{</span>target_ore<span class="sc">}</span><span class="ss">.xlsx"</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>display(HTML(ores_uncomtrade_url[target_ore][<span class="st">'df_top5_html'</span>].to_html(escape<span class="op">=</span><span class="va">False</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">2014</th>
+<th data-quarto-table-cell-role="th">2015</th>
+<th data-quarto-table-cell-role="th">2016</th>
+<th data-quarto-table-cell-role="th">2017</th>
+<th data-quarto-table-cell-role="th">2018</th>
+<th data-quarto-table-cell-role="th">2019</th>
+<th data-quarto-table-cell-role="th">2020</th>
+<th data-quarto-table-cell-role="th">2021</th>
+<th data-quarto-table-cell-role="th">2022</th>
+<th data-quarto-table-cell-role="th">2023</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Belgium<br>
+11,844</td>
+<td>Rep. of Korea<br>
+35,014</td>
+<td>China<br>
+47,227</td>
+<td>Japan<br>
+69,609</td>
+<td>Rep. of Korea<br>
+91,029</td>
+<td>Rep. of Korea<br>
+124,094</td>
+<td>Rep. of Korea<br>
+130,051</td>
+<td>Rep. of Korea<br>
+189,821</td>
+<td>China<br>
+278,358</td>
+<td>China<br>
+324,683</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Spain<br>
+6,852</td>
+<td>Belgium<br>
+18,782</td>
+<td>USA<br>
+33,806</td>
+<td>China<br>
+61,411</td>
+<td>Japan<br>
+86,273</td>
+<td>Japan<br>
+118,216</td>
+<td>China<br>
+101,259</td>
+<td>China<br>
+169,226</td>
+<td>Rep. of Korea<br>
+238,878</td>
+<td>Japan<br>
+109,344</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Germany<br>
+3,900</td>
+<td>Canada<br>
+7,502</td>
+<td>Belgium<br>
+24,300</td>
+<td>Rep. of Korea<br>
+55,620</td>
+<td>China<br>
+46,158</td>
+<td>China<br>
+59,437</td>
+<td>Japan<br>
+97,427</td>
+<td>Japan<br>
+108,999</td>
+<td>Japan<br>
+120,350</td>
+<td>USA<br>
+34,261</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Turkiye<br>
+3,313</td>
+<td>Germany<br>
+6,237</td>
+<td>Russian Federation<br>
+11,620</td>
+<td>USA<br>
+34,820</td>
+<td>USA<br>
+36,507</td>
+<td>USA<br>
+26,740</td>
+<td>USA<br>
+26,229</td>
+<td>USA<br>
+27,766</td>
+<td>Netherlands<br>
+17,332</td>
+<td>Netherlands<br>
+12,724</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Netherlands<br>
+1,376</td>
+<td>Spain<br>
+5,638</td>
+<td>Canada<br>
+10,842</td>
+<td>Belgium<br>
+17,840</td>
+<td>Belgium<br>
+21,817</td>
+<td>France<br>
+16,984</td>
+<td>Belgium<br>
+16,554</td>
+<td>Russian Federation<br>
+19,591</td>
+<td>USA<br>
+15,192</td>
+<td>United Kingdom<br>
+6,761</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>27,285</td>
+<td>73,173</td>
+<td>127,794</td>
+<td>239,299</td>
+<td>281,784</td>
+<td>345,471</td>
+<td>371,519</td>
+<td>515,402</td>
+<td>670,112</td>
+<td>487,772</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li>광물별 상위 수입국 현황 - 망간 (단위 : kt[킬로톤])</li>
+</ul>
+<div id="4ec1cbd7" class="cell">
+<details open="" class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>target_ore <span class="op">=</span> <span class="st">'망간'</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>ores_uncomtrade_url[target_ore][<span class="st">'df_top5_html'</span>] <span class="op">=</span> ores_uncomtrade_url[target_ore][<span class="st">'df_top5'</span>].copy()</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> each_year <span class="kw">in</span> ores_uncomtrade_url[target_ore][<span class="st">'df_top5'</span>].columns:</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    ores_uncomtrade_url[target_ore][<span class="st">'df_top5_html'</span>][each_year] <span class="op">=</span> ores_uncomtrade_url[target_ore][<span class="st">'df_top5_html'</span>][each_year].<span class="bu">str</span>.replace(<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>,<span class="st">'&lt;br&gt;'</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># HWP파일 작성용 CSV저장, 자동 줄바꿈 적용시 아래 표기처럼 복사/붙여넣기 가능</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>ores_uncomtrade_url[target_ore][<span class="st">'df_top5'</span>].to_excel(<span class="ss">f"Top5Country_</span><span class="sc">{</span>target_ore<span class="sc">}</span><span class="ss">.xlsx"</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>display(HTML(ores_uncomtrade_url[target_ore][<span class="st">'df_top5_html'</span>].to_html(escape<span class="op">=</span><span class="va">False</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">2014</th>
+<th data-quarto-table-cell-role="th">2015</th>
+<th data-quarto-table-cell-role="th">2016</th>
+<th data-quarto-table-cell-role="th">2017</th>
+<th data-quarto-table-cell-role="th">2018</th>
+<th data-quarto-table-cell-role="th">2019</th>
+<th data-quarto-table-cell-role="th">2020</th>
+<th data-quarto-table-cell-role="th">2021</th>
+<th data-quarto-table-cell-role="th">2022</th>
+<th data-quarto-table-cell-role="th">2023</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Germany<br>
+1,762,753</td>
+<td>China, Hong Kong SAR<br>
+6,596,207</td>
+<td>China, Hong Kong SAR<br>
+6,430,363</td>
+<td>China, Hong Kong SAR<br>
+4,445,408</td>
+<td>USA<br>
+5,646,705</td>
+<td>USA<br>
+5,337,518</td>
+<td>USA<br>
+5,522,054</td>
+<td>USA<br>
+6,726,526</td>
+<td>Germany<br>
+4,296,848</td>
+<td>USA<br>
+7,890,263</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Brazil<br>
+1,139,607</td>
+<td>Germany<br>
+2,047,818</td>
+<td>USA<br>
+3,899,931</td>
+<td>USA<br>
+4,356,834</td>
+<td>China, Hong Kong SAR<br>
+5,317,808</td>
+<td>China, Hong Kong SAR<br>
+5,014,159</td>
+<td>China, Hong Kong SAR<br>
+4,943,913</td>
+<td>Germany<br>
+4,675,819</td>
+<td>Japan<br>
+2,842,379</td>
+<td>Germany<br>
+3,032,223</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Belgium<br>
+847,525</td>
+<td>Belgium<br>
+1,255,255</td>
+<td>Germany<br>
+3,361,475</td>
+<td>Germany<br>
+2,858,660</td>
+<td>Germany<br>
+2,722,953</td>
+<td>Germany<br>
+3,163,188</td>
+<td>Germany<br>
+4,058,559</td>
+<td>China, Hong Kong SAR<br>
+4,648,238</td>
+<td>China, Hong Kong SAR<br>
+2,556,882</td>
+<td>Japan<br>
+2,457,672</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Spain<br>
+498,741</td>
+<td>Brazil<br>
+1,015,417</td>
+<td>Russian Federation<br>
+1,509,007</td>
+<td>Japan<br>
+2,302,316</td>
+<td>China<br>
+2,504,820</td>
+<td>China<br>
+2,789,753</td>
+<td>China<br>
+2,812,012</td>
+<td>Tunisia<br>
+2,484,856</td>
+<td>Poland<br>
+1,565,781</td>
+<td>China, Hong Kong SAR<br>
+2,360,582</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Turkiye<br>
+457,040</td>
+<td>Rep. of Korea<br>
+443,342</td>
+<td>China<br>
+1,213,518</td>
+<td>Russian Federation<br>
+1,732,776</td>
+<td>Japan<br>
+2,433,654</td>
+<td>Japan<br>
+2,398,831</td>
+<td>Japan<br>
+2,636,763</td>
+<td>Japan<br>
+2,484,354</td>
+<td>China<br>
+1,529,201</td>
+<td>Poland<br>
+1,547,787</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>4,705,666</td>
+<td>11,358,039</td>
+<td>16,414,293</td>
+<td>15,695,994</td>
+<td>18,625,940</td>
+<td>18,703,449</td>
+<td>19,973,301</td>
+<td>21,019,792</td>
+<td>12,791,091</td>
+<td>17,288,526</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><strong>출처</strong> : UN COMTRADE DB의 자료를 가공 <br> <strong>참고</strong> : https://www.sedaily.com/NewsView/2D7TKJ4UE9</p>
+<ul>
+<li>핵심광물을 확보하기 위해 경쟁국들은 다양한 전략을 추진중
+<ul>
+<li>한국 : 희소금속 산업 발전대책 2.0 추진 (확보-비축-순환 수급에 대한 3중 안정망 등)</li>
+<li>미국 : 중요 광물 공급을 위한 연방정부 전략 추진 (수입의존 저감 및 공급망 확보 등)</li>
+<li>일본 : 신 국제자원 전략 추진 (비축제도 재검토, 광종별 확보책 구축, 확보를 위한 국제협력 도출 등)</li>
+<li>EU : EIP Raw materials 추진 (자원의 채광,재활용 등에 대한 시험적 대응, 희소자원에 대한 대체 이용처 도출 등)</li>
+</ul></li>
+</ul>
+<p><strong>출처</strong> : 한눈에 보는 6대 핵심광물 이슈분석, 한국지질자원연구원</p>
+</section>
+<section id="현황요약-및-제안목적" class="level4">
+<h4 class="anchored" data-anchor-id="현황요약-및-제안목적">현황요약 및 제안목적</h4>
+<ul>
+<li>아래와 같은 상황에서 한국도 핵심광물 비축이나 국산화 노력 등이 이루어지고 있음
+<ul>
+<li>핵심광물의 수요증가(전기차 등 환경에 대한 관심과 배터리 시장의 성장)</li>
+<li>공급망 위기(생산지 편중)</li>
+<li>수급경쟁 심화(경쟁국의 확보전략 추진, 수입량 증대)</li>
+</ul></li>
+<li>그럼에도 생산지 편중, 경쟁국은 통제 불가능 요소로, 여전히 공급망 리스크가 상당함</li>
+<li>이러한 상황에서 미래 핵심산업의 경쟁력 확보를 이끌어낼 핵심 원재료(광물)의 확보를 위해, 각 상황에 대한 예측과 위기요소를 탐지할, 위기요소 탐지모델을 도입하고자 함</li>
+</ul>
+</section>
+</section>
+<section id="도입-방법" class="level3">
+<h3 class="anchored" data-anchor-id="도입-방법">도입 방법</h3>
+<section id="분석대상-정립" class="level4">
+<h4 class="anchored" data-anchor-id="분석대상-정립">분석대상 정립</h4>
+<ul>
+<li>핵심광물로 니켈, 코발트, 리튬, 망간을 지정하고, 국제기준인 6자리 HSCODE를 기준으로 함
+<ul>
+<li>산화코발트(282200), 황산코발트(283329), 산화/수산화리튬(282520), 탄산리튬(283691)</li>
+<li>산화/수산화니켈(282540), 황산니켈(283324), 이산화망간(850610)</li>
+</ul></li>
+</ul>
+</section>
+<section id="고려요소feature-선정" class="level4">
+<h4 class="anchored" data-anchor-id="고려요소feature-선정">고려요소(Feature) 선정</h4>
+<ul>
+<li>국가별 자원수입량을 통해 경쟁자의 활동(광물이동의 편중 등)을 관찰
+<ul>
+<li>위의 HSCODE로 전세계 수출입현황을 알 수 있는 UN Comtrade DB API로 데이터 확보</li>
+</ul></li>
+<li>중량당 가격(Price per Weight)을 가격변수로 고려
+<ul>
+<li>수출입데이터의 Value(Price)와 Netweight로 연월 데이터 산출</li>
+</ul></li>
+<li>핵심광물 생산지가 해외에 편중되어 국제운송이 필수이므로, 물류에 대해 BDI지수로 관찰
+<ul>
+<li>BDI : Baltic Dry Index. 원자재 운송에 사용되는 건화물선에 대한 운임비용 지수</li>
+<li>원자재 이동이라는 점에서 경기선행지표로도 인식되고 있음(향후 시장상황에 대한 지표)</li>
+</ul></li>
+</ul>
+</section>
+<section id="예측-및-이상탐지" class="level4">
+<h4 class="anchored" data-anchor-id="예측-및-이상탐지">예측 및 이상탐지</h4>
+<ul>
+<li>고려요소에 대해 ARIMA, 홀트윈터스 지수평활법을 시작으로 LSTM 등 AI모델로 예측 진행</li>
+<li>예측 데이터 기반으로 AnomalyDetection(R, 파이썬의 Prophet) 등을 활용한 이상탐지 진행</li>
+</ul>
+</section>
+</section>
+</section>
+</section>
+<section id="작성에-사용된-분석-코드" class="level1">
+<h1>작성에 사용된 분석 코드</h1>
+<section id="usgs-자료분석-광물별-매장량-산출" class="level2">
+<h2 class="anchored" data-anchor-id="usgs-자료분석-광물별-매장량-산출">USGS 자료분석 (광물별 매장량 산출)</h2>
+<div id="359b65ae" class="cell">
+<details open="" class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.ticker <span class="im">as</span> ticker</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display, HTML</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="30bd1f6f" class="cell">
+<details open="" class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ores <span class="op">=</span> {<span class="st">'니켈'</span>:</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>        {<span class="st">'csv_name'</span>:<span class="st">'mcs2024-nicke_world.csv'</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">'csv_df'</span>:<span class="st">''</span>},</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>         <span class="st">'코발트'</span>:</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>         {<span class="st">'csv_name'</span>:<span class="st">'mcs2024-cobal_world.csv'</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">'csv_df'</span>:<span class="st">''</span>},</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>         <span class="st">'리튬'</span>:</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>         {<span class="st">'csv_name'</span>:<span class="st">'mcs2024-lithi_world.csv'</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">'csv_df'</span>:<span class="st">''</span>},</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>         <span class="st">'망간'</span>:</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>         {<span class="st">'csv_name'</span>:<span class="st">'mcs2024-manga_world.csv'</span>,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">'csv_df'</span>:<span class="st">''</span>}}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="29b12f1d" class="cell">
+<details open="" class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># CSV리딩</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ore <span class="kw">in</span> ores.keys():</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># CSV리딩</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    ores[ore][<span class="st">'csv_df'</span>] <span class="op">=</span> pd.read_csv(ores[ore][<span class="st">'csv_name'</span>])</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 데이터 전처리</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">## Null처리</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    ores[ore][<span class="st">'csv_df'</span>] <span class="op">=</span> ores[ore][<span class="st">'csv_df'</span>].<span class="bu">filter</span>(regex<span class="op">=</span><span class="st">'^(?!Unnamed)'</span>).dropna(subset<span class="op">=</span>[<span class="st">'Country'</span>])</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">## 킬로톤인 경우 톤으로 변환(컬럼 추가)</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">'Reserves_kt'</span> <span class="kw">in</span> ores[ore][<span class="st">'csv_df'</span>].columns:</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        ores[ore][<span class="st">'csv_df'</span>][<span class="st">'Reserves_t'</span>] <span class="op">=</span> ores[ore][<span class="st">'csv_df'</span>][<span class="st">'Reserves_kt'</span>] <span class="op">*</span> <span class="dv">1000</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">## 숫자에 섞인 기호 처리 후 변환</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ores[ore][<span class="st">'csv_df'</span>][<span class="st">'Reserves_t'</span>].dtype<span class="op">==</span><span class="st">'O'</span>:</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>        ores[ore][<span class="st">'csv_df'</span>][<span class="st">'Reserves_t'</span>] <span class="op">=</span> ores[ore][<span class="st">'csv_df'</span>][<span class="st">'Reserves_t'</span>].<span class="bu">str</span>.replace(<span class="st">'&gt;'</span>,<span class="st">''</span>)</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        ores[ore][<span class="st">'csv_df'</span>][<span class="st">'Reserves_t'</span>] <span class="op">=</span> ores[ore][<span class="st">'csv_df'</span>][<span class="st">'Reserves_t'</span>].<span class="bu">str</span>.replace(<span class="st">','</span>,<span class="st">''</span>)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>        ores[ore][<span class="st">'csv_df'</span>][<span class="st">'Reserves_t'</span>] <span class="op">=</span> ores[ore][<span class="st">'csv_df'</span>][<span class="st">'Reserves_t'</span>].<span class="bu">str</span>.strip().astype(<span class="bu">int</span>)</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    <span class="co">## 국가명 변환(튀르키예 등)</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    ores[ore][<span class="st">'csv_df'</span>][<span class="st">'Country'</span>] <span class="op">=</span> ores[ore][<span class="st">'csv_df'</span>][<span class="st">'Country'</span>].<span class="bu">str</span>.replace(<span class="st">'T체rkiye'</span>,<span class="st">'Turkiye'</span>)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 매장량 (실제값)</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    ores[ore][<span class="st">'reserve_df_actual'</span>] <span class="op">=</span> ores[ore][<span class="st">'csv_df'</span>].copy()</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    ores[ore][<span class="st">'reserve_df_actual'</span>] <span class="op">=</span> pd.DataFrame(ores[ore][<span class="st">'csv_df'</span>].groupby(<span class="st">'Country'</span>).<span class="bu">sum</span>()[<span class="st">'Reserves_t'</span>])</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>    ores[ore][<span class="st">'reserve_df_actual'</span>][<span class="st">'Reserves_t'</span>].astype(<span class="bu">int</span>)</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>    ores[ore][<span class="st">'reserve_df_actual'</span>] <span class="op">=</span> ores[ore][<span class="st">'reserve_df_actual'</span>].drop(<span class="st">'World total (rounded)'</span>)</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>    ores[ore][<span class="st">'reserve_df_actual'</span>] <span class="op">=</span> ores[ore][<span class="st">'reserve_df_actual'</span>].copy()</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>    ores[ore][<span class="st">'reserve_df_actual'</span>][<span class="st">'Reserves_t_total'</span>] <span class="op">=</span> <span class="bu">int</span>(ores[ore][<span class="st">'reserve_df_actual'</span>].<span class="bu">sum</span>().item())</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>    ores[ore][<span class="st">'reserve_df_actual'</span>][<span class="st">'Reserves_portion'</span>] <span class="op">=</span> ores[ore][<span class="st">'reserve_df_actual'</span>][<span class="st">'Reserves_t'</span>]<span class="op">/</span>ores[ore][<span class="st">'reserve_df_actual'</span>][<span class="st">'Reserves_t_total'</span>]</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>    ores[ore][<span class="st">'reserve_df_actual'</span>] <span class="op">=</span> ores[ore][<span class="st">'reserve_df_actual'</span>].sort_values(by<span class="op">=</span><span class="st">'Reserves_portion'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="a20f702a" class="cell">
+<details open="" class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 시각화용 DataFrame</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ore <span class="kw">in</span> ores.keys():</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    ores[ore][<span class="st">'plotly_df'</span>] <span class="op">=</span> ores[ore][<span class="st">'reserve_df_actual'</span>].copy()</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    ores[ore][<span class="st">'plotly_df'</span>] <span class="op">=</span> ores[ore][<span class="st">'plotly_df'</span>].reset_index()</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, _ <span class="kw">in</span> <span class="bu">enumerate</span>(ores[ore][<span class="st">'plotly_df'</span>].index):</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        value <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>ores[ore][<span class="st">'plotly_df'</span>][<span class="st">'Country'</span>][i]<span class="sc">}</span><span class="ss">&lt;br&gt;</span><span class="sc">{</span><span class="bu">int</span>(ores[ore][<span class="st">'plotly_df'</span>][<span class="st">'Reserves_t'</span>][i]<span class="op">/</span><span class="dv">1000</span>)<span class="sc">:,}</span><span class="ss"> kt &lt;br&gt;</span><span class="sc">{</span>ores[ore][<span class="st">'plotly_df'</span>][<span class="st">'Reserves_portion'</span>][i]<span class="op">*</span><span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">%"</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        ores[ore][<span class="st">'plotly_df'</span>].loc.<span class="fu">__setitem__</span>((i, <span class="st">'Country'</span>), value)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="e7a295de" class="cell">
+<details open="" class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ore <span class="kw">in</span> ores.keys():</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Data</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> ores[ore][<span class="st">'plotly_df'</span>]</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create treemap</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    fig <span class="op">=</span> px.treemap(data, path<span class="op">=</span>[<span class="st">'Country'</span>], values<span class="op">=</span><span class="st">'Reserves_portion'</span>, title<span class="op">=</span>ore,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>                        labels<span class="op">=</span>ores[ore][<span class="st">'plotly_df'</span>][<span class="st">'Reserves_t'</span>], width<span class="op">=</span><span class="dv">700</span>, height<span class="op">=</span><span class="dv">380</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    fig.update_traces(textposition<span class="op">=</span><span class="st">'middle center'</span>)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<pre><code>Unable to display output for mime type(s): application/vnd.plotly.v1+json</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>Unable to display output for mime type(s): application/vnd.plotly.v1+json</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>Unable to display output for mime type(s): application/vnd.plotly.v1+json</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>Unable to display output for mime type(s): application/vnd.plotly.v1+json</code></pre>
+</div>
+</div>
+</section>
+<section id="un-comtrade-자료분석광물별-top5수입국" class="level2">
+<h2 class="anchored" data-anchor-id="un-comtrade-자료분석광물별-top5수입국">UN Comtrade 자료분석(광물별 Top5수입국)</h2>
+<div id="63433b05" class="cell">
+<details open="" class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ores_uncomtrade_url <span class="op">=</span> {<span class="st">'니켈'</span>:</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>        {<span class="st">'csv_url'</span>:[<span class="st">'https://raw.githubusercontent.com/KR9268/db_datagokr/main/282540,283324_merged(since2011).csv'</span>,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'https://raw.githubusercontent.com/KR9268/db_datagokr/main/282540,283324_merged(since2021).csv'</span>],</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">'csv_df'</span>:<span class="st">''</span>},</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>         <span class="st">'코발트'</span>:</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>         {<span class="st">'csv_url'</span>:[<span class="st">'https://raw.githubusercontent.com/KR9268/db_datagokr/main/282200,283329_merged(since2011).csv'</span>,</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'https://raw.githubusercontent.com/KR9268/db_datagokr/main/282200,283329_merged(since2021).csv'</span>],</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">'csv_df'</span>:<span class="st">''</span>},</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>         <span class="st">'리튬'</span>:</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>         {<span class="st">'csv_url'</span>:[<span class="st">'https://raw.githubusercontent.com/KR9268/db_datagokr/main/282520,283691_merged(since2011).csv'</span>,</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'https://raw.githubusercontent.com/KR9268/db_datagokr/main/282520,283691_merged(since2021).csv'</span>],</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">'csv_df'</span>:<span class="st">''</span>},</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>         <span class="st">'망간'</span>:</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>         {<span class="st">'csv_url'</span>:[<span class="st">'https://raw.githubusercontent.com/KR9268/db_datagokr/main/850610_merged(since2011).csv'</span>,</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'https://raw.githubusercontent.com/KR9268/db_datagokr/main/850610_merged(since2021).csv'</span>],</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">'csv_df'</span>:<span class="st">''</span>}}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="085d3e63" class="cell">
+<details open="" class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># CSV리딩</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ore <span class="kw">in</span> ores_uncomtrade_url.keys():</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    temp_list_for_df_concat <span class="op">=</span> []</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> each_url <span class="kw">in</span> ores_uncomtrade_url[ore][<span class="st">'csv_url'</span>]:</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>        temp_list_for_df_concat.append(pd.read_csv(each_url, encoding<span class="op">=</span><span class="st">'cp949'</span>, low_memory<span class="op">=</span><span class="va">False</span>))</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    ores_uncomtrade_url[ore][<span class="st">'csv_df'</span>] <span class="op">=</span> pd.concat(temp_list_for_df_concat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="9364d2e2" class="cell">
+<details open="" class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 기간데이터 전처리 &amp; 데이터 가공 및 순위산출</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> preprocess_df(df_copy):</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 날짜변환</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    df_copy[<span class="st">'period'</span>] <span class="op">=</span> df_copy[<span class="st">'period'</span>].astype(<span class="st">'int'</span>).astype(<span class="st">'str'</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    df_copy[<span class="st">'period_year'</span>] <span class="op">=</span> df_copy[<span class="st">'period'</span>].<span class="bu">str</span>[:<span class="dv">4</span>]</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    df_copy[<span class="st">'period_month'</span>] <span class="op">=</span> df_copy[<span class="st">'period'</span>].<span class="bu">str</span>[<span class="op">-</span><span class="dv">2</span>:]</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    df_copy[<span class="st">'period_dateformat'</span>] <span class="op">=</span> pd.to_datetime(df_copy[<span class="st">'refPeriodId'</span>], <span class="bu">format</span><span class="op">=</span><span class="st">'%Y%m</span><span class="sc">%d</span><span class="st">'</span>)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 단위당 가격</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    df_copy[<span class="st">'value_per_qty'</span>] <span class="op">=</span> df_copy[<span class="st">'primaryValue'</span>]<span class="op">/</span>df_copy[<span class="st">'qty'</span>]</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    df_copy[<span class="st">'value_per_qty'</span>] <span class="op">=</span> df_copy[<span class="st">'value_per_qty'</span>].replace([np.inf, <span class="op">-</span>np.inf], <span class="dv">0</span>)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 국가명 변환(튀르키예 등)</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>    df_copy[<span class="st">'reporterDesc'</span>] <span class="op">=</span> df_copy[<span class="st">'reporterDesc'</span>].<span class="bu">str</span>.replace(<span class="st">'T체rkiye'</span>,<span class="st">'Turkiye'</span>)</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>    df_copy[<span class="st">'partnerDesc'</span>] <span class="op">=</span> df_copy[<span class="st">'partnerDesc'</span>].<span class="bu">str</span>.replace(<span class="st">'T체rkiye'</span>,<span class="st">'Turkiye'</span>)</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df_copy</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ore <span class="kw">in</span> ores_uncomtrade_url.keys():</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>    <span class="co">## 기간데이터 전처리</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>    ores_uncomtrade_url[ore][<span class="st">'csv_df'</span>] <span class="op">=</span> preprocess_df(ores_uncomtrade_url[ore][<span class="st">'csv_df'</span>])</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">## 데이터 가공 및 순위산출(groupby)</span></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>    ores_uncomtrade_url[ore][<span class="st">'df_groupby_value'</span>] <span class="op">=</span>ores_uncomtrade_url[ore][<span class="st">'csv_df'</span>][ores_uncomtrade_url[ore][<span class="st">'csv_df'</span>][<span class="st">'flowCode'</span>]<span class="op">==</span><span class="st">'M'</span>].groupby([<span class="st">'refYear'</span>,<span class="st">'reporterDesc'</span>]).<span class="bu">sum</span>(numeric_only<span class="op">=</span><span class="va">True</span>)[<span class="st">'primaryValue'</span>]</span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>    ores_uncomtrade_url[ore][<span class="st">'df_groupby_value'</span>] <span class="op">=</span>ores_uncomtrade_url[ore][<span class="st">'csv_df'</span>][ores_uncomtrade_url[ore][<span class="st">'csv_df'</span>][<span class="st">'flowCode'</span>]<span class="op">==</span><span class="st">'M'</span>].groupby([<span class="st">'refYear'</span>,<span class="st">'reporterDesc'</span>]).<span class="bu">sum</span>(numeric_only<span class="op">=</span><span class="va">True</span>)[<span class="st">'qty'</span>]</span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>    <span class="co">#ores_uncomtrade_url[ore]['df_groupby_value'] =ores_uncomtrade_url[ore]['csv_df'][ores_uncomtrade_url[ore]['csv_df']['flowCode']=='M'].groupby(['refYear','reporterDesc']).sum(numeric_only=True)['value_per_qty']</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cfd81b4a" class="cell">
+<details open="" class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 상위 5개국 산출</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> return_top5(df_groupby, list_removing_year):</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    dict_top_all_year <span class="op">=</span> {}</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    dict_top_all_year_value <span class="op">=</span> {}</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    dict_top_all_year_total <span class="op">=</span> {}</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    dict_top_all_year_value_sum <span class="op">=</span> {}</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    year_index <span class="op">=</span> <span class="bu">list</span>(<span class="bu">set</span>(df_groupby.index.get_level_values(<span class="dv">0</span>)))</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _ <span class="kw">in</span> list_removing_year:</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>        year_index.remove(_)</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    year_index.sort()</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> each_year <span class="kw">in</span> year_index:</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>        top5 <span class="op">=</span> df_groupby[each_year].sort_values(ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="st">'World'</span> <span class="kw">in</span> top5.index:</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>            top5 <span class="op">=</span> top5.drop(<span class="st">'World'</span>)</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>        top5_index <span class="op">=</span> top5.index.tolist()[:<span class="dv">5</span>]</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>        top5_value <span class="op">=</span> []</span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>        top5_index_and_value<span class="op">=</span>[]</span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> index_country <span class="kw">in</span> top5_index:</span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>            <span class="co"># top5_value.append(top5[index_country])</span></span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>            <span class="co"># top5_index_and_value.append(f"{index_country}\n{top5[index_country]:,.0f}")</span></span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>            top5_value.append(top5[index_country]<span class="op">/</span><span class="dv">1000</span>)</span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>            top5_index_and_value.append(<span class="ss">f"</span><span class="sc">{</span>index_country<span class="sc">}</span><span class="ch">\n</span><span class="sc">{</span>top5[index_country]<span class="op">/</span><span class="dv">1000</span><span class="sc">:,.0f}</span><span class="ss">"</span>)</span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>        dict_top_all_year[each_year] <span class="op">=</span> top5_index</span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a>        dict_top_all_year_value[each_year] <span class="op">=</span> top5_value</span>
+<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a>        dict_top_all_year_total[each_year] <span class="op">=</span> top5_index_and_value</span>
+<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a>        dict_top_all_year_value_sum[each_year] <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span><span class="bu">sum</span>(top5_value)<span class="sc">:,.0f}</span><span class="ss">"</span></span>
+<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.concat([pd.DataFrame(dict_top_all_year_total), </span>
+<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a>                      pd.DataFrame(dict_top_all_year_value_sum, </span>
+<span id="cb17-37"><a href="#cb17-37" aria-hidden="true" tabindex="-1"></a>                                   index<span class="op">=</span>[<span class="dv">5</span>])]) </span>
+<span id="cb17-38"><a href="#cb17-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-39"><a href="#cb17-39" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ore <span class="kw">in</span> ores_uncomtrade_url.keys():</span>
+<span id="cb17-40"><a href="#cb17-40" aria-hidden="true" tabindex="-1"></a>    ores_uncomtrade_url[ore][<span class="st">'df_top5'</span>] <span class="op">=</span> return_top5(ores_uncomtrade_url[ore][<span class="st">'df_groupby_value'</span>], [<span class="dv">2011</span>,<span class="dv">2012</span>,<span class="dv">2013</span>,<span class="dv">2024</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="90afd409" class="cell">
+<details open="" class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>target_ore <span class="op">=</span> <span class="st">'코발트'</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>ores_uncomtrade_url[target_ore][<span class="st">'df_top5_html'</span>] <span class="op">=</span> ores_uncomtrade_url[target_ore][<span class="st">'df_top5'</span>].copy()</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> each_year <span class="kw">in</span> ores_uncomtrade_url[target_ore][<span class="st">'df_top5'</span>].columns:</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    ores_uncomtrade_url[target_ore][<span class="st">'df_top5_html'</span>][each_year] <span class="op">=</span> ores_uncomtrade_url[target_ore][<span class="st">'df_top5_html'</span>][each_year].<span class="bu">str</span>.replace(<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>,<span class="st">'&lt;br&gt;'</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># HWP파일 작성용 CSV저장, 자동 줄바꿈 적용시 아래 표기처럼 복사/붙여넣기 가능</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>ores_uncomtrade_url[target_ore][<span class="st">'df_top5'</span>].to_excel(<span class="ss">f"Top5Country_</span><span class="sc">{</span>target_ore<span class="sc">}</span><span class="ss">.xlsx"</span>)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>display(HTML(ores_uncomtrade_url[target_ore][<span class="st">'df_top5_html'</span>].to_html(escape<span class="op">=</span><span class="va">False</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">2014</th>
+<th data-quarto-table-cell-role="th">2015</th>
+<th data-quarto-table-cell-role="th">2016</th>
+<th data-quarto-table-cell-role="th">2017</th>
+<th data-quarto-table-cell-role="th">2018</th>
+<th data-quarto-table-cell-role="th">2019</th>
+<th data-quarto-table-cell-role="th">2020</th>
+<th data-quarto-table-cell-role="th">2021</th>
+<th data-quarto-table-cell-role="th">2022</th>
+<th data-quarto-table-cell-role="th">2023</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Germany<br>
+360,060</td>
+<td>Germany<br>
+366,375</td>
+<td>USA<br>
+444,837</td>
+<td>USA<br>
+496,572</td>
+<td>USA<br>
+471,603</td>
+<td>United Kingdom<br>
+546,036</td>
+<td>Germany<br>
+571,008</td>
+<td>Germany<br>
+660,773</td>
+<td>Germany<br>
+488,970</td>
+<td>Germany<br>
+529,288</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Sweden<br>
+213,809</td>
+<td>Sweden<br>
+220,380</td>
+<td>Germany<br>
+347,106</td>
+<td>United Kingdom<br>
+345,329</td>
+<td>Germany<br>
+329,296</td>
+<td>Germany<br>
+380,888</td>
+<td>USA<br>
+472,193</td>
+<td>USA<br>
+295,225</td>
+<td>Italy<br>
+250,075</td>
+<td>United Kingdom<br>
+395,371</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Brazil<br>
+154,625</td>
+<td>Brazil<br>
+124,744</td>
+<td>Sweden<br>
+201,729</td>
+<td>Germany<br>
+299,495</td>
+<td>Finland<br>
+277,965</td>
+<td>USA<br>
+348,198</td>
+<td>United Kingdom<br>
+371,668</td>
+<td>Italy<br>
+232,667</td>
+<td>Brazil<br>
+191,783</td>
+<td>USA<br>
+219,089</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Netherlands<br>
+124,798</td>
+<td>Canada<br>
+93,406</td>
+<td>Brazil<br>
+137,948</td>
+<td>Italy<br>
+195,547</td>
+<td>United Kingdom<br>
+264,720</td>
+<td>Italy<br>
+217,586</td>
+<td>Italy<br>
+217,804</td>
+<td>United Kingdom<br>
+198,261</td>
+<td>Austria<br>
+186,431</td>
+<td>Japan<br>
+189,547</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Belgium<br>
+90,674</td>
+<td>Rep. of Korea<br>
+76,266</td>
+<td>Netherlands<br>
+101,162</td>
+<td>Sweden<br>
+182,634</td>
+<td>Italy<br>
+228,860</td>
+<td>France<br>
+176,344</td>
+<td>Sweden<br>
+159,068</td>
+<td>Sweden<br>
+187,343</td>
+<td>Sweden<br>
+164,849</td>
+<td>Sweden<br>
+180,823</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>943,966</td>
+<td>881,171</td>
+<td>1,232,782</td>
+<td>1,519,578</td>
+<td>1,572,444</td>
+<td>1,669,052</td>
+<td>1,791,741</td>
+<td>1,574,269</td>
+<td>1,282,108</td>
+<td>1,514,119</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="cc99e30b" class="cell">
+<details open="" class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>target_ore <span class="op">=</span> <span class="st">'리튬'</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>ores_uncomtrade_url[target_ore][<span class="st">'df_top5_html'</span>] <span class="op">=</span> ores_uncomtrade_url[target_ore][<span class="st">'df_top5'</span>].copy()</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> each_year <span class="kw">in</span> ores_uncomtrade_url[target_ore][<span class="st">'df_top5'</span>].columns:</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    ores_uncomtrade_url[target_ore][<span class="st">'df_top5_html'</span>][each_year] <span class="op">=</span> ores_uncomtrade_url[target_ore][<span class="st">'df_top5_html'</span>][each_year].<span class="bu">str</span>.replace(<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>,<span class="st">'&lt;br&gt;'</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># HWP파일 작성용 CSV저장, 자동 줄바꿈 적용시 아래 표기처럼 복사/붙여넣기 가능</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>ores_uncomtrade_url[target_ore][<span class="st">'df_top5'</span>].to_excel(<span class="ss">f"Top5Country_</span><span class="sc">{</span>target_ore<span class="sc">}</span><span class="ss">.xlsx"</span>)</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>display(HTML(ores_uncomtrade_url[target_ore][<span class="st">'df_top5_html'</span>].to_html(escape<span class="op">=</span><span class="va">False</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">2014</th>
+<th data-quarto-table-cell-role="th">2015</th>
+<th data-quarto-table-cell-role="th">2016</th>
+<th data-quarto-table-cell-role="th">2017</th>
+<th data-quarto-table-cell-role="th">2018</th>
+<th data-quarto-table-cell-role="th">2019</th>
+<th data-quarto-table-cell-role="th">2020</th>
+<th data-quarto-table-cell-role="th">2021</th>
+<th data-quarto-table-cell-role="th">2022</th>
+<th data-quarto-table-cell-role="th">2023</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Belgium<br>
+11,844</td>
+<td>Rep. of Korea<br>
+35,014</td>
+<td>China<br>
+47,227</td>
+<td>Japan<br>
+69,609</td>
+<td>Rep. of Korea<br>
+91,029</td>
+<td>Rep. of Korea<br>
+124,094</td>
+<td>Rep. of Korea<br>
+130,051</td>
+<td>Rep. of Korea<br>
+189,821</td>
+<td>China<br>
+278,358</td>
+<td>China<br>
+324,683</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Spain<br>
+6,852</td>
+<td>Belgium<br>
+18,782</td>
+<td>USA<br>
+33,806</td>
+<td>China<br>
+61,411</td>
+<td>Japan<br>
+86,273</td>
+<td>Japan<br>
+118,216</td>
+<td>China<br>
+101,259</td>
+<td>China<br>
+169,226</td>
+<td>Rep. of Korea<br>
+238,878</td>
+<td>Japan<br>
+109,344</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Germany<br>
+3,900</td>
+<td>Canada<br>
+7,502</td>
+<td>Belgium<br>
+24,300</td>
+<td>Rep. of Korea<br>
+55,620</td>
+<td>China<br>
+46,158</td>
+<td>China<br>
+59,437</td>
+<td>Japan<br>
+97,427</td>
+<td>Japan<br>
+108,999</td>
+<td>Japan<br>
+120,350</td>
+<td>USA<br>
+34,261</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Turkiye<br>
+3,313</td>
+<td>Germany<br>
+6,237</td>
+<td>Russian Federation<br>
+11,620</td>
+<td>USA<br>
+34,820</td>
+<td>USA<br>
+36,507</td>
+<td>USA<br>
+26,740</td>
+<td>USA<br>
+26,229</td>
+<td>USA<br>
+27,766</td>
+<td>Netherlands<br>
+17,332</td>
+<td>Netherlands<br>
+12,724</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Netherlands<br>
+1,376</td>
+<td>Spain<br>
+5,638</td>
+<td>Canada<br>
+10,842</td>
+<td>Belgium<br>
+17,840</td>
+<td>Belgium<br>
+21,817</td>
+<td>France<br>
+16,984</td>
+<td>Belgium<br>
+16,554</td>
+<td>Russian Federation<br>
+19,591</td>
+<td>USA<br>
+15,192</td>
+<td>United Kingdom<br>
+6,761</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>27,285</td>
+<td>73,173</td>
+<td>127,794</td>
+<td>239,299</td>
+<td>281,784</td>
+<td>345,471</td>
+<td>371,519</td>
+<td>515,402</td>
+<td>670,112</td>
+<td>487,772</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="7223e54b" class="cell">
+<details open="" class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>target_ore <span class="op">=</span> <span class="st">'망간'</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>ores_uncomtrade_url[target_ore][<span class="st">'df_top5_html'</span>] <span class="op">=</span> ores_uncomtrade_url[target_ore][<span class="st">'df_top5'</span>].copy()</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> each_year <span class="kw">in</span> ores_uncomtrade_url[target_ore][<span class="st">'df_top5'</span>].columns:</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    ores_uncomtrade_url[target_ore][<span class="st">'df_top5_html'</span>][each_year] <span class="op">=</span> ores_uncomtrade_url[target_ore][<span class="st">'df_top5_html'</span>][each_year].<span class="bu">str</span>.replace(<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>,<span class="st">'&lt;br&gt;'</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># HWP파일 작성용 CSV저장, 자동 줄바꿈 적용시 아래 표기처럼 복사/붙여넣기 가능</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>ores_uncomtrade_url[target_ore][<span class="st">'df_top5'</span>].to_excel(<span class="ss">f"Top5Country_</span><span class="sc">{</span>target_ore<span class="sc">}</span><span class="ss">.xlsx"</span>)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>display(HTML(ores_uncomtrade_url[target_ore][<span class="st">'df_top5_html'</span>].to_html(escape<span class="op">=</span><span class="va">False</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">2014</th>
+<th data-quarto-table-cell-role="th">2015</th>
+<th data-quarto-table-cell-role="th">2016</th>
+<th data-quarto-table-cell-role="th">2017</th>
+<th data-quarto-table-cell-role="th">2018</th>
+<th data-quarto-table-cell-role="th">2019</th>
+<th data-quarto-table-cell-role="th">2020</th>
+<th data-quarto-table-cell-role="th">2021</th>
+<th data-quarto-table-cell-role="th">2022</th>
+<th data-quarto-table-cell-role="th">2023</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Germany<br>
+1,762,753</td>
+<td>China, Hong Kong SAR<br>
+6,596,207</td>
+<td>China, Hong Kong SAR<br>
+6,430,363</td>
+<td>China, Hong Kong SAR<br>
+4,445,408</td>
+<td>USA<br>
+5,646,705</td>
+<td>USA<br>
+5,337,518</td>
+<td>USA<br>
+5,522,054</td>
+<td>USA<br>
+6,726,526</td>
+<td>Germany<br>
+4,296,848</td>
+<td>USA<br>
+7,890,263</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Brazil<br>
+1,139,607</td>
+<td>Germany<br>
+2,047,818</td>
+<td>USA<br>
+3,899,931</td>
+<td>USA<br>
+4,356,834</td>
+<td>China, Hong Kong SAR<br>
+5,317,808</td>
+<td>China, Hong Kong SAR<br>
+5,014,159</td>
+<td>China, Hong Kong SAR<br>
+4,943,913</td>
+<td>Germany<br>
+4,675,819</td>
+<td>Japan<br>
+2,842,379</td>
+<td>Germany<br>
+3,032,223</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Belgium<br>
+847,525</td>
+<td>Belgium<br>
+1,255,255</td>
+<td>Germany<br>
+3,361,475</td>
+<td>Germany<br>
+2,858,660</td>
+<td>Germany<br>
+2,722,953</td>
+<td>Germany<br>
+3,163,188</td>
+<td>Germany<br>
+4,058,559</td>
+<td>China, Hong Kong SAR<br>
+4,648,238</td>
+<td>China, Hong Kong SAR<br>
+2,556,882</td>
+<td>Japan<br>
+2,457,672</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Spain<br>
+498,741</td>
+<td>Brazil<br>
+1,015,417</td>
+<td>Russian Federation<br>
+1,509,007</td>
+<td>Japan<br>
+2,302,316</td>
+<td>China<br>
+2,504,820</td>
+<td>China<br>
+2,789,753</td>
+<td>China<br>
+2,812,012</td>
+<td>Tunisia<br>
+2,484,856</td>
+<td>Poland<br>
+1,565,781</td>
+<td>China, Hong Kong SAR<br>
+2,360,582</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Turkiye<br>
+457,040</td>
+<td>Rep. of Korea<br>
+443,342</td>
+<td>China<br>
+1,213,518</td>
+<td>Russian Federation<br>
+1,732,776</td>
+<td>Japan<br>
+2,433,654</td>
+<td>Japan<br>
+2,398,831</td>
+<td>Japan<br>
+2,636,763</td>
+<td>Japan<br>
+2,484,354</td>
+<td>China<br>
+1,529,201</td>
+<td>Poland<br>
+1,547,787</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>4,705,666</td>
+<td>11,358,039</td>
+<td>16,414,293</td>
+<td>15,695,994</td>
+<td>18,625,940</td>
+<td>18,703,449</td>
+<td>19,973,301</td>
+<td>21,019,792</td>
+<td>12,791,091</td>
+<td>17,288,526</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="f7780a15" class="cell">
+<details open="" class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>target_ore <span class="op">=</span> <span class="st">'니켈'</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>ores_uncomtrade_url[target_ore][<span class="st">'df_top5_html'</span>] <span class="op">=</span> ores_uncomtrade_url[target_ore][<span class="st">'df_top5'</span>].copy()</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> each_year <span class="kw">in</span> ores_uncomtrade_url[target_ore][<span class="st">'df_top5'</span>].columns:</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    ores_uncomtrade_url[target_ore][<span class="st">'df_top5_html'</span>][each_year] <span class="op">=</span> ores_uncomtrade_url[target_ore][<span class="st">'df_top5_html'</span>][each_year].<span class="bu">str</span>.replace(<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>,<span class="st">'&lt;br&gt;'</span>)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># HWP파일 작성용 CSV저장, 자동 줄바꿈 적용시 아래 표기처럼 복사/붙여넣기 가능</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>ores_uncomtrade_url[target_ore][<span class="st">'df_top5'</span>].to_excel(<span class="ss">f"Top5Country_</span><span class="sc">{</span>target_ore<span class="sc">}</span><span class="ss">.xlsx"</span>)</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>display(HTML(ores_uncomtrade_url[target_ore][<span class="st">'df_top5_html'</span>].to_html(escape<span class="op">=</span><span class="va">False</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">2014</th>
+<th data-quarto-table-cell-role="th">2015</th>
+<th data-quarto-table-cell-role="th">2016</th>
+<th data-quarto-table-cell-role="th">2017</th>
+<th data-quarto-table-cell-role="th">2018</th>
+<th data-quarto-table-cell-role="th">2019</th>
+<th data-quarto-table-cell-role="th">2020</th>
+<th data-quarto-table-cell-role="th">2021</th>
+<th data-quarto-table-cell-role="th">2022</th>
+<th data-quarto-table-cell-role="th">2023</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Brazil<br>
+29,012</td>
+<td>Brazil<br>
+34,127</td>
+<td>Brazil<br>
+19,720</td>
+<td>Japan<br>
+112,033</td>
+<td>Japan<br>
+135,167</td>
+<td>Japan<br>
+191,793</td>
+<td>Japan<br>
+200,127</td>
+<td>Japan<br>
+206,021</td>
+<td>Japan<br>
+173,627</td>
+<td>China<br>
+256,142</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Germany<br>
+11,705</td>
+<td>Rep. of Korea<br>
+27,394</td>
+<td>China<br>
+15,197</td>
+<td>Rep. of Korea<br>
+53,085</td>
+<td>Rep. of Korea<br>
+52,446</td>
+<td>Belgium<br>
+34,111</td>
+<td>Belgium<br>
+31,329</td>
+<td>China<br>
+98,853</td>
+<td>China<br>
+119,071</td>
+<td>Japan<br>
+124,779</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Turkiye<br>
+2,203</td>
+<td>Canada<br>
+16,517</td>
+<td>Germany<br>
+14,054</td>
+<td>China<br>
+21,639</td>
+<td>Australia<br>
+21,776</td>
+<td>Rep. of Korea<br>
+31,817</td>
+<td>Canada<br>
+21,353</td>
+<td>Belgium<br>
+41,121</td>
+<td>Belgium<br>
+43,286</td>
+<td>Belgium<br>
+41,815</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Switzerland<br>
+1,344</td>
+<td>Germany<br>
+12,654</td>
+<td>Canada<br>
+13,500</td>
+<td>Germany<br>
+13,939</td>
+<td>Belgium<br>
+20,963</td>
+<td>Canada<br>
+25,360</td>
+<td>China<br>
+16,340</td>
+<td>Canada<br>
+21,410</td>
+<td>Canada<br>
+18,103</td>
+<td>Malaysia<br>
+26,280</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Spain<br>
+1,292</td>
+<td>Thailand<br>
+4,923</td>
+<td>Rep. of Korea<br>
+8,951</td>
+<td>India<br>
+11,978</td>
+<td>China<br>
+20,569</td>
+<td>Australia<br>
+19,640</td>
+<td>Australia<br>
+13,834</td>
+<td>Malaysia<br>
+10,150</td>
+<td>Rep. of Korea<br>
+14,469</td>
+<td>Canada<br>
+13,364</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>45,555</td>
+<td>95,615</td>
+<td>71,421</td>
+<td>212,674</td>
+<td>250,921</td>
+<td>302,721</td>
+<td>282,983</td>
+<td>377,554</td>
+<td>368,556</td>
+<td>462,380</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="un-comtrade-자료분석연도별-광물수입량-산출" class="level2">
+<h2 class="anchored" data-anchor-id="un-comtrade-자료분석연도별-광물수입량-산출">UN Comtrade 자료분석(연도별 광물수입량 산출)</h2>
+<div id="12c7898e" class="cell">
+<details open="" class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'font.family'</span>] <span class="op">=</span> <span class="st">'Nanum Gothic'</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">4</span>), ncols<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ore <span class="kw">in</span> ores_uncomtrade_url.keys():</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    sns_index <span class="op">=</span> ores_uncomtrade_url[ore][<span class="st">'df_top5'</span>].columns.tolist()</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    sns_value <span class="op">=</span> ores_uncomtrade_url[ore][<span class="st">'df_top5'</span>].values[<span class="dv">5</span>].tolist()</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    sns_df <span class="op">=</span> pd.DataFrame(sns_value, index<span class="op">=</span>sns_index, columns<span class="op">=</span>[ore])</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    sns_df <span class="op">=</span> sns_df[ore].<span class="bu">str</span>.replace(<span class="st">','</span>,<span class="st">''</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ore <span class="kw">in</span> [<span class="st">'망간'</span>]:</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>        target_ax <span class="op">=</span> ax[<span class="dv">0</span>]</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> ore <span class="kw">in</span> [<span class="st">'니켈'</span>,<span class="st">'리튬'</span>]:</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>        target_ax <span class="op">=</span> ax[<span class="dv">1</span>]</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> ore <span class="kw">in</span> [<span class="st">'니켈'</span>,<span class="st">'코발트'</span>]:</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>        target_ax <span class="op">=</span> ax[<span class="dv">2</span>]</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>    sns_df.plot(ax<span class="op">=</span>target_ax)</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>    target_ax.yaxis.set_major_formatter(ticker.FuncFormatter(<span class="kw">lambda</span> x, pos: <span class="st">'</span><span class="sc">{:,}</span><span class="st">'</span>.<span class="bu">format</span>(<span class="bu">int</span>(x))))</span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> each_ax <span class="kw">in</span> ax:</span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>    each_ax.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-19-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/kr9268\.github\.io\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="kr9268/giscus_for_blog" data-repo-id="R_kgDOL0Sthw" data-category="General" data-category-id="DIC_kwDOL0Sth84Ce_5h" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+</div> <!-- /content -->
+<script>
+    const baseFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    const watermark = new XWatermark.XWatermark();
+    watermark.init("Kibok Park", {
+      parentSelector: "body",
+      prevent: true,
+      observer: true,
+      mode: "normal",
+      font: "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', 'Liberation Sans', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
+      fontsize: baseFontSize * 1.000000,
+      angle: -15.000000,
+      color: "#000000",
+      alpha: 0.100000,
+      cols: 10,
+      rows: 50,
+      xSpace: baseFontSize * 4.000000,
+      ySpace: baseFontSize * 4.000000,
+      zIndex: -1
+    });
+    </script>
+
+
+
+
+</body></html>
