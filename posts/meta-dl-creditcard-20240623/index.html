@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.53">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Kibok Park">
+<meta name="dcterms.date" content="2024-06-23">
+
+<title>[M_Study_5주차] Overfitting Control – Blog</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.jpg" rel="icon" type="image/jpeg">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/watermark-1.0.11/watermark.min.js"></script>
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-LPL499WQBH"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Blog</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index_dashboards.html"> 
+<span class="menu-text">Dashboards</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index_miniprojects.html"> 
+<span class="menu-text">Mini Projects</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About me</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/KR9268"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/%EA%B8%B0%EB%B3%B5-%EB%B0%95-573a68268/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">[M_Study_5주차] Overfitting Control</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">파이썬</div>
+                <div class="quarto-category">머신러닝</div>
+                <div class="quarto-category">딥러닝</div>
+                <div class="quarto-category">MStudy</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Kibok Park </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">June 23, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#개요" id="toc-개요" class="nav-link active" data-scroll-target="#개요">개요</a></li>
+  <li><a href="#주차-과제정리" id="toc-주차-과제정리" class="nav-link" data-scroll-target="#주차-과제정리">4주차 과제정리</a></li>
+  <li><a href="#주차-수업정리" id="toc-주차-수업정리" class="nav-link" data-scroll-target="#주차-수업정리">5주차 수업정리</a>
+  <ul class="collapse">
+  <li><a href="#hyper-parameter하이퍼-파라미터" id="toc-hyper-parameter하이퍼-파라미터" class="nav-link" data-scroll-target="#hyper-parameter하이퍼-파라미터"><code>Hyper parameter(하이퍼 파라미터)</code></a>
+  <ul class="collapse">
+  <li><a href="#activation-functions-sigmoid-tanh-relu-등" id="toc-activation-functions-sigmoid-tanh-relu-등" class="nav-link" data-scroll-target="#activation-functions-sigmoid-tanh-relu-등">(1) <code>Activation functions</code> : Sigmoid, tanh, ReLU 등</a></li>
+  <li><a href="#weight-initialization" id="toc-weight-initialization" class="nav-link" data-scroll-target="#weight-initialization">(2) <code>Weight Initialization</code></a></li>
+  </ul></li>
+  <li><a href="#learning-rate-scheduling" id="toc-learning-rate-scheduling" class="nav-link" data-scroll-target="#learning-rate-scheduling"><code>Learning rate Scheduling</code></a>
+  <ul class="collapse">
+  <li><a href="#learning-rate-scheduling의-종류" id="toc-learning-rate-scheduling의-종류" class="nav-link" data-scroll-target="#learning-rate-scheduling의-종류">(1) <code>Learning rate Scheduling의 종류</code></a></li>
+  <li><a href="#기타-참고사항" id="toc-기타-참고사항" class="nav-link" data-scroll-target="#기타-참고사항">(2) 기타 참고사항</a></li>
+  </ul></li>
+  <li><a href="#regularization-for-overfitting" id="toc-regularization-for-overfitting" class="nav-link" data-scroll-target="#regularization-for-overfitting"><code>Regularization for Overfitting</code></a>
+  <ul class="collapse">
+  <li><a href="#overfitting" id="toc-overfitting" class="nav-link" data-scroll-target="#overfitting">(1) Overfitting</a></li>
+  <li><a href="#regularization" id="toc-regularization" class="nav-link" data-scroll-target="#regularization">(2) Regularization</a></li>
+  <li><a href="#regularization-for-deep-nueral-networks" id="toc-regularization-for-deep-nueral-networks" class="nav-link" data-scroll-target="#regularization-for-deep-nueral-networks">(3) Regularization for Deep Nueral Networks</a></li>
+  </ul></li>
+  <li><a href="#optimization" id="toc-optimization" class="nav-link" data-scroll-target="#optimization"><code>Optimization</code></a>
+  <ul class="collapse">
+  <li><a href="#sgd의-문제" id="toc-sgd의-문제" class="nav-link" data-scroll-target="#sgd의-문제">(1) SGD의 문제</a></li>
+  <li><a href="#sgd의-문제들에-대한-해결방법" id="toc-sgd의-문제들에-대한-해결방법" class="nav-link" data-scroll-target="#sgd의-문제들에-대한-해결방법">(2) SGD의 문제들에 대한 해결방법</a></li>
+  </ul></li>
+  <li><a href="#batch-normalization" id="toc-batch-normalization" class="nav-link" data-scroll-target="#batch-normalization"><code>Batch Normalization</code></a>
+  <ul class="collapse">
+  <li><a href="#data-preprocessing-nomalization" id="toc-data-preprocessing-nomalization" class="nav-link" data-scroll-target="#data-preprocessing-nomalization">Data Preprocessing (Nomalization)</a></li>
+  <li><a href="#batch-normalization-1" id="toc-batch-normalization-1" class="nav-link" data-scroll-target="#batch-normalization-1">Batch Normalization</a></li>
+  <li><a href="#batch-normalization의-종류" id="toc-batch-normalization의-종류" class="nav-link" data-scroll-target="#batch-normalization의-종류">Batch Normalization의 종류</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="개요" class="level1">
+<h1>개요</h1>
+<p>참여중인 딥러닝 스터디 5주차 기록입니다.</p>
+</section>
+<section id="주차-과제정리" class="level1">
+<h1>4주차 과제정리</h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># MNIST Data Load</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>(x_train, y_train), (x_test, y_test) <span class="op">=</span> datasets.mnist.load_data()</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x_train.shape, y_train.shape, y_train[<span class="dv">0</span>])</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> (<span class="dv">60000</span>, <span class="dv">28</span>, <span class="dv">28</span>) (<span class="dv">60000</span>,) <span class="dv">5</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>x_train <span class="op">=</span> x_train.reshape((<span class="dv">60000</span>,<span class="dv">28</span>,<span class="dv">28</span>,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>위 코드와 같이 reshape 하는 이유
+<ul>
+<li>이미지 처리의 코드는 기본적으로 3차원이 들어오게 되어있음
+<ul>
+<li>관례적으로 앞의 샘플(60000)은 제외(표기생략)하고 뒤에 있는 부분(28,28)을 사용하는데, 2차원임</li>
+<li>reshape로 (28,28,1)과 같이 통상의 이미지를 처리하는 형식으로 만들어줌 <br><br></li>
+</ul></li>
+</ul></li>
+<li>CNN은 2개의 단계로 진행 (Feature Learning + Classification)
+<ul>
+<li><p><strong>Feature Learning</strong></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Step 1. Feature Learning</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  model <span class="op">=</span> Sequential()</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># output size formula: { (N - F + 2P) / stride } +1</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># parameter formual: K(F^2 * C + 1)</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># filter number: 32, filter_size = 3x3, (default) stride = 1, padding = 'valid' (= no padding)</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  model.add(Conv2D(<span class="dv">32</span>, (<span class="dv">3</span>,<span class="dv">3</span>), activation <span class="op">=</span> <span class="st">"relu"</span>, input_shape <span class="op">=</span> (<span class="dv">28</span>,<span class="dv">28</span>,<span class="dv">1</span>)))</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># output shape = {(28-3)/1} +1 = 26 =&gt; feature map = 26 x 26 x 32</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># pool_size = 2x2, stride = None, padding = "valid" (= no padding)</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  model.add(MaxPooling2D((<span class="dv">2</span>,<span class="dv">2</span>)))</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># output shape = 26/2 = 13 =&gt; feature map = 13 x 13 x 32</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  model.add(Conv2D(<span class="dv">64</span>, (<span class="dv">3</span>,<span class="dv">3</span>), activation <span class="op">=</span> <span class="st">"relu"</span>))</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># output shape = {(13-3)/1} +1 = 11 =&gt; feature map = 11 x 11 x 64</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  model.add(MaxPooling2D((<span class="dv">2</span>,<span class="dv">2</span>)))</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># output shape = 11/2 = 5,5 =&gt; 5 =&gt; feature map = 5 x 5 x 64</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  model.add(Conv2D(<span class="dv">64</span>, (<span class="dv">3</span>,<span class="dv">3</span>), activation <span class="op">=</span> <span class="st">"relu"</span>))</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># output shape = {(5-3)/1} +1 = 3 x 3 x 64</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Classification</strong></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Step 2. Fully Conneted Layer</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  model.add(Flatten())</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  model.add(Dense(<span class="dv">64</span>, activation <span class="op">=</span> <span class="st">"relu"</span>))</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  model.add(Dense(<span class="dv">10</span>, activation <span class="op">=</span> <span class="st">"softmax"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Multiclass문제에는 Output Activation function을 Softmax로 한다 <br><br></li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># model compile: cost function, optimizer, metric 설정</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(optimizer<span class="op">=</span><span class="st">"adam"</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>          loss <span class="op">=</span> <span class="st">'sparse_categorical_crossentropy'</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>          metrics <span class="op">=</span> [<span class="st">'accuracy'</span>])</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Training</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>history <span class="op">=</span> model.fit(x_train, y_train, epochs<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span>Epoch <span class="dv">1</span><span class="op">/</span><span class="dv">5</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="dv">1875</span><span class="op">/</span><span class="dv">1875</span> [<span class="op">==============================</span>] <span class="op">-</span> <span class="dv">12</span><span class="er">s</span> <span class="dv">4</span><span class="er">ms</span><span class="op">/</span>step <span class="op">-</span> loss: <span class="fl">0.1554</span> <span class="op">-</span> accuracy: <span class="fl">0.9520</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>Epoch <span class="dv">2</span><span class="op">/</span><span class="dv">5</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="dv">1875</span><span class="op">/</span><span class="dv">1875</span> [<span class="op">==============================</span>] <span class="op">-</span> <span class="dv">7</span><span class="er">s</span> <span class="dv">4</span><span class="er">ms</span><span class="op">/</span>step <span class="op">-</span> loss: <span class="fl">0.0497</span> <span class="op">-</span> accuracy: <span class="fl">0.9843</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>Epoch <span class="dv">3</span><span class="op">/</span><span class="dv">5</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="dv">1875</span><span class="op">/</span><span class="dv">1875</span> [<span class="op">==============================</span>] <span class="op">-</span> <span class="dv">8</span><span class="er">s</span> <span class="dv">4</span><span class="er">ms</span><span class="op">/</span>step <span class="op">-</span> loss: <span class="fl">0.0344</span> <span class="op">-</span> accuracy: <span class="fl">0.9891</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>Epoch <span class="dv">4</span><span class="op">/</span><span class="dv">5</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="dv">1875</span><span class="op">/</span><span class="dv">1875</span> [<span class="op">==============================</span>] <span class="op">-</span> <span class="dv">8</span><span class="er">s</span> <span class="dv">4</span><span class="er">ms</span><span class="op">/</span>step <span class="op">-</span> loss: <span class="fl">0.0266</span> <span class="op">-</span> accuracy: <span class="fl">0.9917</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>Epoch <span class="dv">5</span><span class="op">/</span><span class="dv">5</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="dv">1875</span><span class="op">/</span><span class="dv">1875</span> [<span class="op">==============================</span>] <span class="op">-</span> <span class="dv">8</span><span class="er">s</span> <span class="dv">4</span><span class="er">ms</span><span class="op">/</span>step <span class="op">-</span> loss: <span class="fl">0.0229</span> <span class="op">-</span> accuracy: <span class="fl">0.9926</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul></li>
+<li>지난번 ANN 등 보다 좋은 정확도나온 이유(기존ML 등 대비)
+<ul>
+<li>파라미터의 수가 늘어나, 비선형적 관계를 많이 표현가능해짐
+<ul>
+<li>(CNN을 쓰며)지난번보다 Layer를 깊게(많이) 만듦</li>
+<li>뉴런의 수 증가</li>
+</ul></li>
+<li>하이퍼 파라미터 조정(Relu사용 등)</li>
+<li>Adam Optimizer의 사용</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Prediction example</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  predictions <span class="op">=</span> model.predict(x_test)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(predictions[<span class="dv">0</span>])</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(np.argmax(predictions[<span class="dv">0</span>]))</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(y_test[<span class="dv">0</span>])</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="op">&gt;&gt;&gt;</span> [<span class="fl">1.3171346e-07</span> <span class="fl">2.3666507e-08</span> <span class="fl">5.0742160e-06</span> <span class="fl">8.5065667e-06</span> <span class="fl">9.7597770e-08</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a> <span class="fl">5.1097163e-07</span> <span class="fl">6.6373372e-11</span> <span class="fl">9.9998188e-01</span> <span class="fl">1.0004998e-06</span> <span class="fl">2.8241509e-06</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>위 코드의 predictions[0]의 10개값
+<ul>
+<li>Softmax로 도출된, 0~9 중 어떤 값에 속할 지에 대한 확률</li>
+</ul></li>
+<li>GPU로 모델을 돌리는 방법
+<ul>
+<li>실습 중인 경우는 GPU가 필요할 정돈 아니지만, 보통의 프로젝트는 GPU사용이 필수적
+<ul>
+<li><code>with tf.device('/device:GPU:0')</code></li>
+</ul>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> tf.device(<span class="st">'/device:GPU:0'</span>):</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Feature Learning</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  model <span class="op">=</span> Sequential()</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  model.add(Conv2D(<span class="dv">32</span>, (<span class="dv">3</span>,<span class="dv">3</span>), input_shape <span class="op">=</span> (<span class="dv">28</span>,<span class="dv">28</span>,<span class="dv">1</span>)))</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  model.add(MaxPooling2D((<span class="dv">2</span>,<span class="dv">2</span>)))</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  model.add(Conv2D(<span class="dv">64</span>, (<span class="dv">3</span>,<span class="dv">3</span>)))</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  model.add(MaxPooling2D((<span class="dv">2</span>,<span class="dv">2</span>)))</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  model.add(Conv2D(<span class="dv">64</span>, (<span class="dv">3</span>,<span class="dv">3</span>)))</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Fully Conneted Layer</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  model.add(Flatten())</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  model.add(Dense(<span class="dv">64</span>, activation <span class="op">=</span> <span class="st">"relu"</span>))</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  model.add(Dense(<span class="dv">10</span>, activation <span class="op">=</span> <span class="st">"softmax"</span>))</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  model.summary()</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># model compile: cost function, optimizer, metric 설정</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  model.<span class="bu">compile</span>(optimizer<span class="op">=</span><span class="st">"adam"</span>,</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>                loss <span class="op">=</span> <span class="st">'sparse_categorical_crossentropy'</span>,</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>                metrics <span class="op">=</span> [<span class="st">'accuracy'</span>])</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Training</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  history <span class="op">=</span> model.fit(x_train, y_train, epochs<span class="op">=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul></li>
+</ul>
+</section>
+<section id="주차-수업정리" class="level1">
+<h1>5주차 수업정리</h1>
+<section id="hyper-parameter하이퍼-파라미터" class="level2">
+<h2 class="anchored" data-anchor-id="hyper-parameter하이퍼-파라미터"><code>Hyper parameter(하이퍼 파라미터)</code></h2>
+<ul>
+<li>위 과제에서의 성능향상은, CNN의 적용(계산량의 감소)보다는, 하이퍼 파라미터조정에서 기인함</li>
+<li>하이퍼 파라미터 : 사람이 정해주는 레이어 갯수, 뉴런의 갯수 등 <br><br></li>
+</ul>
+<section id="activation-functions-sigmoid-tanh-relu-등" class="level3">
+<h3 class="anchored" data-anchor-id="activation-functions-sigmoid-tanh-relu-등">(1) <code>Activation functions</code> : Sigmoid, tanh, ReLU 등</h3>
+<ul>
+<li>비선형성을 부여하기 위해 사용. 어떤 것을 쓰냐에 따라 Neural Network성능에 큰 영향</li>
+<li>Activation functions의 종류
+<ul>
+<li><code>Sigmoid</code> : 0~1 출력. Logistic regression 등 오래부터 쓰였던 함수.
+<ul>
+<li>0~1 사이이기 때문에 확률적 해석이 가능</li>
+<li>문제
+<ul>
+<li><code>Killing Gradient</code> : 가장 치명적 문제. <strong>미분값이 0이 되는 구간은 학습이 일어나지 않음</strong></li>
+<li><code>Output not Zero-centered</code> : 치명적 문제. <strong>학습은 되지만, 레이어를 통과할 때마다 왜곡 심화(같은 방향으로만 학습)</strong>
+<ul>
+<li>SGD에서는 Batch-size 반복마다 일종의 자정작용이 있어 약간 완화되기는 함</li>
+</ul></li>
+<li>Computationally expensive : 학습이 안될 정도의 큰 문제는 아님. Exponential계산 등 계산량이 많음</li>
+</ul></li>
+</ul></li>
+<li><code>tanh</code> : -1~1 출력.
+<ul>
+<li>Zero-centered이므로 왜곡이 일어나지는 않음</li>
+<li>문제 : 여전히 <code>Killing Gradient</code>문제가 존재하여 Neural Network에서 쓰기는 부적절</li>
+</ul></li>
+<li><code>ReLU</code>(Rectified Linear Unit) : 음수면 0, 양수면 그대로
+<ul>
+<li>Computationaliy very efficient(음수면 0반환)</li>
+<li><code>Killing Gradient</code>문제는 없음. 기울기가 0인 지점이 없으므로(단 0인 부분은 미분이 되지 않음)</li>
+<li>문제
+<ul>
+<li><code>Output not Zero-centered</code>(Batch-size 적용시 큰 문제가 되진 않음)</li>
+<li>0인 부분은 미분이 되지 않음(0인 경우는 미분값 지정하는 방법으로 해결 가능)</li>
+<li><code>Dead ReLU</code> : 한번 0이되면, Layer가 계속 되어도 기울기가 업데이트 되지 않고 0</li>
+</ul></li>
+</ul></li>
+<li><code>Leaky ReLU</code>(Rectified Linear Unit) <br> <img src="index_files/figure-html/9b3ad2c2-4-image.png" class="img-fluid" alt="image.png">
+<ul>
+<li>음수인 경우 0이 아닌 0.01<span class="math inline">\(x\)</span>를 적용하여Dead ReLU문제 해결 가능</li>
+<li>효율적인 계산이나 Sigmoid/Tanh대비 빠른 장점 등 ReLU의 장점 존재</li>
+<li>문제 : additional paremeter(0.01<span class="math inline">\(x\)</span>)를 계산해야해서 계산량이 늘어나기는 함</li>
+</ul></li>
+<li><code>ELU</code>(Exponential Linear Unit) :
+<ul>
+<li>기존처럼 인위적인 지정(구간별 미분값 등)없이, 모든 지점에서 자연스럽게 미분이 가능하도록 Exponential 적용</li>
+<li>문제 : 계산량이 늘어남
+<ul>
+<li>Exponential연산은 nvidia환경에서 지원이 되는 편이긴 함</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><code>Activation function의 적용</code>
+<ul>
+<li><strong>기본적으로는 ReLU를 사용</strong>. Dead ReLU문제가 있긴하지만 일반적인 프로젝트 수준에서는 무방</li>
+<li>단 Computation자원이 충분하다면 Leaky ReLU나 ELU 사용 가능</li>
+<li><strong>Sigmoid나 Tanh는 Hidden layer의 Activation function으로 사용X</strong>(Killing Gradient문제로 학습되지 않음)</li>
+<li>참고 : GPT계열 등 대규모 모델은 ReLU계열이나 GELU(ELU를 Gausssian으로 바꾼)</li>
+</ul></li>
+</ul>
+</section>
+<section id="weight-initialization" class="level3">
+<h3 class="anchored" data-anchor-id="weight-initialization">(2) <code>Weight Initialization</code></h3>
+<ul>
+<li><p>Gradient Descent에서 임의의 점에서 시작했었던 것과 달리, 좋은 시작지점에서 시작하고자 하는 것</p></li>
+<li><p>임의의 크거나 작은 Weight로 시작하는 경우와 문제</p>
+<ul>
+<li><code>Small Gaussian Random</code> : 작은 Weight로 시작한 경우
+<ul>
+<li>Layer를 통과할때마다 한 곳으로 수렴(0으로 수렴)되어 학습이 되지 않음 <img src="index_files/figure-html/9b3ad2c2-1-image-2.png" class="img-fluid" alt="image-2.png"></li>
+</ul></li>
+<li><code>Large  Gaussian Random</code> : 큰 Weight로 시작한 경우
+<ul>
+<li>Layer를 통과할때마다 양쪽으로 발산(1,-1로 수렴)되어 학습이 되지 않음 <img src="index_files/figure-html/9b3ad2c2-2-image-3.png" class="img-fluid" alt="image-3.png"></li>
+</ul></li>
+<li>ReLU를 적용하더라도 위와 비슷한 문제는 발생</li>
+</ul></li>
+<li><p><code>Xavier Initialization</code> : Input dimension에 루트를 씌운 것으로 나눠 준 Weight 사용 (64차원이라면 8로 나눔)</p>
+<ul>
+<li>Input variance와 Output variance 맞춰 좋은 시작점(Weight)에서 시작</li>
+<li>Layer를 여러번 통과해도 Robust한 정규분포 모양으로 나오게 됨 <br> <img src="index_files/figure-html/9b3ad2c2-3-image-4.png" class="img-fluid" alt="image-4.png"></li>
+</ul></li>
+<li><p><code>Kaiming/MSRA Initialization for ReLU</code> : 2/Input dimension 을 루트 씌운 것으로 나눈 Weight 사용</p></li>
+</ul>
+</section>
+</section>
+<section id="learning-rate-scheduling" class="level2">
+<h2 class="anchored" data-anchor-id="learning-rate-scheduling"><code>Learning rate Scheduling</code></h2>
+<ul>
+<li>어떤 Learning rate가 가장 좋은가? <br> <img src="index_files/figure-html/87b6b97f-2-image.png" class="img-fluid" alt="image.png">
+<ul>
+<li>Very high : 이동이 너무 커서 Loss가 급격히 상승</li>
+<li>Low : 이동이 너무 작아서 오래걸림</li>
+<li>High : 처음엔 적절한 rate보다도 학습이 빠르지만, 일정 수준부터 Loss감소가 없음</li>
+<li><strong>적절한 rate를 통해, 적절한 속도로 optimum point로 도달하도록 해야함</strong></li>
+</ul></li>
+<li><code>Learning rate Scheduling(Decay)</code>의 구상
+<ul>
+<li>High(빠름) → Good(적절) → Low 의 rate를 적용하면 되지 않는지에 대한 의문으로 시작</li>
+<li>Epoch에 따라 learning rate를 조절하여 효율적인 학습속도 구현 <strong>(↔︎ constant learning rate)</strong> <img src="index_files/figure-html/87b6b97f-1-image-2.png" class="img-fluid" alt="image-2.png"></li>
+<li>모든 프로젝트에 직관을 적용한 Scheduling은 어려우며, 모든 프로젝트에 적용가능한 Scheduling은 없음.
+<ul>
+<li>정해진 Scheduling은방식(Cosine, Linear, Inverse Sqrt 등)이 존재</li>
+</ul></li>
+</ul></li>
+</ul>
+<section id="learning-rate-scheduling의-종류" class="level3">
+<h3 class="anchored" data-anchor-id="learning-rate-scheduling의-종류">(1) <code>Learning rate Scheduling의 종류</code></h3>
+<ul>
+<li>크게 3가지 종류가 있음
+<ul>
+<li><code>Linear Learning rate</code> : [세심하게 학습] 가장 기본적. Epoch을 거듭할수록 rate 감소</li>
+<li><code>Cosine Learning rate</code> : [빠른 학습] High rate를 좀 더 오래 유지</li>
+<li><code>Inverse Sqrt rate</code> : [무난하게 학습] rate를 빠르게 감소시킴. Optimal Point를 세밀하게 찾고 싶을 때 사용</li>
+</ul></li>
+<li>분야마다 많이 사용되는 방법은 다름
+<ul>
+<li>자연어처리는 큰 모델을 다루고 학습데이터가 많은 편이므로 <code>Cosine Learning rate Scheduler</code> 사용</li>
+<li>작은 문제나 모델이라면 <code>Linear/Inverse Sqrt earning rate Scheduler</code> 고려 가능</li>
+</ul></li>
+<li><code>Learning rate Warm-up</code>?
+<ul>
+<li>눈으로 Loss 등을 보며 감을 잡는 구간
+<ul>
+<li>Loss가 엄청 높게 튀는 경우 Learning rate가 높으므로 낮춤</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="기타-참고사항" class="level3">
+<h3 class="anchored" data-anchor-id="기타-참고사항">(2) 기타 참고사항</h3>
+<ul>
+<li>Hyper parameter가 적용되는 부분
+<ul>
+<li>Activation function은 레이어마다 적용</li>
+<li>Learning rate epoch마다 적용</li>
+<li>Weight Initialization은 처음에만 적용</li>
+</ul></li>
+<li>대략적인 가이드라인
+<ul>
+<li>레이어나 뉴런의 수는 가이드라인이 없는 편 (실험해보며 조정)
+<ul>
+<li>레이어의 수가 많을수록 복잡한/비선형적인 관계를 표현 가능</li>
+<li>레이어의 수가 30개가 좋은지 50개가 좋은진 알 수 없음</li>
+</ul></li>
+<li>Learning rate는 특정 값이 높거나 낮다고 볼 수 없음 (실험해보며 조정)
+<ul>
+<li>Loss값이 너무 튀면 learning rate를 먼저 조정 (대부분 말도안되게 튀는 것은 learning rate문제)</li>
+</ul></li>
+</ul></li>
+<li>우선순위 : (loss가 튐)Learning rate 조정 → Optimizer</li>
+</ul>
+</section>
+</section>
+<section id="regularization-for-overfitting" class="level2">
+<h2 class="anchored" data-anchor-id="regularization-for-overfitting"><code>Regularization for Overfitting</code></h2>
+<section id="overfitting" class="level3">
+<h3 class="anchored" data-anchor-id="overfitting">(1) Overfitting</h3>
+<ul>
+<li>새로운 데이터에 대해서는 잘 동작하지 않음 (↔︎Underfitting. 학습한 데이터도 처리하지 못함. 과거의 전통적 머신러닝[모델의 한계 등])</li>
+<li>파라미터의 갯수가 늘어나고 복잡해지는 경우 많음</li>
+</ul>
+</section>
+<section id="regularization" class="level3">
+<h3 class="anchored" data-anchor-id="regularization">(2) Regularization</h3>
+<ul>
+<li>파라미터가 커질수록 오차도 커짐 → 파라미터가 커져 Overfitting이 일어나는 것을 방지</li>
+<li>람다(<span class="math inline">\(\lambda\)</span>)의 크기로 패널티의 크기를 설정. 커질수록 하단 Boundary(L2는 원형, L1은 마름모)는 작아짐</li>
+<li>기존의 최적화 지점(Parameter제약 없을 때)에서 그래프의 화살표 방향(Boundary안)으로 이동</li>
+</ul>
+<section id="ridge-regressionl2-norm" class="level4">
+<h4 class="anchored" data-anchor-id="ridge-regressionl2-norm"><code>Ridge Regression(L2 Norm)</code></h4>
+<ul>
+<li>기존의 오차정의(MSE 등)에, Penalty term으로 <code>파라미터를 제곱해서 더함</code><br> <img src="index_files/figure-html/d24f026a-4-image.png" class="img-fluid" alt="image.png"> <img src="index_files/figure-html/d24f026a-1-image-2.png" class="img-fluid" alt="image-2.png"></li>
+</ul>
+</section>
+<section id="lasso-regressionl1-norm" class="level4">
+<h4 class="anchored" data-anchor-id="lasso-regressionl1-norm"><code>Lasso Regression(L1 Norm)</code></h4>
+<ul>
+<li>기존의 오차정의(MSE 등)에, Penalty term으로 <code>파라미터를 절대값으로 더함</code><br> (<code>Ridge와의 차이점 : 필요없는 파라미터를 삭제해줌</code>)<br> <img src="index_files/figure-html/d24f026a-2-image-3.png" class="img-fluid" alt="image-3.png"> <img src="index_files/figure-html/d24f026a-3-image-4.png" class="img-fluid" alt="image-4.png"></li>
+</ul>
+</section>
+</section>
+<section id="regularization-for-deep-nueral-networks" class="level3">
+<h3 class="anchored" data-anchor-id="regularization-for-deep-nueral-networks">(3) Regularization for Deep Nueral Networks</h3>
+<section id="weight-decay" class="level4">
+<h4 class="anchored" data-anchor-id="weight-decay"><code>Weight decay</code></h4>
+<ul>
+<li>Ridge(L1, 제곱, 원형마름모Boundary), Lasso(L2, 절대값, 마름모Boundary)의 적용</li>
+<li>Multiple regression 등 과거엔 많이 쓰였지만 <code>딥러닝에선 잘 안쓰임</code></li>
+</ul>
+</section>
+<section id="early-stopping" class="level4">
+<h4 class="anchored" data-anchor-id="early-stopping"><code>Early stopping</code></h4>
+<ul>
+<li>Train set에서 <code>Validation set을 분리</code>해두고, <code>Validation점수가 높아질때까지(Loss저하) 학습</code>
+<ul>
+<li>Test loss가 Overfitting지점부터 발생하는 점을 참고</li>
+</ul></li>
+<li>Acuraccy와 같은 Metric으로 적용하는 것이 트렌드</li>
+<li>Loss는 미분가능 &amp; 작을수록 좋은 지표 등을 이유로 채택했지만 실제 알고싶은 것은 Loss가 아닌 Accuracy임</li>
+<li>F1-score 등은 미분 불가로 적용 불가했지만, 측정 목적이라면 Accuracy를 채택</li>
+<li>단점 : 측정을 위한 Validation set을 만들기 위해 데이터가 많이 필요(데이터가 적은 바이오분야 등은 적용 어려움)
+<ul>
+<li>다만 딥러닝은 보통 데이터가 많은 경우에 사용하므로 Early stopping 적용이 가능함</li>
+</ul></li>
+<li>주의점 : Train/Validation/Test로 나눌 때, <code>Test Set은 정한 뒤엔 건드리지 않는다</code> (Train set에서 나눈 Train set와 Validation set의 비율 조절은 가능하다)</li>
+<li>Final metric으로 사용된다</li>
+</ul>
+</section>
+<section id="drop-out" class="level4">
+<h4 class="anchored" data-anchor-id="drop-out"><code>Drop out</code></h4>
+<ul>
+<li><code>Random한 뉴런을 끈다</code></li>
+<li>다소 무식하지만 효과가 좋아 잘 사용됨(GPT 등에서도 활용)
+<ul>
+<li>예시) 고양이의 눈/귀/코를 특징으로 잡을 때, 호랑이의 눈이 들어온다면 오류가 발생할 수 있는데,<br> 눈에 대한 특징(뉴런)이 꺼져있다면 오류를 방지할 수도 있다</li>
+</ul></li>
+<li>Cut out(Drop out의 응용) : 사진에서 특정 부분을 Random하게 삭제하여 입력하여 판단시키는 방법으로 Overfitting극복</li>
+<li>Large fully-connected layers에 사용</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="optimization" class="level2">
+<h2 class="anchored" data-anchor-id="optimization"><code>Optimization</code></h2>
+<ul>
+<li>SGD : 전체 데이터를 다 넣기 어려워 Batch를 적용해 극복</li>
+</ul>
+<section id="sgd의-문제" class="level3">
+<h3 class="anchored" data-anchor-id="sgd의-문제">(1) SGD의 문제</h3>
+<ul>
+<li><code>Jittering문제</code> : 원하는 것은 전체 파라미터의 최적화지만, 특정 파라미터만 학습이 진행됨
+<ul>
+<li>예를 들어 자산&amp;월급이 있을 때, 값이 큰 자산 위주로 최적화가 진행됨</li>
+<li>Singular value가 큰 쪽으로 학습이 이루어짐</li>
+</ul></li>
+<li><code>Local optimum문제</code> : 전체의 최적이 아닌, 부분의 최적인 Local Optimum에 빠지는 문제
+<ul>
+<li>다만, 딥러닝에서는 거의 일어나지 않는 문제임. 모든 파라미터 대부분이 양수거나 음수인 특수한 상황에서 발생</li>
+</ul></li>
+<li><code>Saddle points문제</code> : 말의 안장같이 생겨, 극소인 동시에 극대인 지점이 발생. <code>학습이 이루어지지 않는 문제</code>
+<ul>
+<li>오히려 Saddle point문제가 딥러닝에서는 더 많이 발생 (미분값이 여러개의 양수/음수가 섞임)</li>
+</ul></li>
+<li><code>Inaccurate Gradient Estimation문제</code>
+<ul>
+<li>어느정도까지는(~50% 정도) Batch size가 클수록 성능향상이 있음
+<ul>
+<li>장비(메모리)가 유효하게 많을때만 가능한 방법으로, 잘 갖춰진 환경에서만 적용 가능함(Google의 연구논문이었음)
+<ul>
+<li>즉 현실적으로는 Batch size 확대는 적용이 어려운 점이 있음</li>
+</ul></li>
+<li>82.76~83% 구간의 변화로, Practical하게 유의미한 결과로 보긴 어려움(Academic한 측면에서 유의미)</li>
+</ul></li>
+<li><code>적용Insignt</code> : 나에게 1만개의 데이터가 있을 때, 5천 건 정도의 Size(2의 배수인 4096으로) 적용</li>
+</ul></li>
+</ul>
+</section>
+<section id="sgd의-문제들에-대한-해결방법" class="level3">
+<h3 class="anchored" data-anchor-id="sgd의-문제들에-대한-해결방법">(2) SGD의 문제들에 대한 해결방법</h3>
+<ul>
+<li><code>SGD + Momentum (Saddle Points문제 해결)</code>
+<ul>
+<li>현실과 달리 GD의 적용시에는 관성이 없으므로 Saddle point에서 멈추게 되므로, 관성을 주어 해결
+<ul>
+<li>Local minimum에서는 적용 불가. saddle point형태이기에 가능한 방법<br> <img src="index_files/figure-html/a1a340f3-1-image.png" class="img-fluid" alt="image.png"></li>
+</ul></li>
+</ul></li>
+<li><code>AdaGrad[AdaptiveGrad] (Jittering문제 해결)</code>
+<ul>
+<li>Scale이 달라 발생하는 문제이므로, Scaling을 해주어 맞춰줌</li>
+</ul></li>
+<li><code>RMSProp [Leaky AdaGrad] (AdaGrad문제 해결)</code>
+<ul>
+<li>AdaGrad가 나누기를 반복하다보니 분모가 커져 0에 수렴하는 문제를 해결</li>
+<li>현재의 비율과 과거의 비율을 조절해 분모가 너무 커지는 것을 방지</li>
+<li>AdaGrad의 Scaling개념을 이해하며 사용하는 것이 중요</li>
+</ul></li>
+<li><strong><code>Adam</code></strong>
+<ul>
+<li>RMSProp + SGD with Momentum</li>
+</ul></li>
+<li>First vs Second order Optimization : 실전적으로 잘 쓰이지 않음
+<ul>
+<li>역행렬이 있다는 점에서 계산량이 많아 쓰기 어렵다는 직관적 이해 정도 갖기</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="batch-normalization" class="level2">
+<h2 class="anchored" data-anchor-id="batch-normalization"><code>Batch Normalization</code></h2>
+<section id="data-preprocessing-nomalization" class="level3">
+<h3 class="anchored" data-anchor-id="data-preprocessing-nomalization">Data Preprocessing (Nomalization)</h3>
+<ul>
+<li>통상적으로 Zero-centering, Scaling 두가지를 해 줌</li>
+<li>Layer를 통과할 때마다 왜곡이 커지는 문제를 방지 <img src="index_files/figure-html/e1ac67a4-1-image.png" class="img-fluid" alt="image.png">
+<ul>
+<li>Zero-centering : 중심에서 점점 멀어지는 문제 해결 (평균을 뺀다)</li>
+<li>Scaling : 분포가 점점 길어지는 문제 해결 (표준편차 등 특정 숫자로 나눠 준다)</li>
+</ul></li>
+<li>일반적인 ML은 처음에 전처리를 하면 되지만, DL은 레이어를 통과하며 다시 왜곡이 심해질 수 있음
+<ul>
+<li>왜곡을 막기 위해 레이어 통과마다 반복하는 <code>Batch Normalization</code>을 진행</li>
+</ul></li>
+</ul>
+</section>
+<section id="batch-normalization-1" class="level3">
+<h3 class="anchored" data-anchor-id="batch-normalization-1">Batch Normalization</h3>
+<ul>
+<li>레이어를 통과할 대마다 Zero-centering, Scaling을 해줌</li>
+<li>Drop-out과 함께 많이 사용됨</li>
+<li>적용은
+<ul>
+<li>Activation function 적용하기 전에</li>
+<li>Fully-connected layer 통과한 다음에</li>
+</ul></li>
+</ul>
+</section>
+<section id="batch-normalization의-종류" class="level3">
+<h3 class="anchored" data-anchor-id="batch-normalization의-종류">Batch Normalization의 종류</h3>
+<ul>
+<li>Batch / Layer / Instance / Group Normalization</li>
+<li>기본적으로는 대부분은 Batch Normalization을 많이 사용(특히 이미지)</li>
+<li>자연어 처리는 Layer Normalization을 사용</li>
+</ul>
+
+
+</section>
+</section>
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/kr9268\.github\.io\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="kr9268/giscus_for_blog" data-repo-id="R_kgDOL0Sthw" data-category="General" data-category-id="DIC_kwDOL0Sth84Ce_5h" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+</div> <!-- /content -->
+<script>
+    const baseFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    const watermark = new XWatermark.XWatermark();
+    watermark.init("Kibok Park", {
+      parentSelector: "body",
+      prevent: true,
+      observer: true,
+      mode: "normal",
+      font: "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', 'Liberation Sans', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
+      fontsize: baseFontSize * 1.000000,
+      angle: -15.000000,
+      color: "#000000",
+      alpha: 0.100000,
+      cols: 10,
+      rows: 50,
+      xSpace: baseFontSize * 4.000000,
+      ySpace: baseFontSize * 4.000000,
+      zIndex: -1
+    });
+    </script>
+
+
+
+
+</body></html>

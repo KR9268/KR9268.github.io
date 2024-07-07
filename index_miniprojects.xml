@@ -9,7 +9,7 @@
 <link>https://kr9268.github.io/index_miniprojects.html</link>
 <atom:link href="https://kr9268.github.io/index_miniprojects.xml" rel="self" type="application/rss+xml"/>
 <description></description>
-<generator>quarto-1.4.556</generator>
+<generator>quarto-1.5.53</generator>
 <lastBuildDate>Mon, 10 Jun 2024 00:00:00 GMT</lastBuildDate>
 <item>
   <title>[Python] Github, API활용한 공공데이터 저장소 만들기</title>
@@ -202,6 +202,7 @@ font-style: inherit;">import</span> time</span>
 <span id="cb2-8"></span>
 <span id="cb2-9"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">def</span> json_load(json_path, encoding<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
@@ -209,6 +210,7 @@ background-color: null;
 font-style: inherit;">'utf-8'</span>):</span>
 <span id="cb2-10">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">with</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">open</span>(json_path, <span class="st" style="color: #20794D;
@@ -227,10 +229,12 @@ background-color: null;
 font-style: inherit;">file</span>)</span>
 <span id="cb2-12">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> json_data</span>
 <span id="cb2-13"></span>
 <span id="cb2-14"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">def</span> request_and_to_json(url):</span>
 <span id="cb2-15">    response <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -240,10 +244,12 @@ background-color: null;
 font-style: inherit;">=</span> json.loads(response.text)</span>
 <span id="cb2-17">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> json_ob</span>
 <span id="cb2-18"></span>
 <span id="cb2-19"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">def</span> chk_json_status_of_data_go_kr(json_obj):</span>
 <span id="cb2-20">    other_data <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -266,18 +272,22 @@ font-style: inherit;">dict</span>()</span>
 <span id="cb2-22">    </span>
 <span id="cb2-23">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> each_column <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> other_data:</span>
 <span id="cb2-24">        result_dict[each_column] <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> json_obj[each_column]  </span>
 <span id="cb2-25">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> result_dict </span>
 <span id="cb2-26"></span>
 <span id="cb2-27"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">def</span> download_from_data_go_kr_with_json(url):</span>
 <span id="cb2-28">    json_ob <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -288,6 +298,7 @@ background-color: null;
 font-style: inherit;">=</span> chk_json_status_of_data_go_kr(json_ob)</span>
 <span id="cb2-31">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> json_status[<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'currentCount'</span>] <span class="op" style="color: #5E5E5E;
@@ -316,16 +327,19 @@ font-style: inherit;">=</span> request_and_to_json(url)</span>
 <span id="cb2-34"></span>
 <span id="cb2-35">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> json_ob</span>
 <span id="cb2-36"></span>
 <span id="cb2-37"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">def</span> update_readme(new_content_list):</span>
 <span id="cb2-38">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Open the README.md file in read mode</span></span>
 <span id="cb2-39">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">with</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">open</span>(<span class="st" style="color: #20794D;
@@ -356,12 +370,15 @@ font-style: inherit;">=</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">next</span>((i <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> i, line <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">enumerate</span>(lines) <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> line.startswith(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'* 데이터 현황'</span>)), <span class="va" style="color: #111111;
@@ -373,10 +390,13 @@ background-color: null;
 font-style: inherit;"># If the line is found, remove the following lines and insert new content</span></span>
 <span id="cb2-46">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> index <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">is</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">not</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">None</span>:</span>
@@ -401,6 +421,7 @@ background-color: null;
 font-style: inherit;"># Open the README.md file in write mode and write the updated content</span></span>
 <span id="cb2-52">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">with</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">open</span>(<span class="st" style="color: #20794D;
@@ -422,6 +443,7 @@ font-style: inherit;">file</span>.writelines(lines)</span>
 <span id="cb2-54"></span>
 <span id="cb2-55"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">def</span> git_push():</span>
 <span id="cb2-56">    <span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -430,12 +452,15 @@ font-style: inherit;"># Get a list of all .csv files in the current directory</s
 background-color: null;
 font-style: inherit;">=</span> [f <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> f <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> os.listdir(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'.'</span>) <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> f.endswith(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'.csv'</span>)]</span>
@@ -445,10 +470,12 @@ background-color: null;
 font-style: inherit;"># Stage all .csv files</span></span>
 <span id="cb2-60">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">file</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> csv_files:</span>
 <span id="cb2-61">        subprocess.call([<span class="st" style="color: #20794D;
 background-color: null;
@@ -528,8 +555,10 @@ background-color: null;
 font-style: inherit;">'</span>]</span>
 <span id="cb4-5"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> each <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> db_list:</span>
 <span id="cb4-6">    <span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -569,6 +598,7 @@ background-color: null;
 font-style: inherit;"># 저장</span></span>
 <span id="cb4-12">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> result_data[<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'currentCount'</span>] <span class="op" style="color: #5E5E5E;
