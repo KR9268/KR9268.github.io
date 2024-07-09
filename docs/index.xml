@@ -10,7 +10,766 @@
 <atom:link href="https://kr9268.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.4.553</generator>
-<lastBuildDate>Sun, 23 Jun 2024 15:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 29 Jun 2024 15:00:00 GMT</lastBuildDate>
+<item>
+  <title>[M_Study_6주차] 자연어처리 및 RNN관련 기초내용</title>
+  <dc:creator>Kibok Park</dc:creator>
+  <link>https://kr9268.github.io/posts/meta-dl-creditcard-20240630/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="개요" class="level1">
+<h1>개요</h1>
+<p>참여중인 딥러닝 스터디 6주차 기록입니다.</p>
+</section>
+<section id="주차-과제-설명" class="level1">
+<h1>5주차 과제 설명</h1>
+<ul>
+<li><p>Optimizer 비교 : SGD vs adam</p>
+<ul>
+<li><p>adam이 1 epoch만에 SGD의 accuracy보다 높게 나옴</p>
+<pre><code>  # SGD
+  Epoch 1/5
+  1875/1875 [==========] - 6s 3ms/step - loss: 0.6548 - accuracy: 0.8358
+  ...
+  Epoch 5/5
+  1875/1875 [==========] - 5s 2ms/step - loss: 0.2346 - accuracy: 0.9352
+
+  # adam
+  Epoch 1/5
+  1875/1875 [==========] - 11s 6ms/step - loss: 0.2605 - accuracy: 0.9256
+  ...
+  Epoch 5/5
+  1875/1875 [==========] - 7s 4ms/step - loss: 0.0456 - accuracy: 0.9863</code></pre></li>
+</ul></li>
+<li><p>Overfitting 케이스</p>
+<ul>
+<li>Test accuracy가 97.75%로 Train accuracy 98.63%보다 낮게 나옴</li>
+<li>간단한 데이터이므로 overfitting으로 판단했지만, 실제로 1%의 차이는 거의 일어나지 않은 것 (실제로 일어나면 5%가까이 떨어지는 경우도 많음)</li>
+</ul></li>
+<li><p>Overfitting 케이스 방지 : Dropout 추가</p>
+<ul>
+<li><p>Dropout을 통해 여러 특징을 학습시킬 수 있도록 함 (뉴런을 적게쓰므로 1 epoch에서는 좀 더 낮음)</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">  model2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.keras.models.Sequential([</span>
+<span id="cb2-2">      tf.keras.layers.Flatten(input_shape<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">28</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">28</span>)),</span>
+<span id="cb2-3">      tf.keras.layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">128</span>, activation <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'relu'</span>),</span>
+<span id="cb2-4">      tf.keras.layers.Dropout(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span>), <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Dropout : 20%정도 Layer를 끈다</span></span>
+<span id="cb2-5">      tf.keras.layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'softmax'</span>)</span>
+<span id="cb2-6">  ])</span>
+<span id="cb2-7"></span>
+<span id="cb2-8">  ...</span>
+<span id="cb2-9"></span>
+<span id="cb2-10">  Epoch <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span></span>
+<span id="cb2-11">  <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1875</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1875</span> [<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==========</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span><span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">s</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span><span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">ms</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>step <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> loss: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2939</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> accuracy: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9154</span></span>
+<span id="cb2-12">  ...</span>
+<span id="cb2-13">  Epoch <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span></span>
+<span id="cb2-14">  <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1875</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1875</span> [<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==========</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span><span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">s</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">ms</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>step <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> loss: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.0725</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> accuracy: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9772</span></span></code></pre></div></li>
+<li><p>Test accuracy가 97.85%, Train accuracy 97.72% 로 Overfitting 줄어듦</p></li>
+</ul></li>
+<li><p>Overfitting 케이스 방지 : Regularization</p>
+<ul>
+<li>파라미터에 패널티를 부여해 Overfitting을 방지. 딥러닝에서는 잘 쓰이지 않음
+<ul>
+<li><code>tf.keras.regularizers.l2(0.01)</code> : <img src="https://latex.codecogs.com/png.latex?%5Clambda">값으로 0.01부여, 커질수록 강한 패널티</li>
+</ul>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">  model2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.keras.models.Sequential([</span>
+<span id="cb3-2">      tf.keras.layers.Flatten(input_shape<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">28</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">28</span>)),</span>
+<span id="cb3-3">      tf.keras.layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">128</span>, activation <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'relu'</span>),</span>
+<span id="cb3-4">      tf.keras.layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">128</span>, kernel_regularizer <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.keras.regularizers.l2(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.01</span>), activation <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'relu'</span>),</span>
+<span id="cb3-5">      tf.keras.layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'softmax'</span>)</span>
+<span id="cb3-6">  ])</span></code></pre></div>
+<ul>
+<li>Test accuracy가 96.70%, Train accuracy 97.81% 로 오히려 Underfitting 발생</li>
+</ul></li>
+</ul></li>
+<li><p>Overfitting 케이스 방지 : Early stopping</p>
+<ul>
+<li><p><code>Early stopping 미적용</code></p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">  model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.keras.Sequential([</span>
+<span id="cb4-2">      tf.keras.layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">500</span>, input_dim<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'relu'</span>),</span>
+<span id="cb4-3">      tf.keras.layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sigmoid'</span>)</span>
+<span id="cb4-4">  ])</span>
+<span id="cb4-5"></span>
+<span id="cb4-6">  model.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">compile</span>(loss<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'binary_crossentropy'</span>,</span>
+<span id="cb4-7">                optimizer <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'adam'</span>,</span>
+<span id="cb4-8">                metrics <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'accuracy'</span>])</span>
+<span id="cb4-9"></span>
+<span id="cb4-10">  history <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> model.fit(trainX, trainy, validation_data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (trainX_2, trainy_2), <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># test데이터를 validation에 넣지 않는다</span></span>
+<span id="cb4-11">                  epochs<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4000</span>, verbose<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb4-12"></span>
+<span id="cb4-13">  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> Train acc: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.0</span>, Test acc: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9142857193946838</span></span></code></pre></div></li>
+<li><p><code>Early stopping without patience</code></p>
+<ul>
+<li><strong>EarlyStopping(monitor=‘val_loss’, mode=‘min’, verbose=1)</strong>
+<ul>
+<li>Validation loss를 모니터링(accuracy가 떨어지면 멈추도록도 설정가능, 단 mode=max로), 가장 작은 min을 찾는다</li>
+<li><code>fit</code> 할 때, <code>callbacks=[es]</code>를 추가로 설정</li>
+</ul>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> tensorflow.keras.callbacks <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> EarlyStopping</span>
+<span id="cb5-2"></span>
+<span id="cb5-3">model1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.keras.Sequential([</span>
+<span id="cb5-4">    tf.keras.layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">500</span>, input_dim<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'relu'</span>),</span>
+<span id="cb5-5">    tf.keras.layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sigmoid'</span>)</span>
+<span id="cb5-6">])</span>
+<span id="cb5-7"></span>
+<span id="cb5-8">model1.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">compile</span>(loss<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'binary_crossentropy'</span>,</span>
+<span id="cb5-9">              optimizer <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'adam'</span>,</span>
+<span id="cb5-10">              metrics <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'accuracy'</span>])</span>
+<span id="cb5-11"></span>
+<span id="cb5-12">es <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> EarlyStopping(monitor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'val_loss'</span>, mode<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'min'</span>, verbose<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb5-13"></span>
+<span id="cb5-14">history <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> model1.fit(trainX, trainy, validation_data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (trainX_2, trainy_2),</span>
+<span id="cb5-15">              epochs<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4000</span>, verbose<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, callbacks<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[es])</span>
+<span id="cb5-16"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> Epoch <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">227</span>: early stopping</span>
+<span id="cb5-17">Train acc: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9666666388511658</span>, Test acc: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8142856955528259</span></span></code></pre></div></li>
+<li>Test accuracy가 81%로 낮아진 이유 : without patience옵션으로 underfitting이 발생
+<ul>
+<li>하단 그래프에서 x축 250정도 잠시 loss증가한 지점에서 멈춰버림<br> <img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240630/index_files/figure-html/89205607-1-image.png" class="img-fluid" alt="image.png"></li>
+</ul></li>
+</ul></li>
+<li><p><code>Early stopping with patience</code></p>
+<ul>
+<li><strong>EarlyStopping(monitor=‘val_loss’, mode=‘min’, verbose=1, patience=200)</strong>
+<ul>
+<li>patience=200 옵션을 추가하여 200 epoch 동안 <code>연속으로 loss증가</code>하면 학습을 멈춤</li>
+<li>나머지 코드 동일</li>
+</ul>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> Epoch <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">922</span>: early stopping</span>
+<span id="cb6-2">    Train acc: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.0</span>, Test acc: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9428571462631226</span></span></code></pre></div></li>
+<li>기존의 227 epoch보다 늦은 922 epoch에서 멈춰, 훨씬 높은 94%의 Test accuracy</li>
+</ul></li>
+</ul></li>
+<li><p>train_test_split : 데이터를 나눌 때 무작위로 섞어서 나눌 수 있게 함</p>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1">  <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> sklearn.model_selection <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> train_test_split</span>
+<span id="cb7-2"></span>
+<span id="cb7-3">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># train, test 나누기</span></span>
+<span id="cb7-4">  x_train, x_test <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> train_test_split(X, test_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>)</span>
+<span id="cb7-5">  y_train, y_test <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> train_test_split(y, test_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>)</span>
+<span id="cb7-6"></span>
+<span id="cb7-7">  <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(x_train.shape, x_test.shape)</span>
+<span id="cb7-8">  <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(x_train.shape, y_test.shape)</span>
+<span id="cb7-9">  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">70</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>) (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb7-10">      (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">70</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>) (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span>,)</span>
+<span id="cb7-11"></span>
+<span id="cb7-12">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># train, validation 나누기</span></span>
+<span id="cb7-13">  x_train, x_validate <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> train_test_split(x_train, test_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>)</span>
+<span id="cb7-14">  y_train, y_validate <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> train_test_split(y_train, test_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>)</span>
+<span id="cb7-15"></span>
+<span id="cb7-16">  <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(x_train.shape, x_validate.shape, x_test.shape)</span>
+<span id="cb7-17">  <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(y_train.shape, y_validate.shape, y_test.shape)</span>
+<span id="cb7-18">  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">49</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>) (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">21</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>) (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb7-19">      (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">49</span>,) (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">21</span>,) (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span>,)</span></code></pre></div></li>
+<li><p>Data Preprocessing(전처리)</p>
+<ul>
+<li><strong>StandardScaler, MinMaxScaler의 약점 : outlier에 약하다</strong>
+<ul>
+<li>극단적인 데이터가 많지 않다면 적용해도 좋으며, 많다면 <strong>robustscaler</strong>도 고려</li>
+</ul>
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> sklearn.preprocessing <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> StandardScaler, MinMaxScaler</span>
+<span id="cb8-2"></span>
+<span id="cb8-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># MinMaxScaler 적용 전 x</span></span>
+<span id="cb8-4"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(x)</span>
+<span id="cb8-5"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> [[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">236.37372138</span>  <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">67.4728654</span>  <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">889.1062823</span>  <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">561.1353035</span>  <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">191.38532351</span>]</span>
+<span id="cb8-6">    [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">746.36250159</span>  <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">92.35363502</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">128.54322612</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">108.49157384</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">353.10048148</span>]</span>
+<span id="cb8-7">    [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">673.3844796</span>  <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">734.7410641</span>  <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">760.98411268</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">983.26464345</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">202.82746593</span>]</span>
+<span id="cb8-8">    [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">803.57916563</span>  <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">79.26219033</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">691.56641875</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">860.20938727</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">637.68924843</span>]</span>
+<span id="cb8-9">    [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">961.59849032</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">646.66721861</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">610.07133782</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">190.98379101</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">392.23091957</span>]]</span>
+<span id="cb8-10"></span>
+<span id="cb8-11"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># MinMaxScaler 적용 후 x : (x - min) / (max - min)</span></span>
+<span id="cb8-12">scaler <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> MinMaxScaler()</span>
+<span id="cb8-13">x_scaled <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> scaler.fit_transform(x)</span>
+<span id="cb8-14"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(x_scaled)</span>
+<span id="cb8-15"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> [[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.</span>         <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.</span>         <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.</span>         <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.51744132</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.</span>        ]</span>
+<span id="cb8-16">    [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.70321479</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.03728751</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.</span>         <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.</span>         <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.36234312</span>]</span>
+<span id="cb8-17">    [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.60258664</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.</span>         <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.831543</span>   <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.</span>         <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.02563756</span>]</span>
+<span id="cb8-18">    [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.78210986</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.01766805</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.74027155</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.85932894</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.</span>        ]</span>
+<span id="cb8-19">    [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.</span>         <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.86800833</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.63312056</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.09430128</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.45001978</span>]]</span>
+<span id="cb8-20"></span>
+<span id="cb8-21"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># StandardScaler : (x - mean) / std</span></span></code></pre></div></li>
+</ul></li>
+</ul>
+</section>
+<section id="주차-수업정리" class="level1">
+<h1>6주차 수업정리</h1>
+<section id="자연어처리-관련-기초적인-내용" class="level2">
+<h2 class="anchored" data-anchor-id="자연어처리-관련-기초적인-내용">자연어처리 관련 기초적인 내용</h2>
+<section id="시계열데이터sequential-data" class="level3">
+<h3 class="anchored" data-anchor-id="시계열데이터sequential-data">시계열데이터(Sequential Data)</h3>
+<ul>
+<li><p>시계열데이터(Sequential Data) : 문장(순서를 가진 단어들), 영상, 주가, 태풍의 이동경로 등 <br> (자연어처리도 시계열데이터의 하위분야 중 하나)</p></li>
+<li><p>기본적으로 <code>Input - Output - 그 사이의 function</code> 을 파악하면 좋으며, 아래는 예시임</p>
+<ul>
+<li>태풍으로 인한 날짜별 피해액을 알고자 할 때 : Input도 Output도 시계열</li>
+<li>태풍의 소멸시기 예측 : Input은 시계열이지만 Output은 single output</li>
+<li>단어가 문법적으로 맞는지 : 시계열 문제</li>
+<li>문장의 주제가 어떤 것인지(과학? 문학?) : single output</li>
+<li>그림을 묘사하는 문장 생성 : 시계열이 아닌 Input과 시계열인 Output</li>
+</ul></li>
+</ul>
+</section>
+<section id="problem-types-예시" class="level3">
+<h3 class="anchored" data-anchor-id="problem-types-예시">Problem types 예시</h3>
+<ul>
+<li>One-to-one : (Image classification) 숫자 이미지를 input으로 받아 정답 숫자를 output</li>
+<li>Many-to-one : (Frame → Class) 태풍의 이동경로, 속도를 input으로 하여 언제사라질지 output</li>
+<li>Many-to-many : (Frames → Classes) 태풍의 이동경로, 속도를 input으로 하여 날짜별 피해액 output</li>
+<li>One-to-many : (Image → Words. Image captioning) 고양이 사진을 input으로, 이에 대한 묘사 문장을 output</li>
+<li>Many-to-many : (Video → words. Video captioning) 5개 단어의 영어문장을 input으로, 3개 단어의 한글문장으로 output</li>
+</ul>
+</section>
+<section id="word-embedding" class="level3">
+<h3 class="anchored" data-anchor-id="word-embedding">Word Embedding</h3>
+<ul>
+<li>단어를 모델에 인식시키려면 숫자로 매핑하는 과정이 필요 (알파벳은 유니코드 등으로 표현이 되지만, 단어는 그렇지 못함)</li>
+<li>숫자로 매핑하며 단어의 다양한 관계를 나타낼 수 있도록 벡터로 표현. 이를 <code>Word Embedding</code>이라고 함
+<ul>
+<li>임의의 정수로 매핑할 때, 비슷한 단어일수록 숫자의 차이가 적게 만듦 (baby 12, boy 13, child 14와 같이)</li>
+<li>다만 girl이라는 단어가 나온다면 문제가 생길 수 있음 (boy 옆에 이미 baby가 있음)</li>
+<li>해결방법 : 벡터로 만든다. 자릿수를 늘려 표현할 수 있는 관계가 많아짐 (boy[13,14], girl[14,13]과 같이 정의하면 벡터간 거리가 같다)</li>
+<li>다양한 관계로 나타낼 수 있도록 벡터로 표현하게 됨 (<code>Word Embedding</code>) (참고로 GPT는 512차원이나 768차원정도 됨)</li>
+</ul></li>
+<li>처음엔 랜덤한 벡터였지만, 학습할수록 벡터가 변경되어 단어간의 관계를 표현</li>
+</ul>
+</section>
+<section id="word2vec" class="level3">
+<h3 class="anchored" data-anchor-id="word2vec">Word2vec</h3>
+<ul>
+<li>가지고 있는 단어(토큰)를, 문장에 빈 칸을 두어 맞추게 함
+<ul>
+<li>예를 들어 5만 개의 단어 중 정답인 into가 들어오지 않으면 감점 후 다시 학습(5만가지의 Classification)</li>
+</ul></li>
+<li>Word2vec이 아닌, 단어(토큰)를 주고 주변의 단어를 맞추게 하는 방법도 있지만 요즘은 많이 쓰지 않는 추세</li>
+<li>언어모델의 학습은, 예를 들면 위키피디아의 문장을 가져와, 문장에 빈칸을 만들고 빈칸의 단어를 정답으로 만든 뒤, cross entropy 측정 등 진행</li>
+<li>Word2vec학습을 마치면 단어의 관계를 묘사하게 됨<br> <img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240630/index_files/figure-html/38d392d2-1-image.png" class="img-fluid" alt="image.png"></li>
+</ul>
+</section>
+</section>
+<section id="rnn" class="level2">
+<h2 class="anchored" data-anchor-id="rnn">RNN</h2>
+<section id="rnn을-활용한-감정분석-사례many-to-one" class="level3">
+<h3 class="anchored" data-anchor-id="rnn을-활용한-감정분석-사례many-to-one">RNN을 활용한 감정분석 사례(Many-to-one)</h3>
+<ul>
+<li><code>RNN(Recurrent Neural Networks)</code>이라는 딥러닝으로 시계열을 처리하는 기초적인 architecture 적용 (이미지와 달리 문장은 길이가 항상 바뀐다)</li>
+<li>랜덤한 <img src="https://latex.codecogs.com/png.latex?h_0">을 시작으로, 현재의 단어 <img src="https://latex.codecogs.com/png.latex?x_1">부터 더해가면 최종적으로 <img src="https://latex.codecogs.com/png.latex?h_t">에 모든 문장의 정보가 들어있음 <img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240630/index_files/figure-html/001a5741-5-image.png" class="img-fluid" alt="image.png"></li>
+<li>현재의 단어 <img src="https://latex.codecogs.com/png.latex?x_t">와, 이전까지의 단어들 <img src="https://latex.codecogs.com/png.latex?h_%7Bt-1%7D"> 중 어떤 것을 더 많이 반영할지를 정하는 파라미터 <img src="https://latex.codecogs.com/png.latex?W_hh">, <img src="https://latex.codecogs.com/png.latex?W_xh"> <img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240630/index_files/figure-html/001a5741-1-image-2.png" class="img-fluid" alt="image-2.png"></li>
+<li>각 부분의 <img src="https://latex.codecogs.com/png.latex?W_hh">, <img src="https://latex.codecogs.com/png.latex?W_xh">는 동일한 값 (<code>Shared parameter</code>) 예를 들어 <img src="https://latex.codecogs.com/png.latex?W_hh">값이 다르다면 단어의 수만큼 <img src="https://latex.codecogs.com/png.latex?W_hh">가 필요하며, 문장길이가 바뀔 때마다 학습을 다르게 해야함 <img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240630/index_files/figure-html/001a5741-2-image-3.png" class="img-fluid" alt="image-3.png"></li>
+<li>Sigmoid함수를 통과하여 0.5를 기준으로 긍정/부정 등을 평가하여 감정분석하는 방식 적용</li>
+<li>Backpropagation(Chain rule)을 사용해 학습</li>
+</ul>
+</section>
+<section id="rnn을-활용한-many-to-many-적용케이스-태풍의-날짜별-피해액-등" class="level3">
+<h3 class="anchored" data-anchor-id="rnn을-활용한-many-to-many-적용케이스-태풍의-날짜별-피해액-등">RNN을 활용한 Many-to-many 적용케이스 (태풍의 날짜별 피해액 등)</h3>
+<ul>
+<li>hidden state(<img src="https://latex.codecogs.com/png.latex?h_1">)마다 예측(<img src="https://latex.codecogs.com/png.latex?%5Chat%7By%7D">)을 하고, 예측에 대해 실제값과 cross entropy비교 및 Backpropagation <img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240630/index_files/figure-html/001a5741-3-image-4.png" class="img-fluid" alt="image-4.png"><br></li>
+<li>Multi-layer RNN<br> <img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240630/index_files/figure-html/001a5741-4-image-5.png" class="img-fluid" alt="image-5.png"><br></li>
+<li>RNN의 장단점
+<ul>
+<li>장점
+<ul>
+<li>Input(문장의 길이 등)이 다른 문제에 대해 대처가 가능</li>
+<li>Parameter share로 모델의 크기가 커지지 않게 됨</li>
+<li>(이론적으로) 마지막 step에는 모든 정보가 들어있게 됨</li>
+</ul></li>
+<li>단점
+<ul>
+<li>느리다</li>
+<li><code>Vanishing gradient</code>(학습이 안됨) : 미분값이 0에 수렴하여 학습이 일어나지 않음 (↔︎ Exploding gradient)</li>
+<li><code>long-range dependency</code>(장기기억 소실, 학습은 되지만 초반부는 잊음) : 문장 초반부의 단어는 0에 수렴하며 잊게되고, 후반부의 내용만 잘 전달됨</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="lstmlong-short-term-memory" class="level3">
+<h3 class="anchored" data-anchor-id="lstmlong-short-term-memory">LSTM(Long Short Term Memory)</h3>
+<ul>
+<li>장기기억을 잊는 문제를 해결하기 위해, 보존할 수 있는 (장기기억만을 담당하는)cell gate 추가 (RNN의 핵심적 아이디어를 조금 발전시킨 것)</li>
+<li>문제
+<ul>
+<li>여전히 <code>Vanishing gradient</code>는 존재함</li>
+<li><code>long-range dependency</code>도 문장이 너무 길어지면 다시 발생</li>
+</ul></li>
+<li><code>Transformer가 등장하며 잘 안쓰이게 되었음</code></li>
+</ul>
+</section>
+<section id="grugated-recurrent-units" class="level3">
+<h3 class="anchored" data-anchor-id="grugated-recurrent-units">GRU(Gated Recurrent Units)</h3>
+<ul>
+<li>LSTM보다 간소화되었음</li>
+<li><code>Transformer가 등장하며 잘 안쓰이게 되었음</code></li>
+<li>다만 LSTM이나 GRU 모두 선박이나 태풍의 이동경로 등의 작은 규모는 적용할만 함 (Transformer는 상당히 큰 모델임)
+<ul>
+<li>자연어는 Transformer 사용(위의 사례도 Transformer사용시 더 좋아짐)</li>
+</ul></li>
+</ul>
+
+
+</section>
+</section>
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
+  <category>파이썬</category>
+  <category>머신러닝</category>
+  <category>딥러닝</category>
+  <category>MStudy</category>
+  <guid>https://kr9268.github.io/posts/meta-dl-creditcard-20240630/</guid>
+  <pubDate>Sat, 29 Jun 2024 15:00:00 GMT</pubDate>
+</item>
 <item>
   <title>[공모전] 공공데이터 공모전-7(광물 전체 제안배경 작성)</title>
   <dc:creator>Kibok Park</dc:creator>
@@ -3172,7 +3931,7 @@ font-style: inherit;">in</span> ax:</span>
   <pubDate>Sun, 23 Jun 2024 15:00:00 GMT</pubDate>
 </item>
 <item>
-  <title>[M_Study_5주차] Overfitting Control</title>
+  <title>[M_Study_5주차] Overfitting Control &amp; Hyper-Parameter</title>
   <dc:creator>Kibok Park</dc:creator>
   <link>https://kr9268.github.io/posts/meta-dl-creditcard-20240623/</link>
   <description><![CDATA[ 
@@ -19231,75 +19990,6 @@ Figure&nbsp;1
   <category>프로그래머스/SQL</category>
   <guid>https://kr9268.github.io/posts/prgms-sql-20240318/</guid>
   <pubDate>Sun, 17 Mar 2024 15:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>[프로그래머스SQL] 평균 일일 대여 요금 구하기</title>
-  <dc:creator>Kibok Park</dc:creator>
-  <link>https://kr9268.github.io/posts/prgms-sql-20240317/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<section id="개요" class="level2">
-<h2 class="anchored" data-anchor-id="개요">개요</h2>
-<p>프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다 <br> (비상업적, 비영리적 용도)</p>
-<p><a href="https://school.programmers.co.kr/learn/courses/30/parts/17042">문제링크</a></p>
-</section>
-<section id="문제-평균-일일-대여-요금-구하기" class="level2">
-<h2 class="anchored" data-anchor-id="문제-평균-일일-대여-요금-구하기">문제 : 평균 일일 대여 요금 구하기</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://kr9268.github.io/posts/prgms-sql-20240317/question.png" class="img-fluid figure-img"></p>
-<figcaption>문제 이미지</figcaption>
-</figure>
-</div>
-</section>
-<section id="작성답안" class="level2">
-<h2 class="anchored" data-anchor-id="작성답안">작성답안</h2>
-<div id="fig-polar" class="cell quarto-figure quarto-figure-center quarto-float anchored" data-vscode="{&quot;languageId&quot;:&quot;sql&quot;}">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-polar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="sourceCode cell-code" id="fig-polar" data-vscode="{&quot;languageId&quot;:&quot;sql&quot;}" style="background: #f1f3f5;"><pre class="sourceCode python cell code-with-copy"><code class="sourceCode python"><span id="fig-polar-1">SELECT ROUND(AVG(DAILY_FEE)) AS AVERAGE_FEE</span>
-<span id="fig-polar-2">FROM CAR_RENTAL_COMPANY_CAR</span>
-<span id="fig-polar-3">WHERE CAR_TYPE <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'SUV'</span></span></code></pre></div>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-polar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1
-</figcaption>
-</figure>
-</div>
-</section>
-<section id="정리" class="level2">
-<h2 class="anchored" data-anchor-id="정리">정리</h2>
-<ul>
-<li>ROUND : 반올림</li>
-<li>AVG : 평균</li>
-<li>AS ??? : 컬럼명을 ???으로 가져온다 (Alias 라고 함)</li>
-<li>WHERE : 작성한 조건을 기준으로 가져온다<br>
-<ul>
-<li><strong>WHERE</strong>의 여러 형태예시</li>
-</ul>
-<pre><code>WHERE CAR_TYPE = 'SUV'
-WHERE CAR_TYPE != 'SUV'
-WHERE DAILY_FEE &gt; 14000
-WHERE DAILY_FEE BETWEEN 14000 AND 16000
-WHERE DAILY_FEE IN (14000, 16000)
-WHERE CAR_TYPE IN ('SUV', '세단')</code></pre></li>
-</ul>
-
-
-</section>
-
-<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
-  <category>프로그래머스/SQL</category>
-  <guid>https://kr9268.github.io/posts/prgms-sql-20240317/</guid>
-  <pubDate>Sat, 16 Mar 2024 15:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
