@@ -10,7 +10,766 @@
 <atom:link href="https://kr9268.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.5.54</generator>
-<lastBuildDate>Mon, 24 Jun 2024 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sun, 30 Jun 2024 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>[M_Study_6주차] 자연어처리 및 RNN관련 기초내용</title>
+  <dc:creator>Kibok Park</dc:creator>
+  <link>https://kr9268.github.io/posts/meta-dl-creditcard-20240630/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="개요" class="level1">
+<h1>개요</h1>
+<p>참여중인 딥러닝 스터디 6주차 기록입니다.</p>
+</section>
+<section id="주차-과제-설명" class="level1">
+<h1>5주차 과제 설명</h1>
+<ul>
+<li><p>Optimizer 비교 : SGD vs adam</p>
+<ul>
+<li><p>adam이 1 epoch만에 SGD의 accuracy보다 높게 나옴</p>
+<pre><code>  # SGD
+  Epoch 1/5
+  1875/1875 [==========] - 6s 3ms/step - loss: 0.6548 - accuracy: 0.8358
+  ...
+  Epoch 5/5
+  1875/1875 [==========] - 5s 2ms/step - loss: 0.2346 - accuracy: 0.9352
+
+  # adam
+  Epoch 1/5
+  1875/1875 [==========] - 11s 6ms/step - loss: 0.2605 - accuracy: 0.9256
+  ...
+  Epoch 5/5
+  1875/1875 [==========] - 7s 4ms/step - loss: 0.0456 - accuracy: 0.9863</code></pre></li>
+</ul></li>
+<li><p>Overfitting 케이스</p>
+<ul>
+<li>Test accuracy가 97.75%로 Train accuracy 98.63%보다 낮게 나옴</li>
+<li>간단한 데이터이므로 overfitting으로 판단했지만, 실제로 1%의 차이는 거의 일어나지 않은 것 (실제로 일어나면 5%가까이 떨어지는 경우도 많음)</li>
+</ul></li>
+<li><p>Overfitting 케이스 방지 : Dropout 추가</p>
+<ul>
+<li><p>Dropout을 통해 여러 특징을 학습시킬 수 있도록 함 (뉴런을 적게쓰므로 1 epoch에서는 좀 더 낮음)</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">  model2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.keras.models.Sequential([</span>
+<span id="cb2-2">      tf.keras.layers.Flatten(input_shape<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">28</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">28</span>)),</span>
+<span id="cb2-3">      tf.keras.layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">128</span>, activation <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'relu'</span>),</span>
+<span id="cb2-4">      tf.keras.layers.Dropout(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span>), <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Dropout : 20%정도 Layer를 끈다</span></span>
+<span id="cb2-5">      tf.keras.layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'softmax'</span>)</span>
+<span id="cb2-6">  ])</span>
+<span id="cb2-7"></span>
+<span id="cb2-8">  ...</span>
+<span id="cb2-9"></span>
+<span id="cb2-10">  Epoch <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span></span>
+<span id="cb2-11">  <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1875</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1875</span> [<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==========</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span><span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">s</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span><span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">ms</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>step <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> loss: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2939</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> accuracy: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9154</span></span>
+<span id="cb2-12">  ...</span>
+<span id="cb2-13">  Epoch <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span></span>
+<span id="cb2-14">  <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1875</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1875</span> [<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==========</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span><span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">s</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">ms</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>step <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> loss: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.0725</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> accuracy: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9772</span></span></code></pre></div></li>
+<li><p>Test accuracy가 97.85%, Train accuracy 97.72% 로 Overfitting 줄어듦</p></li>
+</ul></li>
+<li><p>Overfitting 케이스 방지 : Regularization</p>
+<ul>
+<li>파라미터에 패널티를 부여해 Overfitting을 방지. 딥러닝에서는 잘 쓰이지 않음
+<ul>
+<li><code>tf.keras.regularizers.l2(0.01)</code> : <img src="https://latex.codecogs.com/png.latex?%5Clambda">값으로 0.01부여, 커질수록 강한 패널티</li>
+</ul>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">  model2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.keras.models.Sequential([</span>
+<span id="cb3-2">      tf.keras.layers.Flatten(input_shape<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">28</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">28</span>)),</span>
+<span id="cb3-3">      tf.keras.layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">128</span>, activation <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'relu'</span>),</span>
+<span id="cb3-4">      tf.keras.layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">128</span>, kernel_regularizer <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.keras.regularizers.l2(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.01</span>), activation <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'relu'</span>),</span>
+<span id="cb3-5">      tf.keras.layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'softmax'</span>)</span>
+<span id="cb3-6">  ])</span></code></pre></div>
+<ul>
+<li>Test accuracy가 96.70%, Train accuracy 97.81% 로 오히려 Underfitting 발생</li>
+</ul></li>
+</ul></li>
+<li><p>Overfitting 케이스 방지 : Early stopping</p>
+<ul>
+<li><p><code>Early stopping 미적용</code></p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">  model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.keras.Sequential([</span>
+<span id="cb4-2">      tf.keras.layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">500</span>, input_dim<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'relu'</span>),</span>
+<span id="cb4-3">      tf.keras.layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sigmoid'</span>)</span>
+<span id="cb4-4">  ])</span>
+<span id="cb4-5"></span>
+<span id="cb4-6">  model.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">compile</span>(loss<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'binary_crossentropy'</span>,</span>
+<span id="cb4-7">                optimizer <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'adam'</span>,</span>
+<span id="cb4-8">                metrics <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'accuracy'</span>])</span>
+<span id="cb4-9"></span>
+<span id="cb4-10">  history <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> model.fit(trainX, trainy, validation_data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (trainX_2, trainy_2), <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># test데이터를 validation에 넣지 않는다</span></span>
+<span id="cb4-11">                  epochs<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4000</span>, verbose<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb4-12"></span>
+<span id="cb4-13">  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> Train acc: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.0</span>, Test acc: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9142857193946838</span></span></code></pre></div></li>
+<li><p><code>Early stopping without patience</code></p>
+<ul>
+<li><strong>EarlyStopping(monitor=‘val_loss’, mode=‘min’, verbose=1)</strong>
+<ul>
+<li>Validation loss를 모니터링(accuracy가 떨어지면 멈추도록도 설정가능, 단 mode=max로), 가장 작은 min을 찾는다</li>
+<li><code>fit</code> 할 때, <code>callbacks=[es]</code>를 추가로 설정</li>
+</ul>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> tensorflow.keras.callbacks <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> EarlyStopping</span>
+<span id="cb5-2"></span>
+<span id="cb5-3">model1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.keras.Sequential([</span>
+<span id="cb5-4">    tf.keras.layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">500</span>, input_dim<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'relu'</span>),</span>
+<span id="cb5-5">    tf.keras.layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sigmoid'</span>)</span>
+<span id="cb5-6">])</span>
+<span id="cb5-7"></span>
+<span id="cb5-8">model1.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">compile</span>(loss<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'binary_crossentropy'</span>,</span>
+<span id="cb5-9">              optimizer <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'adam'</span>,</span>
+<span id="cb5-10">              metrics <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'accuracy'</span>])</span>
+<span id="cb5-11"></span>
+<span id="cb5-12">es <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> EarlyStopping(monitor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'val_loss'</span>, mode<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'min'</span>, verbose<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb5-13"></span>
+<span id="cb5-14">history <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> model1.fit(trainX, trainy, validation_data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (trainX_2, trainy_2),</span>
+<span id="cb5-15">              epochs<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4000</span>, verbose<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, callbacks<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[es])</span>
+<span id="cb5-16"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> Epoch <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">227</span>: early stopping</span>
+<span id="cb5-17">Train acc: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9666666388511658</span>, Test acc: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8142856955528259</span></span></code></pre></div></li>
+<li>Test accuracy가 81%로 낮아진 이유 : without patience옵션으로 underfitting이 발생
+<ul>
+<li>하단 그래프에서 x축 250정도 잠시 loss증가한 지점에서 멈춰버림<br> <img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240630/index_files/figure-html/89205607-1-image.png" class="img-fluid" alt="image.png"></li>
+</ul></li>
+</ul></li>
+<li><p><code>Early stopping with patience</code></p>
+<ul>
+<li><strong>EarlyStopping(monitor=‘val_loss’, mode=‘min’, verbose=1, patience=200)</strong>
+<ul>
+<li>patience=200 옵션을 추가하여 200 epoch 동안 <code>연속으로 loss증가</code>하면 학습을 멈춤</li>
+<li>나머지 코드 동일</li>
+</ul>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> Epoch <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">922</span>: early stopping</span>
+<span id="cb6-2">    Train acc: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.0</span>, Test acc: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9428571462631226</span></span></code></pre></div></li>
+<li>기존의 227 epoch보다 늦은 922 epoch에서 멈춰, 훨씬 높은 94%의 Test accuracy</li>
+</ul></li>
+</ul></li>
+<li><p>train_test_split : 데이터를 나눌 때 무작위로 섞어서 나눌 수 있게 함</p>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1">  <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> sklearn.model_selection <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> train_test_split</span>
+<span id="cb7-2"></span>
+<span id="cb7-3">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># train, test 나누기</span></span>
+<span id="cb7-4">  x_train, x_test <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> train_test_split(X, test_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>)</span>
+<span id="cb7-5">  y_train, y_test <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> train_test_split(y, test_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>)</span>
+<span id="cb7-6"></span>
+<span id="cb7-7">  <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(x_train.shape, x_test.shape)</span>
+<span id="cb7-8">  <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(x_train.shape, y_test.shape)</span>
+<span id="cb7-9">  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">70</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>) (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb7-10">      (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">70</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>) (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span>,)</span>
+<span id="cb7-11"></span>
+<span id="cb7-12">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># train, validation 나누기</span></span>
+<span id="cb7-13">  x_train, x_validate <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> train_test_split(x_train, test_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>)</span>
+<span id="cb7-14">  y_train, y_validate <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> train_test_split(y_train, test_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>)</span>
+<span id="cb7-15"></span>
+<span id="cb7-16">  <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(x_train.shape, x_validate.shape, x_test.shape)</span>
+<span id="cb7-17">  <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(y_train.shape, y_validate.shape, y_test.shape)</span>
+<span id="cb7-18">  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">49</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>) (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">21</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>) (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb7-19">      (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">49</span>,) (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">21</span>,) (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span>,)</span></code></pre></div></li>
+<li><p>Data Preprocessing(전처리)</p>
+<ul>
+<li><strong>StandardScaler, MinMaxScaler의 약점 : outlier에 약하다</strong>
+<ul>
+<li>극단적인 데이터가 많지 않다면 적용해도 좋으며, 많다면 <strong>robustscaler</strong>도 고려</li>
+</ul>
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> sklearn.preprocessing <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> StandardScaler, MinMaxScaler</span>
+<span id="cb8-2"></span>
+<span id="cb8-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># MinMaxScaler 적용 전 x</span></span>
+<span id="cb8-4"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(x)</span>
+<span id="cb8-5"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> [[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">236.37372138</span>  <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">67.4728654</span>  <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">889.1062823</span>  <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">561.1353035</span>  <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">191.38532351</span>]</span>
+<span id="cb8-6">    [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">746.36250159</span>  <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">92.35363502</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">128.54322612</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">108.49157384</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">353.10048148</span>]</span>
+<span id="cb8-7">    [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">673.3844796</span>  <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">734.7410641</span>  <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">760.98411268</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">983.26464345</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">202.82746593</span>]</span>
+<span id="cb8-8">    [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">803.57916563</span>  <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">79.26219033</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">691.56641875</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">860.20938727</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">637.68924843</span>]</span>
+<span id="cb8-9">    [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">961.59849032</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">646.66721861</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">610.07133782</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">190.98379101</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">392.23091957</span>]]</span>
+<span id="cb8-10"></span>
+<span id="cb8-11"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># MinMaxScaler 적용 후 x : (x - min) / (max - min)</span></span>
+<span id="cb8-12">scaler <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> MinMaxScaler()</span>
+<span id="cb8-13">x_scaled <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> scaler.fit_transform(x)</span>
+<span id="cb8-14"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(x_scaled)</span>
+<span id="cb8-15"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> [[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.</span>         <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.</span>         <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.</span>         <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.51744132</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.</span>        ]</span>
+<span id="cb8-16">    [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.70321479</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.03728751</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.</span>         <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.</span>         <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.36234312</span>]</span>
+<span id="cb8-17">    [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.60258664</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.</span>         <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.831543</span>   <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.</span>         <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.02563756</span>]</span>
+<span id="cb8-18">    [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.78210986</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.01766805</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.74027155</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.85932894</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.</span>        ]</span>
+<span id="cb8-19">    [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.</span>         <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.86800833</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.63312056</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.09430128</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.45001978</span>]]</span>
+<span id="cb8-20"></span>
+<span id="cb8-21"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># StandardScaler : (x - mean) / std</span></span></code></pre></div></li>
+</ul></li>
+</ul>
+</section>
+<section id="주차-수업정리" class="level1">
+<h1>6주차 수업정리</h1>
+<section id="자연어처리-관련-기초적인-내용" class="level2">
+<h2 class="anchored" data-anchor-id="자연어처리-관련-기초적인-내용">자연어처리 관련 기초적인 내용</h2>
+<section id="시계열데이터sequential-data" class="level3">
+<h3 class="anchored" data-anchor-id="시계열데이터sequential-data">시계열데이터(Sequential Data)</h3>
+<ul>
+<li><p>시계열데이터(Sequential Data) : 문장(순서를 가진 단어들), 영상, 주가, 태풍의 이동경로 등 <br> (자연어처리도 시계열데이터의 하위분야 중 하나)</p></li>
+<li><p>기본적으로 <code>Input - Output - 그 사이의 function</code> 을 파악하면 좋으며, 아래는 예시임</p>
+<ul>
+<li>태풍으로 인한 날짜별 피해액을 알고자 할 때 : Input도 Output도 시계열</li>
+<li>태풍의 소멸시기 예측 : Input은 시계열이지만 Output은 single output</li>
+<li>단어가 문법적으로 맞는지 : 시계열 문제</li>
+<li>문장의 주제가 어떤 것인지(과학? 문학?) : single output</li>
+<li>그림을 묘사하는 문장 생성 : 시계열이 아닌 Input과 시계열인 Output</li>
+</ul></li>
+</ul>
+</section>
+<section id="problem-types-예시" class="level3">
+<h3 class="anchored" data-anchor-id="problem-types-예시">Problem types 예시</h3>
+<ul>
+<li>One-to-one : (Image classification) 숫자 이미지를 input으로 받아 정답 숫자를 output</li>
+<li>Many-to-one : (Frame → Class) 태풍의 이동경로, 속도를 input으로 하여 언제사라질지 output</li>
+<li>Many-to-many : (Frames → Classes) 태풍의 이동경로, 속도를 input으로 하여 날짜별 피해액 output</li>
+<li>One-to-many : (Image → Words. Image captioning) 고양이 사진을 input으로, 이에 대한 묘사 문장을 output</li>
+<li>Many-to-many : (Video → words. Video captioning) 5개 단어의 영어문장을 input으로, 3개 단어의 한글문장으로 output</li>
+</ul>
+</section>
+<section id="word-embedding" class="level3">
+<h3 class="anchored" data-anchor-id="word-embedding">Word Embedding</h3>
+<ul>
+<li>단어를 모델에 인식시키려면 숫자로 매핑하는 과정이 필요 (알파벳은 유니코드 등으로 표현이 되지만, 단어는 그렇지 못함)</li>
+<li>숫자로 매핑하며 단어의 다양한 관계를 나타낼 수 있도록 벡터로 표현. 이를 <code>Word Embedding</code>이라고 함
+<ul>
+<li>임의의 정수로 매핑할 때, 비슷한 단어일수록 숫자의 차이가 적게 만듦 (baby 12, boy 13, child 14와 같이)</li>
+<li>다만 girl이라는 단어가 나온다면 문제가 생길 수 있음 (boy 옆에 이미 baby가 있음)</li>
+<li>해결방법 : 벡터로 만든다. 자릿수를 늘려 표현할 수 있는 관계가 많아짐 (boy[13,14], girl[14,13]과 같이 정의하면 벡터간 거리가 같다)</li>
+<li>다양한 관계로 나타낼 수 있도록 벡터로 표현하게 됨 (<code>Word Embedding</code>) (참고로 GPT는 512차원이나 768차원정도 됨)</li>
+</ul></li>
+<li>처음엔 랜덤한 벡터였지만, 학습할수록 벡터가 변경되어 단어간의 관계를 표현</li>
+</ul>
+</section>
+<section id="word2vec" class="level3">
+<h3 class="anchored" data-anchor-id="word2vec">Word2vec</h3>
+<ul>
+<li>가지고 있는 단어(토큰)를, 문장에 빈 칸을 두어 맞추게 함
+<ul>
+<li>예를 들어 5만 개의 단어 중 정답인 into가 들어오지 않으면 감점 후 다시 학습(5만가지의 Classification)</li>
+</ul></li>
+<li>Word2vec이 아닌, 단어(토큰)를 주고 주변의 단어를 맞추게 하는 방법도 있지만 요즘은 많이 쓰지 않는 추세</li>
+<li>언어모델의 학습은, 예를 들면 위키피디아의 문장을 가져와, 문장에 빈칸을 만들고 빈칸의 단어를 정답으로 만든 뒤, cross entropy 측정 등 진행</li>
+<li>Word2vec학습을 마치면 단어의 관계를 묘사하게 됨<br> <img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240630/index_files/figure-html/38d392d2-1-image.png" class="img-fluid" alt="image.png"></li>
+</ul>
+</section>
+</section>
+<section id="rnn" class="level2">
+<h2 class="anchored" data-anchor-id="rnn">RNN</h2>
+<section id="rnn을-활용한-감정분석-사례many-to-one" class="level3">
+<h3 class="anchored" data-anchor-id="rnn을-활용한-감정분석-사례many-to-one">RNN을 활용한 감정분석 사례(Many-to-one)</h3>
+<ul>
+<li><code>RNN(Recurrent Neural Networks)</code>이라는 딥러닝으로 시계열을 처리하는 기초적인 architecture 적용 (이미지와 달리 문장은 길이가 항상 바뀐다)</li>
+<li>랜덤한 <img src="https://latex.codecogs.com/png.latex?h_0">을 시작으로, 현재의 단어 <img src="https://latex.codecogs.com/png.latex?x_1">부터 더해가면 최종적으로 <img src="https://latex.codecogs.com/png.latex?h_t">에 모든 문장의 정보가 들어있음 <img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240630/index_files/figure-html/001a5741-5-image.png" class="img-fluid" alt="image.png"></li>
+<li>현재의 단어 <img src="https://latex.codecogs.com/png.latex?x_t">와, 이전까지의 단어들 <img src="https://latex.codecogs.com/png.latex?h_%7Bt-1%7D"> 중 어떤 것을 더 많이 반영할지를 정하는 파라미터 <img src="https://latex.codecogs.com/png.latex?W_hh">, <img src="https://latex.codecogs.com/png.latex?W_xh"> <img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240630/index_files/figure-html/001a5741-1-image-2.png" class="img-fluid" alt="image-2.png"></li>
+<li>각 부분의 <img src="https://latex.codecogs.com/png.latex?W_hh">, <img src="https://latex.codecogs.com/png.latex?W_xh">는 동일한 값 (<code>Shared parameter</code>) 예를 들어 <img src="https://latex.codecogs.com/png.latex?W_hh">값이 다르다면 단어의 수만큼 <img src="https://latex.codecogs.com/png.latex?W_hh">가 필요하며, 문장길이가 바뀔 때마다 학습을 다르게 해야함 <img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240630/index_files/figure-html/001a5741-2-image-3.png" class="img-fluid" alt="image-3.png"></li>
+<li>Sigmoid함수를 통과하여 0.5를 기준으로 긍정/부정 등을 평가하여 감정분석하는 방식 적용</li>
+<li>Backpropagation(Chain rule)을 사용해 학습</li>
+</ul>
+</section>
+<section id="rnn을-활용한-many-to-many-적용케이스-태풍의-날짜별-피해액-등" class="level3">
+<h3 class="anchored" data-anchor-id="rnn을-활용한-many-to-many-적용케이스-태풍의-날짜별-피해액-등">RNN을 활용한 Many-to-many 적용케이스 (태풍의 날짜별 피해액 등)</h3>
+<ul>
+<li>hidden state(<img src="https://latex.codecogs.com/png.latex?h_1">)마다 예측(<img src="https://latex.codecogs.com/png.latex?%5Chat%7By%7D">)을 하고, 예측에 대해 실제값과 cross entropy비교 및 Backpropagation <img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240630/index_files/figure-html/001a5741-3-image-4.png" class="img-fluid" alt="image-4.png"><br></li>
+<li>Multi-layer RNN<br> <img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240630/index_files/figure-html/001a5741-4-image-5.png" class="img-fluid" alt="image-5.png"><br></li>
+<li>RNN의 장단점
+<ul>
+<li>장점
+<ul>
+<li>Input(문장의 길이 등)이 다른 문제에 대해 대처가 가능</li>
+<li>Parameter share로 모델의 크기가 커지지 않게 됨</li>
+<li>(이론적으로) 마지막 step에는 모든 정보가 들어있게 됨</li>
+</ul></li>
+<li>단점
+<ul>
+<li>느리다</li>
+<li><code>Vanishing gradient</code>(학습이 안됨) : 미분값이 0에 수렴하여 학습이 일어나지 않음 (↔︎ Exploding gradient)</li>
+<li><code>long-range dependency</code>(장기기억 소실, 학습은 되지만 초반부는 잊음) : 문장 초반부의 단어는 0에 수렴하며 잊게되고, 후반부의 내용만 잘 전달됨</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="lstmlong-short-term-memory" class="level3">
+<h3 class="anchored" data-anchor-id="lstmlong-short-term-memory">LSTM(Long Short Term Memory)</h3>
+<ul>
+<li>장기기억을 잊는 문제를 해결하기 위해, 보존할 수 있는 (장기기억만을 담당하는)cell gate 추가 (RNN의 핵심적 아이디어를 조금 발전시킨 것)</li>
+<li>문제
+<ul>
+<li>여전히 <code>Vanishing gradient</code>는 존재함</li>
+<li><code>long-range dependency</code>도 문장이 너무 길어지면 다시 발생</li>
+</ul></li>
+<li><code>Transformer가 등장하며 잘 안쓰이게 되었음</code></li>
+</ul>
+</section>
+<section id="grugated-recurrent-units" class="level3">
+<h3 class="anchored" data-anchor-id="grugated-recurrent-units">GRU(Gated Recurrent Units)</h3>
+<ul>
+<li>LSTM보다 간소화되었음</li>
+<li><code>Transformer가 등장하며 잘 안쓰이게 되었음</code></li>
+<li>다만 LSTM이나 GRU 모두 선박이나 태풍의 이동경로 등의 작은 규모는 적용할만 함 (Transformer는 상당히 큰 모델임)
+<ul>
+<li>자연어는 Transformer 사용(위의 사례도 Transformer사용시 더 좋아짐)</li>
+</ul></li>
+</ul>
+
+
+</section>
+</section>
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
+  <category>파이썬</category>
+  <category>머신러닝</category>
+  <category>딥러닝</category>
+  <category>MStudy</category>
+  <guid>https://kr9268.github.io/posts/meta-dl-creditcard-20240630/</guid>
+  <pubDate>Sun, 30 Jun 2024 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>[공모전] 공공데이터 공모전-7(광물 전체 제안배경 작성)</title>
   <dc:creator>Kibok Park</dc:creator>
@@ -10443,6 +11202,771 @@ font-style: inherit;">False</span>)</span></code></pre></div>
   <pubDate>Sun, 16 Jun 2024 00:00:00 GMT</pubDate>
 </item>
 <item>
+  <title>[공모전] 공공데이터 공모전-4(모델에 대한 Feature개발 및 평가지표)</title>
+  <dc:creator>Kibok Park</dc:creator>
+  <link>https://kr9268.github.io/posts/dtcontest-ore-20240615/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>2024년 12회 산업통상자원부 공공데이터 활용 아이디어 공모전 참가 기록.(모델에 대한 Feature개발 및 평가지표)</p>
+<section id="개요" class="level2">
+<h2 class="anchored" data-anchor-id="개요">개요</h2>
+<ul>
+<li>2024년 12회 산업통상자원부 공공데이터 활용 아이디어 공모전 참가해보기로 함
+<ul>
+<li>https://datacontest.kr/apply/applyAdd/3</li>
+</ul></li>
+<li>분석 대상 광물에 대한 HSCODE 등 기준 고민</li>
+<li>모델 평가지표에 대한 고민 : Recall</li>
+<li>모델에 사용할 지표 개발에 대한 부분 (UN Comtrade 활용)
+<ul>
+<li>생산국 수출량</li>
+<li>생산국 판매가격</li>
+<li>수입국 수입량</li>
+</ul></li>
+</ul>
+</section>
+<section id="내용정리" class="level2">
+<h2 class="anchored" data-anchor-id="내용정리">내용정리</h2>
+<section id="지난-회의정리" class="level3">
+<h3 class="anchored" data-anchor-id="지난-회의정리">지난 회의정리</h3>
+<ul>
+<li>모델링에 사용할 지표 중 <code>시장위험지수</code> 제거에 대한 동의
+<ul>
+<li>수급안정화지수에 공통항목이 많아 추이가 비슷하여 제외</li>
+</ul></li>
+<li>Feature 중 하나로 <code>BDI지수</code> 추가</li>
+<li>Feature로 사용할 데이터를 추가로 발굴
+<ul>
+<li><a href="https://comtradeplus.un.org/TradeFlow">UN Comtrade database</a>에서도 활용할 데이터 있는지 검토(타 팀원 제보)</li>
+</ul></li>
+<li>잘 만들어진 기존 모델들을 잘 사용하는 방안 고려
+<ul>
+<li>이상요소 탐지에 R AnomalyDetection패키지 사용 (타 팀원이 적용예정)</li>
+</ul></li>
+</ul>
+</section>
+<section id="회의내용에-대한-self고찰-및-아이디어-develope" class="level3">
+<h3 class="anchored" data-anchor-id="회의내용에-대한-self고찰-및-아이디어-develope">회의내용에 대한 Self고찰 및 아이디어 Develope</h3>
+<ul>
+<li>분석할 광물에 대해 어떤 기준을 적용할지 고민
+<ul>
+<li>UN Comtrade를 활용할 때 어떤 HSCODE를 적용할지에 대한 고민
+<ul>
+<li>한국무역통계진흥원에서 제공하는 <a href="https://www.bandtrass.or.kr/hsnavi.do?page=F&amp;site=">HSCODE분류서비스</a>를 활용해, 가장 신고율이 높은 HSCODE 채택
+<ul>
+<li>‘이차전지용’ 등 여러 용도가 있음에도 가장 높은 신고율은 ’기타’인 것으로 확인해 이 로직은 <code>Drop</code></li>
+</ul></li>
+<li>현대경제연구원의 <a href="https://www.hri.co.kr/kor/report/report-view.html?mode=2&amp;uid=97723&amp;find_field=total&amp;find_word=2%EC%B0%A8%EC%A0%84%EC%A7%80&amp;page=1">2차전지 보고서</a> 중 품목별 HSCODE 내용이 있어 활용 검토
+<ul>
+<li><strong>핵심사업에 사용될 광물에 대한 분석</strong>이라는 점에서, 2차전지 컨셉 차용이 나쁘지 않은 것으로 보여 <code>활용제안 예정</code>
+<ul>
+<li>산화/수산화리튬(282520), 산화/수산화코발트(282200), 황산코발트(283329)</li>
+<li>탄산리튬(283691), 이산화망간(850610), 산화/수산화니켈(282540), 황산니켈(283324)</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>모델링에 사용할 평가기준에 대한 분석
+<ul>
+<li>위험요소 탐지에 대한 모델이므로 <code>Recall 사용으로 제안 예정</code>
+<ul>
+<li>위기로 ’판정’하는게 많아져야 위기를 놓치지 않을 확률이 크므로 Recall이 맞다고 생각했음</li>
+</ul></li>
+</ul></li>
+<li>모델링에 사용할 Feature에 대한 생각 (<code>아래의 3개 지표를 개발하여 활용하도록 의견제안 예정</code>)
+<ul>
+<li>UN Comtrade의 요소를 바탕으로 아래의 지표를 생성하는 것을 고려
+<ul>
+<li><code>생산국 수출량</code> : 각 광물의 생산량 상위 국가를 from기준으로 하여 수출(공급)량 판단</li>
+<li><code>생산국 판매가격</code> : 각 광물의 판매가격을 수출량으로 나누어 kg당 단가로 판단
+<ul>
+<li>가격은 CIF, FOB중 기타비용을 제외하는 FOB를 우선고려, 데이터를 보고 추가결정</li>
+</ul></li>
+<li><code>수입국 수입량</code> : 특정 국가에서 수입량 변동이 급격히 변동(상승)하는 것 탐지</li>
+</ul></li>
+</ul></li>
+</ul>
+
+
+</section>
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
+  <category>공모전</category>
+  <category>공공데이터</category>
+  <category>분석</category>
+  <guid>https://kr9268.github.io/posts/dtcontest-ore-20240615/</guid>
+  <pubDate>Sat, 15 Jun 2024 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>[M_Study_3주차과제1] Softmax로 MNIST다루기</title>
+  <dc:creator>Kibok Park</dc:creator>
+  <link>https://kr9268.github.io/posts/meta-dl-creditcard-20240615_1/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>스터디 진행하며 진행한 과제 기록(MNIST, Softmax)</p>
+<section id="개요" class="level2">
+<h2 class="anchored" data-anchor-id="개요">개요</h2>
+<p>참여중인 딥러닝 스터디 3주차 기록입니다.</p>
+<ul>
+<li>Softmax로 MNIST다루기</li>
+<li>강사님이 주신 샘플코드 참고해서, 나에게 맞추거나 추가공부 진행</li>
+</ul>
+</section>
+<section id="과제-작성-softmax-linear" class="level2">
+<h2 class="anchored" data-anchor-id="과제-작성-softmax-linear">과제 작성 (Softmax / Linear)</h2>
+<div id="c2c7d438" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> tensorflow <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> tf</span>
+<span id="cb1-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb1-3"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> plt</span>
+<span id="cb1-4"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> tensorflow.keras.datasets <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> mnist</span></code></pre></div>
+</div>
+<section id="mnist-dataset로딩-및-전처리" class="level3">
+<h3 class="anchored" data-anchor-id="mnist-dataset로딩-및-전처리">Mnist Dataset로딩 및 전처리</h3>
+<div id="3cc2dc4b" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">(x_train, y_train), (x_test, y_test) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> mnist.load_data()</span>
+<span id="cb2-2"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> (x_train, y_train, x_test, y_test):</span>
+<span id="cb2-3">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(i.shape)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(60000, 28, 28)
+(60000,)
+(10000, 28, 28)
+(10000,)</code></pre>
+</div>
+</div>
+<section id="float변환" class="level4">
+<h4 class="anchored" data-anchor-id="float변환">float변환</h4>
+<div id="d17a0531" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">x_train, x_test <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.array(x_train, np.float32), np.array(x_test, np.float32)</span></code></pre></div>
+</div>
+</section>
+<section id="flatten" class="level4">
+<h4 class="anchored" data-anchor-id="flatten">Flatten</h4>
+<div id="9ca4ba93" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Flatten (num_features=784)</span></span>
+<span id="cb5-2">num_features <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">784</span> <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 28*28 (Data의 Shape)</span></span>
+<span id="cb5-3"></span>
+<span id="cb5-4"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Flatten전 : '</span>, x_train.shape, x_test.shape)</span>
+<span id="cb5-5">x_train, x_test <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x_train.reshape(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, num_features), x_test.reshape(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, num_features)</span>
+<span id="cb5-6"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Flatten후 : '</span>, x_train.shape, x_test.shape)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Flatten전 :  (60000, 28, 28) (10000, 28, 28)
+Flatten후 :  (60000, 784) (10000, 784)</code></pre>
+</div>
+</div>
+</section>
+<section id="normalize" class="level4">
+<h4 class="anchored" data-anchor-id="normalize">Normalize</h4>
+<div id="8b98cd1a" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Normalize (0~255사이의 값을 0~1 사이의 값으로)</span></span>
+<span id="cb7-2">x_train, x_test <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x_train <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">255.</span>, x_test <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">255.</span></span></code></pre></div>
+</div>
+</section>
+</section>
+<section id="함수-및-파라메터-설정" class="level3">
+<h3 class="anchored" data-anchor-id="함수-및-파라메터-설정">함수 및 파라메터 설정</h3>
+<div id="28184919" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Parameters</span></span>
+<span id="cb8-2">learning_rate <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.01</span></span>
+<span id="cb8-3">training_steps <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span></span>
+<span id="cb8-4">batch_size <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">256</span></span>
+<span id="cb8-5"></span>
+<span id="cb8-6">num_classes <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span> <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># MNIST의 0~9 숫자 10개</span></span>
+<span id="cb8-7">num_features <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">784</span> <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 28*28 (Data의 Shape)</span></span>
+<span id="cb8-8"></span>
+<span id="cb8-9"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Variables</span></span>
+<span id="cb8-10">W <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.Variable(tf.ones([num_features, num_classes]), name<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'weight'</span>)</span>
+<span id="cb8-11">b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.Variable(tf.zeros([num_classes]), name<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bias'</span>)</span>
+<span id="cb8-12"></span>
+<span id="cb8-13"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Functions</span></span>
+<span id="cb8-14"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> softmax(x):</span>
+<span id="cb8-15">    z <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.matmul(x, W) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> b</span>
+<span id="cb8-16">    sm <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.nn.softmax(z)</span>
+<span id="cb8-17">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> sm</span>
+<span id="cb8-18"></span>
+<span id="cb8-19"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> cross_entropy(y_pred, y_true):</span>
+<span id="cb8-20">    y_true <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.one_hot(y_true, depth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>num_classes)</span>
+<span id="cb8-21">    y_pred <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.clip_by_value(y_pred, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1e-9</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.</span>) <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># clip_by_value에서 1e-9 최소값지정사유 : </span></span>
+<span id="cb8-22">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> tf.reduce_mean(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>tf.reduce_sum(y_true <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> tf.math.log(y_pred), axis<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>))</span></code></pre></div>
+</div>
+<ul>
+<li><p>tf.nn.softmax : 0~1 사이로 출력</p></li>
+<li><p>tf.one_hot(y_true, depth=num_classes) : y_true인 대상을 depth에 맞춰 원핫인코딩</p>
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 샘플</span></span>
+<span id="cb9-2">  tf.one_hot([<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>], depth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>).numpy()</span>
+<span id="cb9-3">  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> array([[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.</span>]], dtype<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>float32)</span></code></pre></div></li>
+<li><p>tf.clip_by_value(y_pred, 1e-9, 1.) : y_pred인 대상을 제시한 min, max에 맞춰 변환</p>
+<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 샘플</span></span>
+<span id="cb10-2">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 변환 전</span></span>
+<span id="cb10-3">  t <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.constant([[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>]], dtype<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>tf.float32)</span>
+<span id="cb10-4">  t.numpy()</span>
+<span id="cb10-5">  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> array([[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.</span>,  <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.</span>,  <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.</span>],</span>
+<span id="cb10-6">     [ <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.</span>,  <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.</span>,  <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.</span>]], dtype<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>float32)</span>
+<span id="cb10-7">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 변환 후</span></span>
+<span id="cb10-8">  tf.clip_by_value(t, clip_value_min<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, clip_value_max<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>).numpy()</span>
+<span id="cb10-9">  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> array([[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.</span>],</span>
+<span id="cb10-10">     [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.</span>]], dtype<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>float32)</span></code></pre></div></li>
+</ul>
+<div id="fb36658f" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Optimization</span></span>
+<span id="cb11-2"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> accuracy(y_pred, y_true):</span>
+<span id="cb11-3">    correct_prediction <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.equal(tf.argmax(y_pred, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>), tf.cast(y_true, tf.int64))</span>
+<span id="cb11-4">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> tf.reduce_mean(tf.cast(correct_prediction, tf.float32), axis <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb11-5"></span>
+<span id="cb11-6"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> batch_maker(text, data_row, batch_size):</span>
+<span id="cb11-7">    random_idx <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.random.randint(data_row, size <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> batch_size)</span>
+<span id="cb11-8">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> x_train[random_idx], y_train[random_idx]</span>
+<span id="cb11-9"></span>
+<span id="cb11-10"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> run_optimization(x, y):</span>
+<span id="cb11-11">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">with</span> tf.GradientTape() <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> g:</span>
+<span id="cb11-12">        pred <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> softmax(x)</span>
+<span id="cb11-13">        cost <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> cross_entropy(pred, y)</span>
+<span id="cb11-14"></span>
+<span id="cb11-15">    gradients <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> g.gradient(cost, [W, b])</span>
+<span id="cb11-16"></span>
+<span id="cb11-17">    optimizer.apply_gradients(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">zip</span>(gradients, [W, b]))</span>
+<span id="cb11-18"></span>
+<span id="cb11-19"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Optimizer (Stochastic Gradient Descent)</span></span>
+<span id="cb11-20">optimizer <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.optimizers.SGD(learning_rate)</span>
+<span id="cb11-21"></span>
+<span id="cb11-22"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> step <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(training_steps): <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># training_steps = 1000로 위에서 지정해둠</span></span>
+<span id="cb11-23">    batch_x, batch_y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> batch_maker(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'training'</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">60000</span>, batch_size) <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># batch_size = 256로 위에서 지정해둠</span></span>
+<span id="cb11-24"></span>
+<span id="cb11-25">    run_optimization(batch_x, batch_y)</span>
+<span id="cb11-26"></span>
+<span id="cb11-27">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> step <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>:</span>
+<span id="cb11-28">        pred <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> softmax(batch_x)</span>
+<span id="cb11-29">        cost <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> cross_entropy(pred, batch_y)</span>
+<span id="cb11-30">        acc <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> accuracy(pred, batch_y)</span>
+<span id="cb11-31">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Step : </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>step<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> | loss : </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>cost<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> / accuracy : </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>acc<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Step : 0 | loss : 2.287696123123169 / accuracy : 0.6875
+Step : 100 | loss : 1.5578452348709106 / accuracy : 0.7578125
+Step : 200 | loss : 1.188745379447937 / accuracy : 0.8359375
+Step : 300 | loss : 1.010088324546814 / accuracy : 0.796875
+Step : 400 | loss : 0.8610934019088745 / accuracy : 0.859375
+Step : 500 | loss : 0.807215690612793 / accuracy : 0.8359375
+Step : 600 | loss : 0.7144550085067749 / accuracy : 0.8671875
+Step : 700 | loss : 0.7559677362442017 / accuracy : 0.81640625
+Step : 800 | loss : 0.6656553745269775 / accuracy : 0.8515625
+Step : 900 | loss : 0.59657222032547 / accuracy : 0.8828125</code></pre>
+</div>
+</div>
+</section>
+<section id="학습-후-validationtest" class="level3">
+<h3 class="anchored" data-anchor-id="학습-후-validationtest">학습 후 Validation(Test)</h3>
+<div id="a06dd500" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># W와 b가 학습된 model로 Validation(Test Dataset사용)</span></span>
+<span id="cb13-2">prediction <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> softmax(x_test)</span>
+<span id="cb13-3"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Test accuracy : </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>accuracy(prediction, y_test)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Test accuracy : 0.8716999888420105</code></pre>
+</div>
+</div>
+</section>
+<section id="추가적으로-검증기능-구현해보기" class="level3">
+<h3 class="anchored" data-anchor-id="추가적으로-검증기능-구현해보기">추가적으로 검증기능 구현해보기</h3>
+<ul>
+<li>추가적으로, 아래의 기능을 구현해보았음
+<ul>
+<li>number_to_look을 입력하여 원하는 횟수만큼 모델검증</li>
+<li>randint를 활용하여 랜덤추출, tested_list로 추출내역 관리하여 중복회피</li>
+<li>pyplot으로 형태/예측/정답을 시각화</li>
+</ul></li>
+</ul>
+<div id="e1bb8562" class="cell">
+<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> koreanize_matplotlib</span>
+<span id="cb15-2"></span>
+<span id="cb15-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 시각화로 Validation 확인</span></span>
+<span id="cb15-4">number_to_look <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span></span>
+<span id="cb15-5">tested_list <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> []</span>
+<span id="cb15-6"></span>
+<span id="cb15-7"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(number_to_look):</span>
+<span id="cb15-8">    plt.figure(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>))</span>
+<span id="cb15-9">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 테스트할 데이터 랜덤추출</span></span>
+<span id="cb15-10">    idx <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb15-11">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">while</span> idx <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">not</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> tested_list:</span>
+<span id="cb15-12">        idx <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.random.randint(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, y_test.shape[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>])</span>
+<span id="cb15-13">        tested_list.append(idx)</span>
+<span id="cb15-14"></span>
+<span id="cb15-15">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 결과 확인</span></span>
+<span id="cb15-16">    plt.xlabel(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"예상:</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>np<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>argmax(prediction[idx])<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> | 정답:</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>y_test[idx]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb15-17">    plt.imshow(np.reshape(x_test[idx], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">28</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">28</span>]), cmap<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>plt.cm.binary)</span>
+<span id="cb15-18">    plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_1/index_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_1/index_files/figure-html/cell-10-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_1/index_files/figure-html/cell-10-output-3.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_1/index_files/figure-html/cell-10-output-4.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
+  <category>파이썬</category>
+  <category>머신러닝</category>
+  <category>딥러닝</category>
+  <category>MStudy</category>
+  <category>MNIST</category>
+  <guid>https://kr9268.github.io/posts/meta-dl-creditcard-20240615_1/</guid>
+  <pubDate>Sat, 15 Jun 2024 00:00:00 GMT</pubDate>
+</item>
+<item>
   <title>[M_Study_3주차과제2] Neural Network로 MNIST다루기</title>
   <dc:creator>Kibok Park</dc:creator>
   <link>https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/</link>
@@ -11465,771 +12989,6 @@ font-style: inherit;">=</span>plt.cm.binary)</span>
   <category>MNIST</category>
   <category>Tensorflow</category>
   <guid>https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/</guid>
-  <pubDate>Sat, 15 Jun 2024 00:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>[M_Study_3주차과제1] Softmax로 MNIST다루기</title>
-  <dc:creator>Kibok Park</dc:creator>
-  <link>https://kr9268.github.io/posts/meta-dl-creditcard-20240615_1/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>스터디 진행하며 진행한 과제 기록(MNIST, Softmax)</p>
-<section id="개요" class="level2">
-<h2 class="anchored" data-anchor-id="개요">개요</h2>
-<p>참여중인 딥러닝 스터디 3주차 기록입니다.</p>
-<ul>
-<li>Softmax로 MNIST다루기</li>
-<li>강사님이 주신 샘플코드 참고해서, 나에게 맞추거나 추가공부 진행</li>
-</ul>
-</section>
-<section id="과제-작성-softmax-linear" class="level2">
-<h2 class="anchored" data-anchor-id="과제-작성-softmax-linear">과제 작성 (Softmax / Linear)</h2>
-<div id="c2c7d438" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> tensorflow <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> tf</span>
-<span id="cb1-2"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> np</span>
-<span id="cb1-3"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> plt</span>
-<span id="cb1-4"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> tensorflow.keras.datasets <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> mnist</span></code></pre></div>
-</div>
-<section id="mnist-dataset로딩-및-전처리" class="level3">
-<h3 class="anchored" data-anchor-id="mnist-dataset로딩-및-전처리">Mnist Dataset로딩 및 전처리</h3>
-<div id="3cc2dc4b" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">(x_train, y_train), (x_test, y_test) <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> mnist.load_data()</span>
-<span id="cb2-2"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> (x_train, y_train, x_test, y_test):</span>
-<span id="cb2-3">    <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(i.shape)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>(60000, 28, 28)
-(60000,)
-(10000, 28, 28)
-(10000,)</code></pre>
-</div>
-</div>
-<section id="float변환" class="level4">
-<h4 class="anchored" data-anchor-id="float변환">float변환</h4>
-<div id="d17a0531" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">x_train, x_test <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> np.array(x_train, np.float32), np.array(x_test, np.float32)</span></code></pre></div>
-</div>
-</section>
-<section id="flatten" class="level4">
-<h4 class="anchored" data-anchor-id="flatten">Flatten</h4>
-<div id="9ca4ba93" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Flatten (num_features=784)</span></span>
-<span id="cb5-2">num_features <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">784</span> <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 28*28 (Data의 Shape)</span></span>
-<span id="cb5-3"></span>
-<span id="cb5-4"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'Flatten전 : '</span>, x_train.shape, x_test.shape)</span>
-<span id="cb5-5">x_train, x_test <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> x_train.reshape(<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>, num_features), x_test.reshape(<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>, num_features)</span>
-<span id="cb5-6"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'Flatten후 : '</span>, x_train.shape, x_test.shape)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Flatten전 :  (60000, 28, 28) (10000, 28, 28)
-Flatten후 :  (60000, 784) (10000, 784)</code></pre>
-</div>
-</div>
-</section>
-<section id="normalize" class="level4">
-<h4 class="anchored" data-anchor-id="normalize">Normalize</h4>
-<div id="8b98cd1a" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Normalize (0~255사이의 값을 0~1 사이의 값으로)</span></span>
-<span id="cb7-2">x_train, x_test <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> x_train <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">255.</span>, x_test <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">255.</span></span></code></pre></div>
-</div>
-</section>
-</section>
-<section id="함수-및-파라메터-설정" class="level3">
-<h3 class="anchored" data-anchor-id="함수-및-파라메터-설정">함수 및 파라메터 설정</h3>
-<div id="28184919" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Parameters</span></span>
-<span id="cb8-2">learning_rate <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.01</span></span>
-<span id="cb8-3">training_steps <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1000</span></span>
-<span id="cb8-4">batch_size <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">256</span></span>
-<span id="cb8-5"></span>
-<span id="cb8-6">num_classes <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span> <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># MNIST의 0~9 숫자 10개</span></span>
-<span id="cb8-7">num_features <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">784</span> <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 28*28 (Data의 Shape)</span></span>
-<span id="cb8-8"></span>
-<span id="cb8-9"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Variables</span></span>
-<span id="cb8-10">W <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> tf.Variable(tf.ones([num_features, num_classes]), name<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'weight'</span>)</span>
-<span id="cb8-11">b <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> tf.Variable(tf.zeros([num_classes]), name<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'bias'</span>)</span>
-<span id="cb8-12"></span>
-<span id="cb8-13"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Functions</span></span>
-<span id="cb8-14"><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">def</span> softmax(x):</span>
-<span id="cb8-15">    z <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> tf.matmul(x, W) <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> b</span>
-<span id="cb8-16">    sm <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> tf.nn.softmax(z)</span>
-<span id="cb8-17">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> sm</span>
-<span id="cb8-18"></span>
-<span id="cb8-19"><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">def</span> cross_entropy(y_pred, y_true):</span>
-<span id="cb8-20">    y_true <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> tf.one_hot(y_true, depth<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>num_classes)</span>
-<span id="cb8-21">    y_pred <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> tf.clip_by_value(y_pred, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1e-9</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1.</span>) <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># clip_by_value에서 1e-9 최소값지정사유 : </span></span>
-<span id="cb8-22">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> tf.reduce_mean(<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span>tf.reduce_sum(y_true <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span> tf.math.log(y_pred), axis<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=-</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>))</span></code></pre></div>
-</div>
-<ul>
-<li><p>tf.nn.softmax : 0~1 사이로 출력</p></li>
-<li><p>tf.one_hot(y_true, depth=num_classes) : y_true인 대상을 depth에 맞춰 원핫인코딩</p>
-<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1">  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 샘플</span></span>
-<span id="cb9-2">  tf.one_hot([<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>], depth<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">5</span>).numpy()</span>
-<span id="cb9-3">  <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;&gt;&gt;</span> array([[<span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1.</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.</span>]], dtype<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>float32)</span></code></pre></div></li>
-<li><p>tf.clip_by_value(y_pred, 1e-9, 1.) : y_pred인 대상을 제시한 min, max에 맞춰 변환</p>
-<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1">  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 샘플</span></span>
-<span id="cb10-2">  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 변환 전</span></span>
-<span id="cb10-3">  t <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> tf.constant([[<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>], [<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">4</span>]], dtype<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>tf.float32)</span>
-<span id="cb10-4">  t.numpy()</span>
-<span id="cb10-5">  <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;&gt;&gt;</span> array([[<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1.</span>,  <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.</span>,  <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1.</span>],</span>
-<span id="cb10-6">     [ <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2.</span>,  <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">3.</span>,  <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">4.</span>]], dtype<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>float32)</span>
-<span id="cb10-7">  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 변환 후</span></span>
-<span id="cb10-8">  tf.clip_by_value(t, clip_value_min<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>, clip_value_max<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>).numpy()</span>
-<span id="cb10-9">  <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;&gt;&gt;</span> array([[<span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1.</span>],</span>
-<span id="cb10-10">     [<span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2.</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2.</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2.</span>]], dtype<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>float32)</span></code></pre></div></li>
-</ul>
-<div id="fb36658f" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Optimization</span></span>
-<span id="cb11-2"><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">def</span> accuracy(y_pred, y_true):</span>
-<span id="cb11-3">    correct_prediction <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> tf.equal(tf.argmax(y_pred, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>), tf.cast(y_true, tf.int64))</span>
-<span id="cb11-4">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> tf.reduce_mean(tf.cast(correct_prediction, tf.float32), axis <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>)</span>
-<span id="cb11-5"></span>
-<span id="cb11-6"><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">def</span> batch_maker(text, data_row, batch_size):</span>
-<span id="cb11-7">    random_idx <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> np.random.randint(data_row, size <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> batch_size)</span>
-<span id="cb11-8">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">return</span> x_train[random_idx], y_train[random_idx]</span>
-<span id="cb11-9"></span>
-<span id="cb11-10"><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">def</span> run_optimization(x, y):</span>
-<span id="cb11-11">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">with</span> tf.GradientTape() <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> g:</span>
-<span id="cb11-12">        pred <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> softmax(x)</span>
-<span id="cb11-13">        cost <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> cross_entropy(pred, y)</span>
-<span id="cb11-14"></span>
-<span id="cb11-15">    gradients <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> g.gradient(cost, [W, b])</span>
-<span id="cb11-16"></span>
-<span id="cb11-17">    optimizer.apply_gradients(<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">zip</span>(gradients, [W, b]))</span>
-<span id="cb11-18"></span>
-<span id="cb11-19"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Optimizer (Stochastic Gradient Descent)</span></span>
-<span id="cb11-20">optimizer <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> tf.optimizers.SGD(learning_rate)</span>
-<span id="cb11-21"></span>
-<span id="cb11-22"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> step <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">range</span>(training_steps): <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># training_steps = 1000로 위에서 지정해둠</span></span>
-<span id="cb11-23">    batch_x, batch_y <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> batch_maker(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'training'</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">60000</span>, batch_size) <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># batch_size = 256로 위에서 지정해둠</span></span>
-<span id="cb11-24"></span>
-<span id="cb11-25">    run_optimization(batch_x, batch_y)</span>
-<span id="cb11-26"></span>
-<span id="cb11-27">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> step <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">100</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>:</span>
-<span id="cb11-28">        pred <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> softmax(batch_x)</span>
-<span id="cb11-29">        cost <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> cross_entropy(pred, batch_y)</span>
-<span id="cb11-30">        acc <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> accuracy(pred, batch_y)</span>
-<span id="cb11-31">        <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">f"Step : </span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span>step<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;"> | loss : </span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span>cost<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;"> / accuracy : </span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span>acc<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span>)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Step : 0 | loss : 2.287696123123169 / accuracy : 0.6875
-Step : 100 | loss : 1.5578452348709106 / accuracy : 0.7578125
-Step : 200 | loss : 1.188745379447937 / accuracy : 0.8359375
-Step : 300 | loss : 1.010088324546814 / accuracy : 0.796875
-Step : 400 | loss : 0.8610934019088745 / accuracy : 0.859375
-Step : 500 | loss : 0.807215690612793 / accuracy : 0.8359375
-Step : 600 | loss : 0.7144550085067749 / accuracy : 0.8671875
-Step : 700 | loss : 0.7559677362442017 / accuracy : 0.81640625
-Step : 800 | loss : 0.6656553745269775 / accuracy : 0.8515625
-Step : 900 | loss : 0.59657222032547 / accuracy : 0.8828125</code></pre>
-</div>
-</div>
-</section>
-<section id="학습-후-validationtest" class="level3">
-<h3 class="anchored" data-anchor-id="학습-후-validationtest">학습 후 Validation(Test)</h3>
-<div id="a06dd500" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># W와 b가 학습된 model로 Validation(Test Dataset사용)</span></span>
-<span id="cb13-2">prediction <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> softmax(x_test)</span>
-<span id="cb13-3"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">f"Test accuracy : </span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span>accuracy(prediction, y_test)<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span>)</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Test accuracy : 0.8716999888420105</code></pre>
-</div>
-</div>
-</section>
-<section id="추가적으로-검증기능-구현해보기" class="level3">
-<h3 class="anchored" data-anchor-id="추가적으로-검증기능-구현해보기">추가적으로 검증기능 구현해보기</h3>
-<ul>
-<li>추가적으로, 아래의 기능을 구현해보았음
-<ul>
-<li>number_to_look을 입력하여 원하는 횟수만큼 모델검증</li>
-<li>randint를 활용하여 랜덤추출, tested_list로 추출내역 관리하여 중복회피</li>
-<li>pyplot으로 형태/예측/정답을 시각화</li>
-</ul></li>
-</ul>
-<div id="e1bb8562" class="cell">
-<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> koreanize_matplotlib</span>
-<span id="cb15-2"></span>
-<span id="cb15-3"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 시각화로 Validation 확인</span></span>
-<span id="cb15-4">number_to_look <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">4</span></span>
-<span id="cb15-5">tested_list <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> []</span>
-<span id="cb15-6"></span>
-<span id="cb15-7"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">range</span>(number_to_look):</span>
-<span id="cb15-8">    plt.figure(figsize<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>,<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>))</span>
-<span id="cb15-9">    <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 테스트할 데이터 랜덤추출</span></span>
-<span id="cb15-10">    idx <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span></span>
-<span id="cb15-11">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">while</span> idx <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">not</span> <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> tested_list:</span>
-<span id="cb15-12">        idx <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> np.random.randint(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>, y_test.shape[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>])</span>
-<span id="cb15-13">        tested_list.append(idx)</span>
-<span id="cb15-14"></span>
-<span id="cb15-15">    <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># 결과 확인</span></span>
-<span id="cb15-16">    plt.xlabel(<span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">f"예상:</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span>np<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">.</span>argmax(prediction[idx])<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;"> | 정답:</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span>y_test[idx]<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span>)</span>
-<span id="cb15-17">    plt.imshow(np.reshape(x_test[idx], [<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">28</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">28</span>]), cmap<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>plt.cm.binary)</span>
-<span id="cb15-18">    plt.show()</span></code></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_1/index_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_1/index_files/figure-html/cell-10-output-2.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_1/index_files/figure-html/cell-10-output-3.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="https://kr9268.github.io/posts/meta-dl-creditcard-20240615_1/index_files/figure-html/cell-10-output-4.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-
-
-</section>
-</section>
-
-<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
-  <category>파이썬</category>
-  <category>머신러닝</category>
-  <category>딥러닝</category>
-  <category>MStudy</category>
-  <category>MNIST</category>
-  <guid>https://kr9268.github.io/posts/meta-dl-creditcard-20240615_1/</guid>
-  <pubDate>Sat, 15 Jun 2024 00:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>[공모전] 공공데이터 공모전-4(모델에 대한 Feature개발 및 평가지표)</title>
-  <dc:creator>Kibok Park</dc:creator>
-  <link>https://kr9268.github.io/posts/dtcontest-ore-20240615/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>2024년 12회 산업통상자원부 공공데이터 활용 아이디어 공모전 참가 기록.(모델에 대한 Feature개발 및 평가지표)</p>
-<section id="개요" class="level2">
-<h2 class="anchored" data-anchor-id="개요">개요</h2>
-<ul>
-<li>2024년 12회 산업통상자원부 공공데이터 활용 아이디어 공모전 참가해보기로 함
-<ul>
-<li>https://datacontest.kr/apply/applyAdd/3</li>
-</ul></li>
-<li>분석 대상 광물에 대한 HSCODE 등 기준 고민</li>
-<li>모델 평가지표에 대한 고민 : Recall</li>
-<li>모델에 사용할 지표 개발에 대한 부분 (UN Comtrade 활용)
-<ul>
-<li>생산국 수출량</li>
-<li>생산국 판매가격</li>
-<li>수입국 수입량</li>
-</ul></li>
-</ul>
-</section>
-<section id="내용정리" class="level2">
-<h2 class="anchored" data-anchor-id="내용정리">내용정리</h2>
-<section id="지난-회의정리" class="level3">
-<h3 class="anchored" data-anchor-id="지난-회의정리">지난 회의정리</h3>
-<ul>
-<li>모델링에 사용할 지표 중 <code>시장위험지수</code> 제거에 대한 동의
-<ul>
-<li>수급안정화지수에 공통항목이 많아 추이가 비슷하여 제외</li>
-</ul></li>
-<li>Feature 중 하나로 <code>BDI지수</code> 추가</li>
-<li>Feature로 사용할 데이터를 추가로 발굴
-<ul>
-<li><a href="https://comtradeplus.un.org/TradeFlow">UN Comtrade database</a>에서도 활용할 데이터 있는지 검토(타 팀원 제보)</li>
-</ul></li>
-<li>잘 만들어진 기존 모델들을 잘 사용하는 방안 고려
-<ul>
-<li>이상요소 탐지에 R AnomalyDetection패키지 사용 (타 팀원이 적용예정)</li>
-</ul></li>
-</ul>
-</section>
-<section id="회의내용에-대한-self고찰-및-아이디어-develope" class="level3">
-<h3 class="anchored" data-anchor-id="회의내용에-대한-self고찰-및-아이디어-develope">회의내용에 대한 Self고찰 및 아이디어 Develope</h3>
-<ul>
-<li>분석할 광물에 대해 어떤 기준을 적용할지 고민
-<ul>
-<li>UN Comtrade를 활용할 때 어떤 HSCODE를 적용할지에 대한 고민
-<ul>
-<li>한국무역통계진흥원에서 제공하는 <a href="https://www.bandtrass.or.kr/hsnavi.do?page=F&amp;site=">HSCODE분류서비스</a>를 활용해, 가장 신고율이 높은 HSCODE 채택
-<ul>
-<li>‘이차전지용’ 등 여러 용도가 있음에도 가장 높은 신고율은 ’기타’인 것으로 확인해 이 로직은 <code>Drop</code></li>
-</ul></li>
-<li>현대경제연구원의 <a href="https://www.hri.co.kr/kor/report/report-view.html?mode=2&amp;uid=97723&amp;find_field=total&amp;find_word=2%EC%B0%A8%EC%A0%84%EC%A7%80&amp;page=1">2차전지 보고서</a> 중 품목별 HSCODE 내용이 있어 활용 검토
-<ul>
-<li><strong>핵심사업에 사용될 광물에 대한 분석</strong>이라는 점에서, 2차전지 컨셉 차용이 나쁘지 않은 것으로 보여 <code>활용제안 예정</code>
-<ul>
-<li>산화/수산화리튬(282520), 산화/수산화코발트(282200), 황산코발트(283329)</li>
-<li>탄산리튬(283691), 이산화망간(850610), 산화/수산화니켈(282540), 황산니켈(283324)</li>
-</ul></li>
-</ul></li>
-</ul></li>
-</ul></li>
-<li>모델링에 사용할 평가기준에 대한 분석
-<ul>
-<li>위험요소 탐지에 대한 모델이므로 <code>Recall 사용으로 제안 예정</code>
-<ul>
-<li>위기로 ’판정’하는게 많아져야 위기를 놓치지 않을 확률이 크므로 Recall이 맞다고 생각했음</li>
-</ul></li>
-</ul></li>
-<li>모델링에 사용할 Feature에 대한 생각 (<code>아래의 3개 지표를 개발하여 활용하도록 의견제안 예정</code>)
-<ul>
-<li>UN Comtrade의 요소를 바탕으로 아래의 지표를 생성하는 것을 고려
-<ul>
-<li><code>생산국 수출량</code> : 각 광물의 생산량 상위 국가를 from기준으로 하여 수출(공급)량 판단</li>
-<li><code>생산국 판매가격</code> : 각 광물의 판매가격을 수출량으로 나누어 kg당 단가로 판단
-<ul>
-<li>가격은 CIF, FOB중 기타비용을 제외하는 FOB를 우선고려, 데이터를 보고 추가결정</li>
-</ul></li>
-<li><code>수입국 수입량</code> : 특정 국가에서 수입량 변동이 급격히 변동(상승)하는 것 탐지</li>
-</ul></li>
-</ul></li>
-</ul>
-
-
-</section>
-</section>
-
-<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
-  <category>공모전</category>
-  <category>공공데이터</category>
-  <category>분석</category>
-  <guid>https://kr9268.github.io/posts/dtcontest-ore-20240615/</guid>
   <pubDate>Sat, 15 Jun 2024 00:00:00 GMT</pubDate>
 </item>
 <item>
@@ -19493,75 +20252,6 @@ Figure&nbsp;1
   <category>프로그래머스/SQL</category>
   <guid>https://kr9268.github.io/posts/prgms-sql-20240318/</guid>
   <pubDate>Mon, 18 Mar 2024 00:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>[프로그래머스SQL] 평균 일일 대여 요금 구하기</title>
-  <dc:creator>Kibok Park</dc:creator>
-  <link>https://kr9268.github.io/posts/prgms-sql-20240317/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<section id="개요" class="level2">
-<h2 class="anchored" data-anchor-id="개요">개요</h2>
-<p>프로그래머스 SQL 문제풀이 연습(Oracle기준, Mysql아님)입니다 <br> (비상업적, 비영리적 용도)</p>
-<p><a href="https://school.programmers.co.kr/learn/courses/30/parts/17042">문제링크</a></p>
-</section>
-<section id="문제-평균-일일-대여-요금-구하기" class="level2">
-<h2 class="anchored" data-anchor-id="문제-평균-일일-대여-요금-구하기">문제 : 평균 일일 대여 요금 구하기</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://kr9268.github.io/posts/prgms-sql-20240317/question.png" class="img-fluid figure-img"></p>
-<figcaption>문제 이미지</figcaption>
-</figure>
-</div>
-</section>
-<section id="작성답안" class="level2">
-<h2 class="anchored" data-anchor-id="작성답안">작성답안</h2>
-<div id="fig-polar" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-vscode="{&quot;languageId&quot;:&quot;sql&quot;}">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-polar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="sourceCode cell-code" id="fig-polar" data-vscode="{&quot;languageId&quot;:&quot;sql&quot;}" style="background: #f1f3f5;"><pre class="sourceCode python cell code-with-copy"><code class="sourceCode python"><span id="fig-polar-1">SELECT ROUND(AVG(DAILY_FEE)) AS AVERAGE_FEE</span>
-<span id="fig-polar-2">FROM CAR_RENTAL_COMPANY_CAR</span>
-<span id="fig-polar-3">WHERE CAR_TYPE <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'SUV'</span></span></code></pre></div>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-polar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1
-</figcaption>
-</figure>
-</div>
-</section>
-<section id="정리" class="level2">
-<h2 class="anchored" data-anchor-id="정리">정리</h2>
-<ul>
-<li>ROUND : 반올림</li>
-<li>AVG : 평균</li>
-<li>AS ??? : 컬럼명을 ???으로 가져온다 (Alias 라고 함)</li>
-<li>WHERE : 작성한 조건을 기준으로 가져온다<br>
-<ul>
-<li><strong>WHERE</strong>의 여러 형태예시</li>
-</ul>
-<pre><code>WHERE CAR_TYPE = 'SUV'
-WHERE CAR_TYPE != 'SUV'
-WHERE DAILY_FEE &gt; 14000
-WHERE DAILY_FEE BETWEEN 14000 AND 16000
-WHERE DAILY_FEE IN (14000, 16000)
-WHERE CAR_TYPE IN ('SUV', '세단')</code></pre></li>
-</ul>
-
-
-</section>
-
-<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
-  <category>프로그래머스/SQL</category>
-  <guid>https://kr9268.github.io/posts/prgms-sql-20240317/</guid>
-  <pubDate>Sun, 17 Mar 2024 00:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
