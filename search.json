@@ -718,7 +718,7 @@
     "href": "posts/meta-dl-creditcard-20240711/index.html",
     "title": "[M_Study_최종과제] 신용카드 이상거래 탐지 모델링",
     "section": "",
-    "text": "참여중인 딥러닝 스터디 개인과제 정리\n원본데이터 : Kaggle CreditCard Fraud Detection\n\nPrivacy보호가 중요한 금융 데이터 익명화를 위해 PCA가 적용되어 있음\nClass(label)은 1 이상거래, 0은 정상거래를 뜻함\n\n데이터 확인 및 전처리\n\nNull값 확인\nAmount(거래액)이 0인 경우는 잡아야 할 거래가 아니라는 관점에서 데이터 제외\nStandard/MinMax Scaler 적용\n데이터가 Imbalance하므로 평가지표를 F1-score로 설정(정상 99.8 / 이상 0.2)\n\n모델링\n\n수업 때 배운 딥러닝 코드로 간단히 구성\nKeras Tuner를 사용한 모델 구성 후 비교\n수업 때 배운 요소들을 지속적으로 하나씩 추가하며 기존모델과 비교\n\nInitialization\nBatch Normalization\nLearning rate scheduler\nEarly stopping with patience\n\n\n결론\n\nLoss는 지속적인 개선이 되고 있으나 F1score는 계속 비슷한 수치를 보임\n\nLearning rate Scheduling 적용시에만 약간의 개선이 있음\n과제 발표 후 관련내용 질의 및 모델개선 예정\n\n과제 진행 중 생긴 궁금한 점들에 대해서도 추가 질의 예정\n\n이런 모델은 결국 사용하고자 만드는 것인데, PCA로 만든 모델이면 새로운 거래가 생성된 경우 그대로 넣어도 모델이 판별 가능한지\nepoch 수 대비 적절한 Early stopping patience값이 있는지\nCopyright © 2024 Kibok Park All rights reserved."
+    "text": "Kaggle CreditCard Fraud Detection\nCopyright © 2024 Kibok Park All rights reserved."
   },
   {
     "objectID": "posts/meta-dl-creditcard-20240711/index.html#데이터-확인kaggle-설명",
@@ -823,7 +823,7 @@
     "href": "posts/meta-dl-creditcard-20240710/index.html",
     "title": "[M_Study_별도 공부] Keras Tuner",
     "section": "",
-    "text": "Credit Card Fraud detection 과제 중 Kaggle에서 Tuner 관련 글을 보고 실습해봅니다 * 링크 : https://www.kaggle.com/code/suvroo/advance-hyperparameter-optimization-in-ml-and-dl#Keras-Tuner-\nCopyright © 2024 Kibok Park All rights reserved."
+    "text": "Kaggle(Credit Card Fraud detection) Keras Tuner실습\nCopyright © 2024 Kibok Park All rights reserved."
   },
   {
     "objectID": "posts/meta-dl-creditcard-20240710/index.html#데이터-전처리",
