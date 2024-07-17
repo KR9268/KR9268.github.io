@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.54">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Kibok Park">
+<meta name="dcterms.date" content="2024-07-14">
+
+<title>[M_Study_최종과제 피드백/이론] 신용카드 이상거래 탐지 모델링 – Blog</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.jpg" rel="icon" type="image/jpeg">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/watermark-1.0.11/watermark.min.js"></script>
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-LPL499WQBH"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Blog</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index_dashboards.html"> 
+<span class="menu-text">Dashboards</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index_miniprojects.html"> 
+<span class="menu-text">Mini Projects</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About me</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/KR9268"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/%EA%B8%B0%EB%B3%B5-%EB%B0%95-573a68268/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">[M_Study_최종과제 피드백/이론] 신용카드 이상거래 탐지 모델링</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">파이썬</div>
+                <div class="quarto-category">딥러닝</div>
+                <div class="quarto-category">MStudy</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Kibok Park </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">July 14, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#내-제출과제에-대한-피드백" id="toc-내-제출과제에-대한-피드백" class="nav-link active" data-scroll-target="#내-제출과제에-대한-피드백">내 제출과제에 대한 피드백</a></li>
+  <li><a href="#과제-보완-계획" id="toc-과제-보완-계획" class="nav-link" data-scroll-target="#과제-보완-계획">과제 보완 계획</a>
+  <ul class="collapse">
+  <li><a href="#data-set-분석" id="toc-data-set-분석" class="nav-link" data-scroll-target="#data-set-분석">Data set 분석</a></li>
+  <li><a href="#data-set-구성" id="toc-data-set-구성" class="nav-link" data-scroll-target="#data-set-구성">Data set 구성</a></li>
+  <li><a href="#parameter-등-모델구성" id="toc-parameter-등-모델구성" class="nav-link" data-scroll-target="#parameter-등-모델구성">Parameter 등 모델구성</a></li>
+  <li><a href="#기타" id="toc-기타" class="nav-link" data-scroll-target="#기타">기타</a></li>
+  <li><a href="#추가진행" id="toc-추가진행" class="nav-link" data-scroll-target="#추가진행">추가진행</a></li>
+  </ul></li>
+  <li><a href="#주차-발표과제들-보완에-필요한-추가지식" id="toc-주차-발표과제들-보완에-필요한-추가지식" class="nav-link" data-scroll-target="#주차-발표과제들-보완에-필요한-추가지식">7주차 발표과제들 보완에 필요한 추가지식</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>Kaggle CreditCard Fraud Detection (과제 피드백 및 관련 이론, 개선계획)</p>
+<section id="내-제출과제에-대한-피드백" class="level2">
+<h2 class="anchored" data-anchor-id="내-제출과제에-대한-피드백">내 제출과제에 대한 피드백</h2>
+<ul>
+<li>Train, Validation, Test 데이터의 비율은 8:1:1 정도가 보통 <br><br></li>
+<li>Flatten은 사진 등 이미지에 많이 사용, 필요 없을 수 있다</li>
+<li>model.compile의 metric
+<ul>
+<li>f1-score는 여러 종류가 있음
+<ul>
+<li>imbalance한 상황에서 이상거래 등에 가중치를 주는 weighted f1-score</li>
+<li>class별로 하는 macro f1-score</li>
+<li>micro f1-score</li>
+</ul></li>
+<li>이런 상황에서 지원되는 metric이 vanila f1-score라면 점수가 안좋게 나온 것일수도 있다
+<ul>
+<li><strong>weighted f1-score와 같은 것을 사용하는 편이 적절히 평가될 수 있음</strong></li>
+<li><strong>recall, precision을 모두 넣고 볼 수도 있음</strong></li>
+<li>model build 대비 점수가 낮게 나와서, metric 문제일 가능성이 높아보임 <br><br></li>
+</ul></li>
+</ul></li>
+<li>Hyper parameter Optimizer (발표과제에서는 Keras Tuner 사용)
+<ul>
+<li>개념
+<ul>
+<li>예를 들어 10개 파라미터에 100개 선택지가 있다면 <span class="math inline">\(100^{10}\)</span>과 같이 계산량이 많음
+<ul>
+<li>(Brute force방식) 모든 조합을 계산하여 최적조합을 찾는 방식은 계산량 문제로 어려움</li>
+</ul></li>
+<li>전체 계산 중 일부만 계산하는 방식으로, 전문가만큼의 성능은 안나오지만 초보의 수준에서는 좋음</li>
+</ul></li>
+<li>Random search, Grid search
+<ul>
+<li>Grid search : 나머지 파라미터를 고정시킨 채 최적 파라미터를 도출하는 것을 반복하여, 최적 파라미터만 조합
+<ul>
+<li>최적이 아닌 파라미터들의 조합으로 최적 성능이 나올 수 있다는 단점</li>
+</ul></li>
+<li>Random Search : 파라미터들의 ’조합’이라는 부분을 Grid search보다 좀 더 보기위한 방법</li>
+</ul></li>
+<li>추가용도
+<ul>
+<li>모델을 확정한 후, 모델의 성능을 좀 더 높이기 위해서도 사용 가능
+<ul>
+<li>예를 들면 모델을 분석하고 보고서를 쓰는 코딩테스트도 있는데, 이럴 때 조금이라도 성능을 올리기 위해 사용가능</li>
+</ul></li>
+</ul></li>
+<li>Hyper parameter관련 보고서를 쓴다면, 어떤 기법을 추가하여 유용하고 좋았는지 비교하는 것이 좋음 <br><br></li>
+</ul></li>
+<li>Early stopping 설정
+<ul>
+<li>epoch수 대비 3%정도로 설정하기도 함</li>
+<li>실질적으로는 전체 epoch을 돌리고, 가장 성능이 좋았던 포인트를 사용하는 방법을 사용(모든 포인트의 고려) <br><br></li>
+</ul></li>
+<li>참고
+<ul>
+<li>이후 새로운 거래가 생겨 모델로 판별하려면, 학습데이터와 같이 PCA처리 후 input 해야함</li>
+<li>매번 현재의 과제처럼 튜닝을 새로하기보다는, 전 모델의 튜닝을 지속하는 것이 효율적임
+<ul>
+<li>Layer수, Activation function 등은 변경 불가한 요소</li>
+<li>Learning rate scheduler, early stopping 등의 변경 가능</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="과제-보완-계획" class="level2">
+<h2 class="anchored" data-anchor-id="과제-보완-계획">과제 보완 계획</h2>
+<section id="data-set-분석" class="level3">
+<h3 class="anchored" data-anchor-id="data-set-분석">Data set 분석</h3>
+<ul>
+<li>t-sne를 통해 데이터의 분포 등을 시각화하여 파악해봄</li>
+<li>내가 어느정도의 분류는 가능하겠다는 정도를 파악할 수 있음</li>
+</ul>
+</section>
+<section id="data-set-구성" class="level3">
+<h3 class="anchored" data-anchor-id="data-set-구성">Data set 구성</h3>
+<ul>
+<li>Train/Validation/Test를 8:1:1로 구성</li>
+<li>train_test_split(stratify=실제Label)을 통한 Label 비중 맞추기 검토</li>
+<li>Validation set은 StratifiedKFold 적용 검토</li>
+<li>컬럼별 이상치 처리 : Box plot의 Upperbound나 Underbound값으로 대체 고려(제거X)
+<ul>
+<li>Robust scaler 고려</li>
+</ul></li>
+</ul>
+</section>
+<section id="parameter-등-모델구성" class="level3">
+<h3 class="anchored" data-anchor-id="parameter-등-모델구성">Parameter 등 모델구성</h3>
+<ul>
+<li>optuna적용고려, Randomsearch, GridSearch 확인 후 선택</li>
+<li>metric을 weighted f1-score나 recall&amp;precision 등을 고려
+<ul>
+<li>예시 : metrics = [f1_score, Precision(), Recall()]</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>  <span class="im">import</span> tensorflow_addons <span class="im">as</span> tfa</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  f1_score <span class="op">=</span> tfa.metrics.F1Score(num_classes<span class="op">=</span><span class="dv">1</span>, threshold<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  model.<span class="bu">compile</span>(loss<span class="op">=</span>SigmoidFocalCorssEntropy(),</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                optimizer<span class="op">=</span>tf.keras.optimizers.Adam(learning_rate<span class="op">=</span><span class="fl">0.0001</span>),</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                metrics<span class="op">=</span>[f1_score, Pricision(), Recall()])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li>Early stopping은 코드구현은 하되 실질적으로는 무효가되는 patience인 경우도 추가로 설정
+<ul>
+<li>전체 epoch을 돌려 가장 성능이 좋은 포인트도 확인한 후 대조</li>
+</ul></li>
+<li>Learning rate scheduling은 기존의 별도 함수를 만드는 방식 외, ReduceLROnPlateau 함수 이용도 고려</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>  <span class="im">from</span> tf.keras.callbacks <span class="im">import</span> ReduceLROnPlateau</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  reduce_lr <span class="op">=</span> ReduceLROnPlateau(monitor<span class="op">=</span><span class="st">'val_loss'</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                factor<span class="op">=</span><span class="fl">0.2</span>, <span class="co"># lr감소치. 현재 lr이 0.01이라면 0.01*0.2를 적용</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                patience<span class="op">=</span><span class="dv">10</span>, <span class="co"># 개선에 대한 허용치. 10 epoch까지 개선이 없다면 적용</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                mode<span class="op">=</span><span class="st">'min'</span>, <span class="co"># auto, max, min 옵션 있음</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                min_lr<span class="op">=</span><span class="fl">0.001</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  model.fit(x_train, y_train, callbacks<span class="op">=</span>[reduce_lr])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><p>Batch size는 가능한 선에서는 늘려서 빠른 학습을 도모</p></li>
+<li><p>평가시 ROC Curve나 PR Curve 시각화도 고려</p></li>
+<li><p>Cross validation 활용시, 여러번의 모델Score가 나오므로 Box plot을 통해 안정적인 모델인지 시각화</p></li>
+</ul>
+</section>
+<section id="기타" class="level3">
+<h3 class="anchored" data-anchor-id="기타">기타</h3>
+<ul>
+<li>시각화를 통해 데이터 설명 보강
+<ul>
+<li>ROC Curve나 PR Curve 등의 사용</li>
+</ul></li>
+</ul>
+</section>
+<section id="추가진행" class="level3">
+<h3 class="anchored" data-anchor-id="추가진행">추가진행</h3>
+<ul>
+<li>머신러닝 기법 활용
+<ul>
+<li>모델 : XGB, Random forest 고려</li>
+<li>데이터셋 : 샘플링(오버 또는 언더) 적용 검토
+<ul>
+<li>오버샘플링 한다면 SMOTE대신 ADASYN적용검토</li>
+<li>샘플링 적용/미적용 성능 비교
+<ul>
+<li>위의 모델 또는 Logistic regression으로 비교</li>
+</ul></li>
+</ul></li>
+<li>모델학습 : Cross validation을 통한 과적합 방지</li>
+<li>Threshold adjustment 고려</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="주차-발표과제들-보완에-필요한-추가지식" class="level2">
+<h2 class="anchored" data-anchor-id="주차-발표과제들-보완에-필요한-추가지식">7주차 발표과제들 보완에 필요한 추가지식</h2>
+<ul>
+<li><p>불균형한 데이터를 맞춰주는 샘플링 기법 : 오버샘플링, 언더샘플링</p>
+<ul>
+<li>주의점 : 두 기법 모두 Test data를 먼저 분리해둔 후 나머지에 대해 적용. Test data는 건드리지 않는다</li>
+<li>언더샘플링과 오버샘플링은 둘 중 하나만 사용하는게 나음(함께 사용시 둘의 단점을 모두 가질수도 있다)</li>
+<li>참고사항
+<ul>
+<li>가급적이면 언더샘플링보다는 오버샘플링을 많이 씀 (데이터는 자산이라는 관점에서, 손실 방지)</li>
+<li>추세는 발전된 알고리즘의 모델에 맡기고, 샘플링을 적용하지 않는 방향
+<ul>
+<li>다만 상황에 따라서는 오버샘플링이 훨씬 좋을 때가 있음
+<ul>
+<li>로지스틱회귀는 최신의 복잡한 알고리즘이 아닌 단순한 모델로, 편중된 데이터에 취약한데 여기에는 궁합이 좋음</li>
+<li>XGBoost나 Neural Network같은 복잡한 모델에는 오히려 안좋을 수 있음</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>오버샘플링 &amp; 언더샘플링
+<ul>
+<li>오버샘플링 : 부족한 데이터를 늘림
+<ul>
+<li>장점 : 데이터의 손실이 없음</li>
+<li>단점 : 데이터를 늘리기 위해 같은 데이터를 반복하면서 노이즈 발생 : Precision이 낮아진다(Recall은 높아진다)
+<ul>
+<li>SMOTE가 이를 보완하기 위한 오버샘플링 기법이지만 근본적으로는 데이터가 반복되는 것은 같음</li>
+<li>(별도확인) ADASYN으로 SMOTE의 단점을 보완가능(SMOTE와 달리 다른 클래스의 데이터 수도 고려하여 증강)</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.over_sampling <span class="im">import</span> SMOTE, ADASYN</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul></li>
+<li>언더샘플링 : 많은 쪽의 데이터를 부족한 데이터만큼 남기고 버림
+<ul>
+<li>단점 : 데이터를 버린다는 손실</li>
+<li>function이 아니라 직접 구현한다면, 순서대로 가져오지 않고 Random하게 가져오도록 구현</li>
+</ul></li>
+<li>샘플링을 통해, 이상거래에 더 잘 반응할 수 있는 모델로 만들어 줄 수 있음
+<ul>
+<li>다만 고객 입장에서는 정상거래인데 이상거래로 판단되게 되는 불편함이 생길 수 있음</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><p><code>StratifiedKFold</code> : 특정 Label이 많거나 적어서 <code>분포가 Imbalance한 경우 활용</code></p>
+<ul>
+<li>Validation set을 나누는 기법이므로, Test set 분리 후 적용</li>
+<li><code>fold</code>: 같은 Data set에서, 각 부분을 모두 Validation으로 활용할 수 있도록 반복
+<ul>
+<li><code>데이터가 적을 때, 있는 데이터를 최대한 활용</code>해, Validation set을 다양하게 만들 수 있다</li>
+<li>예를 들어 100개 데이터에 5 fold를 적용한다면, 아래와 같이 구성됨(굵은 부분이 validation set)
+<ul>
+<li><strong>1<sub>20<strong>, 21~100 / 1~20, </strong>21</sub>40</strong>, 41~100 / 1~40, <strong>41<sub>60<strong>, 61~100 / 1~60, </strong>61</sub>80</strong>, 81~100 / 1~80, <strong>81~100</strong></li>
+</ul></li>
+</ul></li>
+<li>참고 코드</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>  skfold <span class="op">=</span> StratifiedKFold(n_split<span class="op">=</span><span class="dv">5</span>, random_state<span class="op">=</span><span class="va">None</span>, Shuffle<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> train_index, test_index <span class="kw">in</span> skfold.split(X,Y):</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    X_train, X_test <span class="op">=</span> X.iloc[train_index], X.iloc[test_index]</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    Y_train, Y_test <span class="op">=</span> Y.iloc[train_index], Y.iloc[test_index]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>이상치 데이터에 대한 처리 : 제거 vs 대체</p>
+<ul>
+<li>제거는 데이터의 손실이므로 대체가 더 좋을 때도 있음
+<ul>
+<li>Box plot 기준으로 Upper bound이상의 값들은 Upper bound값으로 치환하는 것도 방법</li>
+</ul></li>
+</ul></li>
+<li><p><code>차원축소(t-sne, PCA , SVD등)</code></p>
+<ul>
+<li>차원축소 : Feature들을 <code>상관관계가 없는 Feature로 바꾸는 것</code>을, 수학적인 방법으로 적용
+<ul>
+<li>예를 들어 100개의 feature 중 연봉과 월급은 중복(상관관계있음)이므로 차원축소 적용 후 10개의 feature로 mapping</li>
+</ul></li>
+<li>대표적으로 PCA가 있음, 현재의 데이터는 이미 PCA가 적용되어 있음</li>
+<li>종류
+<ul>
+<li><code>PCA</code> : 상관관계를 없애며 전처리 가능</li>
+<li><code>SVD</code>(간단하게 PCA를 확장한 것으로 볼 수 있음. 전처리 가능)</li>
+<li><code>t-sne</code> : 저차원으로 mapping 하여 시각화 용이 (전처리는 불가)</li>
+</ul></li>
+<li>유의사항 : <code>PCA나 SVD는 선형적인 관계가 있을때만 적용</code>한다(<code>비선형적인 정보는 손실</code>되므로 <code>모델성능하락</code>이 있을 수 있다)</li>
+</ul></li>
+<li><p>Plot을 그렸을 때 fold의 수만큼 점으로 나오게 됨(5fold면 5개) <br> <img src="index_files/figure-html/ebe440c8-1-image.png" class="img-fluid" alt="image.png"><br></p></li>
+<li><p>Recall, Precision은 Trade-off, 2개 모두 준수한 Sweet spot을 찾기 위해 함께 볼 수 있는 방법</p>
+<ul>
+<li>f1-score : 조화평균을 활용한 하나의 숫자로 판단 가능</li>
+<li>ROC Curve : TP와 FP를 x, y축으로 두고 면적으로 판단 가능(넓을수록 좋음, 0~1값 가짐)</li>
+<li>PR(Precision-Recall) Curve : Precision과 Recall을 x, y축으로 두고 면적으로 판단 (넓을수록 좋음)</li>
+</ul></li>
+<li><p>Binary 문제의 경우, Simoid 대신 2개 뉴런의 Softmax도 가능함</p></li>
+<li><p>Batch size는 관례(2의 배수)를 맞추는 것이 좋음 (보고서 확인의 관점에서는 안좋은 시선으로 보게될 수 있다)</p></li>
+<li><p>이상치 Robustscaler</p></li>
+<li><p>train_test_split(stratify=실제Label)옵션으로 Label의 비율을 비슷하게 샘플링 가능</p></li>
+<li><p>오버샘플링의 단점 : precision이 낮아진다</p>
+<ul>
+<li>precision은 판정한 건 중 실제의 비율이고, 오버샘플링으로 정상거래를 이상거래로 판정하는건이 많아짐</li>
+<li>recall의 측면에서는 오버샘플링을 통해 판정을 늘리는게 나을 수 있음(암환자 사례)</li>
+</ul></li>
+<li><p>데이터 불균형에서의 가중치 설정 : Class(label)분포 기반 가중치 설정</p>
+<ul>
+<li><p>더 중요하게 보는 것에 패널티를 더 크게 줌</p></li>
+<li><p>정상거래(0) 284315건, 이상거래(1) 492건인 경우의 예시</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>  total_samples <span class="op">=</span> <span class="dv">284315</span> <span class="op">+</span> <span class="dv">492</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  weight_for_0 <span class="op">=</span> total_samples <span class="op">/</span> ( <span class="dv">2</span> <span class="op">*</span> <span class="dv">284315</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  weight_for_1 <span class="op">=</span> total_samples <span class="op">/</span> (<span class="dv">2</span> <span class="op">*</span> <span class="dv">492</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  class_weights <span class="op">=</span> {<span class="dv">0</span>:weight_for_0, <span class="dv">1</span>:weight_for_1}</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  model.fit(x_train, y_train, class_weight<span class="op">=</span>class_weights)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Neural network에서 해결할 수 있는 부분이어서 오히려 혼동을 줄 수도 있다</p>
+<ul>
+<li><strong>모델 알고리즘이 복잡한 경우</strong>는, Weight에서 패널티를 다르게 주는 focal loss나 오버샘플링을 잘 쓰지 않음
+<ul>
+<li>Neural network에 Sigmoid focal CrossEntrophy를 통해 패널티를 높게 주어 긍정적 효과를 기대했지만, 오히려 성능하락될 수 있음</li>
+</ul></li>
+<li><strong>모델 알고리즘이 단순한 Logistic regression 등은</strong>, 이러한 Weighted loss가 효과가 좋을 수 있음</li>
+</ul></li>
+</ul></li>
+<li><p>Learning rate scheduler 함수로 구현 예시</p></li>
+</ul>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>  <span class="im">from</span> tf.keras.callbacks <span class="im">import</span> ReduceLROnPlateau</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  reduce_lr <span class="op">=</span> ReduceLROnPlateau(monitor<span class="op">=</span><span class="st">'val_loss'</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                factor<span class="op">=</span><span class="fl">0.2</span>, <span class="co"># lr감소치. 현재 lr이 0.01이라면 0.01*0.2를 적용</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                patience<span class="op">=</span><span class="dv">10</span>, <span class="co"># 개선에 대한 허용치. 10 epoch까지 개선이 없다면 적용</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                mode<span class="op">=</span><span class="st">'min'</span>, <span class="co"># auto, max, min 옵션 있음</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                min_lr<span class="op">=</span><span class="fl">0.001</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  model.fit(x_train, y_train, callbacks<span class="op">=</span>[reduce_lr])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><p>Dropout은 간단한 모델이라면 높게 설정할지 않아도 괜찮음</p></li>
+<li><p>Batch size는 데이터가 적거나 장비(메모리) 상황이 좋다면 늘려서 빠르게 학습</p></li>
+<li><p>과적합(Overfitting)의 원인</p>
+<ul>
+<li>모델 자체의 문제, 앞단계인 데이터 전처리나 샘플링, Data split 등의 문제일 수 있음</li>
+<li>단순히 성능이 안나왔다해서 과적합으로 판단은 금물</li>
+</ul></li>
+<li><p>LDA (Linear discriminant Anaylsis) : 분류문제에서는 Logistic Regression 좋은 성능</p></li>
+<li><p>KNN (K-Nearest Neighbor) : 근접(이웃)한 데이터들을 분류</p></li>
+<li><p>Cart : 의사결정나무(Decision Tree)의 기본 모델</p></li>
+<li><p>Random forest : 여러개의 트리 모델을 만들고, 다수결로 정함. <strong>앙상블 모델</strong></p></li>
+<li><p>Boosting 계열 모델 : 학습 후, 틀린 부분에 가중치를 두면서 학습 반복</p>
+<ul>
+<li>처음에는 이상거래에 대해 많이 틀리다가, 점점 잘 잡아내도록 학습됨.</li>
+<li>XGB를 많이 사용</li>
+</ul></li>
+<li><p>이외에 Catboost 등도 있음</p></li>
+<li><p>현재와 같은 20만건 정도의 데이터는, 최신계열의 복잡한 머신러닝에서 더 성능이 좋을 수 있음</p></li>
+<li><p>Cross validation 활용시, 여러번의 모델Score가 나오므로 Box plot을 통해 안정적인 모델인지 확인 가능</p></li>
+<li><p>모델의 선택 (SOTA가 기준이 되어야 하는지에 대한 질문)</p>
+<ul>
+<li>문제 정의(상황이 어떤 문제인지 정의할 능력 필요)</li>
+<li>어떤 계열의 모델이 적합한지 선택 (전반적인 머신러닝 등 모델 지식 필요)</li>
+<li>SOTA(State of the art)는 이후의 문제</li>
+</ul></li>
+<li><p>논문 등을 볼 때는 문제 Setup까지 본 후, 바로 풀이보지말고 먼저 고민 후 보기</p></li>
+<li><p>Random forest모델 사용시 두가지 고려사항</p>
+<ul>
+<li>Cross validation을 통한 과적합 방지
+<ul>
+<li>앙상블모델은 복잡한 머신러닝 기법에 속하고, XGB나 Random forest는 과적합 일어날 수 있음</li>
+</ul></li>
+<li>Hyper parameter tuning을 통한 개선</li>
+</ul></li>
+<li><p>Thresholding(임계값 조정)</p>
+<ul>
+<li>Precision과 recall은 trade-off. 원하는 것은 둘 다 높은 Spot
+<ul>
+<li>이러한 Sweet spot을 시각적으로는 ROC/PR Curve로 확인, 코드로는 Threshold adjustment 조절</li>
+<li>Threshold 예시 일부</li>
+</ul>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>  y_scores <span class="op">=</span> model.predict_proba(X_test)[:, <span class="dv">1</span>]</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  precision, recall, thresholds <span class="op">=</span> precision_recall_curve(y_test, y_scores)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  f1_score <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> precision <span class="op">*</span> recall <span class="op">/</span> (precision <span class="op">+</span> recall)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  optimal_idx <span class="op">=</span> np.argmax(f1_scores)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  optimal_threshold <span class="op">=</span> thresholds[optimal_idx]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul></li>
+</ul>
+
+
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/kr9268\.github\.io\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="kr9268/giscus_for_blog" data-repo-id="R_kgDOL0Sthw" data-category="General" data-category-id="DIC_kwDOL0Sth84Ce_5h" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+</div> <!-- /content -->
+<script>
+    const baseFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    const watermark = new XWatermark.XWatermark();
+    watermark.init("Kibok Park", {
+      parentSelector: "body",
+      prevent: true,
+      observer: true,
+      mode: "normal",
+      font: "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', 'Liberation Sans', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
+      fontsize: baseFontSize * 1.000000,
+      angle: -15.000000,
+      color: "#000000",
+      alpha: 0.100000,
+      cols: 10,
+      rows: 50,
+      xSpace: baseFontSize * 4.000000,
+      ySpace: baseFontSize * 4.000000,
+      zIndex: -1
+    });
+    </script>
+
+
+
+
+</body></html>
