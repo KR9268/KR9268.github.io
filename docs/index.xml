@@ -881,7 +881,7 @@ font-style: inherit;">2</span>)</span></code></pre></div>
 <p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
   <category>파이썬</category>
   <category>딥러닝</category>
-  <category>MStudy</category>
+  <category>202406Study_FDS</category>
   <category>FDS</category>
   <category>Keras tuner</category>
   <guid>https://kr9268.github.io/posts/meta-dl-creditcard-20240716/</guid>
@@ -2927,7 +2927,7 @@ font-style: inherit;">1</span>].legend()</span>
 <p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
   <category>파이썬</category>
   <category>딥러닝</category>
-  <category>MStudy</category>
+  <category>202406Study_FDS</category>
   <category>FDS</category>
   <category>StratifiedKFold</category>
   <guid>https://kr9268.github.io/posts/meta-dl-creditcard-20240715/</guid>
@@ -3449,7 +3449,7 @@ font-style: inherit;">=</span> thresholds[optimal_idx]</span></code></pre></div>
 <p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
   <category>파이썬</category>
   <category>딥러닝</category>
-  <category>MStudy</category>
+  <category>202406Study_FDS</category>
   <category>FDS</category>
   <guid>https://kr9268.github.io/posts/meta-dl-creditcard-20240714/</guid>
   <pubDate>Sat, 13 Jul 2024 15:00:00 GMT</pubDate>
@@ -8347,7 +8347,7 @@ font-style: inherit;">'F1-score'</span>)</span>
 <p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
   <category>파이썬</category>
   <category>딥러닝</category>
-  <category>MStudy</category>
+  <category>202406Study_FDS</category>
   <category>FDS</category>
   <guid>https://kr9268.github.io/posts/meta-dl-creditcard-20240711/</guid>
   <pubDate>Wed, 10 Jul 2024 15:00:00 GMT</pubDate>
@@ -9322,7 +9322,7 @@ Epoch 10/10
   <category>파이썬</category>
   <category>머신러닝</category>
   <category>딥러닝</category>
-  <category>MStudy</category>
+  <category>202406Study_FDS</category>
   <category>FDS</category>
   <guid>https://kr9268.github.io/posts/meta-dl-creditcard-20240710/</guid>
   <pubDate>Tue, 09 Jul 2024 15:00:00 GMT</pubDate>
@@ -10082,7 +10082,7 @@ font-style: inherit;"># StandardScaler : (x - mean) / std</span></span></code></
   <category>파이썬</category>
   <category>머신러닝</category>
   <category>딥러닝</category>
-  <category>MStudy</category>
+  <category>202406Study_FDS</category>
   <guid>https://kr9268.github.io/posts/meta-dl-creditcard-20240630/</guid>
   <pubDate>Sat, 29 Jun 2024 15:00:00 GMT</pubDate>
 </item>
@@ -14148,7 +14148,7 @@ font-style: inherit;">5</span>)</span></code></pre></div></li>
   <category>파이썬</category>
   <category>머신러닝</category>
   <category>딥러닝</category>
-  <category>MStudy</category>
+  <category>202406Study_FDS</category>
   <guid>https://kr9268.github.io/posts/meta-dl-creditcard-20240623/</guid>
   <pubDate>Sat, 22 Jun 2024 15:00:00 GMT</pubDate>
 </item>
@@ -15420,7 +15420,7 @@ font-style: inherit;">"</span>)</span></code></pre></div>
   <category>파이썬</category>
   <category>머신러닝</category>
   <category>딥러닝</category>
-  <category>MStudy</category>
+  <category>202406Study_FDS</category>
   <category>MNIST</category>
   <category>Tensorflow</category>
   <guid>https://kr9268.github.io/posts/meta-dl-creditcard-20240622/</guid>
@@ -20421,7 +20421,7 @@ font-style: inherit;">0.00</span> Byte)</span></code></pre></div></li>
   <category>파이썬</category>
   <category>머신러닝</category>
   <category>딥러닝</category>
-  <category>MStudy</category>
+  <category>202406Study_FDS</category>
   <guid>https://kr9268.github.io/posts/meta-dl-creditcard-20240616/</guid>
   <pubDate>Sat, 15 Jun 2024 15:00:00 GMT</pubDate>
 </item>
@@ -21165,7 +21165,7 @@ font-style: inherit;">=</span>plt.cm.binary)</span>
   <category>파이썬</category>
   <category>머신러닝</category>
   <category>딥러닝</category>
-  <category>MStudy</category>
+  <category>202406Study_FDS</category>
   <category>MNIST</category>
   <guid>https://kr9268.github.io/posts/meta-dl-creditcard-20240615_1/</guid>
   <pubDate>Fri, 14 Jun 2024 15:00:00 GMT</pubDate>
@@ -22187,7 +22187,7 @@ font-style: inherit;">=</span>plt.cm.binary)</span>
   <category>파이썬</category>
   <category>머신러닝</category>
   <category>딥러닝</category>
-  <category>MStudy</category>
+  <category>202406Study_FDS</category>
   <category>MNIST</category>
   <category>Tensorflow</category>
   <guid>https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/</guid>
@@ -23106,7 +23106,7 @@ font-style: inherit;">'Confusion Matrix'</span>)</span>
   <category>파이썬</category>
   <category>머신러닝</category>
   <category>딥러닝</category>
-  <category>MStudy</category>
+  <category>202406Study_FDS</category>
   <guid>https://kr9268.github.io/posts/meta-dl-creditcard-20240609/</guid>
   <pubDate>Sat, 08 Jun 2024 15:00:00 GMT</pubDate>
 </item>
@@ -27313,7 +27313,7 @@ font-style: inherit;">zip</span>(gradients, [W,b])) </span></code></pre></div></
   <category>파이썬</category>
   <category>머신러닝</category>
   <category>딥러닝</category>
-  <category>MStudy</category>
+  <category>202406Study_FDS</category>
   <guid>https://kr9268.github.io/posts/meta-dl-creditcard-20240602/</guid>
   <pubDate>Sat, 01 Jun 2024 15:00:00 GMT</pubDate>
 </item>
