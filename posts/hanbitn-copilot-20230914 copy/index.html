@@ -2,12 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.55">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Kibok Park">
+<meta name="dcterms.date" content="2024-07-25">
 
-<title>Mini Projects – Blog</title>
+<title>Blog - [한빛앤] ‘데이터 웨어하우스로 효율적인 분석시스템 만들기’ 세미나 정리</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,28 +25,26 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./profile.jpg" rel="icon" type="image/jpeg">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<script src="site_libs/quarto-contrib/watermark-1.0.11/watermark.min.js"></script>
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.jpg" rel="icon" type="image/jpeg">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/watermark-1.0.11/watermark.min.js"></script>
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -72,35 +72,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-title','listing-author','listing-date','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-LPL499WQBH"></script>
 
 <script type="text/javascript">
@@ -111,38 +82,9 @@ gtag('js', new Date());
 gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
 </script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="styles.css">
-<link rel="alternate" type="application/rss+xml" title="Blog" href="index_miniprojects.xml" data-external="1"></head>
+<link rel="stylesheet" href="../../styles.css">
+</head>
 
 <body class="nav-fixed">
 
@@ -151,28 +93,28 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Blog</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index_dashboards.html"> 
+    <a class="nav-link" href="../../index_dashboards.html"> 
 <span class="menu-text">Dashboards</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./index_miniprojects.html" aria-current="page"> 
+    <a class="nav-link" href="../../index_miniprojects.html"> 
 <span class="menu-text">Mini Projects</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About me</span></a>
   </li>  
   <li class="nav-item compact">
@@ -186,13 +128,13 @@ window.Quarto = {
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="./index.xml"> <i class="bi bi-rss" role="img">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-            <div class="quarto-navbar-tools">
+          <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
@@ -201,286 +143,300 @@ window.Quarto = {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">Mini Projects</h1>
-                      </div>
+    <div class="quarto-title column-body">
+      <h1 class="title">[한빛앤] ‘데이터 웨어하우스로 효율적인 분석시스템 만들기’ 세미나 정리</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Datawarehouse</div>
+                <div class="quarto-category">DW</div>
+              </div>
+                  </div>
   </div>
     
   
-  <div class="quarto-title-meta column-page-left">
+  <div class="quarto-title-meta">
 
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Kibok Park </p>
+            </div>
+    </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">July 25, 2024</p>
+      </div>
+    </div>
     
       
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar"><div class="quarto-margin-header"><section id="kibok-park" class="level1 margin-header-item">
-<h1>Kibok Park</h1>
-</section></div>
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(6)</span></div><div class="category" data-category="BeautifulSoup">BeautifulSoup <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Python">Python <span class="quarto-category-count">(6)</span></div><div class="category" data-category="SAP Scripting">SAP Scripting <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Streamlit">Streamlit <span class="quarto-category-count">(1)</span></div><div class="category" data-category="json">json <span class="quarto-category-count">(1)</span></div><div class="category" data-category="pandas">pandas <span class="quarto-category-count">(4)</span></div><div class="category" data-category="pathlib">pathlib <span class="quarto-category-count">(1)</span></div><div class="category" data-category="pdfminer">pdfminer <span class="quarto-category-count">(1)</span></div><div class="category" data-category="re">re <span class="quarto-category-count">(1)</span></div><div class="category" data-category="requests">requests <span class="quarto-category-count">(1)</span></div><div class="category" data-category="selenium">selenium <span class="quarto-category-count">(1)</span></div><div class="category" data-category="sqlite3">sqlite3 <span class="quarto-category-count">(2)</span></div><div class="category" data-category="streamlit">streamlit <span class="quarto-category-count">(1)</span></div><div class="category" data-category="subprocess">subprocess <span class="quarto-category-count">(1)</span></div><div class="category" data-category="tabula">tabula <span class="quarto-category-count">(1)</span></div><div class="category" data-category="win11toast">win11toast <span class="quarto-category-count">(1)</span></div><div class="category" data-category="xlwings">xlwings <span class="quarto-category-count">(2)</span></div></div></div>
-<!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
-
-
-
-
-
-
-
-
-
-<div class="quarto-listing quarto-listing-container-grid" id="listing-listing">
-<div class="listing-actions-group">
-    <div class="input-group input-group-sm quarto-listing-filter">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input type="text" class="search form-control" placeholder="Filter">
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#개요" id="toc-개요" class="nav-link active" data-scroll-target="#개요">개요</a></li>
+  <li><a href="#강연내용-정리" id="toc-강연내용-정리" class="nav-link" data-scroll-target="#강연내용-정리">강연내용 정리</a>
+  <ul class="collapse">
+  <li><a href="#서론" id="toc-서론" class="nav-link" data-scroll-target="#서론">서론</a></li>
+  <li><a href="#dwdata-warehouse의-개념과-특징" id="toc-dwdata-warehouse의-개념과-특징" class="nav-link" data-scroll-target="#dwdata-warehouse의-개념과-특징"><code>DW(Data Warehouse)</code>의 개념과 특징</a></li>
+  <li><a href="#dldata-lake의-개념과-특징" id="toc-dldata-lake의-개념과-특징" class="nav-link" data-scroll-target="#dldata-lake의-개념과-특징"><code>DL(Data Lake)</code>의 개념과 특징</a></li>
+  <li><a href="#dw의-구축" id="toc-dw의-구축" class="nav-link" data-scroll-target="#dw의-구축">DW의 구축</a></li>
+  <li><a href="#etlextracttransformload-추출변환로드" id="toc-etlextracttransformload-추출변환로드" class="nav-link" data-scroll-target="#etlextracttransformload-추출변환로드">ETL(Extract/Transform/Load, 추출/변환/로드)</a></li>
+  <li><a href="#초기로딩과-주기적갱신" id="toc-초기로딩과-주기적갱신" class="nav-link" data-scroll-target="#초기로딩과-주기적갱신">초기로딩과 주기적갱신</a></li>
+  <li><a href="#스타-스키마" id="toc-스타-스키마" class="nav-link" data-scroll-target="#스타-스키마">스타 스키마</a></li>
+  <li><a href="#스노우플레이크-스키마" id="toc-스노우플레이크-스키마" class="nav-link" data-scroll-target="#스노우플레이크-스키마">스노우플레이크 스키마</a></li>
+  <li><a href="#dmdata-mart" id="toc-dmdata-mart" class="nav-link" data-scroll-target="#dmdata-mart">DM(Data Mart)</a></li>
+  <li><a href="#데이터의-추출-및-가공dq" id="toc-데이터의-추출-및-가공dq" class="nav-link" data-scroll-target="#데이터의-추출-및-가공dq">데이터의 추출 및 가공(DQ)</a></li>
+  <li><a href="#dm의-구축" id="toc-dm의-구축" class="nav-link" data-scroll-target="#dm의-구축">DM의 구축</a></li>
+  <li><a href="#차원의-이해" id="toc-차원의-이해" class="nav-link" data-scroll-target="#차원의-이해">차원의 이해</a></li>
+  <li><a href="#dw-실무운영-팁" id="toc-dw-실무운영-팁" class="nav-link" data-scroll-target="#dw-실무운영-팁">DW 실무운영 팁</a></li>
+  <li><a href="#요약" id="toc-요약" class="nav-link" data-scroll-target="#요약">요약</a></li>
+  </ul></li>
+  <li><a href="#qa-내용정리" id="toc-qa-내용정리" class="nav-link" data-scroll-target="#qa-내용정리">Q&amp;A 내용정리</a></li>
+  </ul>
+</nav>
     </div>
-</div>
-<div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="Python,requests,json,subprocess,pandas" data-listing-date-sort="1717977600000" data-listing-file-modified-sort="1722154807055" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="394">
-<a href="./posts_miniprojects/dtcontest-ore-py-datagokr/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<div class="listing-item-img-placeholder card-img-top" style="height: 150px;">&nbsp;</div>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-[Python] Github, API활용한 공공데이터 저장소 만들기
-</h5>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
-Python
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('requests'); return false;">
-requests
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('json'); return false;">
-json
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('subprocess'); return false;">
-subprocess
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('pandas'); return false;">
-pandas
-</div>
-</div>
-<div class="card-text listing-description">
-<p>[Python] requests(공공데이터API호출용), json(json규격 자료저장), subprocess(github push자동화), pandas(csv저장)</p>
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Kibok Park
-</div>
-<div class="listing-date">
-2024-06-10
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="1" data-categories="Python,SAP Scripting" data-listing-date-sort="1709683200000" data-listing-file-modified-sort="1722154807055" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="225">
-<a href="./posts_miniprojects/sel-py-crawl_sr-20240306/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<div class="listing-item-img-placeholder card-img-top" style="height: 150px;">&nbsp;</div>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-[Python] ERP(SAP) 특정 메뉴의 주요정보 크롤링 &amp; 정리 Tool
-</h5>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
-Python
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('SAP Scripting'); return false;">
-SAP Scripting
-</div>
-</div>
-<div class="card-text listing-description">
-<p>Python, win32를 활용한 SAP Scripting</p>
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Kibok Park
-</div>
-<div class="listing-date">
-2024-03-06
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="2" data-categories="Python,win11toast,sqlite3,streamlit,pandas,selenium" data-listing-date-sort="1708387200000" data-listing-file-modified-sort="1722154807055" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="480">
-<a href="./posts_miniprojects/sel-py-monitoringCOO-20240220/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<div class="listing-item-img-placeholder card-img-top" style="height: 150px;">&nbsp;</div>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-[Python] COO발급관리용 Tool
-</h5>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
-Python
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('win11toast'); return false;">
-win11toast
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('sqlite3'); return false;">
-sqlite3
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('streamlit'); return false;">
-streamlit
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('pandas'); return false;">
-pandas
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('selenium'); return false;">
-selenium
-</div>
-</div>
-<div class="card-text listing-description">
-<p>[Python] selenium(웹스크레핑), sqlite3(db), win11toast(알림), streamlit(UI)</p>
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Kibok Park
-</div>
-<div class="listing-date">
-2024-02-20
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="3" data-categories="Python,SAP Scripting,Streamlit,sqlite3,BeautifulSoup" data-listing-date-sort="1705881600000" data-listing-file-modified-sort="1722154807055" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="498">
-<a href="./posts_miniprojects/sel-py-local-20240122/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<div class="listing-item-img-placeholder card-img-top" style="height: 150px;">&nbsp;</div>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-[Python] LocalL/C 관리용 Tool
-</h5>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
-Python
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('SAP Scripting'); return false;">
-SAP Scripting
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Streamlit'); return false;">
-Streamlit
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('sqlite3'); return false;">
-sqlite3
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('BeautifulSoup'); return false;">
-BeautifulSoup
-</div>
-</div>
-<div class="card-text listing-description">
-<p>Python, Streamlit을 활용한 업무자동화</p>
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Kibok Park
-</div>
-<div class="listing-date">
-2024-01-22
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="4" data-categories="Python,re,xlwings,pandas,pdfminer" data-listing-date-sort="1702598400000" data-listing-file-modified-sort="1722154807055" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="316">
-<a href="./posts_miniprojects/sel-py-autoPIforl001-20231215/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<div class="listing-item-img-placeholder card-img-top" style="height: 150px;">&nbsp;</div>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-[Python] 아웃룩 메일열람 &amp; pdf regex리딩 &amp; 시스템 자동등록
-</h5>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
-Python
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('re'); return false;">
-re
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('xlwings'); return false;">
-xlwings
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('pandas'); return false;">
-pandas
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('pdfminer'); return false;">
-pdfminer
-</div>
-</div>
-<div class="card-text listing-description">
-<p>[Python] re(regex), xlwings(암호화 Excel리딩), pdfminer(pdf리딩), pywin32(outlook)</p>
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Kibok Park
-</div>
-<div class="listing-date">
-2023-12-15
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="5" data-categories="Python,tabula,xlwings,pathlib,pandas" data-listing-date-sort="1698883200000" data-listing-file-modified-sort="1722154807055" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="266">
-<a href="./posts_miniprojects/sel-py-readPIAR-20231102/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<div class="listing-item-img-placeholder card-img-top" style="height: 150px;">&nbsp;</div>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-[Python] Peak타임 대응용 수출계약서pdf tabula리딩
-</h5>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
-Python
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('tabula'); return false;">
-tabula
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('xlwings'); return false;">
-xlwings
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('pathlib'); return false;">
-pathlib
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('pandas'); return false;">
-pandas
-</div>
-</div>
-<div class="card-text listing-description">
-<p>[Python] tabula(pdf리딩[표 형태], xlwings(암호화 Excel리딩)</p>
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Kibok Park
-</div>
-<div class="listing-date">
-2023-11-02
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div><p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p></main> <!-- /main -->
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>한빛앤 데이터웨어하우스 세미나 내용 정리</p>
+<section id="개요" class="level1">
+<h1>개요</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/225d807a-1-image-2.png" class="img-fluid figure-img"></p>
+<figcaption>image-2.png</figcaption>
+</figure>
+</div>
+<ul>
+<li>한빛앤 데이터 웨어하우스 세미나 다녀와서 정리</li>
+<li>데이터 웨어하우스라는 단어는 많이 들어봤지만 와닿지 않았는데, DW개념이해가 필요한 비전공자 대상이라고 하여 참가함
+<ul>
+<li>다만 SQLD를 공부하지 않았다면 초중반부터는 이해가 어려웠겠다라는 생각이 들었는데, 어차피 이런 세미나는 관심있는 사람만 들어서 괜찮을 듯 했음</li>
+<li>단어 자체만 기억나는 경우가 많아 따라가기 급급했지만, 결론적으로 재밌는 걸 많이 알게되어 좋았음</li>
+</ul></li>
+<li>강연자이신 강성욱님이 시니어 DB Ops로 소개되었는데, 자주보이던 Ops라는 단어도 간략히 어떤 개념이구나 알게 되었음
+<ul>
+<li>Ops : Silo현상의 해결을 위해 개발과 운영의 통합</li>
+</ul></li>
+<li>신청해 둔 다른 스터디에서 spark와 airflow를 다룰 예정이라, 관련 내용을 좀 더 이해하게 되지 않을까 기대됨</li>
+<li>차원얘기가 나왔는데, AI관련 스터디에서 차원축소 관련 언급때 나온 희소성이 다시 생각나면서 좀 더 이해가 높아지는 계기가 되었음</li>
+<li>이해되는 기준으로 정리했는데, 향후 다시보기를 통해 보완 예정</li>
+</ul>
+</section>
+<section id="강연내용-정리" class="level1">
+<h1>강연내용 정리</h1>
+<section id="서론" class="level2">
+<h2 class="anchored" data-anchor-id="서론">서론</h2>
+<ul>
+<li>데이터 분석의 8할은 데이터 가공이다</li>
+<li>Data-driven을 위해 빅데이터 시스템이 꼭 필요한가?
+<ul>
+<li>데이터의 <code>품질</code>이 중요함 (많더라도 쓸모가 없으면 의미없음)
+<ul>
+<li>‘데이터(비즈니스) 목적 정의’ ~ ’정의한 사항에 대한 일치여부 지속확인’까지 필요</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="dwdata-warehouse의-개념과-특징" class="level2">
+<h2 class="anchored" data-anchor-id="dwdata-warehouse의-개념과-특징"><code>DW(Data Warehouse)</code>의 개념과 특징</h2>
+<ul>
+<li><code>DW는 사용자 관점에서 주제 별로 통합해 별도의 장소에 보관한 DB</code>
+<ul>
+<li>OLTP의 단점을 극복하기 위해 출현
+<ul>
+<li>OLTP(트랜잭션 단위로 동시에 처리) vs OLAP(다양한 관점에서 데이터를 보게 해줌)</li>
+</ul></li>
+<li>장점 : 정제 및 검증을 통한 양질의 데이터(의미있는 데이터만 남도록 해줌)</li>
+</ul></li>
+<li>데이터 구조와 스키마는 빠른 SQL쿼리에 최적화되도록 정의
+<ul>
+<li><code>schema-on-write</code>. DW구현 이전에 스키마 설계함</li>
+<li>신뢰할 수 있는 선별된 데이터를 저장</li>
+</ul></li>
+</ul>
+</section>
+<section id="dldata-lake의-개념과-특징" class="level2">
+<h2 class="anchored" data-anchor-id="dldata-lake의-개념과-특징"><code>DL(Data Lake)</code>의 개념과 특징</h2>
+<ul>
+<li><code>DL은 영상 등 (비정형데이터를 포함한) 모든 데이터를 일단 보관</code></li>
+<li>DW와 달리 스키마구조가 정의되어있지 않음 (DW는 RDB관점이어서 정의되어있음)
+<ul>
+<li><code>schema-on-read</code>. 사용자가 필요할 때 스키마를 정의함</li>
+<li>선별되거나 선별되지 않은 모든 데이터 저장(비용부담이 될 수 있음)
+<ul>
+<li>이러한 문제로 DL을 표방한 DW를 사용함</li>
+</ul></li>
+</ul></li>
+<li>데이터를 읽을 때 잘못되면 스키마가 공백으로 나올 수 있고, 사용자는 데이터가 없는 것으로 착각할 수 있다</li>
+</ul>
+</section>
+<section id="dw의-구축" class="level2">
+<h2 class="anchored" data-anchor-id="dw의-구축">DW의 구축</h2>
+<ul>
+<li>사용중인 RDB솔루션 사용가능</li>
+<li>디스크 용량은 큰 것이 좋음(속도가 높으면 좋지만 무조건 빠른게 필요하진 않음)</li>
+<li>CPU코어가 많은 것이 유리(집계 연산이 많기 때문, 클럭보다 코어 많은게 유리)</li>
+<li>메모리는 많을수록 좋음(대량의 데이터를 조회/가공하므로)</li>
+</ul>
+</section>
+<section id="etlextracttransformload-추출변환로드" class="level2">
+<h2 class="anchored" data-anchor-id="etlextracttransformload-추출변환로드">ETL(Extract/Transform/Load, 추출/변환/로드)</h2>
+<ul>
+<li>추출 : 전체/부분 추출</li>
+<li>변환 : 필터링, 정렬, 조인, 중복제거, 유효성검사 등 (+스테이징[Staging]환경 업로드)</li>
+<li>로드 : 변환된 데이터를 스테이징 영역에서 보강 후 변환</li>
+<li>ETL Tool : Airflow(오픈소스), AWS, Azure, InfoSphere, Oracle 등</li>
+</ul>
+</section>
+<section id="초기로딩과-주기적갱신" class="level2">
+<h2 class="anchored" data-anchor-id="초기로딩과-주기적갱신">초기로딩과 주기적갱신</h2>
+<ul>
+<li>초기로딩 : 필요한 데이터의 최초 로딩</li>
+<li>주기적갱신 : CDC(Change Data Capture), DML트리거 등 솔루션으로 변경사항이 있을때마다 별도 테이블에 기록하여 로딩 (Insert된 데이터 뿐 아니라 Update된 데이터도 가져와야 함)
+<ul>
+<li>데이터에 따른 예시
+<ul>
+<li>날짜컬럼이 있다면, 날짜컬럼이 Update된 경우 가져옴</li>
+<li>날짜컬럼이 없다면, Outer join으로 백업데이터와 비교(이 방법은 데이터가 커지면 쉽지 않음)
+<ul>
+<li>CDC나 DML트리거를 활용하는 방안으로 적용</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="스타-스키마" class="level2">
+<h2 class="anchored" data-anchor-id="스타-스키마">스타 스키마</h2>
+<ul>
+<li>다차원의 데이터를 효과적으로 저장</li>
+<li><code>하나의 팩트 테이블 + 다수의 디멘젼 테이블</code>로 구성
+<ul>
+<li>팩트(사실) : 분석하고자 하는 대상</li>
+<li>디멘젼(차원, Dim) : 팩트를 보는 관섬</li>
+</ul></li>
+<li>하나의 모델에는 하나의 팩트테이블이 존재</li>
+</ul>
+</section>
+<section id="스노우플레이크-스키마" class="level2">
+<h2 class="anchored" data-anchor-id="스노우플레이크-스키마">스노우플레이크 스키마</h2>
+<ul>
+<li><code>스타스키마의 팩트테이블 구조</code>를 동일하게 유지하며, 차원테이블은 정규화한 구조</li>
+<li>팩트테이블과 조인되는 디멘젼테이블이 있으며, <code>디멘젼테이블은 또 다른 테이블의 키</code>를 가짐</li>
+</ul>
+</section>
+<section id="dmdata-mart" class="level2">
+<h2 class="anchored" data-anchor-id="dmdata-mart">DM(Data Mart)</h2>
+<ul>
+<li>DW가 1차적인 가공이 되어있다면, <code>DM은 목적에 맞게 재집계</code>되어있음
+<ul>
+<li>CEO가 원하는 월별 매출, 지점담당자의 지역매출 등</li>
+</ul></li>
+<li>DW가 데이터가 너무 많고 복잡(사용자에게 불친절)해 DM을 사용</li>
+</ul>
+</section>
+<section id="데이터의-추출-및-가공dq" class="level2">
+<h2 class="anchored" data-anchor-id="데이터의-추출-및-가공dq">데이터의 추출 및 가공(DQ)</h2>
+<ul>
+<li>데이터 포맷 정형화 (0/1, 남/여 등을 M/F로 변환)</li>
+<li>메타데이터 관리
+<ul>
+<li>예) 주소입력시 ’서울’을 치면 ’서울특별시’로 입력되게 하는 것</li>
+</ul></li>
+</ul>
+</section>
+<section id="dm의-구축" class="level2">
+<h2 class="anchored" data-anchor-id="dm의-구축">DM의 구축</h2>
+<ul>
+<li>하향식 접근법 : 일반적으로 많이 사용. DW로 DM 만들기
+<ul>
+<li>한번 쿼리한 결과를 테이블로 저장해두는 경우 등</li>
+</ul></li>
+<li>상향식 접근법 : 거의 없는 케이스</li>
+</ul>
+</section>
+<section id="차원의-이해" class="level2">
+<h2 class="anchored" data-anchor-id="차원의-이해">차원의 이해</h2>
+<ul>
+<li>차원 : 분석하고자 하는 관점, 큐브를 구성하는 축</li>
+<li>차원항목 : 각 축의 좌표</li>
+<li>큐브와 셀 : 각 차원을 구성하는 항목의 조합에 대한 데이터를 저장하는 공간</li>
+<li>희박성(Sparsify) : 데이터가 존재하지 않는 셀은 물리적으로 존재하지 않는 것
+<ul>
+<li>차원 때문에 매칭을 하다보니 희박성(없는 부분)이 발생하게 됨</li>
+</ul></li>
+<li>하이퍼 큐브 : ‘입력된 데이터’ 상태에서, ‘계산된 데이터’ 추가되면 큐브가 팽창하여 시스템다운</li>
+<li>희박성 증가와 팽창계수 : 차원이 증가하고 희박성이 커지면 DB의 팽창계수는 급속히 증가</li>
+</ul>
+</section>
+<section id="dw-실무운영-팁" class="level2">
+<h2 class="anchored" data-anchor-id="dw-실무운영-팁">DW 실무운영 팁</h2>
+<ul>
+<li>데이터 재처리를 위해 항상 <code>RAW데이터도 함께 보관</code></li>
+<li>집계 중 오류가 발생하면 부분재처리보단 <code>전체재처리를 권장</code></li>
+<li><code>자주 사용되는 패턴은 미리</code> 집계하여 저장</li>
+<li>대량 데이터를 집계할 때는 부분집합으로 나누어 처리한 다음, 상위 처리과정으로 집계하여 <code>리소스를 효율적으로</code>
+<ul>
+<li>시스템 하드웨어가 약해도 큰 데이터 집계가 가능해짐</li>
+</ul></li>
+<li>집계된 결과는 백업하여 유사시 대비</li>
+<li>배치 작업의 분리 및 순서에 대한 전략 고민</li>
+<li>불필요하게 많은 차원은 리소스 낭비</li>
+</ul>
+</section>
+<section id="요약" class="level2">
+<h2 class="anchored" data-anchor-id="요약">요약</h2>
+<ul>
+<li>대부분의 데이터는 RDB에 저장되어 있음</li>
+<li>빅데이터 시스템이 있어도, 결국 집계된 데이터는 RDB에서 관리</li>
+<li><code>DW만 잘 만들어도 대부분의 분석이 비용효율적으로 가능하다</code></li>
+<li><code>GIGO</code>를 잊지 말자(Garbage in, Garbage out. 데이터의 품질 중요)</li>
+<li>중요한 것은 <code>무엇을 분석할지에 대한 목표</code>, 평가</li>
+<li>관점에 따라 같은 데이터도 다양한 인사이트를 만들어 냄</li>
+</ul>
+</section>
+</section>
+<section id="qa-내용정리" class="level1">
+<h1>Q&amp;A 내용정리</h1>
+<ul>
+<li>NOSQL은 스키마 없이 저장한다는 개념으로, DL과는 다른 개념임</li>
+<li>DB모델링시 다른 회사의 보고서를 보는게 도움이 될 수 있다(리버스 엔지니어링)</li>
+<li>개인정보보호법관련, 허용기간 이상 저장 등 필요한 경우는 개인정보 자체를 지운다
+<ul>
+<li>ID와 같은 식별자만 남겨 누군지는 모르지만 분석은 가능하도록 저장</li>
+<li>개인정보는 정보를 조합해서 누군가를 식별할 수 있게 되는 것을 개인정보라고 함</li>
+</ul></li>
+<li>실제 운영시 Raw데이터는 Cold데이터로 저장
+<ul>
+<li>예를 들어 작년데이터는 자주 사용할 수 있게 해두고, 장기 데이터는 필요시에 꺼내씀</li>
+</ul></li>
+<li>쿼리튜닝의 중요성과 팁
+<ul>
+<li>컬럼을 가공하면 index를 사용할 수 없고, DB가 느려진다</li>
+<li>데이터 타입 지정이 중요하다
+<ul>
+<li>varchar 5, varchar 8인 경우 풀스캔을 하게된다</li>
+</ul></li>
+<li>데이터는 없는 것보다는 당장 안쓰더라도 있는게 낫다</li>
+</ul></li>
+</ul>
+
+
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -660,7 +616,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -692,29 +659,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp("https:\/\/kr9268\.github\.io\/");
@@ -722,7 +667,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
@@ -1050,6 +995,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<script src="https://giscus.app/client.js" data-repo="kr9268/giscus_for_blog" data-repo-id="R_kgDOL0Sthw" data-category="General" data-category-id="DIC_kwDOL0Sth84Ce_5h" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
 </div> <!-- /content -->
 <script>
     const baseFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
