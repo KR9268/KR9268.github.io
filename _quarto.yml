@@ -8,8 +8,7 @@ website:
   site-url: https://kr9268.github.io/ # 사이트맵에 필요
   site-path: "/" # 사이트맵에 필요
   google-analytics: "G-LPL499WQBH"
-  execute:
-  freeze: auto
+
   navbar:
     left:
       - text: Dashboards
@@ -43,5 +42,8 @@ format:
       dark : [Darkly]
     css: styles.css
     link-external-newwindow: true
+
+execute:
+  freeze: auto
 
 
