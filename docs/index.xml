@@ -772,19 +772,19 @@ Name: count, dtype: int64</code></pre>
 <ul>
 <li>optuna OptunaSearchCV 공식문서
 <ul>
-<li>https://optuna.readthedocs.io/en/v2.0.0/reference/generated/optuna.integration.OptunaSearchCV.html</li>
+<li><a href="https://optuna.readthedocs.io/en/v2.0.0/reference/generated/optuna.integration.OptunaSearchCV.html">https://optuna.readthedocs.io/en/v2.0.0/reference/generated/optuna.integration.OptunaSearchCV.html</a></li>
 </ul></li>
 <li>optuna OptunaSearchCV 샘플코드
 <ul>
-<li>https://github.com/optuna/optuna-examples/blob/main/sklearn/sklearn_optuna_search_cv_simple.py</li>
+<li><a href="https://github.com/optuna/optuna-examples/blob/main/sklearn/sklearn_optuna_search_cv_simple.py">https://github.com/optuna/optuna-examples/blob/main/sklearn/sklearn_optuna_search_cv_simple.py</a></li>
 </ul></li>
 <li>Scikit-learn RandomForestClassifier 공식문서
 <ul>
-<li>https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html#randomforestclassifier</li>
+<li><a href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html#randomforestclassifier">https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html#randomforestclassifier</a></li>
 </ul></li>
 <li>Scikit-learn ccp_alpha(Pruning, [과적합방지용]가지치기)
 <ul>
-<li>https://scikit-learn.org/stable/auto_examples/tree/plot_cost_complexity_pruning.html#sphx-glr-auto-examples-tree-plot-cost-complexity-pruning-py</li>
+<li><a href="https://scikit-learn.org/stable/auto_examples/tree/plot_cost_complexity_pruning.html#sphx-glr-auto-examples-tree-plot-cost-complexity-pruning-py">https://scikit-learn.org/stable/auto_examples/tree/plot_cost_complexity_pruning.html#sphx-glr-auto-examples-tree-plot-cost-complexity-pruning-py</a></li>
 </ul></li>
 </ul>
 <div id="3eb383c7" class="cell">
