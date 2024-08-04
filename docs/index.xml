@@ -1623,7 +1623,7 @@ weighted avg       1.00      1.00      1.00     28481
   <pubDate>Wed, 17 Jul 2024 15:00:00 GMT</pubDate>
 </item>
 <item>
-  <title>[MStudy_과제개선2] 신용카드 이상거래 탐지 모델링</title>
+  <title>[MStudy_과제개선2] 신용카드 이상거래 탐지 모델링 with DL</title>
   <dc:creator>Kibok Park</dc:creator>
   <link>https://kr9268.github.io/posts/meta-dl-creditcard-20240716/</link>
   <description><![CDATA[ 
@@ -2499,7 +2499,7 @@ font-style: inherit;">2</span>)</span></code></pre></div>
   <pubDate>Mon, 15 Jul 2024 15:00:00 GMT</pubDate>
 </item>
 <item>
-  <title>[MStudy_과제개선1] 신용카드 이상거래 탐지 모델링</title>
+  <title>[MStudy_과제개선1] 신용카드 이상거래 탐지 모델링 with ML</title>
   <dc:creator>Kibok Park</dc:creator>
   <link>https://kr9268.github.io/posts/meta-dl-creditcard-20240715/</link>
   <description><![CDATA[ 
@@ -5066,7 +5066,7 @@ font-style: inherit;">=</span> thresholds[optimal_idx]</span></code></pre></div>
   <pubDate>Sat, 13 Jul 2024 15:00:00 GMT</pubDate>
 </item>
 <item>
-  <title>[M_Study_최종과제] 신용카드 이상거래 탐지 모델링</title>
+  <title>[M_Study_최종과제] 신용카드 이상거래 탐지 모델링 with DL</title>
   <dc:creator>Kibok Park</dc:creator>
   <link>https://kr9268.github.io/posts/meta-dl-creditcard-20240711/</link>
   <description><![CDATA[ 
