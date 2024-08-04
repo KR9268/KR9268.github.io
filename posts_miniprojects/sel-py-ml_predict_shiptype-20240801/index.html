@@ -1,0 +1,2070 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.56">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Kibok Park">
+<meta name="dcterms.date" content="2024-08-01">
+
+<title>[Python] AIR/VESSEL 예측을 위한 머신러닝 모델(진행중) – Blog</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.jpg" rel="icon" type="image/jpeg">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/watermark-1.0.11/watermark.min.js"></script>
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-LPL499WQBH"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Blog</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index_dashboards.html"> 
+<span class="menu-text">Dashboards</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index_miniprojects.html"> 
+<span class="menu-text">Mini Projects</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About me</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/KR9268"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/%EA%B8%B0%EB%B3%B5-%EB%B0%95-573a68268/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">[Python] AIR/VESSEL 예측을 위한 머신러닝 모델(진행중)</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Python</div>
+                <div class="quarto-category">scikit-learn</div>
+                <div class="quarto-category">KNeighborsClassifier</div>
+                <div class="quarto-category">category_encoders</div>
+                <div class="quarto-category">optuna</div>
+                <div class="quarto-category">OptunaSearchCV</div>
+                <div class="quarto-category">joblib</div>
+                <div class="quarto-category">sqlite3</div>
+                <div class="quarto-category">pandas</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Kibok Park </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">August 1, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  <div>
+    <div class="abstract">
+      <div class="block-title">Abstract</div>
+      <p>Python, Scikit-learn(KNeighborsClassifier 등)을 활용한 운송수단 예측 머신러닝 모델 (진행중, category_encoders변환 후 OptunaSearchCV 파라미터 최적화 진행)</p>
+    </div>
+  </div>
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#개요" id="toc-개요" class="nav-link active" data-scroll-target="#개요">개요</a>
+  <ul class="collapse">
+  <li><a href="#추진배경" id="toc-추진배경" class="nav-link" data-scroll-target="#추진배경">추진배경</a></li>
+  <li><a href="#계획" id="toc-계획" class="nav-link" data-scroll-target="#계획">계획</a></li>
+  <li><a href="#효과" id="toc-효과" class="nav-link" data-scroll-target="#효과">효과</a></li>
+  <li><a href="#github-repository" id="toc-github-repository" class="nav-link" data-scroll-target="#github-repository">github repository</a></li>
+  <li><a href="#세부내용-구현내용-사용한-언어패키지-등" id="toc-세부내용-구현내용-사용한-언어패키지-등" class="nav-link" data-scroll-target="#세부내용-구현내용-사용한-언어패키지-등">[세부내용] 구현내용 &amp; 사용한 언어/패키지 등</a></li>
+  </ul></li>
+  <li><a href="#데이터로딩" id="toc-데이터로딩" class="nav-link" data-scroll-target="#데이터로딩">데이터로딩</a>
+  <ul class="collapse">
+  <li><a href="#load-with-dbsqlite3" id="toc-load-with-dbsqlite3" class="nav-link" data-scroll-target="#load-with-dbsqlite3">Load with DB(sqlite3)</a></li>
+  </ul></li>
+  <li><a href="#데이터-전처리date-preprocessing" id="toc-데이터-전처리date-preprocessing" class="nav-link" data-scroll-target="#데이터-전처리date-preprocessing">데이터 전처리(Date Preprocessing)</a>
+  <ul class="collapse">
+  <li><a href="#drop-및-값-변환" id="toc-drop-및-값-변환" class="nav-link" data-scroll-target="#drop-및-값-변환">Drop 및 값 변환</a></li>
+  <li><a href="#x-y값-변환to-numeric" id="toc-x-y값-변환to-numeric" class="nav-link" data-scroll-target="#x-y값-변환to-numeric">X, Y값 변환(To numeric)</a></li>
+  <li><a href="#x값-변환to-numeric-with-leaveoneout-encoder" id="toc-x값-변환to-numeric-with-leaveoneout-encoder" class="nav-link" data-scroll-target="#x값-변환to-numeric-with-leaveoneout-encoder">X값 변환(To numeric with LeaveOneOut Encoder)</a></li>
+  <li><a href="#데이터셋-분할split-traintest" id="toc-데이터셋-분할split-traintest" class="nav-link" data-scroll-target="#데이터셋-분할split-traintest">데이터셋 분할(Split Train/Test)</a></li>
+  </ul></li>
+  <li><a href="#모델-학습-kneighborsclassifier" id="toc-모델-학습-kneighborsclassifier" class="nav-link" data-scroll-target="#모델-학습-kneighborsclassifier">모델 학습 (KNeighborsClassifier)</a>
+  <ul class="collapse">
+  <li><a href="#kneighborsclassifier-학습" id="toc-kneighborsclassifier-학습" class="nav-link" data-scroll-target="#kneighborsclassifier-학습">KNeighborsClassifier 학습</a></li>
+  <li><a href="#kneighborsclassifier-모델평가" id="toc-kneighborsclassifier-모델평가" class="nav-link" data-scroll-target="#kneighborsclassifier-모델평가">KNeighborsClassifier 모델평가</a></li>
+  <li><a href="#kneighborsclassifier-예측prediction" id="toc-kneighborsclassifier-예측prediction" class="nav-link" data-scroll-target="#kneighborsclassifier-예측prediction">KNeighborsClassifier 예측(Prediction)</a></li>
+  <li><a href="#kneighborsclassifier-모델저장" id="toc-kneighborsclassifier-모델저장" class="nav-link" data-scroll-target="#kneighborsclassifier-모델저장">KNeighborsClassifier 모델저장</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="개요" class="level1">
+<h1>개요</h1>
+<section id="추진배경" class="level2">
+<h2 class="anchored" data-anchor-id="추진배경">추진배경</h2>
+<ul>
+<li>긴급하게 현재 가지고 있는 데이터로, 예측관련하여 만들 수 있는 머신러닝 모델을 요청받음</li>
+<li>Kaggle에서 운송수단을 예측하는 KNN모델 샘플을 발견하여 적용</li>
+</ul>
+</section>
+<section id="계획" class="level2">
+<h2 class="anchored" data-anchor-id="계획">계획</h2>
+<ul>
+<li>국내외의 이동 데이터를 학습한 머신러닝을 활용하여, 조건(국가, 거래업체 등)입력시 어떤 운송수단으로 수출할지 예측(항공/해상)
+<ul>
+<li>[모델1] KNeighborsClassifier 활용한 분류
+<ul>
+<li>모델 정확성을 위해 7개의 Feature로 학습</li>
+<li>업무 사용시에는 사용자가 알 수 있는 4가지 정보를 필수로 받음 (‘Loading Country’, ‘Final Destination country’, ‘Sold-to party’, ‘Ship To Party’)
+<ul>
+<li>3가지 추가정보 제공시 더 정확한 예측제공, 없는 경우 기존데이터의 최빈값으로 대체하여 예측 (Sales Organization, Incoterms, Dangerous goods)</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>예측된 운송수단을 기반으로, 어느정도의 공간(부피)가 필요한지 확인 후 부킹(운송을 위한 공간예약)에 활용
+<ul>
+<li>[모델2] 활용한 예측
+<ul>
+<li>모델1에서 입력/예측된 값을 기반으로 부피(Volumn)을 예측
+<ul>
+<li>‘Loading Country’, ‘Final Destination country’, ‘Sold-to party’, ‘Ship To Party’ (+ ‘AIR/VESSEL’, ‘Dangerous goods’)</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>예측된 값과 함께, 기존 데이터의 History를 제공해 어떤 출발지에서 나갔었는지 함께 공유하여 업무에 활용
+<ul>
+<li>어떤 출발지인지에 따라, 사용하면 안되는 선사(해상운송업체)나 항공사가 정해질 수 있음</li>
+</ul></li>
+<li>KNN 참조한 샘플코드 : https://www.kaggle.com/code/sergeifursa/shipment-type-prediction-with-knn</li>
+</ul>
+</section>
+<section id="효과" class="level2">
+<h2 class="anchored" data-anchor-id="효과">효과</h2>
+<ul>
+<li>특정 조건(출/도착국가, 상대업체)을 기반으로, 항공기와 배 중 어떤 수단으로 얼마만큼 물량을 선적해야할 지 예측</li>
+<li>예측한 데이터를 기반으로, 조기에 Space(선적공간)을 수배하고 선점하여 대응력 강화</li>
+</ul>
+</section>
+<section id="github-repository" class="level2">
+<h2 class="anchored" data-anchor-id="github-repository">github repository</h2>
+<ul>
+<li>별도의 github레포로 정리하지 않고, 하단에 코드로만 기록</li>
+</ul>
+</section>
+<section id="세부내용-구현내용-사용한-언어패키지-등" class="level2">
+<h2 class="anchored" data-anchor-id="세부내용-구현내용-사용한-언어패키지-등">[세부내용] 구현내용 &amp; 사용한 언어/패키지 등</h2>
+<ol type="1">
+<li>db로 전환하여 <code>sqlite3</code>으로 데이터 보관</li>
+<li>데이터 전처리는 아래의 로직에 따라 <code>pandas</code>로 처리</li>
+</ol>
+<ul>
+<li>Drop
+<ul>
+<li>예측 대상인 중량(GrossWT), 항공중량(ChargeableWT), 부피(Volumn)이 모두 없으면 Drop</li>
+<li>배로 선적하는데 부피가 없는 경우 Drop</li>
+</ul></li>
+<li>변환(단위 통일)
+<ul>
+<li>중량은 G/KG 중 KG으로, 부피는 CCM/CBM중 CBM으로 설정</li>
+</ul></li>
+<li>대체(Null보완)
+<ul>
+<li>항공중량(ChargeableWT)만 없는 경우, 별도의 계산식으로 보완처리 (Max(중량, 부피*167))</li>
+</ul></li>
+<li>수치변환(To Numeric)
+<ul>
+<li>Y값으로 사용할 값 중 Categorical한 AIR/VESSEL컬럼은 dict로 관리 및 보관</li>
+<li>X값으로 사용할 값 중 Categorical한 컬럼들은 Scikit-learn의 <code>category_encoders</code>로 변환
+<ul>
+<li>향후 데이터가 추가/삭제될 상황을 위해 사용(업체코드 등은 추가가 빈번할 것으로 예상)</li>
+<li>High Cardinality하여 OnehotEncoding으로 인한 차원문제도 방지</li>
+<li>최초 실행 후 <code>joblib</code>로 encoder값을 저장해두고, 이후에는 로딩하여 사용</li>
+</ul></li>
+</ul></li>
+</ul>
+<ol start="3" type="1">
+<li>데이터셋 분할은 <code>Scikit-learn</code>의 <code>train_test_split</code>으로 train/test 8:2로 split</li>
+<li>모델 파라미터는 optuna를 활용하여 세팅</li>
+</ol>
+<ul>
+<li>첫 사용 모델로 일부 특이사항만 지정하여 <code>OptunaSearchCV</code>로 파라미터 지정
+<ul>
+<li>서열형(Ordinal)이 아닌 Categorical한 Y값이어서 Hamming을 metric으로 지정</li>
+<li>일부 Null값이 있어 kd_tree에서는 적용불가 메시지가 떠 kd_tree는 대상에서 제외</li>
+<li>이외 파라미터는 공식문서의 default값을 기준으로 일부 buffer를 두어 세팅함</li>
+</ul></li>
+</ul>
+<ol start="5" type="1">
+<li><code>Scikit-learn</code>의 <code>cross_val_score</code>으로 모델평가 (accuracy사용)</li>
+<li>모델예측은 앞서 <code>category_encoders</code>으로 변환 후 학습했으므로, predict시에도 변환 후 적용</li>
+<li>joblib로 모델저장</li>
+<li>이후 내용 추가 예정</li>
+</ol>
+</section>
+</section>
+<section id="데이터로딩" class="level1">
+<h1>데이터로딩</h1>
+<section id="load-with-dbsqlite3" class="level2">
+<h2 class="anchored" data-anchor-id="load-with-dbsqlite3">Load with DB(sqlite3)</h2>
+<div id="2b0e1c98" class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sqlite3</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Connect to the SQLite database</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>conn <span class="op">=</span> sqlite3.<span class="ex">connect</span>(<span class="st">'sample.db'</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Write the DataFrame to the database</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>query <span class="op">=</span> <span class="st">"SELECT * FROM `table`"</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_sql_query(query, conn)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Close the database connection</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>conn.close()</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="데이터-전처리date-preprocessing" class="level1">
+<h1>데이터 전처리(Date Preprocessing)</h1>
+<section id="drop-및-값-변환" class="level2">
+<h2 class="anchored" data-anchor-id="drop-및-값-변환">Drop 및 값 변환</h2>
+<ul>
+<li>[Drop] 운임 또는 Space확보의 기준되는 값이 없는 것이므로 Drop
+<ul>
+<li>해상/항공여부를 예측하더라도, Space정보가 없는 경우는 이후 대응이 불가하므로 Drop</li>
+</ul></li>
+<li>[변환] 중량 등 수치에 대한 단위 일치
+<ul>
+<li>중량(KG, G), 부피(CBM, CCM)일치시키기</li>
+</ul></li>
+<li>[Null대체] 주어진 값으로 계산하여 대체 가능한 경우 반영
+<ul>
+<li>Chargeable WT : 중량과 부피를 기준으로 계산가능. Null인 경우 계산하여 대체</li>
+</ul></li>
+</ul>
+<div id="b56b2dac" class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 판다스 컬럼생략하지 않게하는 옵션설정</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.max_columns'</span>, <span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="d5b242e9" class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> drop_fillna_convert_df(df):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Drop</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    df_dropped <span class="op">=</span> df.drop(df[(df[<span class="st">'AIR/VESSEL'</span>]<span class="op">==</span><span class="dv">2</span>) <span class="op">&amp;</span> df[<span class="st">'Charg. Unit'</span>].isna()].index).copy()</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">## 모든 중량/부피가 없음</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    df_dropped <span class="op">=</span> df_dropped.drop(df_dropped[df_dropped[<span class="st">'Gross weight'</span>].isna() <span class="op">&amp;</span> df_dropped[<span class="st">'Volume'</span>].isna() <span class="op">&amp;</span> df_dropped[<span class="st">'Charg. weigh'</span>].isna()].index)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">## 해상인데 부피 또는 부피단위가 없음</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    df_dropped <span class="op">=</span> df_dropped.drop(df_dropped[(df_dropped[<span class="st">'AIR/VESSEL'</span>]<span class="op">==</span><span class="dv">1</span>) <span class="op">&amp;</span> df_dropped[<span class="st">'Volume'</span>].isna()].index)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    df_dropped <span class="op">=</span> df_dropped.drop(df_dropped[(df_dropped[<span class="st">'AIR/VESSEL'</span>]<span class="op">==</span><span class="dv">1</span>) <span class="op">&amp;</span> df_dropped[<span class="st">'Volume unit'</span>].isna()].index)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">## 항공인데, ChargeableWT가 없는데, 계산할 기초값인 Groww weight나 Volumn 중 하나가 없음</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    df_dropped <span class="op">=</span> df_dropped.drop(df_dropped[(df_dropped[<span class="st">'AIR/VESSEL'</span>]<span class="op">==</span><span class="dv">2</span>) <span class="op">&amp;</span> df_dropped[<span class="st">'Charg. weigh'</span>].isna() <span class="op">&amp;</span> df_dropped[<span class="st">'Gross weight'</span>].isna()].index)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    df_dropped <span class="op">=</span> df_dropped.drop(df_dropped[(df_dropped[<span class="st">'AIR/VESSEL'</span>]<span class="op">==</span><span class="dv">2</span>) <span class="op">&amp;</span> df_dropped[<span class="st">'Charg. weigh'</span>].isna() <span class="op">&amp;</span> df_dropped[<span class="st">'Volume'</span>].isna()].index)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Convert Unit</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    df_dropped.loc[df_dropped[<span class="st">'Gross unit'</span>] <span class="op">==</span> <span class="st">'G'</span>, <span class="st">'Gross weight'</span>] <span class="op">*=</span> <span class="dv">1000</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    df_dropped.loc[df_dropped[<span class="st">'Volume unit'</span>] <span class="op">==</span> <span class="st">'CCM'</span>, <span class="st">'Volume'</span>] <span class="op">/=</span> <span class="dv">1000</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Null대체</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    crit_replace_na <span class="op">=</span> (df_dropped[<span class="st">'Charg. weigh'</span>].isnull()) <span class="op">&amp;</span> (df_dropped[<span class="st">'AIR/VESSEL'</span>] <span class="op">==</span> <span class="dv">2</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    df_dropped.loc[crit_replace_na, <span class="st">'Charg. weigh'</span>] <span class="op">=</span> np.maximum(df_dropped[crit_replace_na][<span class="st">'Gross weight'</span>], df_dropped[crit_replace_na][<span class="st">'Volume'</span>] <span class="op">*</span> <span class="dv">167</span>)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df_dropped</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>df_dropped <span class="op">=</span> drop_fillna_convert_df(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="x-y값-변환to-numeric" class="level2">
+<h2 class="anchored" data-anchor-id="x-y값-변환to-numeric">X, Y값 변환(To numeric)</h2>
+<ul>
+<li>Y값 변환
+<ul>
+<li>사용할 3개의 Y값(AIR/VESSEL, Volumn, Charg. weigh)중, 한가지는 Categorical이므로 숫자로 변경
+<ul>
+<li>AIR/VESSEL(Categorical이므로), Volumn(Numeric), Charg. weigh(Numeric)</li>
+</ul></li>
+<li>해상/항공만 사용할 예정이므로 해상과 항공에 대해 매핑, 나머지는 9</li>
+</ul></li>
+<li>X값 변환
+<ul>
+<li>Dangerous goods는 2가지 값(O,X)밖에 없으므로 0,1로 변환</li>
+</ul></li>
+</ul>
+<div id="f6a1af27" class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mapping_airvessel_dict <span class="op">=</span> <span class="bu">dict</span>()</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> df[<span class="st">'AIR/VESSEL'</span>].unique():</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">'S'</span> <span class="kw">in</span> i:</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        mapping_airvessel_dict[i] <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> <span class="st">'P'</span> <span class="kw">in</span> i <span class="kw">or</span> <span class="st">'M'</span> <span class="kw">in</span> i:</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        mapping_airvessel_dict[i] <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        mapping_airvessel_dict[i] <span class="op">=</span> <span class="dv">9</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>mapping_airvessel_dict</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="1c1fc715" class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># y값 매핑</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df_dropped[<span class="st">'AIR/VESSEL'</span>] <span class="op">=</span> df_dropped[<span class="st">'AIR/VESSEL'</span>].<span class="bu">map</span>(mapping_airvessel_dict)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># X값 매핑</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>df_dropped[<span class="st">'Dangerous goods'</span>] <span class="op">=</span> df_dropped[<span class="st">'Dangerous goods'</span>].<span class="bu">map</span>({<span class="va">None</span>:<span class="dv">0</span>,<span class="st">'X'</span>:<span class="dv">1</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="x값-변환to-numeric-with-leaveoneout-encoder" class="level2">
+<h2 class="anchored" data-anchor-id="x값-변환to-numeric-with-leaveoneout-encoder">X값 변환(To numeric with LeaveOneOut Encoder)</h2>
+<ul>
+<li>머신러닝학습을 위해 숫자로 변환 필요</li>
+<li>LeaveOneOut Encoder를 활용하는 것으로 결정
+<ul>
+<li><p>국가코드는 거의 바뀔 일이 없지만, 아프리카 지역 등 일부 Minor한 국가로 판매할 경우 추가될 수 있음</p></li>
+<li><p>업체코드는 추가/삭제될 가능성이 높음</p></li>
+<li><p>Unique값이 많으므로 One-hot Encoding시 차원이 너무 많아질 위험 있음(High Cardinality)</p></li>
+<li><p>처음에는 아래와 같이 dict로 각 컬럼별 매핑값을 관리하고자했으나, 번거로움과 대상이 많아짐에 따라 Encoder를 활용</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>  party_code_reverse <span class="op">=</span> {v: k <span class="cf">for</span> k, v <span class="kw">in</span> party_code.items()}</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  country_code_map_reverse <span class="op">=</span> {v: k <span class="cf">for</span> k, v <span class="kw">in</span> country_code_map.items()}</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  x_data_encoded <span class="op">=</span> pd.DataFrame()</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> each_column <span class="kw">in</span> x_column:</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> each_column <span class="kw">in</span> [<span class="st">'Loading Country'</span>, <span class="st">'Final Destination country'</span>]:</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>          x_data_encoded[each_column] <span class="op">=</span> x_data[each_column].<span class="bu">map</span>(country_code_map_reverse)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>      <span class="cf">elif</span> each_column <span class="kw">in</span> [<span class="st">'Sold-to party'</span>, <span class="st">'Ship To Party'</span>]:</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>          x_data_encoded[each_column] <span class="op">=</span> x_data[each_column].<span class="bu">map</span>(party_code_reverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul></li>
+<li>Sci-kit learn LeaveOneOut Encoder 공식문서
+<ul>
+<li>https://contrib.scikit-learn.org/category_encoders/leaveoneout.html</li>
+</ul></li>
+</ul>
+<div id="da8767d1" class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 학습할 Feature</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>x_column <span class="op">=</span> [<span class="st">'Loading Country'</span>, <span class="st">'Final Destination country'</span>, <span class="st">'Sold-to party'</span>, <span class="st">'Ship To Party'</span>, <span class="st">'Dangerous goods'</span>,<span class="st">'Sales Organization'</span>,<span class="st">'Incoterms'</span>]</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>y_column <span class="op">=</span> <span class="st">'AIR/VESSEL'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="f50a523e" class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LeaveOneOutEncoder (최초 실행시)</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> category_encoders <span class="im">as</span> ce</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> joblib</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>encoder_leave_one_out <span class="op">=</span> ce.LeaveOneOutEncoder(cols<span class="op">=</span>x_column, sigma<span class="op">=</span><span class="fl">0.1</span>, return_df<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>x_data_all <span class="op">=</span> encoder_leave_one_out.fit_transform(df_dropped[x_column], df_dropped[y_column])</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>joblib.dump(encoder_leave_one_out, <span class="st">'encoder_leave_one_out.pkl'</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>x_data_all</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Loading Country</th>
+<th data-quarto-table-cell-role="th">Final Destination country</th>
+<th data-quarto-table-cell-role="th">Sold-to party</th>
+<th data-quarto-table-cell-role="th">Ship To Party</th>
+<th data-quarto-table-cell-role="th">Dangerous goods</th>
+<th data-quarto-table-cell-role="th">Sales Organization</th>
+<th data-quarto-table-cell-role="th">Incoterms</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>7.047596</td>
+<td>3.679223</td>
+<td>3.861376</td>
+<td>8.134116</td>
+<td>2.765859</td>
+<td>2.988212</td>
+<td>3.206009</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>1.501914</td>
+<td>1.956254</td>
+<td>1.396398</td>
+<td>1.010231</td>
+<td>2.410832</td>
+<td>3.551036</td>
+<td>2.268934</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>1.246987</td>
+<td>1.247269</td>
+<td>1.076889</td>
+<td>1.069540</td>
+<td>2.266524</td>
+<td>3.929307</td>
+<td>1.368437</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>7.557798</td>
+<td>3.385827</td>
+<td>4.343922</td>
+<td>5.881165</td>
+<td>2.453504</td>
+<td>3.253987</td>
+<td>3.082357</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>1.711316</td>
+<td>1.644219</td>
+<td>1.418986</td>
+<td>1.081862</td>
+<td>2.604062</td>
+<td>1.513666</td>
+<td>1.461735</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">68896</td>
+<td>1.805997</td>
+<td>1.211290</td>
+<td>1.620240</td>
+<td>0.923400</td>
+<td>2.128367</td>
+<td>4.805674</td>
+<td>1.252805</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">68897</td>
+<td>1.738878</td>
+<td>1.543501</td>
+<td>1.904886</td>
+<td>0.850793</td>
+<td>2.625204</td>
+<td>2.538548</td>
+<td>2.008110</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">68898</td>
+<td>1.916489</td>
+<td>1.649348</td>
+<td>1.104931</td>
+<td>1.064014</td>
+<td>2.018030</td>
+<td>2.863359</td>
+<td>1.569362</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">68899</td>
+<td>1.903145</td>
+<td>2.041549</td>
+<td>2.386892</td>
+<td>0.954536</td>
+<td>2.133451</td>
+<td>1.841485</td>
+<td>1.714075</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">68900</td>
+<td>1.963608</td>
+<td>1.810246</td>
+<td>1.429540</td>
+<td>1.208997</td>
+<td>2.474078</td>
+<td>2.198915</td>
+<td>1.706463</td>
+</tr>
+</tbody>
+</table>
+
+<p>68880 rows × 7 columns</p>
+</div>
+</div>
+</div>
+<div id="0507419c" class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LeaveOneOutEncoder (실행내역 있는 경우)</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>encoder_leave_one_out <span class="op">=</span> joblib.load(<span class="st">'encoder_leave_one_out.pkl'</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>x_data_all <span class="op">=</span> encoder_leave_one_out.transform(df_dropped[x_column], df_dropped[y_column])</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>joblib.dump(encoder_leave_one_out, <span class="st">'encoder_leave_one_out.pkl'</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>x_data_all</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Loading Country</th>
+<th data-quarto-table-cell-role="th">Final Destination country</th>
+<th data-quarto-table-cell-role="th">Sold-to party</th>
+<th data-quarto-table-cell-role="th">Ship To Party</th>
+<th data-quarto-table-cell-role="th">Dangerous goods</th>
+<th data-quarto-table-cell-role="th">Sales Organization</th>
+<th data-quarto-table-cell-role="th">Incoterms</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>7.041479</td>
+<td>2.808034</td>
+<td>3.644974</td>
+<td>10.297530</td>
+<td>2.271593</td>
+<td>3.376236</td>
+<td>2.761253</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>1.203195</td>
+<td>1.595750</td>
+<td>1.537957</td>
+<td>1.012471</td>
+<td>2.542451</td>
+<td>4.059490</td>
+<td>1.791253</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>1.509811</td>
+<td>1.355136</td>
+<td>1.029430</td>
+<td>0.941528</td>
+<td>2.484937</td>
+<td>3.039443</td>
+<td>1.278045</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>8.488335</td>
+<td>4.329470</td>
+<td>5.074977</td>
+<td>5.995380</td>
+<td>2.378870</td>
+<td>3.362426</td>
+<td>2.950839</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>1.371701</td>
+<td>1.669704</td>
+<td>1.662936</td>
+<td>1.251279</td>
+<td>2.103728</td>
+<td>1.285509</td>
+<td>1.482815</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">68896</td>
+<td>1.759238</td>
+<td>1.000788</td>
+<td>1.684182</td>
+<td>1.115493</td>
+<td>2.130670</td>
+<td>2.516951</td>
+<td>1.334155</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">68897</td>
+<td>2.000342</td>
+<td>1.765736</td>
+<td>1.469979</td>
+<td>1.130242</td>
+<td>2.640289</td>
+<td>2.358999</td>
+<td>1.532509</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">68898</td>
+<td>1.901704</td>
+<td>1.555484</td>
+<td>1.386904</td>
+<td>0.944819</td>
+<td>2.572425</td>
+<td>2.429427</td>
+<td>1.479614</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">68899</td>
+<td>2.164074</td>
+<td>2.300433</td>
+<td>2.976153</td>
+<td>1.097528</td>
+<td>2.626010</td>
+<td>1.895660</td>
+<td>1.757920</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">68900</td>
+<td>1.721231</td>
+<td>1.691727</td>
+<td>1.582234</td>
+<td>1.200996</td>
+<td>2.586225</td>
+<td>1.986513</td>
+<td>1.549286</td>
+</tr>
+</tbody>
+</table>
+
+<p>68880 rows × 7 columns</p>
+</div>
+</div>
+</div>
+<div id="4e962657" class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>y_data_all <span class="op">=</span> df_dropped[<span class="st">'AIR/VESSEL'</span>]</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>y_data_all</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>0        9
+1        1
+2        1
+3        9
+4        1
+        ..
+68896    1
+68897    1
+68898    1
+68899    1
+68900    1
+Name: AIR/VESSEL, Length: 68880, dtype: int64</code></pre>
+</div>
+</div>
+</section>
+<section id="데이터셋-분할split-traintest" class="level2">
+<h2 class="anchored" data-anchor-id="데이터셋-분할split-traintest">데이터셋 분할(Split Train/Test)</h2>
+<div id="39a6fc1a" class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>x_train, x_test, y_train, y_test <span class="op">=</span> train_test_split(x_data_all, y_data_all, train_size<span class="op">=</span><span class="fl">0.8</span>, shuffle<span class="op">=</span><span class="va">True</span>, stratify<span class="op">=</span>y_data_all)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="모델-학습-kneighborsclassifier" class="level1">
+<h1>모델 학습 (KNeighborsClassifier)</h1>
+<section id="kneighborsclassifier-학습" class="level2">
+<h2 class="anchored" data-anchor-id="kneighborsclassifier-학습">KNeighborsClassifier 학습</h2>
+<ul>
+<li>처음 사용해보는 모델이면서 마감기한이 촉박하여, optuna를 활용하여 파라미터 세팅</li>
+<li>Scikit-learn KNeighborsClassifier 공식문서
+<ul>
+<li>https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html</li>
+</ul></li>
+<li>Metric의 경우, hamming distance를 채택
+<ul>
+<li>Kaggle 샘플코드에서 Categorical인 경우는 hamming distance를 기준한다고 되어있음을 참고</li>
+<li>시간관계상 간단히 알아보니, Simple matching이라면 hamming, 중요도가 있다면 jacard라고 함</li>
+<li>이외에 변수가 서열형(ordinal)인 경우에도 다른 방법이 있다고 하나, 현재의 데이터는 서열형으로 볼 수는 없어 제외</li>
+</ul></li>
+</ul>
+<div id="403a08d1" class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> optuna</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> KNeighborsClassifier</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>clf <span class="op">=</span> KNeighborsClassifier(metric<span class="op">=</span><span class="st">'hamming'</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>param_distributions <span class="op">=</span> {</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"n_neighbors"</span>: optuna.distributions.IntDistribution(<span class="dv">3</span>, <span class="dv">5</span>),</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"weights"</span>: optuna.distributions.CategoricalDistribution([<span class="st">'uniform'</span>, <span class="st">'distance'</span>]),</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"algorithm"</span>: optuna.distributions.CategoricalDistribution([<span class="st">'auto'</span>, <span class="st">'ball_tree'</span>, <span class="st">'brute'</span>]), <span class="co">#'kd_tree'는 nan인 경우 문제가 있어 제외</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"leaf_size"</span> : optuna.distributions.IntDistribution(<span class="dv">20</span>, <span class="dv">40</span>),</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>optuna_search <span class="op">=</span> optuna.integration.OptunaSearchCV(</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    clf, </span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    param_distributions, </span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    n_jobs<span class="op">=-</span><span class="dv">1</span>, <span class="co"># Number of parallel jobs. -1 means using all processors.</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    cv<span class="op">=</span><span class="dv">5</span>, <span class="co">#  estimator가 classifier &amp; label이 binary or multiclass라면 sklearn.model_selection.StratifiedKFold 적용 (이외는 sklearn.model_selection.KFold)</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    n_trials<span class="op">=</span><span class="dv">100</span>, </span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    timeout<span class="op">=</span><span class="dv">600</span>, </span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    verbose<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    scoring<span class="op">=</span><span class="va">None</span>, <span class="co"># If None, score on the estimator is used.</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    refit<span class="op">=</span><span class="va">True</span> <span class="co"># Best Parameter로 refit. refitted estimator는 best_estimator_ attribute로 바로 predict가능</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>optuna_search.fit(x_train, y_train)</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Best trial:"</span>)</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>trial <span class="op">=</span> optuna_search.study_.best_trial</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"  Value: "</span>, trial.value)</span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"  Params: "</span>)</span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> key, value <span class="kw">in</span> trial.params.items():</span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"    </span><span class="sc">{}</span><span class="st">: </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(key, value))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>py:13: ExperimentalWarning: OptunaSearchCV is experimental (supported from v0.17.0). The interface can change in the future.
+  optuna_search = optuna.integration.OptunaSearchCV(
+[I 2024-08-04 22:23:30,602] A new study created in memory with name: no-name-8095b4dc-5e03-4ae4-942f-6fa9c1f72a9c
+[I 2024-08-04 22:24:37,815] Trial 4 finished with value: 0.5235917538057604 and parameters: {'n_neighbors': 5, 'weights': 'distance', 'algorithm': 'brute', 'leaf_size': 24}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:24:39,034] Trial 5 finished with value: 0.5235917538057604 and parameters: {'n_neighbors': 5, 'weights': 'distance', 'algorithm': 'brute', 'leaf_size': 36}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:24:51,518] Trial 6 finished with value: 0.5235917538057604 and parameters: {'n_neighbors': 3, 'weights': 'distance', 'algorithm': 'brute', 'leaf_size': 23}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:26:20,120] Trial 3 finished with value: 0.3665977063092387 and parameters: {'n_neighbors': 4, 'weights': 'uniform', 'algorithm': 'auto', 'leaf_size': 39}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:26:20,993] Trial 2 finished with value: 0.42937162859026257 and parameters: {'n_neighbors': 3, 'weights': 'distance', 'algorithm': 'ball_tree', 'leaf_size': 25}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:26:51,430] Trial 1 finished with value: 0.3665977063092387 and parameters: {'n_neighbors': 5, 'weights': 'distance', 'algorithm': 'auto', 'leaf_size': 30}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:26:52,521] Trial 7 finished with value: 0.3665977063092387 and parameters: {'n_neighbors': 4, 'weights': 'uniform', 'algorithm': 'auto', 'leaf_size': 32}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:26:52,625] Trial 0 finished with value: 0.42937162859026257 and parameters: {'n_neighbors': 3, 'weights': 'uniform', 'algorithm': 'auto', 'leaf_size': 35}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:27:15,381] Trial 8 finished with value: 0.3665977063092387 and parameters: {'n_neighbors': 5, 'weights': 'distance', 'algorithm': 'auto', 'leaf_size': 35}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:27:16,046] Trial 9 finished with value: 0.3665977063092387 and parameters: {'n_neighbors': 4, 'weights': 'distance', 'algorithm': 'auto', 'leaf_size': 25}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:28:09,880] Trial 14 finished with value: 0.4293897757638404 and parameters: {'n_neighbors': 4, 'weights': 'distance', 'algorithm': 'brute', 'leaf_size': 36}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:28:10,904] Trial 10 finished with value: 0.3665977063092387 and parameters: {'n_neighbors': 4, 'weights': 'distance', 'algorithm': 'auto', 'leaf_size': 36}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:28:12,691] Trial 15 finished with value: 0.4293897757638404 and parameters: {'n_neighbors': 4, 'weights': 'uniform', 'algorithm': 'brute', 'leaf_size': 29}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:28:26,116] Trial 17 finished with value: 0.5235917538057604 and parameters: {'n_neighbors': 5, 'weights': 'uniform', 'algorithm': 'brute', 'leaf_size': 20}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:29:16,651] Trial 12 finished with value: 0.3665977063092387 and parameters: {'n_neighbors': 5, 'weights': 'distance', 'algorithm': 'auto', 'leaf_size': 24}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:29:17,018] Trial 11 finished with value: 0.3665977063092387 and parameters: {'n_neighbors': 5, 'weights': 'uniform', 'algorithm': 'auto', 'leaf_size': 34}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:29:33,118] Trial 19 finished with value: 0.5235917538057604 and parameters: {'n_neighbors': 5, 'weights': 'distance', 'algorithm': 'brute', 'leaf_size': 20}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:29:33,664] Trial 18 finished with value: 0.5235917538057604 and parameters: {'n_neighbors': 5, 'weights': 'distance', 'algorithm': 'brute', 'leaf_size': 20}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:29:37,861] Trial 20 finished with value: 0.5235917538057604 and parameters: {'n_neighbors': 5, 'weights': 'distance', 'algorithm': 'brute', 'leaf_size': 20}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:29:46,067] Trial 21 finished with value: 0.5235917538057604 and parameters: {'n_neighbors': 5, 'weights': 'distance', 'algorithm': 'brute', 'leaf_size': 40}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:30:10,551] Trial 13 finished with value: 0.3665977063092387 and parameters: {'n_neighbors': 5, 'weights': 'distance', 'algorithm': 'ball_tree', 'leaf_size': 32}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:30:11,709] Trial 16 finished with value: 0.3665977063092387 and parameters: {'n_neighbors': 5, 'weights': 'uniform', 'algorithm': 'auto', 'leaf_size': 31}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:30:29,747] Trial 22 finished with value: 0.5235917538057604 and parameters: {'n_neighbors': 5, 'weights': 'distance', 'algorithm': 'brute', 'leaf_size': 40}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:30:30,705] Trial 23 finished with value: 0.5235917538057604 and parameters: {'n_neighbors': 5, 'weights': 'distance', 'algorithm': 'brute', 'leaf_size': 40}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:31:25,150] Trial 29 finished with value: 0.5235917538057604 and parameters: {'n_neighbors': 3, 'weights': 'distance', 'algorithm': 'brute', 'leaf_size': 27}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:31:40,271] Trial 30 finished with value: 0.5235917538057604 and parameters: {'n_neighbors': 3, 'weights': 'distance', 'algorithm': 'brute', 'leaf_size': 23}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:31:41,349] Trial 31 finished with value: 0.5235917538057604 and parameters: {'n_neighbors': 3, 'weights': 'distance', 'algorithm': 'brute', 'leaf_size': 23}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:31:42,531] Trial 28 finished with value: 0.5235917538057604 and parameters: {'n_neighbors': 3, 'weights': 'distance', 'algorithm': 'brute', 'leaf_size': 23}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:32:32,403] Trial 27 finished with value: 0.3665977063092387 and parameters: {'n_neighbors': 4, 'weights': 'distance', 'algorithm': 'ball_tree', 'leaf_size': 28}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:33:00,736] Trial 24 finished with value: 0.3665977063092387 and parameters: {'n_neighbors': 5, 'weights': 'distance', 'algorithm': 'ball_tree', 'leaf_size': 28}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:33:02,806] Trial 26 finished with value: 0.3665977063092387 and parameters: {'n_neighbors': 5, 'weights': 'distance', 'algorithm': 'ball_tree', 'leaf_size': 40}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:33:05,471] Trial 25 finished with value: 0.3665977063092387 and parameters: {'n_neighbors': 5, 'weights': 'distance', 'algorithm': 'ball_tree', 'leaf_size': 28}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:34:04,143] Trial 32 finished with value: 0.42937162859026257 and parameters: {'n_neighbors': 3, 'weights': 'distance', 'algorithm': 'ball_tree', 'leaf_size': 23}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:34:13,049] Trial 33 finished with value: 0.3665977063092387 and parameters: {'n_neighbors': 4, 'weights': 'distance', 'algorithm': 'ball_tree', 'leaf_size': 22}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:34:14,021] Trial 34 finished with value: 0.3665977063092387 and parameters: {'n_neighbors': 4, 'weights': 'distance', 'algorithm': 'ball_tree', 'leaf_size': 27}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:34:16,306] Trial 37 finished with value: 0.4293897757638404 and parameters: {'n_neighbors': 4, 'weights': 'distance', 'algorithm': 'brute', 'leaf_size': 26}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:34:22,248] Trial 38 finished with value: 0.4293897757638404 and parameters: {'n_neighbors': 4, 'weights': 'uniform', 'algorithm': 'brute', 'leaf_size': 22}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:34:22,899] Trial 39 finished with value: 0.4293897757638404 and parameters: {'n_neighbors': 4, 'weights': 'uniform', 'algorithm': 'brute', 'leaf_size': 22}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:34:30,938] Trial 35 finished with value: 0.3665977063092387 and parameters: {'n_neighbors': 4, 'weights': 'distance', 'algorithm': 'ball_tree', 'leaf_size': 27}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:34:37,208] Trial 36 finished with value: 0.3665977063092387 and parameters: {'n_neighbors': 4, 'weights': 'distance', 'algorithm': 'ball_tree', 'leaf_size': 27}. Best is trial 4 with value: 0.5235917538057604.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Best trial:
+  Value:  0.5235917538057604
+  Params: 
+    n_neighbors: 5
+    weights: distance
+    algorithm: brute
+    leaf_size: 24</code></pre>
+</div>
+</div>
+<div id="78fbea2c" class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>optuna_search.best_params_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>{'n_neighbors': 5,
+ 'weights': 'distance',
+ 'algorithm': 'brute',
+ 'leaf_size': 24}</code></pre>
+</div>
+</div>
+<div id="7dfab7d0" class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>best_model_knclassifier <span class="op">=</span> optuna_search.best_estimator_</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>best_model_knclassifier</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<style>#sk-container-id-2 {
+  /* Definition of color scheme common for light and dark mode */
+  --sklearn-color-text: black;
+  --sklearn-color-line: gray;
+  /* Definition of color scheme for unfitted estimators */
+  --sklearn-color-unfitted-level-0: #fff5e6;
+  --sklearn-color-unfitted-level-1: #f6e4d2;
+  --sklearn-color-unfitted-level-2: #ffe0b3;
+  --sklearn-color-unfitted-level-3: chocolate;
+  /* Definition of color scheme for fitted estimators */
+  --sklearn-color-fitted-level-0: #f0f8ff;
+  --sklearn-color-fitted-level-1: #d4ebff;
+  --sklearn-color-fitted-level-2: #b3dbfd;
+  --sklearn-color-fitted-level-3: cornflowerblue;
+
+  /* Specific color for light theme */
+  --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
+  --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-icon: #696969;
+
+  @media (prefers-color-scheme: dark) {
+    /* Redefinition of color scheme for dark theme */
+    --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
+    --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-icon: #878787;
+  }
+}
+
+#sk-container-id-2 {
+  color: var(--sklearn-color-text);
+}
+
+#sk-container-id-2 pre {
+  padding: 0;
+}
+
+#sk-container-id-2 input.sk-hidden--visually {
+  border: 0;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+#sk-container-id-2 div.sk-dashed-wrapped {
+  border: 1px dashed var(--sklearn-color-line);
+  margin: 0 0.4em 0.5em 0.4em;
+  box-sizing: border-box;
+  padding-bottom: 0.4em;
+  background-color: var(--sklearn-color-background);
+}
+
+#sk-container-id-2 div.sk-container {
+  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
+     but bootstrap.min.css set `[hidden] { display: none !important; }`
+     so we also need the `!important` here to be able to override the
+     default hidden behavior on the sphinx rendered scikit-learn.org.
+     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
+  display: inline-block !important;
+  position: relative;
+}
+
+#sk-container-id-2 div.sk-text-repr-fallback {
+  display: none;
+}
+
+div.sk-parallel-item,
+div.sk-serial,
+div.sk-item {
+  /* draw centered vertical line to link estimators */
+  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
+  background-size: 2px 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* Parallel-specific style estimator block */
+
+#sk-container-id-2 div.sk-parallel-item::after {
+  content: "";
+  width: 100%;
+  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
+  flex-grow: 1;
+}
+
+#sk-container-id-2 div.sk-parallel {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background-color: var(--sklearn-color-background);
+  position: relative;
+}
+
+#sk-container-id-2 div.sk-parallel-item {
+  display: flex;
+  flex-direction: column;
+}
+
+#sk-container-id-2 div.sk-parallel-item:first-child::after {
+  align-self: flex-end;
+  width: 50%;
+}
+
+#sk-container-id-2 div.sk-parallel-item:last-child::after {
+  align-self: flex-start;
+  width: 50%;
+}
+
+#sk-container-id-2 div.sk-parallel-item:only-child::after {
+  width: 0;
+}
+
+/* Serial-specific style estimator block */
+
+#sk-container-id-2 div.sk-serial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--sklearn-color-background);
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+
+/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
+clickable and can be expanded/collapsed.
+- Pipeline and ColumnTransformer use this feature and define the default style
+- Estimators will overwrite some part of the style using the `sk-estimator` class
+*/
+
+/* Pipeline and ColumnTransformer style (default) */
+
+#sk-container-id-2 div.sk-toggleable {
+  /* Default theme specific background. It is overwritten whether we have a
+  specific estimator or a Pipeline/ColumnTransformer */
+  background-color: var(--sklearn-color-background);
+}
+
+/* Toggleable label */
+#sk-container-id-2 label.sk-toggleable__label {
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 0.5em;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+#sk-container-id-2 label.sk-toggleable__label-arrow:before {
+  /* Arrow on the left of the label */
+  content: "▸";
+  float: left;
+  margin-right: 0.25em;
+  color: var(--sklearn-color-icon);
+}
+
+#sk-container-id-2 label.sk-toggleable__label-arrow:hover:before {
+  color: var(--sklearn-color-text);
+}
+
+/* Toggleable content - dropdown */
+
+#sk-container-id-2 div.sk-toggleable__content {
+  max-height: 0;
+  max-width: 0;
+  overflow: hidden;
+  text-align: left;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-2 div.sk-toggleable__content.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-2 div.sk-toggleable__content pre {
+  margin: 0.2em;
+  border-radius: 0.25em;
+  color: var(--sklearn-color-text);
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-2 div.sk-toggleable__content.fitted pre {
+  /* unfitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-2 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+  /* Expand drop-down */
+  max-height: 200px;
+  max-width: 100%;
+  overflow: auto;
+}
+
+#sk-container-id-2 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+  content: "▾";
+}
+
+/* Pipeline/ColumnTransformer-specific style */
+
+#sk-container-id-2 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-2 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator-specific style */
+
+/* Colorize estimator box */
+#sk-container-id-2 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-2 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+#sk-container-id-2 div.sk-label label.sk-toggleable__label,
+#sk-container-id-2 div.sk-label label {
+  /* The background is the default theme color */
+  color: var(--sklearn-color-text-on-default-background);
+}
+
+/* On hover, darken the color of the background */
+#sk-container-id-2 div.sk-label:hover label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+/* Label box, darken color on hover, fitted */
+#sk-container-id-2 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator label */
+
+#sk-container-id-2 div.sk-label label {
+  font-family: monospace;
+  font-weight: bold;
+  display: inline-block;
+  line-height: 1.2em;
+}
+
+#sk-container-id-2 div.sk-label-container {
+  text-align: center;
+}
+
+/* Estimator-specific */
+#sk-container-id-2 div.sk-estimator {
+  font-family: monospace;
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: 0.25em;
+  box-sizing: border-box;
+  margin-bottom: 0.5em;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-2 div.sk-estimator.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+/* on hover */
+#sk-container-id-2 div.sk-estimator:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-2 div.sk-estimator.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Specification for estimator info (e.g. "i" and "?") */
+
+/* Common style for "i" and "?" */
+
+.sk-estimator-doc-link,
+a:link.sk-estimator-doc-link,
+a:visited.sk-estimator-doc-link {
+  float: right;
+  font-size: smaller;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1em;
+  height: 1em;
+  width: 1em;
+  text-decoration: none !important;
+  margin-left: 1ex;
+  /* unfitted */
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-1);
+}
+
+.sk-estimator-doc-link.fitted,
+a:link.sk-estimator-doc-link.fitted,
+a:visited.sk-estimator-doc-link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+div.sk-estimator:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover,
+div.sk-label-container:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover,
+div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+/* Span, style for the box shown on hovering the info icon */
+.sk-estimator-doc-link span {
+  display: none;
+  z-index: 9999;
+  position: relative;
+  font-weight: normal;
+  right: .2ex;
+  padding: .5ex;
+  margin: .5ex;
+  width: min-content;
+  min-width: 20ex;
+  max-width: 50ex;
+  color: var(--sklearn-color-text);
+  box-shadow: 2pt 2pt 4pt #999;
+  /* unfitted */
+  background: var(--sklearn-color-unfitted-level-0);
+  border: .5pt solid var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted span {
+  /* fitted */
+  background: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-estimator-doc-link:hover span {
+  display: block;
+}
+
+/* "?"-specific style due to the `<a>` HTML tag */
+
+#sk-container-id-2 a.estimator_doc_link {
+  float: right;
+  font-size: 1rem;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1rem;
+  height: 1rem;
+  width: 1rem;
+  text-decoration: none;
+  /* unfitted */
+  color: var(--sklearn-color-unfitted-level-1);
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+}
+
+#sk-container-id-2 a.estimator_doc_link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+#sk-container-id-2 a.estimator_doc_link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+#sk-container-id-2 a.estimator_doc_link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+}
+</a></style><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>KNeighborsClassifier(algorithm='brute', leaf_size=24, metric='hamming',
+                     weights='distance')</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" checked=""><label for="sk-estimator-id-2" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;KNeighborsClassifier<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.neighbors.KNeighborsClassifier.html">?<span>Documentation for KNeighborsClassifier</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>KNeighborsClassifier(algorithm='brute', leaf_size=24, metric='hamming',
+                     weights='distance')</pre></div> </div></div></div></div>
+</div>
+</div>
+</section>
+<section id="kneighborsclassifier-모델평가" class="level2">
+<h2 class="anchored" data-anchor-id="kneighborsclassifier-모델평가">KNeighborsClassifier 모델평가</h2>
+<div id="d2dc37ee" class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sklearn.model_selection</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>sklearn.model_selection.cross_val_score(best_model_knclassifier, x_test, y_test, scoring<span class="op">=</span><span class="st">'accuracy'</span>, cv<span class="op">=</span><span class="dv">5</span>, </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>                                        n_jobs<span class="op">=</span><span class="va">None</span>, verbose<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>array([0.52358491, 0.52377495, 0.52377495, 0.52341198, 0.52341198])</code></pre>
+</div>
+</div>
+</section>
+<section id="kneighborsclassifier-예측prediction" class="level2">
+<h2 class="anchored" data-anchor-id="kneighborsclassifier-예측prediction">KNeighborsClassifier 예측(Prediction)</h2>
+<div id="165f4baa" class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 예측대상 입력 후 변환</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co">## 입력</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>x_test_input <span class="op">=</span> pd.DataFrame({<span class="st">'Loading Country'</span>:<span class="st">'MX'</span>,</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>                             <span class="st">'Final Destination country'</span>:<span class="st">'US'</span>,</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>                             <span class="st">'Sold-to party'</span>:<span class="st">'C310-00'</span>,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>                             <span class="st">'Ship To Party'</span>:<span class="st">'4891788'</span>,</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>                             <span class="st">'Dangerous goods'</span>:<span class="st">'0'</span>,</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>                             <span class="st">'Sales Organization'</span>:<span class="st">'R001'</span>,</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>                             <span class="st">'Incoterms'</span>:<span class="st">'CIP'</span>},</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>                             index<span class="op">=</span>[<span class="dv">0</span>]</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="co">## LeaveOneOutEncoder변환</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>encoder_leave_one_out <span class="op">=</span> joblib.load(<span class="st">'encoder_leave_one_out.pkl'</span>)</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>x_data_to_predict <span class="op">=</span> encoder_leave_one_out.transform(x_test_input[x_column])</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>x_data_to_predict[<span class="st">'Dangerous goods'</span>] <span class="op">=</span> x_data_to_predict[<span class="st">'Dangerous goods'</span>].<span class="bu">map</span>({np.nan:<span class="dv">0</span>})</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>x_data_to_predict</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Loading Country</th>
+<th data-quarto-table-cell-role="th">Final Destination country</th>
+<th data-quarto-table-cell-role="th">Sold-to party</th>
+<th data-quarto-table-cell-role="th">Ship To Party</th>
+<th data-quarto-table-cell-role="th">Dangerous goods</th>
+<th data-quarto-table-cell-role="th">Sales Organization</th>
+<th data-quarto-table-cell-role="th">Incoterms</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>7.339717</td>
+<td>3.507706</td>
+<td>4.077912</td>
+<td>9.0</td>
+<td>0</td>
+<td>3.443488</td>
+<td>3.025576</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="1cf79d82" class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 예측값 {1:'VESSEL',2:'AIR'}</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>prediction <span class="op">=</span> best_model_knclassifier.predict(x_data_to_predict)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>prediction</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>array([2], dtype=int64)</code></pre>
+</div>
+</div>
+<div id="220cd1d8" class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>array_to_conver <span class="op">=</span> prediction</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>np.where(array_to_conver <span class="op">==</span> <span class="dv">1</span>, <span class="st">'VESSEL'</span>, np.where(array_to_conver <span class="op">==</span> <span class="dv">2</span>, <span class="st">'AIR'</span>, <span class="st">'UNKNOWN'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>array(['AIR'], dtype='&lt;U7')</code></pre>
+</div>
+</div>
+</section>
+<section id="kneighborsclassifier-모델저장" class="level2">
+<h2 class="anchored" data-anchor-id="kneighborsclassifier-모델저장">KNeighborsClassifier 모델저장</h2>
+<div id="d5ce0585" class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> joblib</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>joblib_file <span class="op">=</span> <span class="st">"model_knn_1st_fitted.joblib"</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>joblib.dump(best_model_knclassifier, joblib_file)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>['model_knn_1st_fitted.joblib']</code></pre>
+</div>
+</div>
+<div id="ce7d30d6" class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>joblib_file <span class="op">=</span> <span class="st">"model_knn_1st_fitted.joblib"</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>knn_loaded <span class="op">=</span> joblib.load(joblib_file)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>prediction <span class="op">=</span> knn_loaded.predict(x_data_to_predict)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>prediction</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>array([2], dtype=int64)</code></pre>
+</div>
+</div>
+<div id="6aba8b11" class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>array_to_conver <span class="op">=</span> prediction</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>np.where(array_to_conver <span class="op">==</span> <span class="dv">1</span>, <span class="st">'VESSEL'</span>, np.where(array_to_conver <span class="op">==</span> <span class="dv">2</span>, <span class="st">'AIR'</span>, <span class="st">'UNKNOWN'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>array(['AIR'], dtype='&lt;U7')</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/kr9268\.github\.io\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="kr9268/giscus_for_blog" data-repo-id="R_kgDOL0Sthw" data-category="General" data-category-id="DIC_kwDOL0Sth84Ce_5h" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+</div> <!-- /content -->
+<script>
+    const baseFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    const watermark = new XWatermark.XWatermark();
+    watermark.init("Kibok Park", {
+      parentSelector: "body",
+      prevent: true,
+      observer: true,
+      mode: "normal",
+      font: "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', 'Liberation Sans', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
+      fontsize: baseFontSize * 1.000000,
+      angle: -15.000000,
+      color: "#000000",
+      alpha: 0.100000,
+      cols: 10,
+      rows: 50,
+      xSpace: baseFontSize * 4.000000,
+      ySpace: baseFontSize * 4.000000,
+      zIndex: -1
+    });
+    </script>
+
+
+
+
+</body></html>

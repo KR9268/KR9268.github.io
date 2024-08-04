@@ -9,8 +9,1857 @@
 <link>https://kr9268.github.io/index_miniprojects.html</link>
 <atom:link href="https://kr9268.github.io/index_miniprojects.xml" rel="self" type="application/rss+xml"/>
 <description></description>
-<generator>quarto-1.5.55</generator>
-<lastBuildDate>Mon, 10 Jun 2024 00:00:00 GMT</lastBuildDate>
+<generator>quarto-1.5.56</generator>
+<lastBuildDate>Thu, 01 Aug 2024 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>[Python] AIR/VESSEL 예측을 위한 머신러닝 모델(진행중)</title>
+  <dc:creator>Kibok Park</dc:creator>
+  <link>https://kr9268.github.io/posts_miniprojects/sel-py-ml_predict_shiptype-20240801/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="개요" class="level1">
+<h1>개요</h1>
+<section id="추진배경" class="level2">
+<h2 class="anchored" data-anchor-id="추진배경">추진배경</h2>
+<ul>
+<li>긴급하게 현재 가지고 있는 데이터로, 예측관련하여 만들 수 있는 머신러닝 모델을 요청받음</li>
+<li>Kaggle에서 운송수단을 예측하는 KNN모델 샘플을 발견하여 적용</li>
+</ul>
+</section>
+<section id="계획" class="level2">
+<h2 class="anchored" data-anchor-id="계획">계획</h2>
+<ul>
+<li>국내외의 이동 데이터를 학습한 머신러닝을 활용하여, 조건(국가, 거래업체 등)입력시 어떤 운송수단으로 수출할지 예측(항공/해상)
+<ul>
+<li>[모델1] KNeighborsClassifier 활용한 분류
+<ul>
+<li>모델 정확성을 위해 7개의 Feature로 학습</li>
+<li>업무 사용시에는 사용자가 알 수 있는 4가지 정보를 필수로 받음 (‘Loading Country’, ‘Final Destination country’, ‘Sold-to party’, ‘Ship To Party’)
+<ul>
+<li>3가지 추가정보 제공시 더 정확한 예측제공, 없는 경우 기존데이터의 최빈값으로 대체하여 예측 (Sales Organization, Incoterms, Dangerous goods)</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>예측된 운송수단을 기반으로, 어느정도의 공간(부피)가 필요한지 확인 후 부킹(운송을 위한 공간예약)에 활용
+<ul>
+<li>[모델2] 활용한 예측
+<ul>
+<li>모델1에서 입력/예측된 값을 기반으로 부피(Volumn)을 예측
+<ul>
+<li>‘Loading Country’, ‘Final Destination country’, ‘Sold-to party’, ‘Ship To Party’ (+ ‘AIR/VESSEL’, ‘Dangerous goods’)</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>예측된 값과 함께, 기존 데이터의 History를 제공해 어떤 출발지에서 나갔었는지 함께 공유하여 업무에 활용
+<ul>
+<li>어떤 출발지인지에 따라, 사용하면 안되는 선사(해상운송업체)나 항공사가 정해질 수 있음</li>
+</ul></li>
+<li>KNN 참조한 샘플코드 : https://www.kaggle.com/code/sergeifursa/shipment-type-prediction-with-knn</li>
+</ul>
+</section>
+<section id="효과" class="level2">
+<h2 class="anchored" data-anchor-id="효과">효과</h2>
+<ul>
+<li>특정 조건(출/도착국가, 상대업체)을 기반으로, 항공기와 배 중 어떤 수단으로 얼마만큼 물량을 선적해야할 지 예측</li>
+<li>예측한 데이터를 기반으로, 조기에 Space(선적공간)을 수배하고 선점하여 대응력 강화</li>
+</ul>
+</section>
+<section id="github-repository" class="level2">
+<h2 class="anchored" data-anchor-id="github-repository">github repository</h2>
+<ul>
+<li>별도의 github레포로 정리하지 않고, 하단에 코드로만 기록</li>
+</ul>
+</section>
+<section id="세부내용-구현내용-사용한-언어패키지-등" class="level2">
+<h2 class="anchored" data-anchor-id="세부내용-구현내용-사용한-언어패키지-등">[세부내용] 구현내용 &amp; 사용한 언어/패키지 등</h2>
+<ol type="1">
+<li>db로 전환하여 <code>sqlite3</code>으로 데이터 보관</li>
+<li>데이터 전처리는 아래의 로직에 따라 <code>pandas</code>로 처리</li>
+</ol>
+<ul>
+<li>Drop
+<ul>
+<li>예측 대상인 중량(GrossWT), 항공중량(ChargeableWT), 부피(Volumn)이 모두 없으면 Drop</li>
+<li>배로 선적하는데 부피가 없는 경우 Drop</li>
+</ul></li>
+<li>변환(단위 통일)
+<ul>
+<li>중량은 G/KG 중 KG으로, 부피는 CCM/CBM중 CBM으로 설정</li>
+</ul></li>
+<li>대체(Null보완)
+<ul>
+<li>항공중량(ChargeableWT)만 없는 경우, 별도의 계산식으로 보완처리 (Max(중량, 부피*167))</li>
+</ul></li>
+<li>수치변환(To Numeric)
+<ul>
+<li>Y값으로 사용할 값 중 Categorical한 AIR/VESSEL컬럼은 dict로 관리 및 보관</li>
+<li>X값으로 사용할 값 중 Categorical한 컬럼들은 Scikit-learn의 <code>category_encoders</code>로 변환
+<ul>
+<li>향후 데이터가 추가/삭제될 상황을 위해 사용(업체코드 등은 추가가 빈번할 것으로 예상)</li>
+<li>High Cardinality하여 OnehotEncoding으로 인한 차원문제도 방지</li>
+<li>최초 실행 후 <code>joblib</code>로 encoder값을 저장해두고, 이후에는 로딩하여 사용</li>
+</ul></li>
+</ul></li>
+</ul>
+<ol start="3" type="1">
+<li>데이터셋 분할은 <code>Scikit-learn</code>의 <code>train_test_split</code>으로 train/test 8:2로 split</li>
+<li>모델 파라미터는 optuna를 활용하여 세팅</li>
+</ol>
+<ul>
+<li>첫 사용 모델로 일부 특이사항만 지정하여 <code>OptunaSearchCV</code>로 파라미터 지정
+<ul>
+<li>서열형(Ordinal)이 아닌 Categorical한 Y값이어서 Hamming을 metric으로 지정</li>
+<li>일부 Null값이 있어 kd_tree에서는 적용불가 메시지가 떠 kd_tree는 대상에서 제외</li>
+<li>이외 파라미터는 공식문서의 default값을 기준으로 일부 buffer를 두어 세팅함</li>
+</ul></li>
+</ul>
+<ol start="5" type="1">
+<li><code>Scikit-learn</code>의 <code>cross_val_score</code>으로 모델평가 (accuracy사용)</li>
+<li>모델예측은 앞서 <code>category_encoders</code>으로 변환 후 학습했으므로, predict시에도 변환 후 적용</li>
+<li>joblib로 모델저장</li>
+<li>이후 내용 추가 예정</li>
+</ol>
+</section>
+</section>
+<section id="데이터로딩" class="level1">
+<h1>데이터로딩</h1>
+<section id="load-with-dbsqlite3" class="level2">
+<h2 class="anchored" data-anchor-id="load-with-dbsqlite3">Load with DB(sqlite3)</h2>
+<div id="2b0e1c98" class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> pd</span>
+<span id="cb1-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> sqlite3</span>
+<span id="cb1-3"></span>
+<span id="cb1-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Connect to the SQLite database</span></span>
+<span id="cb1-5">conn <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> sqlite3.<span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">connect</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sample.db'</span>)</span>
+<span id="cb1-6"></span>
+<span id="cb1-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Write the DataFrame to the database</span></span>
+<span id="cb1-8">query <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"SELECT * FROM `table`"</span></span>
+<span id="cb1-9">df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.read_sql_query(query, conn)</span>
+<span id="cb1-10"></span>
+<span id="cb1-11"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Close the database connection</span></span>
+<span id="cb1-12">conn.close()</span>
+<span id="cb1-13">df</span></code></pre></div>
+</div>
+</section>
+</section>
+<section id="데이터-전처리date-preprocessing" class="level1">
+<h1>데이터 전처리(Date Preprocessing)</h1>
+<section id="drop-및-값-변환" class="level2">
+<h2 class="anchored" data-anchor-id="drop-및-값-변환">Drop 및 값 변환</h2>
+<ul>
+<li>[Drop] 운임 또는 Space확보의 기준되는 값이 없는 것이므로 Drop
+<ul>
+<li>해상/항공여부를 예측하더라도, Space정보가 없는 경우는 이후 대응이 불가하므로 Drop</li>
+</ul></li>
+<li>[변환] 중량 등 수치에 대한 단위 일치
+<ul>
+<li>중량(KG, G), 부피(CBM, CCM)일치시키기</li>
+</ul></li>
+<li>[Null대체] 주어진 값으로 계산하여 대체 가능한 경우 반영
+<ul>
+<li>Chargeable WT : 중량과 부피를 기준으로 계산가능. Null인 경우 계산하여 대체</li>
+</ul></li>
+</ul>
+<div id="b56b2dac" class="cell">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 판다스 컬럼생략하지 않게하는 옵션설정</span></span>
+<span id="cb2-2">pd.set_option(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'display.max_columns'</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>)</span></code></pre></div>
+</div>
+<div id="d5b242e9" class="cell">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> drop_fillna_convert_df(df):</span>
+<span id="cb3-2">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Drop</span></span>
+<span id="cb3-3">    df_dropped <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df.drop(df[(df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'AIR/VESSEL'</span>]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&amp;</span> df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Charg. Unit'</span>].isna()].index).copy()</span>
+<span id="cb3-4">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## 모든 중량/부피가 없음</span></span>
+<span id="cb3-5">    df_dropped <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_dropped.drop(df_dropped[df_dropped[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Gross weight'</span>].isna() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&amp;</span> df_dropped[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Volume'</span>].isna() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&amp;</span> df_dropped[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Charg. weigh'</span>].isna()].index)</span>
+<span id="cb3-6">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## 해상인데 부피 또는 부피단위가 없음</span></span>
+<span id="cb3-7">    df_dropped <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_dropped.drop(df_dropped[(df_dropped[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'AIR/VESSEL'</span>]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&amp;</span> df_dropped[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Volume'</span>].isna()].index)</span>
+<span id="cb3-8">    df_dropped <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_dropped.drop(df_dropped[(df_dropped[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'AIR/VESSEL'</span>]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&amp;</span> df_dropped[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Volume unit'</span>].isna()].index)</span>
+<span id="cb3-9">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## 항공인데, ChargeableWT가 없는데, 계산할 기초값인 Groww weight나 Volumn 중 하나가 없음</span></span>
+<span id="cb3-10">    df_dropped <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_dropped.drop(df_dropped[(df_dropped[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'AIR/VESSEL'</span>]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&amp;</span> df_dropped[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Charg. weigh'</span>].isna() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&amp;</span> df_dropped[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Gross weight'</span>].isna()].index)</span>
+<span id="cb3-11">    df_dropped <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_dropped.drop(df_dropped[(df_dropped[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'AIR/VESSEL'</span>]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&amp;</span> df_dropped[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Charg. weigh'</span>].isna() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&amp;</span> df_dropped[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Volume'</span>].isna()].index)</span>
+<span id="cb3-12"></span>
+<span id="cb3-13">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Convert Unit</span></span>
+<span id="cb3-14">    df_dropped.loc[df_dropped[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Gross unit'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'G'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Gross weight'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span></span>
+<span id="cb3-15">    df_dropped.loc[df_dropped[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Volume unit'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'CCM'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Volume'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span></span>
+<span id="cb3-16"></span>
+<span id="cb3-17">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Null대체</span></span>
+<span id="cb3-18">    crit_replace_na <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (df_dropped[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Charg. weigh'</span>].isnull()) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&amp;</span> (df_dropped[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'AIR/VESSEL'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb3-19">    df_dropped.loc[crit_replace_na, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Charg. weigh'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.maximum(df_dropped[crit_replace_na][<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Gross weight'</span>], df_dropped[crit_replace_na][<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Volume'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">167</span>)</span>
+<span id="cb3-20"></span>
+<span id="cb3-21">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> df_dropped</span>
+<span id="cb3-22"></span>
+<span id="cb3-23">df_dropped <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> drop_fillna_convert_df(df)</span></code></pre></div>
+</div>
+</section>
+<section id="x-y값-변환to-numeric" class="level2">
+<h2 class="anchored" data-anchor-id="x-y값-변환to-numeric">X, Y값 변환(To numeric)</h2>
+<ul>
+<li>Y값 변환
+<ul>
+<li>사용할 3개의 Y값(AIR/VESSEL, Volumn, Charg. weigh)중, 한가지는 Categorical이므로 숫자로 변경
+<ul>
+<li>AIR/VESSEL(Categorical이므로), Volumn(Numeric), Charg. weigh(Numeric)</li>
+</ul></li>
+<li>해상/항공만 사용할 예정이므로 해상과 항공에 대해 매핑, 나머지는 9</li>
+</ul></li>
+<li>X값 변환
+<ul>
+<li>Dangerous goods는 2가지 값(O,X)밖에 없으므로 0,1로 변환</li>
+</ul></li>
+</ul>
+<div id="f6a1af27" class="cell">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">mapping_airvessel_dict <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>()</span>
+<span id="cb4-2"></span>
+<span id="cb4-3"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'AIR/VESSEL'</span>].unique():</span>
+<span id="cb4-4">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'S'</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> i:</span>
+<span id="cb4-5">        mapping_airvessel_dict[i] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb4-6">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">elif</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'P'</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">or</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'M'</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> i:</span>
+<span id="cb4-7">        mapping_airvessel_dict[i] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span>
+<span id="cb4-8">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span>:</span>
+<span id="cb4-9">        mapping_airvessel_dict[i] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span></span>
+<span id="cb4-10">mapping_airvessel_dict</span></code></pre></div>
+</div>
+<div id="1c1fc715" class="cell">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># y값 매핑</span></span>
+<span id="cb5-2">df_dropped[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'AIR/VESSEL'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_dropped[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'AIR/VESSEL'</span>].<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">map</span>(mapping_airvessel_dict)</span>
+<span id="cb5-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># X값 매핑</span></span>
+<span id="cb5-4">df_dropped[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Dangerous goods'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_dropped[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Dangerous goods'</span>].<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">map</span>({<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'X'</span>:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>})</span></code></pre></div>
+</div>
+</section>
+<section id="x값-변환to-numeric-with-leaveoneout-encoder" class="level2">
+<h2 class="anchored" data-anchor-id="x값-변환to-numeric-with-leaveoneout-encoder">X값 변환(To numeric with LeaveOneOut Encoder)</h2>
+<ul>
+<li>머신러닝학습을 위해 숫자로 변환 필요</li>
+<li>LeaveOneOut Encoder를 활용하는 것으로 결정
+<ul>
+<li><p>국가코드는 거의 바뀔 일이 없지만, 아프리카 지역 등 일부 Minor한 국가로 판매할 경우 추가될 수 있음</p></li>
+<li><p>업체코드는 추가/삭제될 가능성이 높음</p></li>
+<li><p>Unique값이 많으므로 One-hot Encoding시 차원이 너무 많아질 위험 있음(High Cardinality)</p></li>
+<li><p>처음에는 아래와 같이 dict로 각 컬럼별 매핑값을 관리하고자했으나, 번거로움과 대상이 많아짐에 따라 Encoder를 활용</p>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1">  party_code_reverse <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {v: k <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> k, v <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> party_code.items()}</span>
+<span id="cb6-2">  country_code_map_reverse <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {v: k <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> k, v <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> country_code_map.items()}</span>
+<span id="cb6-3"></span>
+<span id="cb6-4">  x_data_encoded <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.DataFrame()</span>
+<span id="cb6-5">  <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> each_column <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> x_column:</span>
+<span id="cb6-6">      <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> each_column <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Loading Country'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Final Destination country'</span>]:</span>
+<span id="cb6-7">          x_data_encoded[each_column] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x_data[each_column].<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">map</span>(country_code_map_reverse)</span>
+<span id="cb6-8">      <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">elif</span> each_column <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Sold-to party'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Ship To Party'</span>]:</span>
+<span id="cb6-9">          x_data_encoded[each_column] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x_data[each_column].<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">map</span>(party_code_reverse)</span></code></pre></div></li>
+</ul></li>
+<li>Sci-kit learn LeaveOneOut Encoder 공식문서
+<ul>
+<li>https://contrib.scikit-learn.org/category_encoders/leaveoneout.html</li>
+</ul></li>
+</ul>
+<div id="da8767d1" class="cell">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 학습할 Feature</span></span>
+<span id="cb7-2">x_column <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Loading Country'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Final Destination country'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Sold-to party'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Ship To Party'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Dangerous goods'</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Sales Organization'</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Incoterms'</span>]</span>
+<span id="cb7-3">y_column <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'AIR/VESSEL'</span></span></code></pre></div>
+</div>
+<div id="f50a523e" class="cell">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># LeaveOneOutEncoder (최초 실행시)</span></span>
+<span id="cb8-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> category_encoders <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> ce</span>
+<span id="cb8-3"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> joblib</span>
+<span id="cb8-4"></span>
+<span id="cb8-5">encoder_leave_one_out <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ce.LeaveOneOutEncoder(cols<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>x_column, sigma<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.1</span>, return_df<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb8-6">x_data_all <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> encoder_leave_one_out.fit_transform(df_dropped[x_column], df_dropped[y_column])</span>
+<span id="cb8-7"></span>
+<span id="cb8-8">joblib.dump(encoder_leave_one_out, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'encoder_leave_one_out.pkl'</span>)</span>
+<span id="cb8-9"></span>
+<span id="cb8-10">x_data_all</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Loading Country</th>
+<th data-quarto-table-cell-role="th">Final Destination country</th>
+<th data-quarto-table-cell-role="th">Sold-to party</th>
+<th data-quarto-table-cell-role="th">Ship To Party</th>
+<th data-quarto-table-cell-role="th">Dangerous goods</th>
+<th data-quarto-table-cell-role="th">Sales Organization</th>
+<th data-quarto-table-cell-role="th">Incoterms</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>7.047596</td>
+<td>3.679223</td>
+<td>3.861376</td>
+<td>8.134116</td>
+<td>2.765859</td>
+<td>2.988212</td>
+<td>3.206009</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>1.501914</td>
+<td>1.956254</td>
+<td>1.396398</td>
+<td>1.010231</td>
+<td>2.410832</td>
+<td>3.551036</td>
+<td>2.268934</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>1.246987</td>
+<td>1.247269</td>
+<td>1.076889</td>
+<td>1.069540</td>
+<td>2.266524</td>
+<td>3.929307</td>
+<td>1.368437</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>7.557798</td>
+<td>3.385827</td>
+<td>4.343922</td>
+<td>5.881165</td>
+<td>2.453504</td>
+<td>3.253987</td>
+<td>3.082357</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>1.711316</td>
+<td>1.644219</td>
+<td>1.418986</td>
+<td>1.081862</td>
+<td>2.604062</td>
+<td>1.513666</td>
+<td>1.461735</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">68896</td>
+<td>1.805997</td>
+<td>1.211290</td>
+<td>1.620240</td>
+<td>0.923400</td>
+<td>2.128367</td>
+<td>4.805674</td>
+<td>1.252805</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">68897</td>
+<td>1.738878</td>
+<td>1.543501</td>
+<td>1.904886</td>
+<td>0.850793</td>
+<td>2.625204</td>
+<td>2.538548</td>
+<td>2.008110</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">68898</td>
+<td>1.916489</td>
+<td>1.649348</td>
+<td>1.104931</td>
+<td>1.064014</td>
+<td>2.018030</td>
+<td>2.863359</td>
+<td>1.569362</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">68899</td>
+<td>1.903145</td>
+<td>2.041549</td>
+<td>2.386892</td>
+<td>0.954536</td>
+<td>2.133451</td>
+<td>1.841485</td>
+<td>1.714075</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">68900</td>
+<td>1.963608</td>
+<td>1.810246</td>
+<td>1.429540</td>
+<td>1.208997</td>
+<td>2.474078</td>
+<td>2.198915</td>
+<td>1.706463</td>
+</tr>
+</tbody>
+</table>
+
+<p>68880 rows × 7 columns</p>
+</div>
+</div>
+</div>
+<div id="0507419c" class="cell">
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># LeaveOneOutEncoder (실행내역 있는 경우)</span></span>
+<span id="cb9-2"></span>
+<span id="cb9-3">encoder_leave_one_out <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> joblib.load(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'encoder_leave_one_out.pkl'</span>)</span>
+<span id="cb9-4">x_data_all <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> encoder_leave_one_out.transform(df_dropped[x_column], df_dropped[y_column])</span>
+<span id="cb9-5"></span>
+<span id="cb9-6">joblib.dump(encoder_leave_one_out, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'encoder_leave_one_out.pkl'</span>)</span>
+<span id="cb9-7"></span>
+<span id="cb9-8">x_data_all</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Loading Country</th>
+<th data-quarto-table-cell-role="th">Final Destination country</th>
+<th data-quarto-table-cell-role="th">Sold-to party</th>
+<th data-quarto-table-cell-role="th">Ship To Party</th>
+<th data-quarto-table-cell-role="th">Dangerous goods</th>
+<th data-quarto-table-cell-role="th">Sales Organization</th>
+<th data-quarto-table-cell-role="th">Incoterms</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>7.041479</td>
+<td>2.808034</td>
+<td>3.644974</td>
+<td>10.297530</td>
+<td>2.271593</td>
+<td>3.376236</td>
+<td>2.761253</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>1.203195</td>
+<td>1.595750</td>
+<td>1.537957</td>
+<td>1.012471</td>
+<td>2.542451</td>
+<td>4.059490</td>
+<td>1.791253</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>1.509811</td>
+<td>1.355136</td>
+<td>1.029430</td>
+<td>0.941528</td>
+<td>2.484937</td>
+<td>3.039443</td>
+<td>1.278045</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>8.488335</td>
+<td>4.329470</td>
+<td>5.074977</td>
+<td>5.995380</td>
+<td>2.378870</td>
+<td>3.362426</td>
+<td>2.950839</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>1.371701</td>
+<td>1.669704</td>
+<td>1.662936</td>
+<td>1.251279</td>
+<td>2.103728</td>
+<td>1.285509</td>
+<td>1.482815</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">68896</td>
+<td>1.759238</td>
+<td>1.000788</td>
+<td>1.684182</td>
+<td>1.115493</td>
+<td>2.130670</td>
+<td>2.516951</td>
+<td>1.334155</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">68897</td>
+<td>2.000342</td>
+<td>1.765736</td>
+<td>1.469979</td>
+<td>1.130242</td>
+<td>2.640289</td>
+<td>2.358999</td>
+<td>1.532509</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">68898</td>
+<td>1.901704</td>
+<td>1.555484</td>
+<td>1.386904</td>
+<td>0.944819</td>
+<td>2.572425</td>
+<td>2.429427</td>
+<td>1.479614</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">68899</td>
+<td>2.164074</td>
+<td>2.300433</td>
+<td>2.976153</td>
+<td>1.097528</td>
+<td>2.626010</td>
+<td>1.895660</td>
+<td>1.757920</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">68900</td>
+<td>1.721231</td>
+<td>1.691727</td>
+<td>1.582234</td>
+<td>1.200996</td>
+<td>2.586225</td>
+<td>1.986513</td>
+<td>1.549286</td>
+</tr>
+</tbody>
+</table>
+
+<p>68880 rows × 7 columns</p>
+</div>
+</div>
+</div>
+<div id="4e962657" class="cell">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1">y_data_all <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_dropped[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'AIR/VESSEL'</span>]</span>
+<span id="cb10-2">y_data_all</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>0        9
+1        1
+2        1
+3        9
+4        1
+        ..
+68896    1
+68897    1
+68898    1
+68899    1
+68900    1
+Name: AIR/VESSEL, Length: 68880, dtype: int64</code></pre>
+</div>
+</div>
+</section>
+<section id="데이터셋-분할split-traintest" class="level2">
+<h2 class="anchored" data-anchor-id="데이터셋-분할split-traintest">데이터셋 분할(Split Train/Test)</h2>
+<div id="39a6fc1a" class="cell">
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> sklearn.model_selection <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> train_test_split</span>
+<span id="cb12-2"></span>
+<span id="cb12-3">x_train, x_test, y_train, y_test <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> train_test_split(x_data_all, y_data_all, train_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>, shuffle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>, stratify<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>y_data_all)</span></code></pre></div>
+</div>
+</section>
+</section>
+<section id="모델-학습-kneighborsclassifier" class="level1">
+<h1>모델 학습 (KNeighborsClassifier)</h1>
+<section id="kneighborsclassifier-학습" class="level2">
+<h2 class="anchored" data-anchor-id="kneighborsclassifier-학습">KNeighborsClassifier 학습</h2>
+<ul>
+<li>처음 사용해보는 모델이면서 마감기한이 촉박하여, optuna를 활용하여 파라미터 세팅</li>
+<li>Scikit-learn KNeighborsClassifier 공식문서
+<ul>
+<li>https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html</li>
+</ul></li>
+<li>Metric의 경우, hamming distance를 채택
+<ul>
+<li>Kaggle 샘플코드에서 Categorical인 경우는 hamming distance를 기준한다고 되어있음을 참고</li>
+<li>시간관계상 간단히 알아보니, Simple matching이라면 hamming, 중요도가 있다면 jacard라고 함</li>
+<li>이외에 변수가 서열형(ordinal)인 경우에도 다른 방법이 있다고 하나, 현재의 데이터는 서열형으로 볼 수는 없어 제외</li>
+</ul></li>
+</ul>
+<div id="403a08d1" class="cell">
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> optuna</span>
+<span id="cb13-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> sklearn.neighbors <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> KNeighborsClassifier</span>
+<span id="cb13-3"></span>
+<span id="cb13-4">clf <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> KNeighborsClassifier(metric<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'hamming'</span>)</span>
+<span id="cb13-5"></span>
+<span id="cb13-6">param_distributions <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {</span>
+<span id="cb13-7">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"n_neighbors"</span>: optuna.distributions.IntDistribution(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>),</span>
+<span id="cb13-8">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"weights"</span>: optuna.distributions.CategoricalDistribution([<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'uniform'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'distance'</span>]),</span>
+<span id="cb13-9">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"algorithm"</span>: optuna.distributions.CategoricalDistribution([<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'auto'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'ball_tree'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'brute'</span>]), <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#'kd_tree'는 nan인 경우 문제가 있어 제외</span></span>
+<span id="cb13-10">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"leaf_size"</span> : optuna.distributions.IntDistribution(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">40</span>),</span>
+<span id="cb13-11">}</span>
+<span id="cb13-12"></span>
+<span id="cb13-13">optuna_search <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> optuna.integration.OptunaSearchCV(</span>
+<span id="cb13-14">    clf, </span>
+<span id="cb13-15">    param_distributions, </span>
+<span id="cb13-16">    n_jobs<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Number of parallel jobs. -1 means using all processors.</span></span>
+<span id="cb13-17">    cv<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#  estimator가 classifier &amp; label이 binary or multiclass라면 sklearn.model_selection.StratifiedKFold 적용 (이외는 sklearn.model_selection.KFold)</span></span>
+<span id="cb13-18">    n_trials<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>, </span>
+<span id="cb13-19">    timeout<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">600</span>, </span>
+<span id="cb13-20">    verbose<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,</span>
+<span id="cb13-21">    scoring<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>, <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># If None, score on the estimator is used.</span></span>
+<span id="cb13-22">    refit<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span> <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Best Parameter로 refit. refitted estimator는 best_estimator_ attribute로 바로 predict가능</span></span>
+<span id="cb13-23">)</span>
+<span id="cb13-24"></span>
+<span id="cb13-25">optuna_search.fit(x_train, y_train)</span>
+<span id="cb13-26"></span>
+<span id="cb13-27"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Best trial:"</span>)</span>
+<span id="cb13-28">trial <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> optuna_search.study_.best_trial</span>
+<span id="cb13-29"></span>
+<span id="cb13-30"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"  Value: "</span>, trial.value)</span>
+<span id="cb13-31"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"  Params: "</span>)</span>
+<span id="cb13-32"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> key, value <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> trial.params.items():</span>
+<span id="cb13-33">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"    </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">format</span>(key, value))</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>py:13: ExperimentalWarning: OptunaSearchCV is experimental (supported from v0.17.0). The interface can change in the future.
+  optuna_search = optuna.integration.OptunaSearchCV(
+[I 2024-08-04 22:23:30,602] A new study created in memory with name: no-name-8095b4dc-5e03-4ae4-942f-6fa9c1f72a9c
+[I 2024-08-04 22:24:37,815] Trial 4 finished with value: 0.5235917538057604 and parameters: {'n_neighbors': 5, 'weights': 'distance', 'algorithm': 'brute', 'leaf_size': 24}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:24:39,034] Trial 5 finished with value: 0.5235917538057604 and parameters: {'n_neighbors': 5, 'weights': 'distance', 'algorithm': 'brute', 'leaf_size': 36}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:24:51,518] Trial 6 finished with value: 0.5235917538057604 and parameters: {'n_neighbors': 3, 'weights': 'distance', 'algorithm': 'brute', 'leaf_size': 23}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:26:20,120] Trial 3 finished with value: 0.3665977063092387 and parameters: {'n_neighbors': 4, 'weights': 'uniform', 'algorithm': 'auto', 'leaf_size': 39}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:26:20,993] Trial 2 finished with value: 0.42937162859026257 and parameters: {'n_neighbors': 3, 'weights': 'distance', 'algorithm': 'ball_tree', 'leaf_size': 25}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:26:51,430] Trial 1 finished with value: 0.3665977063092387 and parameters: {'n_neighbors': 5, 'weights': 'distance', 'algorithm': 'auto', 'leaf_size': 30}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:26:52,521] Trial 7 finished with value: 0.3665977063092387 and parameters: {'n_neighbors': 4, 'weights': 'uniform', 'algorithm': 'auto', 'leaf_size': 32}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:26:52,625] Trial 0 finished with value: 0.42937162859026257 and parameters: {'n_neighbors': 3, 'weights': 'uniform', 'algorithm': 'auto', 'leaf_size': 35}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:27:15,381] Trial 8 finished with value: 0.3665977063092387 and parameters: {'n_neighbors': 5, 'weights': 'distance', 'algorithm': 'auto', 'leaf_size': 35}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:27:16,046] Trial 9 finished with value: 0.3665977063092387 and parameters: {'n_neighbors': 4, 'weights': 'distance', 'algorithm': 'auto', 'leaf_size': 25}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:28:09,880] Trial 14 finished with value: 0.4293897757638404 and parameters: {'n_neighbors': 4, 'weights': 'distance', 'algorithm': 'brute', 'leaf_size': 36}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:28:10,904] Trial 10 finished with value: 0.3665977063092387 and parameters: {'n_neighbors': 4, 'weights': 'distance', 'algorithm': 'auto', 'leaf_size': 36}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:28:12,691] Trial 15 finished with value: 0.4293897757638404 and parameters: {'n_neighbors': 4, 'weights': 'uniform', 'algorithm': 'brute', 'leaf_size': 29}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:28:26,116] Trial 17 finished with value: 0.5235917538057604 and parameters: {'n_neighbors': 5, 'weights': 'uniform', 'algorithm': 'brute', 'leaf_size': 20}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:29:16,651] Trial 12 finished with value: 0.3665977063092387 and parameters: {'n_neighbors': 5, 'weights': 'distance', 'algorithm': 'auto', 'leaf_size': 24}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:29:17,018] Trial 11 finished with value: 0.3665977063092387 and parameters: {'n_neighbors': 5, 'weights': 'uniform', 'algorithm': 'auto', 'leaf_size': 34}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:29:33,118] Trial 19 finished with value: 0.5235917538057604 and parameters: {'n_neighbors': 5, 'weights': 'distance', 'algorithm': 'brute', 'leaf_size': 20}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:29:33,664] Trial 18 finished with value: 0.5235917538057604 and parameters: {'n_neighbors': 5, 'weights': 'distance', 'algorithm': 'brute', 'leaf_size': 20}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:29:37,861] Trial 20 finished with value: 0.5235917538057604 and parameters: {'n_neighbors': 5, 'weights': 'distance', 'algorithm': 'brute', 'leaf_size': 20}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:29:46,067] Trial 21 finished with value: 0.5235917538057604 and parameters: {'n_neighbors': 5, 'weights': 'distance', 'algorithm': 'brute', 'leaf_size': 40}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:30:10,551] Trial 13 finished with value: 0.3665977063092387 and parameters: {'n_neighbors': 5, 'weights': 'distance', 'algorithm': 'ball_tree', 'leaf_size': 32}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:30:11,709] Trial 16 finished with value: 0.3665977063092387 and parameters: {'n_neighbors': 5, 'weights': 'uniform', 'algorithm': 'auto', 'leaf_size': 31}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:30:29,747] Trial 22 finished with value: 0.5235917538057604 and parameters: {'n_neighbors': 5, 'weights': 'distance', 'algorithm': 'brute', 'leaf_size': 40}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:30:30,705] Trial 23 finished with value: 0.5235917538057604 and parameters: {'n_neighbors': 5, 'weights': 'distance', 'algorithm': 'brute', 'leaf_size': 40}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:31:25,150] Trial 29 finished with value: 0.5235917538057604 and parameters: {'n_neighbors': 3, 'weights': 'distance', 'algorithm': 'brute', 'leaf_size': 27}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:31:40,271] Trial 30 finished with value: 0.5235917538057604 and parameters: {'n_neighbors': 3, 'weights': 'distance', 'algorithm': 'brute', 'leaf_size': 23}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:31:41,349] Trial 31 finished with value: 0.5235917538057604 and parameters: {'n_neighbors': 3, 'weights': 'distance', 'algorithm': 'brute', 'leaf_size': 23}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:31:42,531] Trial 28 finished with value: 0.5235917538057604 and parameters: {'n_neighbors': 3, 'weights': 'distance', 'algorithm': 'brute', 'leaf_size': 23}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:32:32,403] Trial 27 finished with value: 0.3665977063092387 and parameters: {'n_neighbors': 4, 'weights': 'distance', 'algorithm': 'ball_tree', 'leaf_size': 28}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:33:00,736] Trial 24 finished with value: 0.3665977063092387 and parameters: {'n_neighbors': 5, 'weights': 'distance', 'algorithm': 'ball_tree', 'leaf_size': 28}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:33:02,806] Trial 26 finished with value: 0.3665977063092387 and parameters: {'n_neighbors': 5, 'weights': 'distance', 'algorithm': 'ball_tree', 'leaf_size': 40}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:33:05,471] Trial 25 finished with value: 0.3665977063092387 and parameters: {'n_neighbors': 5, 'weights': 'distance', 'algorithm': 'ball_tree', 'leaf_size': 28}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:34:04,143] Trial 32 finished with value: 0.42937162859026257 and parameters: {'n_neighbors': 3, 'weights': 'distance', 'algorithm': 'ball_tree', 'leaf_size': 23}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:34:13,049] Trial 33 finished with value: 0.3665977063092387 and parameters: {'n_neighbors': 4, 'weights': 'distance', 'algorithm': 'ball_tree', 'leaf_size': 22}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:34:14,021] Trial 34 finished with value: 0.3665977063092387 and parameters: {'n_neighbors': 4, 'weights': 'distance', 'algorithm': 'ball_tree', 'leaf_size': 27}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:34:16,306] Trial 37 finished with value: 0.4293897757638404 and parameters: {'n_neighbors': 4, 'weights': 'distance', 'algorithm': 'brute', 'leaf_size': 26}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:34:22,248] Trial 38 finished with value: 0.4293897757638404 and parameters: {'n_neighbors': 4, 'weights': 'uniform', 'algorithm': 'brute', 'leaf_size': 22}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:34:22,899] Trial 39 finished with value: 0.4293897757638404 and parameters: {'n_neighbors': 4, 'weights': 'uniform', 'algorithm': 'brute', 'leaf_size': 22}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:34:30,938] Trial 35 finished with value: 0.3665977063092387 and parameters: {'n_neighbors': 4, 'weights': 'distance', 'algorithm': 'ball_tree', 'leaf_size': 27}. Best is trial 4 with value: 0.5235917538057604.
+[I 2024-08-04 22:34:37,208] Trial 36 finished with value: 0.3665977063092387 and parameters: {'n_neighbors': 4, 'weights': 'distance', 'algorithm': 'ball_tree', 'leaf_size': 27}. Best is trial 4 with value: 0.5235917538057604.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Best trial:
+  Value:  0.5235917538057604
+  Params: 
+    n_neighbors: 5
+    weights: distance
+    algorithm: brute
+    leaf_size: 24</code></pre>
+</div>
+</div>
+<div id="78fbea2c" class="cell">
+<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1">optuna_search.best_params_</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>{'n_neighbors': 5,
+ 'weights': 'distance',
+ 'algorithm': 'brute',
+ 'leaf_size': 24}</code></pre>
+</div>
+</div>
+<div id="7dfab7d0" class="cell">
+<div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1">best_model_knclassifier <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> optuna_search.best_estimator_</span>
+<span id="cb18-2">best_model_knclassifier</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<style>#sk-container-id-2 {
+  /* Definition of color scheme common for light and dark mode */
+  --sklearn-color-text: black;
+  --sklearn-color-line: gray;
+  /* Definition of color scheme for unfitted estimators */
+  --sklearn-color-unfitted-level-0: #fff5e6;
+  --sklearn-color-unfitted-level-1: #f6e4d2;
+  --sklearn-color-unfitted-level-2: #ffe0b3;
+  --sklearn-color-unfitted-level-3: chocolate;
+  /* Definition of color scheme for fitted estimators */
+  --sklearn-color-fitted-level-0: #f0f8ff;
+  --sklearn-color-fitted-level-1: #d4ebff;
+  --sklearn-color-fitted-level-2: #b3dbfd;
+  --sklearn-color-fitted-level-3: cornflowerblue;
+
+  /* Specific color for light theme */
+  --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
+  --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-icon: #696969;
+
+  @media (prefers-color-scheme: dark) {
+    /* Redefinition of color scheme for dark theme */
+    --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
+    --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-icon: #878787;
+  }
+}
+
+#sk-container-id-2 {
+  color: var(--sklearn-color-text);
+}
+
+#sk-container-id-2 pre {
+  padding: 0;
+}
+
+#sk-container-id-2 input.sk-hidden--visually {
+  border: 0;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+#sk-container-id-2 div.sk-dashed-wrapped {
+  border: 1px dashed var(--sklearn-color-line);
+  margin: 0 0.4em 0.5em 0.4em;
+  box-sizing: border-box;
+  padding-bottom: 0.4em;
+  background-color: var(--sklearn-color-background);
+}
+
+#sk-container-id-2 div.sk-container {
+  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
+     but bootstrap.min.css set `[hidden] { display: none !important; }`
+     so we also need the `!important` here to be able to override the
+     default hidden behavior on the sphinx rendered scikit-learn.org.
+     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
+  display: inline-block !important;
+  position: relative;
+}
+
+#sk-container-id-2 div.sk-text-repr-fallback {
+  display: none;
+}
+
+div.sk-parallel-item,
+div.sk-serial,
+div.sk-item {
+  /* draw centered vertical line to link estimators */
+  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
+  background-size: 2px 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* Parallel-specific style estimator block */
+
+#sk-container-id-2 div.sk-parallel-item::after {
+  content: "";
+  width: 100%;
+  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
+  flex-grow: 1;
+}
+
+#sk-container-id-2 div.sk-parallel {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background-color: var(--sklearn-color-background);
+  position: relative;
+}
+
+#sk-container-id-2 div.sk-parallel-item {
+  display: flex;
+  flex-direction: column;
+}
+
+#sk-container-id-2 div.sk-parallel-item:first-child::after {
+  align-self: flex-end;
+  width: 50%;
+}
+
+#sk-container-id-2 div.sk-parallel-item:last-child::after {
+  align-self: flex-start;
+  width: 50%;
+}
+
+#sk-container-id-2 div.sk-parallel-item:only-child::after {
+  width: 0;
+}
+
+/* Serial-specific style estimator block */
+
+#sk-container-id-2 div.sk-serial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--sklearn-color-background);
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+
+/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
+clickable and can be expanded/collapsed.
+- Pipeline and ColumnTransformer use this feature and define the default style
+- Estimators will overwrite some part of the style using the `sk-estimator` class
+*/
+
+/* Pipeline and ColumnTransformer style (default) */
+
+#sk-container-id-2 div.sk-toggleable {
+  /* Default theme specific background. It is overwritten whether we have a
+  specific estimator or a Pipeline/ColumnTransformer */
+  background-color: var(--sklearn-color-background);
+}
+
+/* Toggleable label */
+#sk-container-id-2 label.sk-toggleable__label {
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 0.5em;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+#sk-container-id-2 label.sk-toggleable__label-arrow:before {
+  /* Arrow on the left of the label */
+  content: "▸";
+  float: left;
+  margin-right: 0.25em;
+  color: var(--sklearn-color-icon);
+}
+
+#sk-container-id-2 label.sk-toggleable__label-arrow:hover:before {
+  color: var(--sklearn-color-text);
+}
+
+/* Toggleable content - dropdown */
+
+#sk-container-id-2 div.sk-toggleable__content {
+  max-height: 0;
+  max-width: 0;
+  overflow: hidden;
+  text-align: left;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-2 div.sk-toggleable__content.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-2 div.sk-toggleable__content pre {
+  margin: 0.2em;
+  border-radius: 0.25em;
+  color: var(--sklearn-color-text);
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-2 div.sk-toggleable__content.fitted pre {
+  /* unfitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-2 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+  /* Expand drop-down */
+  max-height: 200px;
+  max-width: 100%;
+  overflow: auto;
+}
+
+#sk-container-id-2 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+  content: "▾";
+}
+
+/* Pipeline/ColumnTransformer-specific style */
+
+#sk-container-id-2 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-2 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator-specific style */
+
+/* Colorize estimator box */
+#sk-container-id-2 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-2 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+#sk-container-id-2 div.sk-label label.sk-toggleable__label,
+#sk-container-id-2 div.sk-label label {
+  /* The background is the default theme color */
+  color: var(--sklearn-color-text-on-default-background);
+}
+
+/* On hover, darken the color of the background */
+#sk-container-id-2 div.sk-label:hover label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+/* Label box, darken color on hover, fitted */
+#sk-container-id-2 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator label */
+
+#sk-container-id-2 div.sk-label label {
+  font-family: monospace;
+  font-weight: bold;
+  display: inline-block;
+  line-height: 1.2em;
+}
+
+#sk-container-id-2 div.sk-label-container {
+  text-align: center;
+}
+
+/* Estimator-specific */
+#sk-container-id-2 div.sk-estimator {
+  font-family: monospace;
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: 0.25em;
+  box-sizing: border-box;
+  margin-bottom: 0.5em;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-2 div.sk-estimator.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+/* on hover */
+#sk-container-id-2 div.sk-estimator:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-2 div.sk-estimator.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Specification for estimator info (e.g. "i" and "?") */
+
+/* Common style for "i" and "?" */
+
+.sk-estimator-doc-link,
+a:link.sk-estimator-doc-link,
+a:visited.sk-estimator-doc-link {
+  float: right;
+  font-size: smaller;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1em;
+  height: 1em;
+  width: 1em;
+  text-decoration: none !important;
+  margin-left: 1ex;
+  /* unfitted */
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-1);
+}
+
+.sk-estimator-doc-link.fitted,
+a:link.sk-estimator-doc-link.fitted,
+a:visited.sk-estimator-doc-link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+div.sk-estimator:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover,
+div.sk-label-container:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover,
+div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+/* Span, style for the box shown on hovering the info icon */
+.sk-estimator-doc-link span {
+  display: none;
+  z-index: 9999;
+  position: relative;
+  font-weight: normal;
+  right: .2ex;
+  padding: .5ex;
+  margin: .5ex;
+  width: min-content;
+  min-width: 20ex;
+  max-width: 50ex;
+  color: var(--sklearn-color-text);
+  box-shadow: 2pt 2pt 4pt #999;
+  /* unfitted */
+  background: var(--sklearn-color-unfitted-level-0);
+  border: .5pt solid var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted span {
+  /* fitted */
+  background: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-estimator-doc-link:hover span {
+  display: block;
+}
+
+/* "?"-specific style due to the `<a>` HTML tag */
+
+#sk-container-id-2 a.estimator_doc_link {
+  float: right;
+  font-size: 1rem;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1rem;
+  height: 1rem;
+  width: 1rem;
+  text-decoration: none;
+  /* unfitted */
+  color: var(--sklearn-color-unfitted-level-1);
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+}
+
+#sk-container-id-2 a.estimator_doc_link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+#sk-container-id-2 a.estimator_doc_link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+#sk-container-id-2 a.estimator_doc_link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+}
+</a></style><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>KNeighborsClassifier(algorithm='brute', leaf_size=24, metric='hamming',
+                     weights='distance')</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" checked=""><label for="sk-estimator-id-2" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;KNeighborsClassifier<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.neighbors.KNeighborsClassifier.html">?<span>Documentation for KNeighborsClassifier</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>KNeighborsClassifier(algorithm='brute', leaf_size=24, metric='hamming',
+                     weights='distance')</pre></div> </div></div></div></div>
+</div>
+</div>
+</section>
+<section id="kneighborsclassifier-모델평가" class="level2">
+<h2 class="anchored" data-anchor-id="kneighborsclassifier-모델평가">KNeighborsClassifier 모델평가</h2>
+<div id="d2dc37ee" class="cell">
+<div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> sklearn.model_selection</span>
+<span id="cb19-2"></span>
+<span id="cb19-3">sklearn.model_selection.cross_val_score(best_model_knclassifier, x_test, y_test, scoring<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'accuracy'</span>, cv<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, </span>
+<span id="cb19-4">                                        n_jobs<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>, verbose<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>array([0.52358491, 0.52377495, 0.52377495, 0.52341198, 0.52341198])</code></pre>
+</div>
+</div>
+</section>
+<section id="kneighborsclassifier-예측prediction" class="level2">
+<h2 class="anchored" data-anchor-id="kneighborsclassifier-예측prediction">KNeighborsClassifier 예측(Prediction)</h2>
+<div id="165f4baa" class="cell">
+<div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 예측대상 입력 후 변환</span></span>
+<span id="cb21-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## 입력</span></span>
+<span id="cb21-3">x_test_input <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.DataFrame({<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Loading Country'</span>:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'MX'</span>,</span>
+<span id="cb21-4">                             <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Final Destination country'</span>:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'US'</span>,</span>
+<span id="cb21-5">                             <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Sold-to party'</span>:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'C310-00'</span>,</span>
+<span id="cb21-6">                             <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Ship To Party'</span>:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'4891788'</span>,</span>
+<span id="cb21-7">                             <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Dangerous goods'</span>:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'0'</span>,</span>
+<span id="cb21-8">                             <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Sales Organization'</span>:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'R001'</span>,</span>
+<span id="cb21-9">                             <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Incoterms'</span>:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'CIP'</span>},</span>
+<span id="cb21-10">                             index<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]</span>
+<span id="cb21-11">)</span>
+<span id="cb21-12"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## LeaveOneOutEncoder변환</span></span>
+<span id="cb21-13">encoder_leave_one_out <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> joblib.load(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'encoder_leave_one_out.pkl'</span>)</span>
+<span id="cb21-14">x_data_to_predict <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> encoder_leave_one_out.transform(x_test_input[x_column])</span>
+<span id="cb21-15">x_data_to_predict[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Dangerous goods'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x_data_to_predict[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Dangerous goods'</span>].<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">map</span>({np.nan:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>})</span>
+<span id="cb21-16"></span>
+<span id="cb21-17">x_data_to_predict</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Loading Country</th>
+<th data-quarto-table-cell-role="th">Final Destination country</th>
+<th data-quarto-table-cell-role="th">Sold-to party</th>
+<th data-quarto-table-cell-role="th">Ship To Party</th>
+<th data-quarto-table-cell-role="th">Dangerous goods</th>
+<th data-quarto-table-cell-role="th">Sales Organization</th>
+<th data-quarto-table-cell-role="th">Incoterms</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>7.339717</td>
+<td>3.507706</td>
+<td>4.077912</td>
+<td>9.0</td>
+<td>0</td>
+<td>3.443488</td>
+<td>3.025576</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="1cf79d82" class="cell">
+<div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 예측값 {1:'VESSEL',2:'AIR'}</span></span>
+<span id="cb22-2"></span>
+<span id="cb22-3">prediction <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> best_model_knclassifier.predict(x_data_to_predict)</span>
+<span id="cb22-4">prediction</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>array([2], dtype=int64)</code></pre>
+</div>
+</div>
+<div id="220cd1d8" class="cell">
+<div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1">array_to_conver <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> prediction</span>
+<span id="cb24-2">np.where(array_to_conver <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'VESSEL'</span>, np.where(array_to_conver <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'AIR'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'UNKNOWN'</span>))</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>array(['AIR'], dtype='&lt;U7')</code></pre>
+</div>
+</div>
+</section>
+<section id="kneighborsclassifier-모델저장" class="level2">
+<h2 class="anchored" data-anchor-id="kneighborsclassifier-모델저장">KNeighborsClassifier 모델저장</h2>
+<div id="d5ce0585" class="cell">
+<div class="sourceCode cell-code" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> joblib</span>
+<span id="cb26-2"></span>
+<span id="cb26-3">joblib_file <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"model_knn_1st_fitted.joblib"</span></span>
+<span id="cb26-4">joblib.dump(best_model_knclassifier, joblib_file)</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>['model_knn_1st_fitted.joblib']</code></pre>
+</div>
+</div>
+<div id="ce7d30d6" class="cell">
+<div class="sourceCode cell-code" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1">joblib_file <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"model_knn_1st_fitted.joblib"</span></span>
+<span id="cb28-2">knn_loaded <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> joblib.load(joblib_file)</span>
+<span id="cb28-3"></span>
+<span id="cb28-4">prediction <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> knn_loaded.predict(x_data_to_predict)</span>
+<span id="cb28-5">prediction</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>array([2], dtype=int64)</code></pre>
+</div>
+</div>
+<div id="6aba8b11" class="cell">
+<div class="sourceCode cell-code" id="cb30" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1">array_to_conver <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> prediction</span>
+<span id="cb30-2">np.where(array_to_conver <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'VESSEL'</span>, np.where(array_to_conver <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'AIR'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'UNKNOWN'</span>))</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>array(['AIR'], dtype='&lt;U7')</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
+  <category>Python</category>
+  <category>scikit-learn</category>
+  <category>KNeighborsClassifier</category>
+  <category>category_encoders</category>
+  <category>optuna</category>
+  <category>OptunaSearchCV</category>
+  <category>joblib</category>
+  <category>sqlite3</category>
+  <category>pandas</category>
+  <guid>https://kr9268.github.io/posts_miniprojects/sel-py-ml_predict_shiptype-20240801/</guid>
+  <pubDate>Thu, 01 Aug 2024 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>[Python] Github, API활용한 공공데이터 저장소 만들기</title>
   <dc:creator>Kibok Park</dc:creator>
