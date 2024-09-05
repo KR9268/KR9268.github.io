@@ -2,218 +2,222 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240830/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.673Z</lastmod>
+    <lastmod>2024-09-05T15:47:40.188Z</lastmod>
   </url>
   <url>
     <loc>https://kr9268.github.io/posts/meta-dl-creditcard-20240710/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.705Z</lastmod>
+    <lastmod>2024-09-05T15:47:40.224Z</lastmod>
   </url>
   <url>
     <loc>https://kr9268.github.io/posts/meta-dl-creditcard-20240715/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.713Z</lastmod>
+    <lastmod>2024-09-05T15:47:40.228Z</lastmod>
   </url>
   <url>
     <loc>https://kr9268.github.io/posts/coach-ds-20240821/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.077Z</lastmod>
+    <lastmod>2024-09-05T15:47:39.596Z</lastmod>
   </url>
   <url>
     <loc>https://kr9268.github.io/posts/hanbitn-datawarehouse-20240725/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.665Z</lastmod>
+    <lastmod>2024-09-05T15:47:40.180Z</lastmod>
   </url>
   <url>
     <loc>https://kr9268.github.io/posts/meta-dl-creditcard-20240630/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.705Z</lastmod>
+    <lastmod>2024-09-05T15:47:40.224Z</lastmod>
   </url>
   <url>
     <loc>https://kr9268.github.io/posts/dtcontest-ore-20240610/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.653Z</lastmod>
+    <lastmod>2024-09-05T15:47:40.168Z</lastmod>
   </url>
   <url>
     <loc>https://kr9268.github.io/posts/dtcontest-ore-20240616/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.653Z</lastmod>
+    <lastmod>2024-09-05T15:47:40.172Z</lastmod>
   </url>
   <url>
     <loc>https://kr9268.github.io/posts/coach-ds-20221113/index.html</loc>
-    <lastmod>2024-09-05T15:37:16.285Z</lastmod>
+    <lastmod>2024-09-05T15:47:38.808Z</lastmod>
   </url>
   <url>
     <loc>https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240902/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.677Z</lastmod>
+    <lastmod>2024-09-05T15:47:40.192Z</lastmod>
   </url>
   <url>
     <loc>https://kr9268.github.io/posts/hanbitn-copilot-20230914/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.661Z</lastmod>
+    <lastmod>2024-09-05T15:47:40.176Z</lastmod>
   </url>
   <url>
     <loc>https://kr9268.github.io/posts/meta-dl-creditcard-20240714/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.709Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/posts/coach-ds-20231107/index.html</loc>
-    <lastmod>2024-09-05T15:37:16.653Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240812/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.669Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/posts/dtcontest-ore-20240612/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.653Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/posts/prgms-sql-20240320/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.717Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/posts/meta-dl-creditcard-20240711/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.709Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/posts/meta-dl-creditcard-20240616/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.689Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/posts/dtcontest-ore-20240615/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.653Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/posts/coach-ml-mnist-20230301/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.649Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/posts/dtcontest-ore-20240608/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.653Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/posts/meta-dl-creditcard-20240602/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.681Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240823_1/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.669Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/posts_miniprojects/sel-py-monitoringCOO-20240220/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.801Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/posts_miniprojects/sel-py-crawl_sr-20240306/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.801Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/posts_miniprojects/dtcontest-ore-py-datagokr/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.801Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/posts_miniprojects/sel-py-local-20240122/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.801Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/index_dashboards.html</loc>
-    <lastmod>2024-09-05T15:37:16.277Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/index_miniprojects.html</loc>
-    <lastmod>2024-09-05T15:37:16.277Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/index.html</loc>
-    <lastmod>2024-09-05T15:37:16.277Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/posts_miniprojects/sel-py-ml_predict_shiptype-20240801/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.801Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/posts_miniprojects/sel-py-autoPIforl001-20231215/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.801Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/posts_miniprojects/sel-py-readPIAR-20231102/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.805Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/about.html</loc>
-    <lastmod>2024-09-05T15:37:15.581Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240823/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.669Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/posts/meta-dl-creditcard-20240526/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.681Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/posts/coach-ds-20230506/index.html</loc>
-    <lastmod>2024-09-05T15:37:16.289Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/posts/coach-ml-kaggle-20230506/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.413Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240827/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.673Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/posts/dtcontest-ore-20240624/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.661Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/posts/meta-dl-creditcard-20240718/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.717Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kr9268.github.io/posts/pycon-20230813/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.801Z</lastmod>
+    <lastmod>2024-09-05T15:47:40.228Z</lastmod>
   </url>
   <url>
     <loc>https://kr9268.github.io/posts/meta-dl-creditcard-20240615_2/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.685Z</lastmod>
+    <lastmod>2024-09-05T15:47:40.204Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/posts/pycon-20230813/index.html</loc>
+    <lastmod>2024-09-05T15:47:40.312Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/posts/meta-dl-creditcard-20240718/index.html</loc>
+    <lastmod>2024-09-05T15:47:40.232Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/posts/dtcontest-ore-20240624/index.html</loc>
+    <lastmod>2024-09-05T15:47:40.176Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240827/index.html</loc>
+    <lastmod>2024-09-05T15:47:40.188Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/posts/coach-ml-kaggle-20230506/index.html</loc>
+    <lastmod>2024-09-05T15:47:39.928Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/posts/coach-ds-20230506/index.html</loc>
+    <lastmod>2024-09-05T15:47:38.808Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/posts/meta-dl-creditcard-20240526/index.html</loc>
+    <lastmod>2024-09-05T15:47:40.196Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240823/index.html</loc>
+    <lastmod>2024-09-05T15:47:40.184Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/about.html</loc>
+    <lastmod>2024-09-05T15:47:38.112Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/posts_miniprojects/sel-py-readPIAR-20231102/index.html</loc>
+    <lastmod>2024-09-05T15:47:40.316Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/posts_miniprojects/sel-py-autoPIforl001-20231215/index.html</loc>
+    <lastmod>2024-09-05T15:47:40.312Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/posts_miniprojects/sel-py-ml_predict_shiptype-20240801/index.html</loc>
+    <lastmod>2024-09-05T15:47:40.316Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/index.html</loc>
+    <lastmod>2024-09-05T15:47:38.800Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/index_miniprojects.html</loc>
+    <lastmod>2024-09-05T15:47:38.800Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/index_dashboards.html</loc>
+    <lastmod>2024-09-05T15:47:38.800Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/posts_miniprojects/sel-py-local-20240122/index.html</loc>
+    <lastmod>2024-09-05T15:47:40.312Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/posts_miniprojects/dtcontest-ore-py-datagokr/index.html</loc>
+    <lastmod>2024-09-05T15:47:40.312Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/posts_miniprojects/sel-py-crawl_sr-20240306/index.html</loc>
+    <lastmod>2024-09-05T15:47:40.312Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/posts_miniprojects/sel-py-monitoringCOO-20240220/index.html</loc>
+    <lastmod>2024-09-05T15:47:40.316Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240823_1/index.html</loc>
+    <lastmod>2024-09-05T15:47:40.184Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/posts/meta-dl-creditcard-20240602/index.html</loc>
+    <lastmod>2024-09-05T15:47:40.196Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/posts/dtcontest-ore-20240608/index.html</loc>
+    <lastmod>2024-09-05T15:47:40.168Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/posts/coach-ml-mnist-20230301/index.html</loc>
+    <lastmod>2024-09-05T15:47:40.164Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/posts/dtcontest-ore-20240615/index.html</loc>
+    <lastmod>2024-09-05T15:47:40.168Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/posts/meta-dl-creditcard-20240616/index.html</loc>
+    <lastmod>2024-09-05T15:47:40.204Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/posts/meta-dl-creditcard-20240711/index.html</loc>
+    <lastmod>2024-09-05T15:47:40.224Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/posts/prgms-sql-20240320/index.html</loc>
+    <lastmod>2024-09-05T15:47:40.236Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/posts/dtcontest-ore-20240612/index.html</loc>
+    <lastmod>2024-09-05T15:47:40.168Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240812/index.html</loc>
+    <lastmod>2024-09-05T15:47:40.184Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/posts/coach-ds-20231107/index.html</loc>
+    <lastmod>2024-09-05T15:47:39.172Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240905/index.html</loc>
+    <lastmod>2024-09-05T15:47:40.192Z</lastmod>
   </url>
   <url>
     <loc>https://kr9268.github.io/posts/meta-dl-creditcard-20240716/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.713Z</lastmod>
+    <lastmod>2024-09-05T15:47:40.232Z</lastmod>
   </url>
   <url>
     <loc>https://kr9268.github.io/posts/dtcontest-ore-20240621/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.657Z</lastmod>
+    <lastmod>2024-09-05T15:47:40.176Z</lastmod>
   </url>
   <url>
     <loc>https://kr9268.github.io/posts/meta-dl-creditcard-20240623/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.701Z</lastmod>
+    <lastmod>2024-09-05T15:47:40.220Z</lastmod>
   </url>
   <url>
     <loc>https://kr9268.github.io/posts/prgms-sql-20240317/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.717Z</lastmod>
+    <lastmod>2024-09-05T15:47:40.232Z</lastmod>
   </url>
   <url>
     <loc>https://kr9268.github.io/posts/prgms-sql-20240318/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.717Z</lastmod>
+    <lastmod>2024-09-05T15:47:40.232Z</lastmod>
   </url>
   <url>
     <loc>https://kr9268.github.io/posts/prgms-sql-20240319/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.717Z</lastmod>
+    <lastmod>2024-09-05T15:47:40.236Z</lastmod>
   </url>
   <url>
     <loc>https://kr9268.github.io/posts/prgms-sql-20240321/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.717Z</lastmod>
+    <lastmod>2024-09-05T15:47:40.236Z</lastmod>
   </url>
   <url>
     <loc>https://kr9268.github.io/posts/meta-dl-creditcard-20240622/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.693Z</lastmod>
+    <lastmod>2024-09-05T15:47:40.212Z</lastmod>
   </url>
   <url>
     <loc>https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240819/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.669Z</lastmod>
+    <lastmod>2024-09-05T15:47:40.184Z</lastmod>
   </url>
   <url>
     <loc>https://kr9268.github.io/posts/meta-dl-creditcard-20240609/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.685Z</lastmod>
+    <lastmod>2024-09-05T15:47:40.200Z</lastmod>
   </url>
   <url>
     <loc>https://kr9268.github.io/posts/meta-dl-creditcard-20240615_1/index.html</loc>
-    <lastmod>2024-09-05T15:37:17.685Z</lastmod>
+    <lastmod>2024-09-05T15:47:40.200Z</lastmod>
   </url>
 </urlset>
