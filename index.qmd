@@ -11,6 +11,7 @@ listing:
   date-format: iso
   feed:
     categories: [posts, news]
+#image-placeholder: image-placeholder_default.jpg
 page-layout: full
 title-block-banner: true # 상단 배너 표시여부
 margin-header: '# Kibok Park'
