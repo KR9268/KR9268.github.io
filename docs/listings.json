@@ -6,11 +6,14 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/meta-de-spark_and_airflow-20240905/index.html",
+      "/posts/meta-de-spark_and_airflow-20240902/index.html",
+      "/posts/meta-de-spark_and_airflow-20240830/index.html",
+      "/posts/meta-de-spark_and_airflow-20240827/index.html",
       "/posts/meta-de-spark_and_airflow-20240823/index.html",
       "/posts/meta-de-spark_and_airflow-20240823_1/index.html",
       "/posts/coach-ds-20240821/index.html",
       "/posts/meta-de-spark_and_airflow-20240819/index.html",
-      "/posts/meta-de-spark_and_airflow-20240826/index.html",
       "/posts/meta-de-spark_and_airflow-20240812/index.html",
       "/posts/hanbitn-datawarehouse-20240725/index.html",
       "/posts/meta-dl-creditcard-20240718/index.html",
