@@ -1,7 +1,24 @@
 [
   {
+    "listing": "/index_dashboards.html",
+    "items": []
+  },
+  {
+    "listing": "/index_miniprojects.html",
+    "items": [
+      "/posts_miniprojects/sel-py-ml_predict_shiptype-20240801/index.html",
+      "/posts_miniprojects/dtcontest-ore-py-datagokr/index.html",
+      "/posts_miniprojects/sel-py-crawl_sr-20240306/index.html",
+      "/posts_miniprojects/sel-py-monitoringCOO-20240220/index.html",
+      "/posts_miniprojects/sel-py-local-20240122/index.html",
+      "/posts_miniprojects/sel-py-autoPIforl001-20231215/index.html",
+      "/posts_miniprojects/sel-py-readPIAR-20231102/index.html"
+    ]
+  },
+  {
     "listing": "/index.html",
     "items": [
+      "/posts/meta-de-spark_and_airflow-20240906/index.html",
       "/posts/meta-de-spark_and_airflow-20240905/index.html",
       "/posts/meta-de-spark_and_airflow-20240902/index.html",
       "/posts/meta-de-spark_and_airflow-20240830/index.html",
@@ -47,21 +64,5 @@
       "/posts/coach-ds-20221113/index.html",
       "/posts/coach-ds-20230506/index.html"
     ]
-  },
-  {
-    "listing": "/index_miniprojects.html",
-    "items": [
-      "/posts_miniprojects/sel-py-ml_predict_shiptype-20240801/index.html",
-      "/posts_miniprojects/dtcontest-ore-py-datagokr/index.html",
-      "/posts_miniprojects/sel-py-crawl_sr-20240306/index.html",
-      "/posts_miniprojects/sel-py-monitoringCOO-20240220/index.html",
-      "/posts_miniprojects/sel-py-local-20240122/index.html",
-      "/posts_miniprojects/sel-py-autoPIforl001-20231215/index.html",
-      "/posts_miniprojects/sel-py-readPIAR-20231102/index.html"
-    ]
-  },
-  {
-    "listing": "/index_dashboards.html",
-    "items": []
   }
 ]
