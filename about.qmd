@@ -1,16 +1,16 @@
 ---
-title: "Kibok Park"
+title: "Blake Park"
 image: profile.jpg
 about:
   template: trestles # jolla, trestles, solana, marquee, broadside
   image-width: 20em
   image-shape: round # rectangle, round, rounded
-  image-alt: '[Profile image of Kibok Park]'
-  image-title: Kibok Park
+  image-alt: '[Profile image of Blake Park]'
+  image-title: Blake Park
   links:
     - icon: linkedin # icon name : https://icons.getbootstrap.com/
       text: LinkedIn
-      href: https://www.linkedin.com/in/%EA%B8%B0%EB%B3%B5-%EB%B0%95-573a68268/
+      href: https:// #https://www.linkedin.com/in/%EA%B8%B0%EB%B3%B5-%EB%B0%95-573a68268/
     - icon: github
       text: Github
       href: https://github.com/KR9268
@@ -19,7 +19,7 @@ about:
 
 ## Hello
 
-I'm **`Kibok Park`**. Welcome to my blog.
+I'm **`Blake Park`**. Welcome to my blog.
 I'm not an expert in my favorites yet, but I'm working on becoming one.
 I hope you to have nice time with my blog.
 
