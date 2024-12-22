@@ -6,6 +6,8 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/meta-cm-sql_and_ml_xai-20241222/index.html",
+      "/posts/meta-de-spark_and_airflow-20240924/index.html",
       "/posts/meta-de-spark_and_airflow-20240923_1/index.html",
       "/posts/meta-de-spark_and_airflow-20240923_2/index.html",
       "/posts/meta-de-spark_and_airflow-20240909/index.html",
