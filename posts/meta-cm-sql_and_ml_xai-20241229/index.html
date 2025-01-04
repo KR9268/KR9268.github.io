@@ -1,0 +1,4448 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Kibok Park">
+<meta name="dcterms.date" content="2024-12-22">
+
+<title>[DA스터디/1주차] SQL기초 및 실습 – Blog</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.jpg" rel="icon" type="image/jpeg">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ea72dc5fed832574809a9c94082fbbb.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-04dd6a5ca28aac96903e51a8fbffbcaa.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-eadd22555550656e957725f4adb214c0.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/watermark-1.0.11/watermark.min.js"></script>
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-LPL499WQBH"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Blog</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index_dashboards.html"> 
+<span class="menu-text">Dashboards</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index_miniprojects.html"> 
+<span class="menu-text">Mini Projects</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About me</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/KR9268"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/%EA%B8%B0%EB%B3%B5-%EB%B0%95-573a68268/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">[DA스터디/1주차] SQL기초 및 실습</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Python</div>
+                <div class="quarto-category">SQL</div>
+                <div class="quarto-category">202412Study_DataAnalysis</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Kibok Park </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">December 22, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#개요" id="toc-개요" class="nav-link active" data-scroll-target="#개요">개요</a></li>
+  <li><a href="#주차-수업정리" id="toc-주차-수업정리" class="nav-link" data-scroll-target="#주차-수업정리">2주차 수업정리</a>
+  <ul class="collapse">
+  <li><a href="#자료형" id="toc-자료형" class="nav-link" data-scroll-target="#자료형">자료형</a>
+  <ul class="collapse">
+  <li><a href="#문자-자료형" id="toc-문자-자료형" class="nav-link" data-scroll-target="#문자-자료형">문자 자료형</a></li>
+  <li><a href="#숫자-자료형" id="toc-숫자-자료형" class="nav-link" data-scroll-target="#숫자-자료형">숫자 자료형</a></li>
+  <li><a href="#날짜시간-자료형" id="toc-날짜시간-자료형" class="nav-link" data-scroll-target="#날짜시간-자료형">날짜/시간 자료형</a></li>
+  </ul></li>
+  <li><a href="#자료형-변환cast함수" id="toc-자료형-변환cast함수" class="nav-link" data-scroll-target="#자료형-변환cast함수">자료형 변환(CAST함수)</a></li>
+  <li><a href="#자료형-변환-실습" id="toc-자료형-변환-실습" class="nav-link" data-scroll-target="#자료형-변환-실습">자료형 변환 실습</a></li>
+  <li><a href="#문자열-함수" id="toc-문자열-함수" class="nav-link" data-scroll-target="#문자열-함수">문자열 함수</a>
+  <ul class="collapse">
+  <li><a href="#upper대문자-변환-lower소문자-변환-length문자열-길이" id="toc-upper대문자-변환-lower소문자-변환-length문자열-길이" class="nav-link" data-scroll-target="#upper대문자-변환-lower소문자-변환-length문자열-길이">UPPER(대문자 변환), LOWER(소문자 변환), LENGTH(문자열 길이)</a></li>
+  <li><a href="#substr지정한-위치부터-n개-글자-가져오기" id="toc-substr지정한-위치부터-n개-글자-가져오기" class="nav-link" data-scroll-target="#substr지정한-위치부터-n개-글자-가져오기">SUBSTR(지정한 위치부터 N개 글자 가져오기)</a></li>
+  <li><a href="#replace단어-찾아-바꾸기" id="toc-replace단어-찾아-바꾸기" class="nav-link" data-scroll-target="#replace단어-찾아-바꾸기">REPLACE(단어 찾아 바꾸기)</a></li>
+  </ul></li>
+  <li><a href="#문자열-함수-실습" id="toc-문자열-함수-실습" class="nav-link" data-scroll-target="#문자열-함수-실습">문자열 함수 실습</a></li>
+  <li><a href="#숫자-함수" id="toc-숫자-함수" class="nav-link" data-scroll-target="#숫자-함수">숫자 함수</a></li>
+  <li><a href="#숫자-함수-실습" id="toc-숫자-함수-실습" class="nav-link" data-scroll-target="#숫자-함수-실습">숫자 함수 실습</a></li>
+  <li><a href="#날짜-함수" id="toc-날짜-함수" class="nav-link" data-scroll-target="#날짜-함수">날짜 함수</a></li>
+  <li><a href="#case-when-조건문" id="toc-case-when-조건문" class="nav-link" data-scroll-target="#case-when-조건문">CASE WHEN 조건문</a></li>
+  <li><a href="#sql실행순서-case-when-사용시-유의할-점" id="toc-sql실행순서-case-when-사용시-유의할-점" class="nav-link" data-scroll-target="#sql실행순서-case-when-사용시-유의할-점">SQL실행순서 (+CASE WHEN 사용시 유의할 점)</a></li>
+  <li><a href="#case-when-실습" id="toc-case-when-실습" class="nav-link" data-scroll-target="#case-when-실습">CASE WHEN 실습</a></li>
+  <li><a href="#join과-union" id="toc-join과-union" class="nav-link" data-scroll-target="#join과-union">JOIN과 UNION</a></li>
+  <li><a href="#coalesce또는-nvl" id="toc-coalesce또는-nvl" class="nav-link" data-scroll-target="#coalesce또는-nvl">COALESCE(또는 NVL)</a></li>
+  <li><a href="#join과-coalese-실습" id="toc-join과-coalese-실습" class="nav-link" data-scroll-target="#join과-coalese-실습">JOIN과 COALESE 실습</a></li>
+  <li><a href="#서브쿼리와-cte" id="toc-서브쿼리와-cte" class="nav-link" data-scroll-target="#서브쿼리와-cte">서브쿼리와 CTE</a>
+  <ul class="collapse">
+  <li><a href="#서브쿼리" id="toc-서브쿼리" class="nav-link" data-scroll-target="#서브쿼리">서브쿼리</a></li>
+  <li><a href="#ctecommon-table-expressions" id="toc-ctecommon-table-expressions" class="nav-link" data-scroll-target="#ctecommon-table-expressions">CTE(Common Table Expressions)</a></li>
+  </ul></li>
+  <li><a href="#서브쿼리와-cte실습" id="toc-서브쿼리와-cte실습" class="nav-link" data-scroll-target="#서브쿼리와-cte실습">서브쿼리와 CTE실습</a></li>
+  <li><a href="#심화-window함수" id="toc-심화-window함수" class="nav-link" data-scroll-target="#심화-window함수">심화 : Window함수</a></li>
+  <li><a href="#기타" id="toc-기타" class="nav-link" data-scroll-target="#기타">기타</a></li>
+  <li><a href="#과제" id="toc-과제" class="nav-link" data-scroll-target="#과제">과제</a>
+  <ul class="collapse">
+  <li><a href="#프로그래머스-과제-풀기" id="toc-프로그래머스-과제-풀기" class="nav-link" data-scroll-target="#프로그래머스-과제-풀기">프로그래머스 과제 풀기</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>금융권 데이터를 활용한 분석 스터디 - 1주차</p>
+<section id="개요" class="level1">
+<h1>개요</h1>
+<ul>
+<li>아래의 목적/이유로 참가한 스터디에 대한 기록
+<ul>
+<li>SQLD취득 후 장기 미사용 &amp; GPT를 통한 SQL사용 등으로 많이 잊은 SQL을 복기</li>
+<li>기존에 사용해 본 Optuna가 아닌 Autogluon이 커리큘럼에 있어 익혀보고자 함</li>
+<li>기존에 관심있던 XAI(설명가능한 AI)를 익히고자 함</li>
+</ul></li>
+<li>2주차 요약
+<ul>
+<li>SQL의 자료형, 함수(CAST, COALESCE 등), 서브쿼리와 CTE</li>
+<li>프로그래머스의 SQL문제풀이 과제</li>
+<li>참고 : 하단 실습코드는 head() 적용되어 있음(불필요하게 긴 포스팅 방지)</li>
+</ul></li>
+</ul>
+</section>
+<section id="주차-수업정리" class="level1">
+<h1>2주차 수업정리</h1>
+<section id="자료형" class="level2">
+<h2 class="anchored" data-anchor-id="자료형">자료형</h2>
+<ul>
+<li>SQL문법마다 조금씩 다르지만, 일반적으로 아래와 같음
+<ul>
+<li>정보가 없는 경우 : NULL</li>
+<li>문자형 : TEXT (STRING / VARCHAR)</li>
+<li>숫자형 : INT (INTEGER), REAL (FLOAT / DOUBLE)</li>
+<li>날짜/시간형 : TIMESTAMP (DATE / TIME / DATETIME / TIMESTAMP)</li>
+</ul></li>
+</ul>
+<section id="문자-자료형" class="level3">
+<h3 class="anchored" data-anchor-id="문자-자료형">문자 자료형</h3>
+<ul>
+<li><code>TEXT</code> : <strong>길이 제한이 없는</strong> 문자열 변수. 로그, 리뷰 등 긴 텍스트 저장</li>
+<li><code>CHAR</code> : <strong>길이가 고정된</strong> 문자열 변수. 전화/우편번호 등 길이가 일정한 문자열 저장
+<ul>
+<li>길이가 부족하면 공백으로 채움</li>
+</ul></li>
+<li><code>VARCHAR</code> : <strong>길이가 가변인</strong> 문자열 변수. <strong>가장 일반적으로 사용</strong>
+<ul>
+<li>최대길이를 지정하여 사용</li>
+</ul></li>
+</ul>
+</section>
+<section id="숫자-자료형" class="level3">
+<h3 class="anchored" data-anchor-id="숫자-자료형">숫자 자료형</h3>
+<ul>
+<li><p>정수형 변수</p>
+<ul>
+<li><code>INT</code>: (소숫점이 없는)정수형 변수. 판매수량, 차량 대수 등 저장
+<ul>
+<li><code>BIGINT</code> / <code>SMALLINT</code> : 자릿수에 따라 지정. 매출 등 큰 숫자를 BIGINT로 저장
+<ul>
+<li>큰 숫자일 필요가 없다면 SMALLINT지정하여 메모리를 절약</li>
+</ul></li>
+<li>INT간 연산은 INT를 반환하므로, 결과가 FLOAT 등 소수가 될 경우 유의</li>
+</ul></li>
+</ul></li>
+<li><p>부동소수점 변수</p>
+<ul>
+<li><code>REAL</code>: <strong>부동소수점</strong>인 실수형 변수.
+<ul>
+<li>부동소수점 : 소수점의 위치가 바뀌며, 유효숫자 X 10^지수 형태로 저장</li>
+<li>부동소수점 예시 (지수의 값에 따라 소숫점이 이동한다)
+<ul>
+<li>1234.5 → 유효숫자 1.2345 &amp; 지수 <span class="math inline">\(10^3\)</span></li>
+<li>1.2345 → 유효숫자 1.2345 &amp; 지수 <span class="math inline">\(10^0\)</span></li>
+<li>1.2345e3 와 같은 형태로 나타내기도 함</li>
+</ul></li>
+<li>일반적으로 REAL은 7자리 정도의 유효숫자를 가짐</li>
+</ul></li>
+<li><code>DOUBLE</code> : <code>REAL</code>보다 약 2배인 15자리 정도의 유효숫자를 가지는 실수형 변수</li>
+<li><code>FLOAT(p)</code> : (REAL, DOUBLE과 달리)정밀도를 지정할 수 있는 실수형 변수
+<ul>
+<li>FLOAT(24) : REAL과 동일 / FLOAT(53) : DOUBLE과 동일
+<ul>
+<li>추가검색해본 결과, p는 유효숫자수가 아니며, FLOAT(24)=REAL은 바이트 수 기준.</li>
+</ul></li>
+<li>여기까지 REAL, DOUBLE, FLOAT를 부동소수점 변수라 부릅니다.</li>
+</ul></li>
+</ul></li>
+<li><p>고정소수점 변수</p>
+<ul>
+<li><code>DECIMAL(m, d)</code>: <strong>고정소수점</strong>인 실수형 변수.
+<ul>
+<li>고정소수점 : 정밀도가 아니라 소수점의 위치를 고정(DECIMAL 형태의 자료형)</li>
+<li>m은 유효숫자의 개수, d는 소수점 이하의 자릿수</li>
+<li>DECIMAL 지정예시 : 1234.5 → DECIMAL(5,1)</li>
+</ul></li>
+</ul></li>
+<li><p>부동소수점 vs 고정소수점 비교</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 42%">
+<col style="width: 40%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>특징</strong></th>
+<th><strong>부동소수점</strong></th>
+<th><strong>고정소수점</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>소수점 위치</strong></td>
+<td>가변적</td>
+<td>고정적</td>
+</tr>
+<tr class="even">
+<td><strong>저장 방식</strong></td>
+<td>유효숫자와 지수를 저장</td>
+<td>정수와 소수점 위치를 기반으로 저장</td>
+</tr>
+<tr class="odd">
+<td><strong>표현 가능 범위</strong></td>
+<td>매우 크거나 작은 값 표현 가능</td>
+<td>표현 가능 범위 제한</td>
+</tr>
+<tr class="even">
+<td><strong>정밀도</strong></td>
+<td>제한적, 오차 발생 가능</td>
+<td>정밀도 100% 보장</td>
+</tr>
+<tr class="odd">
+<td><strong>연산 속도</strong></td>
+<td>상대적으로 느림</td>
+<td>상대적으로 빠름</td>
+</tr>
+<tr class="even">
+<td><strong>주요 사용 사례</strong></td>
+<td>과학적 계산, 통계</td>
+<td>금융, 회계, 정밀한 금액 계산</td>
+</tr>
+<tr class="odd">
+<td><strong>SQL 자료형</strong></td>
+<td>REAL, FLOAT, DOUBLE</td>
+<td>DECIMAL, NUMERIC</td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+</section>
+<section id="날짜시간-자료형" class="level3">
+<h3 class="anchored" data-anchor-id="날짜시간-자료형">날짜/시간 자료형</h3>
+<ul>
+<li><p><code>DATE</code> / <code>TIME</code> : 날짜/시간 형태 데이터 (YYYY-MM-DD 또는 HH:MM:SS 형태로 저장)</p></li>
+<li><p><code>DATETIME</code> / <code>TIMESTAMP</code> : 날짜+시간 형태의 자료 (YYYY-MM-DD HH:MM:SS 형태로 저장)</p>
+<ul>
+<li>DATETIME VS TIMESTAMP
+<ul>
+<li>DATETIME은 입력값을 그대로 저장 / TIMESTAMP는 UTC(협정세계시)로 변환</li>
+<li>글로벌서비스라면 TIMESTAMP, 값을 유지하고 싶으면 DATETIME</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="자료형-변환cast함수" class="level2">
+<h2 class="anchored" data-anchor-id="자료형-변환cast함수">자료형 변환(CAST함수)</h2>
+<ul>
+<li>일반적으로 CAST함수로 변환. <code>CAST(컬럼명 AS 변수형)</code> 형태로 사용</li>
+</ul>
+</section>
+<section id="자료형-변환-실습" class="level2">
+<h2 class="anchored" data-anchor-id="자료형-변환-실습">자료형 변환 실습</h2>
+<div id="9636b892" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sqlite3</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># SQLite 데이터베이스 파일 연결 (db가 없으면 자동 생성)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>conn <span class="op">=</span> sqlite3.<span class="ex">connect</span>(<span class="st">'my_database.db'</span>, timeout<span class="op">=</span><span class="dv">30</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>cursor <span class="op">=</span> conn.cursor()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cafa7018" class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># INT간 연산의 잘못된 예시 : c_camp_rt = campaign / (campaign + previous)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">## 5행(idx 41187)의 값이 0.75가 아닌 0으로 잘못되었음</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>pd.read_sql(<span class="st">'SELECT campaign / (campaign + previous) AS c_camp_rt, campaign, previous FROM tb_camp'</span>, conn).tail(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">c_camp_rt</th>
+<th data-quarto-table-cell-role="th">campaign</th>
+<th data-quarto-table-cell-role="th">previous</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">41183</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">41184</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">41185</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">41186</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">41187</td>
+<td>0</td>
+<td>3</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="0847a143" class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># CAST를 활용해 연산 정확하게 하기</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">## 메모리 효율을 위해, (FLOAT가 아닌)REAL 사용</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">## 메모리 효율을 위해, CAST 횟수를 최소화 (분모에서 합한 후 사용)</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>pd.read_sql(<span class="st">'SELECT CAST(campaign AS REAL) / CAST((campaign + previous) AS REAL) AS c_camp_rt, campaign, previous FROM tb_camp'</span>, conn).tail(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">c_camp_rt</th>
+<th data-quarto-table-cell-role="th">campaign</th>
+<th data-quarto-table-cell-role="th">previous</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">41183</td>
+<td>1.00</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">41184</td>
+<td>1.00</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">41185</td>
+<td>1.00</td>
+<td>2</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">41186</td>
+<td>1.00</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">41187</td>
+<td>0.75</td>
+<td>3</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="문자열-함수" class="level2">
+<h2 class="anchored" data-anchor-id="문자열-함수">문자열 함수</h2>
+<ul>
+<li>사용하는 SQL에 따라 상이하나 일반적으로 아래와 같음</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">UPPER</span>(col) <span class="op">/</span> <span class="fu">LOWER</span>(col) <span class="co">-- 문자열을 대 / 소문자로 변환하는 함수입니다.</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">LENGTH</span>(col) <span class="co">-- 문자열의 길이를 반환하는 함수입니다.</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>SUBSTRING(col, <span class="kw">start</span>, n) <span class="co">-- 문자열의 start 부터 n개의 문자를 반환하는 함수입니다.</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">REPLACE</span>(문자열, 문자1, 문자2) <span class="co">-- 문자1을 문자2로 통째로 변환합니다.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="upper대문자-변환-lower소문자-변환-length문자열-길이" class="level3">
+<h3 class="anchored" data-anchor-id="upper대문자-변환-lower소문자-변환-length문자열-길이">UPPER(대문자 변환), LOWER(소문자 변환), LENGTH(문자열 길이)</h3>
+<div id="3443e7d9" class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 초기 데이터</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="st">"""SELECT</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="st">    job</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="st">FROM tb_cst</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>pd.read_sql_query(q, conn).head(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">job</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>housemaid</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>services</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>services</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>admin.</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>services</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="8962c113" class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># UPPER를 통한 대문자 변환 / LENGTH를 통한 문자길이 계산</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="st">"""SELECT</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="st">    UPPER(job) as upper_job,</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="st">    LENGTH(job) as len_job</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="st">FROM tb_cst</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>pd.read_sql_query(q, conn).head(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">upper_job</th>
+<th data-quarto-table-cell-role="th">len_job</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>HOUSEMAID</td>
+<td>9</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>SERVICES</td>
+<td>8</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>SERVICES</td>
+<td>8</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>ADMIN.</td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>SERVICES</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="substr지정한-위치부터-n개-글자-가져오기" class="level3">
+<h3 class="anchored" data-anchor-id="substr지정한-위치부터-n개-글자-가져오기">SUBSTR(지정한 위치부터 N개 글자 가져오기)</h3>
+<ul>
+<li>아래는 데이터의 첫 글자만 떼어내어, CHAR(1)로 저장해 메모리를 절약하는 예제</li>
+</ul>
+<div id="ce43fb52" class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 초기 데이터(marital 컬럼의 모든 데이터의 unique값 첫 글자가 일치하지 않음)</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="st">"""SELECT</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="st">    marital</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="st">FROM tb_cst</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>pd.read_sql_query(q, conn)[<span class="st">'marital'</span>].unique()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>array(['married', 'single', 'divorced', 'unknown'], dtype=object)</code></pre>
+</div>
+</div>
+<div id="0780821c" class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="st">"""SELECT</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="st">    CAST(SUBSTR(marital,1,1) AS CHAR(1)) as mr_c</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="st">FROM tb_cst</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>pd.read_sql_query(q, conn).head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">mr_c</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>m</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>m</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>m</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>m</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>m</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>m</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>m</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>m</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>s</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>s</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<ul>
+<li>아래는 SUBSTR로 뒤의 2글자를 자르는 예제</li>
+</ul>
+<div id="e0f19a83" class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="st">"""SELECT</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="st">    marital,</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="st">    SUBSTR(marital, LENGTH(marital)-1, 2) as last2</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="st">FROM tb_cst</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>pd.read_sql_query(q, conn).head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">marital</th>
+<th data-quarto-table-cell-role="th">last2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>married</td>
+<td>ed</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>married</td>
+<td>ed</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>married</td>
+<td>ed</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>married</td>
+<td>ed</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>married</td>
+<td>ed</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>married</td>
+<td>ed</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>married</td>
+<td>ed</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>married</td>
+<td>ed</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>single</td>
+<td>le</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>single</td>
+<td>le</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="replace단어-찾아-바꾸기" class="level3">
+<h3 class="anchored" data-anchor-id="replace단어-찾아-바꾸기">REPLACE(단어 찾아 바꾸기)</h3>
+<ul>
+<li>아래는 다양한 곳에서 예약어로 사용되는 <code>.</code>을, 데이터에서 제거하는 예제</li>
+</ul>
+<div id="c540679a" class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 초기 데이터(education 컬럼의 unique값)</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>pd.read_sql(<span class="st">'select * from tb_cst'</span>, conn).job.unique()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>array(['housemaid', 'services', 'admin.', 'blue-collar', 'technician',
+       'retired', 'management', 'unemployed', 'self-employed', 'unknown',
+       'entrepreneur', 'student'], dtype=object)</code></pre>
+</div>
+</div>
+<div id="4e60cf7d" class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace적용된 데이터 (. 찾아 삭제)</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="st">"""SELECT job, REPLACE(job, 'admin.', 'admin') AS new_job</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="st">FROM tb_cst</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>pd.read_sql(q, conn).new_job.unique()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>array(['housemaid', 'services', 'admin', 'blue-collar', 'technician',
+       'retired', 'management', 'unemployed', 'self-employed', 'unknown',
+       'entrepreneur', 'student'], dtype=object)</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="문자열-함수-실습" class="level2">
+<h2 class="anchored" data-anchor-id="문자열-함수-실습">문자열 함수 실습</h2>
+<ul>
+<li>tb_cst에서 job이 ’blue*collar’인 사람에 대해</li>
+<li>하이픈 (-)을 언더바(_*로 바꾼뒤, 직업을 대문자로 바꿔서 new_job을 반환하기</li>
+</ul>
+<div id="61b2222d" class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 실습 답안</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="st">"""SELECT job, UPPER(REPLACE(job, 'blue-collar', 'blue_collar')) AS new_job</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="st">FROM tb_cst</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>pd.read_sql(q, conn).head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">job</th>
+<th data-quarto-table-cell-role="th">new_job</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>housemaid</td>
+<td>HOUSEMAID</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>services</td>
+<td>SERVICES</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>services</td>
+<td>SERVICES</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>admin.</td>
+<td>ADMIN.</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>services</td>
+<td>SERVICES</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>services</td>
+<td>SERVICES</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>admin.</td>
+<td>ADMIN.</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>blue-collar</td>
+<td>BLUE_COLLAR</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>technician</td>
+<td>TECHNICIAN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>services</td>
+<td>SERVICES</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="c3d5f88e" class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 메모리 절약하기 : 처음 Replace부터 대문자를 적용하여 UPPER함수 미사용</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="st">"""SELECT job, REPLACE(job, 'blue-collar', 'BLUE_COLLAR') AS new_job</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="st">FROM tb_cst</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>pd.read_sql(q, conn).head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">job</th>
+<th data-quarto-table-cell-role="th">new_job</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>housemaid</td>
+<td>housemaid</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>services</td>
+<td>services</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>services</td>
+<td>services</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>admin.</td>
+<td>admin.</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>services</td>
+<td>services</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>services</td>
+<td>services</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>admin.</td>
+<td>admin.</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>blue-collar</td>
+<td>BLUE_COLLAR</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>technician</td>
+<td>technician</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>services</td>
+<td>services</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="숫자-함수" class="level2">
+<h2 class="anchored" data-anchor-id="숫자-함수">숫자 함수</h2>
+<ul>
+<li>집계함수(SUM, AVG, VAR, COUNT 등)는 계산결과를 보여주지만, 이번에는 단일 숫자를 변환</li>
+<li><code>FLOOR</code>(버림), <code>CEIL</code>(올림), <code>ROUND</code>(반올림)</li>
+<li><code>ABS</code>(절대값), <code>MOD</code>(나눈 후 나머지), <code>LOG</code>, <code>LN</code>(자연로그), <code>EXP</code>, <code>SQRT</code> 등
+<ul>
+<li>LOG(숫자, 컬럼명)의 경우 숫자는 밑이며, 생략시 10이거나 SQL에 따라 달라짐</li>
+</ul></li>
+<li>사용하는 SQL에 따라 문법은 다를 수 있음</li>
+</ul>
+<div id="3c2c563b" class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 버림/올림/반올림</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="st">"""SELECT</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="st">    cons_price_idx,</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="st">    FLOOR(cons_price_idx) AS fl_idx,</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="st">    CEIL(cons_price_idx) AS cl_idx,</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="st">    ROUND(cons_price_idx, 1) AS rd_idx1,</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="st">    ROUND(cons_price_idx, 2) AS rd_idx2</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="st">FROM tb_out</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>pd.read_sql(q, conn)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">cons_price_idx</th>
+<th data-quarto-table-cell-role="th">fl_idx</th>
+<th data-quarto-table-cell-role="th">cl_idx</th>
+<th data-quarto-table-cell-role="th">rd_idx1</th>
+<th data-quarto-table-cell-role="th">rd_idx2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>93.994</td>
+<td>93.0</td>
+<td>94.0</td>
+<td>94.0</td>
+<td>93.99</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>93.994</td>
+<td>93.0</td>
+<td>94.0</td>
+<td>94.0</td>
+<td>93.99</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>93.994</td>
+<td>93.0</td>
+<td>94.0</td>
+<td>94.0</td>
+<td>93.99</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>93.994</td>
+<td>93.0</td>
+<td>94.0</td>
+<td>94.0</td>
+<td>93.99</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>93.994</td>
+<td>93.0</td>
+<td>94.0</td>
+<td>94.0</td>
+<td>93.99</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">370</td>
+<td>94.767</td>
+<td>94.0</td>
+<td>95.0</td>
+<td>94.8</td>
+<td>94.77</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">371</td>
+<td>94.767</td>
+<td>94.0</td>
+<td>95.0</td>
+<td>94.8</td>
+<td>94.77</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">372</td>
+<td>94.767</td>
+<td>94.0</td>
+<td>95.0</td>
+<td>94.8</td>
+<td>94.77</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">373</td>
+<td>94.767</td>
+<td>94.0</td>
+<td>95.0</td>
+<td>94.8</td>
+<td>94.77</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">374</td>
+<td>94.767</td>
+<td>94.0</td>
+<td>95.0</td>
+<td>94.8</td>
+<td>94.77</td>
+</tr>
+</tbody>
+</table>
+
+<p>375 rows × 5 columns</p>
+</div>
+</div>
+</div>
+<div id="58ab7130" class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 로그, 로그2읫, e의 4승, 4의 제곱근, e의 4승의 자연로그, 4를 2로 나눈 나머지, 4의 절대값</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="st">"""SELECT</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="st">    4,</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="st">    LOG(4),</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="st">    LOG(2,4),</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="st">    EXP(4),</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="st">    SQRT(4),</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="st">    LN(EXP(4)),</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="st">    MOD(4,2),</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="st">    ABS(4)</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>pd.read_sql(q, conn)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">4</th>
+<th data-quarto-table-cell-role="th">LOG(4)</th>
+<th data-quarto-table-cell-role="th">LOG(2,4)</th>
+<th data-quarto-table-cell-role="th">EXP(4)</th>
+<th data-quarto-table-cell-role="th">SQRT(4)</th>
+<th data-quarto-table-cell-role="th">LN(EXP(4))</th>
+<th data-quarto-table-cell-role="th">MOD(4,2)</th>
+<th data-quarto-table-cell-role="th">ABS(4)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>4</td>
+<td>0.60206</td>
+<td>2.0</td>
+<td>54.59815</td>
+<td>2.0</td>
+<td>4.0</td>
+<td>0.0</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="숫자-함수-실습" class="level2">
+<h2 class="anchored" data-anchor-id="숫자-함수-실습">숫자 함수 실습</h2>
+<ul>
+<li>tb_out 테이블의</li>
+<li>nr_employed 열에 대해서</li>
+<li>자연로그를 씌워서 ln_nr_employed열에,</li>
+<li>제곱근을 구해서 sqrt_nr_employed열에 할당해 봅시다</li>
+</ul>
+<div id="48097689" class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># write your code</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="st">"""SELECT</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="st">    LN(nr_employed) as ln_nr_employed,</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="st">    SQRT(nr_employed) as sqrt_nr_employed</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="st">FROM tb_out</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>pd.read_sql(q, conn)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ln_nr_employed</th>
+<th data-quarto-table-cell-role="th">sqrt_nr_employed</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>8.554682</td>
+<td>72.048595</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>8.554682</td>
+<td>72.048595</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>8.554682</td>
+<td>72.048595</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>8.554682</td>
+<td>72.048595</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>8.554682</td>
+<td>72.048595</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">370</td>
+<td>8.509887</td>
+<td>70.452821</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">371</td>
+<td>8.509887</td>
+<td>70.452821</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">372</td>
+<td>8.509887</td>
+<td>70.452821</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">373</td>
+<td>8.509887</td>
+<td>70.452821</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">374</td>
+<td>8.509887</td>
+<td>70.452821</td>
+</tr>
+</tbody>
+</table>
+
+<p>375 rows × 2 columns</p>
+</div>
+</div>
+</div>
+</section>
+<section id="날짜-함수" class="level2">
+<h2 class="anchored" data-anchor-id="날짜-함수">날짜 함수</h2>
+<ul>
+<li><p>SQL별 문법차이가 커서, 자세한 부분은 사용하기 전 공식문서를 확인</p></li>
+<li><p>STFRTIME 함수는 공통적으로 있는 편</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>STRFTIME(<span class="st">'format'</span>, col) <span class="co">-- 날짜 데이터를 원하는 지정한 format의 문자열로 변환해서 반환합니다.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 56%">
+<col style="width: 31%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>코드</th>
+<th>설명</th>
+<th>예시</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>%Y</code></td>
+<td>연도 (4자리)</td>
+<td>2024</td>
+</tr>
+<tr class="even">
+<td><code>%y</code></td>
+<td>연도 (2자리)</td>
+<td>24</td>
+</tr>
+<tr class="odd">
+<td><code>%m</code></td>
+<td>월 (2자리)</td>
+<td>01 (1월), 12 (12월)</td>
+</tr>
+<tr class="even">
+<td><code>%d</code></td>
+<td>일 (2자리)</td>
+<td>01 (1일), 31 (31일)</td>
+</tr>
+<tr class="odd">
+<td><code>%H</code></td>
+<td>시간 (24시간제, 2자리)</td>
+<td>00 (자정), 23 (23시)</td>
+</tr>
+<tr class="even">
+<td><code>%M</code></td>
+<td>분 (2자리)</td>
+<td>00, 59</td>
+</tr>
+<tr class="odd">
+<td><code>%S</code></td>
+<td>초 (2자리)</td>
+<td>00, 59</td>
+</tr>
+<tr class="even">
+<td><code>%w</code></td>
+<td>요일 (0: 일요일, 6: 토요일)</td>
+<td>0 (일요일), 6 (토요일)</td>
+</tr>
+<tr class="odd">
+<td><code>%W</code></td>
+<td>연중 주 번호 (0부터 시작)</td>
+<td>00, 52</td>
+</tr>
+<tr class="even">
+<td><code>%j</code></td>
+<td>연중 일 번호 (1부터 시작)</td>
+<td>001 (1월 1일), 365</td>
+</tr>
+<tr class="odd">
+<td><code>%f</code></td>
+<td>소수점 이하 초 (마이크로초 단위, 6자리)</td>
+<td>123456</td>
+</tr>
+<tr class="even">
+<td><code>%s</code></td>
+<td>Unix Timestamp (1970년 1월 1일부터의 초)</td>
+<td>1708953600</td>
+</tr>
+<tr class="odd">
+<td><code>%z</code></td>
+<td>UTC 오프셋 (시간대 정보)</td>
+<td>+0000, -0800</td>
+</tr>
+<tr class="even">
+<td><code>%Z</code></td>
+<td>시간대 이름 (예: UTC)</td>
+<td>UTC</td>
+</tr>
+<tr class="odd">
+<td><code>%%</code></td>
+<td><code>%</code> 문자 그대로</td>
+<td>%</td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+<div id="4bbb88d5" class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 실습용 테이블 생성</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co">## 테이블 생성</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="st">"""CREATE TABLE tb_dates (</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="st">    order_id INTEGER PRIMARY KEY,</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="st">    order_date TEXT</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="st">);"""</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>conn.execute(q)</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co">## 샘플데이터 입력</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="st">"""INSERT INTO tb_dates (order_id, order_date) VALUES</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="st">(1, '2024-12-26 10:30:00'),</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="st">(2, '2024-12-25 14:20:00'),</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="st">(3, '2024-12-24 08:00:00');</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>conn.execute(q)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="865dc4c6" class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># STFRTIME 실습</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span><span class="st">"""SELECT order_id, order_date, STRFTIME('%Y', order_date) AS order_year FROM tb_dates;"""</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>pd.read_sql(q, conn)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">order_id</th>
+<th data-quarto-table-cell-role="th">order_date</th>
+<th data-quarto-table-cell-role="th">order_year</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>2024-12-26 10:30:00</td>
+<td>2024</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2</td>
+<td>2024-12-25 14:20:00</td>
+<td>2024</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>3</td>
+<td>2024-12-24 08:00:00</td>
+<td>2024</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<ul>
+<li>DB별 날짜 간의 차이구하는 샘플</li>
+</ul>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 60%">
+<col style="width: 28%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Database</strong></th>
+<th><strong>SQL Query</strong></th>
+<th><strong>설명</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>MySQL</strong></td>
+<td><code>SELECT DATEDIFF('2024-12-31', '2024-12-25') AS days_difference;</code></td>
+<td>두 날짜 간의 차이를 <strong>일 단위</strong>로 반환</td>
+</tr>
+<tr class="even">
+<td><strong>Oracle</strong></td>
+<td><code>SELECT TO_DATE('2024-12-31', 'YYYY-MM-DD') - TO_DATE('2024-12-25', 'YYYY-MM-DD') AS days_difference FROM dual;</code></td>
+<td>날짜 간 차이를 <strong>일 단위</strong>로 반환</td>
+</tr>
+<tr class="odd">
+<td><strong>SQLite3</strong></td>
+<td><code>SELECT JULIANDAY('2024-12-31') - JULIANDAY('2024-12-25') AS days_difference;</code></td>
+<td>두 날짜의 <strong>율리우스 날짜 차이</strong>를 계산</td>
+</tr>
+<tr class="even">
+<td><strong>Hive</strong></td>
+<td><code>SELECT DATEDIFF('2024-12-31', '2024-12-25') AS days_difference;</code></td>
+<td>날짜 차이를 <strong>일 단위</strong>로 반환</td>
+</tr>
+<tr class="odd">
+<td><strong>PostgreSQL</strong></td>
+<td><code>SELECT '2024-12-31'::DATE - '2024-12-25'::DATE AS days_difference;</code></td>
+<td>두 날짜 간의 차이를 <strong>일 단위</strong>로 반환</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="case-when-조건문" class="level2">
+<h2 class="anchored" data-anchor-id="case-when-조건문">CASE WHEN 조건문</h2>
+<ul>
+<li>CASE WHEN</li>
+</ul>
+<div class="sourceCode" id="cb23"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="cf">CASE</span> <span class="cf">WHEN</span> 조건1 <span class="cf">THEN</span> 결과1</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">WHEN</span> 조건2 <span class="cf">THEN</span> 결과2</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">..</span>.</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">ELSE</span> 모든 조건을 만족하지 않을 때의 결과 <span class="cf">END</span> <span class="kw">AS</span> 변수명</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>아래 표의 education(학력)은, 순위가 있는 Ordinal변수
+<ul>
+<li>한 자리 숫자코드로 지정해 모델이 이해하기 쉽게 / 메모리효율이 높아지게 함</li>
+</ul></li>
+</ul>
+<div id="3dad7c22" class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>pd.read_sql(<span class="st">'SELECT education FROM tb_cst'</span>, conn).education.unique()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>array(['basic.4y', 'high.school', 'basic.6y', 'basic.9y',
+       'professional.course', 'unknown', 'university.degree',
+       'illiterate'], dtype=object)</code></pre>
+</div>
+</div>
+<div id="cf798895" class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="st">"""SELECT</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="st">    education,</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="st">    CASE WHEN education = 'illiterate' THEN 0</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="st">         WHEN education = 'basic.4y' THEN 1</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="st">         WHEN education = 'basic.6y' THEN 2</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="st">         WHEN education = 'basic.9y' THEN 3</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="st">         WHEN education = 'high.school' THEN 4</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="st">         WHEN education = 'university.degree' THEN 5</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="st">         WHEN education = 'professional.course' THEN 6</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="st">         WHEN education = 'unknown' THEN 99</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="st">         ELSE 99 END AS education_c</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="st">FROM tb_cst</span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>pd.read_sql(q, conn).head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">education</th>
+<th data-quarto-table-cell-role="th">education_c</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>basic.4y</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>high.school</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>high.school</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>basic.6y</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>high.school</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>basic.9y</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>professional.course</td>
+<td>6</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>unknown</td>
+<td>99</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>professional.course</td>
+<td>6</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>high.school</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<ul>
+<li>학력별 고객 수를 1K 이상/이하 등으로 지정하는 예시</li>
+</ul>
+<div id="735701a9" class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="st">"""SELECT</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="st">    education,</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="st">    COUNT(*) AS n_cst,</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="st">    CASE WHEN COUNT(*) &gt; 1000 THEN 'Above 1K'</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="st">         ELSE 'Below 1K'</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="st">         END AS n_cst_over_1k</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="st">FROM tb_cst</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="st">GROUP BY education</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>pd.read_sql(q, conn)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">education</th>
+<th data-quarto-table-cell-role="th">n_cst</th>
+<th data-quarto-table-cell-role="th">n_cst_over_1k</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>basic.4y</td>
+<td>4176</td>
+<td>Above 1K</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>basic.6y</td>
+<td>2292</td>
+<td>Above 1K</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>basic.9y</td>
+<td>6045</td>
+<td>Above 1K</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>high.school</td>
+<td>9515</td>
+<td>Above 1K</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>illiterate</td>
+<td>18</td>
+<td>Below 1K</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>professional.course</td>
+<td>5243</td>
+<td>Above 1K</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>university.degree</td>
+<td>12168</td>
+<td>Above 1K</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>unknown</td>
+<td>1731</td>
+<td>Above 1K</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="sql실행순서-case-when-사용시-유의할-점" class="level2">
+<h2 class="anchored" data-anchor-id="sql실행순서-case-when-사용시-유의할-점">SQL실행순서 (+CASE WHEN 사용시 유의할 점)</h2>
+<ul>
+<li>SQL실행순서
+<ol type="1">
+<li>FROM &amp; JOIN</li>
+<li>WHERE</li>
+<li>GROUP BY</li>
+<li>HAVING</li>
+<li>SELECT (window function, case when)</li>
+<li>ORDER BY</li>
+<li>LIMIT</li>
+</ol></li>
+<li>CASE WHEN은 SELECT 안에서 실행되므로, CASE WHEN으로 생성한 변수를 쓰려면 별칭이 아닌 구문 전체를 사용
+<ul>
+<li>AS는 오류를 일으키는 경우가 많아 END까지만 작성</li>
+</ul></li>
+</ul>
+</section>
+<section id="case-when-실습" class="level2">
+<h2 class="anchored" data-anchor-id="case-when-실습">CASE WHEN 실습</h2>
+<ul>
+<li>고객의 직업별로</li>
+<li>확실히 파산한 고객의 수를 n_default_cst에 할당한 뒤 (Unique한 수를 세려면 DISTINCT를 열 앞에 붙여주세요. COUNT(DISTINCT COL) 이렇게요.)</li>
+<li>1명 이상 있다면 1 없으면 0을 is_default_job에 할당해주세요.</li>
+</ul>
+<div id="a374842b" class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="st">"""SELECT</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="st">job, </span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="st">SUM(CASE WHEN is_default = 'yes' THEN 1</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="st">        ELSE 0</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="st">        END) AS n_default_cst,</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="st">CASE WHEN SUM(CASE WHEN is_default = 'yes' then 1</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="st">        ELSE 0</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="st">        END) &gt;= 1 THEN 1</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="st">        ELSE 0</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="st">        END AS is_default_job</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="st">FROM tb_cst</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="st">GROUP BY job</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>pd.read_sql(q, conn)</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 위 사항은 자주 사용되는 케이스임</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">job</th>
+<th data-quarto-table-cell-role="th">n_default_cst</th>
+<th data-quarto-table-cell-role="th">is_default_job</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>admin.</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>blue-collar</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>entrepreneur</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>housemaid</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>management</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>retired</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>self-employed</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>services</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>student</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>technician</td>
+<td>2</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>unemployed</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11</td>
+<td>unknown</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="join과-union" class="level2">
+<h2 class="anchored" data-anchor-id="join과-union">JOIN과 UNION</h2>
+<ul>
+<li>서로 다른 두 테이블을 합치고 싶을 때 JOIN 사용(Python pandas의 merge와 동일)</li>
+<li>FROM절 다음에 사용</li>
+</ul>
+<div class="sourceCode" id="cb29"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    tb1.col1_from_tb1,</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    tb1.col2_from_tb1,</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    tb1.join_key,</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    tb2.col1_from_tb2</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> table1 <span class="kw">AS</span> tb1</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'JOIN 방법'</span> <span class="kw">JOIN</span> tabl2 <span class="kw">AS</span> tb2</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">ON</span> tb1.join_key <span class="op">=</span> tb2.join_key</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">AND</span> <span class="op">..</span>.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/d19c77be-1-Note_week2_1.jpg" class="img-fluid figure-img"></p>
+<figcaption>Note_week2_1.jpg</figcaption>
+</figure>
+</div>
+<div id="927c4fe9" class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># JOIN대상 테이블1</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>tb_cst <span class="op">=</span> pd.read_sql(<span class="st">'SELECT * FROM tb_cst'</span>, conn)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>tb_cst.head(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">idx</th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">job</th>
+<th data-quarto-table-cell-role="th">marital</th>
+<th data-quarto-table-cell-role="th">education</th>
+<th data-quarto-table-cell-role="th">is_default</th>
+<th data-quarto-table-cell-role="th">housing</th>
+<th data-quarto-table-cell-role="th">loan</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2023-01-01</td>
+<td>0</td>
+<td>56</td>
+<td>housemaid</td>
+<td>married</td>
+<td>basic.4y</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2023-01-01</td>
+<td>1</td>
+<td>57</td>
+<td>services</td>
+<td>married</td>
+<td>high.school</td>
+<td>unknown</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2023-01-01</td>
+<td>2</td>
+<td>37</td>
+<td>services</td>
+<td>married</td>
+<td>high.school</td>
+<td>no</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2023-01-01</td>
+<td>3</td>
+<td>40</td>
+<td>admin.</td>
+<td>married</td>
+<td>basic.6y</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2023-01-01</td>
+<td>4</td>
+<td>56</td>
+<td>services</td>
+<td>married</td>
+<td>high.school</td>
+<td>no</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="ea0d21c1" class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># JOIN대상 테이블2</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>tb_camp <span class="op">=</span> pd.read_sql(<span class="st">'SELECT * FROM tb_camp'</span>, conn)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>tb_camp.head(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">idx</th>
+<th data-quarto-table-cell-role="th">contact</th>
+<th data-quarto-table-cell-role="th">month</th>
+<th data-quarto-table-cell-role="th">day_of_week</th>
+<th data-quarto-table-cell-role="th">duration</th>
+<th data-quarto-table-cell-role="th">campaign</th>
+<th data-quarto-table-cell-role="th">pdays</th>
+<th data-quarto-table-cell-role="th">previous</th>
+<th data-quarto-table-cell-role="th">poutcome</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2023-01-01</td>
+<td>0</td>
+<td>telephone</td>
+<td>may</td>
+<td>mon</td>
+<td>261</td>
+<td>1</td>
+<td>999</td>
+<td>0</td>
+<td>nonexistent</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2023-01-01</td>
+<td>1</td>
+<td>telephone</td>
+<td>may</td>
+<td>mon</td>
+<td>149</td>
+<td>1</td>
+<td>999</td>
+<td>0</td>
+<td>nonexistent</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2023-01-01</td>
+<td>2</td>
+<td>telephone</td>
+<td>may</td>
+<td>mon</td>
+<td>226</td>
+<td>1</td>
+<td>999</td>
+<td>0</td>
+<td>nonexistent</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2023-01-01</td>
+<td>3</td>
+<td>telephone</td>
+<td>may</td>
+<td>mon</td>
+<td>151</td>
+<td>1</td>
+<td>999</td>
+<td>0</td>
+<td>nonexistent</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2023-01-01</td>
+<td>4</td>
+<td>telephone</td>
+<td>may</td>
+<td>mon</td>
+<td>307</td>
+<td>1</td>
+<td>999</td>
+<td>0</td>
+<td>nonexistent</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="4d182de3" class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># JOIN대상 테이블3</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>tb_out <span class="op">=</span> pd.read_sql(<span class="st">'SELECT * FROM tb_out'</span>, conn)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>tb_out.head(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">emp_var_rate</th>
+<th data-quarto-table-cell-role="th">cons_price_idx</th>
+<th data-quarto-table-cell-role="th">cons_conf_idx</th>
+<th data-quarto-table-cell-role="th">euribor3m</th>
+<th data-quarto-table-cell-role="th">nr_employed</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2023-01-01</td>
+<td>1.1</td>
+<td>93.994</td>
+<td>-36.4</td>
+<td>4.857</td>
+<td>5191.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2023-01-02</td>
+<td>1.1</td>
+<td>93.994</td>
+<td>-36.4</td>
+<td>4.856</td>
+<td>5191.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2023-01-03</td>
+<td>1.1</td>
+<td>93.994</td>
+<td>-36.4</td>
+<td>4.855</td>
+<td>5191.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2023-01-04</td>
+<td>1.1</td>
+<td>93.994</td>
+<td>-36.4</td>
+<td>4.859</td>
+<td>5191.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2023-01-05</td>
+<td>1.1</td>
+<td>93.994</td>
+<td>-36.4</td>
+<td>4.860</td>
+<td>5191.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<ul>
+<li>LEFT JOIN 예시</li>
+</ul>
+<div id="c6933451" class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LEFT JOIN 예시</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="st">"""SELECT</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="st">    c1.date, -- from절에서 가져올 열들을 별칭을 활용해 지정해 줍니다.</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="st">    c1.idx,</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="st">    c1.age,</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="st">    c1.job,</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="st">    c1.marital,</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="st">    c1.education,</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="st">    c1.is_default,</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="st">    c1.housing,</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="st">    c1.loan,</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a><span class="st">    o1.emp_var_rate, -- 마찬가지로 join절에서 가져올 열 역시 지정이 가능합니다.</span></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a><span class="st">    o1.cons_price_idx,</span></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a><span class="st">    o1.cons_conf_idx,</span></span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a><span class="st">    o1.euribor3m,</span></span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a><span class="st">    o1.nr_employed</span></span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a><span class="st">FROM tb_cst AS c1</span></span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a><span class="st">LEFT JOIN tb_out AS o1</span></span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a><span class="st">  ON c1.date = o1.date</span></span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>pd.read_sql(q, conn).head(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">idx</th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">job</th>
+<th data-quarto-table-cell-role="th">marital</th>
+<th data-quarto-table-cell-role="th">education</th>
+<th data-quarto-table-cell-role="th">is_default</th>
+<th data-quarto-table-cell-role="th">housing</th>
+<th data-quarto-table-cell-role="th">loan</th>
+<th data-quarto-table-cell-role="th">emp_var_rate</th>
+<th data-quarto-table-cell-role="th">cons_price_idx</th>
+<th data-quarto-table-cell-role="th">cons_conf_idx</th>
+<th data-quarto-table-cell-role="th">euribor3m</th>
+<th data-quarto-table-cell-role="th">nr_employed</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2023-01-01</td>
+<td>0</td>
+<td>56</td>
+<td>housemaid</td>
+<td>married</td>
+<td>basic.4y</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+<td>1.1</td>
+<td>93.994</td>
+<td>-36.4</td>
+<td>4.857</td>
+<td>5191.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2023-01-01</td>
+<td>1</td>
+<td>57</td>
+<td>services</td>
+<td>married</td>
+<td>high.school</td>
+<td>unknown</td>
+<td>no</td>
+<td>no</td>
+<td>1.1</td>
+<td>93.994</td>
+<td>-36.4</td>
+<td>4.857</td>
+<td>5191.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2023-01-01</td>
+<td>2</td>
+<td>37</td>
+<td>services</td>
+<td>married</td>
+<td>high.school</td>
+<td>no</td>
+<td>yes</td>
+<td>no</td>
+<td>1.1</td>
+<td>93.994</td>
+<td>-36.4</td>
+<td>4.857</td>
+<td>5191.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2023-01-01</td>
+<td>3</td>
+<td>40</td>
+<td>admin.</td>
+<td>married</td>
+<td>basic.6y</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+<td>1.1</td>
+<td>93.994</td>
+<td>-36.4</td>
+<td>4.857</td>
+<td>5191.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2023-01-01</td>
+<td>4</td>
+<td>56</td>
+<td>services</td>
+<td>married</td>
+<td>high.school</td>
+<td>no</td>
+<td>no</td>
+<td>yes</td>
+<td>1.1</td>
+<td>93.994</td>
+<td>-36.4</td>
+<td>4.857</td>
+<td>5191.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<ul>
+<li>INNER JOIN 예시</li>
+</ul>
+<div id="3b719633" class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># JOIN대상 테이블4</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>tb_y <span class="op">=</span> pd.read_sql(<span class="st">'SELECT * FROM tb_y'</span>, conn)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>tb_y.head(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">idx</th>
+<th data-quarto-table-cell-role="th">y</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2023-01-01</td>
+<td>0</td>
+<td>no</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2023-01-01</td>
+<td>1</td>
+<td>no</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2023-01-01</td>
+<td>2</td>
+<td>no</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2023-01-01</td>
+<td>3</td>
+<td>no</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2023-01-01</td>
+<td>5</td>
+<td>no</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="81cc9215" class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># INNER JOIN 예시</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="st">"""SELECT</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="st">    c1.date, -- from절에서 가져올 열들을 별칭을 활용해 지정해 줍니다.</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="st">    c1.idx,</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="st">    c1.age,</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="st">    c1.job,</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="st">    c1.marital,</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="st">    c1.education,</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="st">    c1.is_default,</span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="st">    c1.housing,</span></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="st">    c1.loan,</span></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a><span class="st">    y1.y</span></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="st">FROM tb_cst AS c1</span></span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a><span class="st">INNER JOIN tb_y AS y1</span></span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a><span class="st">  ON c1.date = y1.date</span></span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a><span class="st">    AND c1.idx = y1.idx</span></span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>co <span class="op">=</span> pd.read_sql(q, conn)</span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a>co.head(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">idx</th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">job</th>
+<th data-quarto-table-cell-role="th">marital</th>
+<th data-quarto-table-cell-role="th">education</th>
+<th data-quarto-table-cell-role="th">is_default</th>
+<th data-quarto-table-cell-role="th">housing</th>
+<th data-quarto-table-cell-role="th">loan</th>
+<th data-quarto-table-cell-role="th">y</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2023-01-01</td>
+<td>0</td>
+<td>56</td>
+<td>housemaid</td>
+<td>married</td>
+<td>basic.4y</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2023-01-01</td>
+<td>1</td>
+<td>57</td>
+<td>services</td>
+<td>married</td>
+<td>high.school</td>
+<td>unknown</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2023-01-01</td>
+<td>2</td>
+<td>37</td>
+<td>services</td>
+<td>married</td>
+<td>high.school</td>
+<td>no</td>
+<td>yes</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2023-01-01</td>
+<td>3</td>
+<td>40</td>
+<td>admin.</td>
+<td>married</td>
+<td>basic.6y</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2023-01-01</td>
+<td>5</td>
+<td>45</td>
+<td>services</td>
+<td>married</td>
+<td>basic.9y</td>
+<td>unknown</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="561b626c" class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"""INNER JOIN의 결과 행의 개수 : </span><span class="sc">{</span>co<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">}</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="ss">기존 tb_cst의 행의 개수 : </span><span class="sc">{</span>tb_cst<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">"""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>INNER JOIN의 결과 행의 개수 : 37534
+기존 tb_cst의 행의 개수 : 41188</code></pre>
+</div>
+</div>
+</section>
+<section id="coalesce또는-nvl" class="level2">
+<h2 class="anchored" data-anchor-id="coalesce또는-nvl">COALESCE(또는 NVL)</h2>
+<ul>
+<li><p>NULL이 들어갈 자리에 지정한 값을 넣음</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">COALESCE</span>(tb1.col1, <span class="st">'no'</span>) <span class="kw">as</span> col1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>위에서 INNER JOIN사용시 값이 줄었는데, Y값이 없다는 것을 YES가 아닌 NO나 UNKNOWN으로 구분해 이진/다중 분류로 사용하고 싶을 때에도 활용 가능</p></li>
+</ul>
+<div id="4d225900" class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="st">"""SELECT</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="st">    c1.date, -- from절에서 가져올 열들을 별칭을 활용해 지정해 줍니다.</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="st">    c1.idx,</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="st">    c1.age,</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="st">    c1.job,</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="st">    c1.marital,</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="st">    c1.education,</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="st">    c1.is_default,</span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a><span class="st">    c1.housing,</span></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="st">    c1.loan,</span></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a><span class="st">    COALESCE(y1.y, 'no') as y</span></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a><span class="st">FROM tb_cst AS c1</span></span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a><span class="st">LEFT JOIN tb_y AS y1</span></span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a><span class="st">  ON c1.date = y1.date</span></span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a><span class="st">    AND c1.idx = y1.idx</span></span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>co2 <span class="op">=</span> pd.read_sql(q, conn)</span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a>co2.head(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">idx</th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">job</th>
+<th data-quarto-table-cell-role="th">marital</th>
+<th data-quarto-table-cell-role="th">education</th>
+<th data-quarto-table-cell-role="th">is_default</th>
+<th data-quarto-table-cell-role="th">housing</th>
+<th data-quarto-table-cell-role="th">loan</th>
+<th data-quarto-table-cell-role="th">y</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2023-01-01</td>
+<td>0</td>
+<td>56</td>
+<td>housemaid</td>
+<td>married</td>
+<td>basic.4y</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2023-01-01</td>
+<td>1</td>
+<td>57</td>
+<td>services</td>
+<td>married</td>
+<td>high.school</td>
+<td>unknown</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2023-01-01</td>
+<td>2</td>
+<td>37</td>
+<td>services</td>
+<td>married</td>
+<td>high.school</td>
+<td>no</td>
+<td>yes</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2023-01-01</td>
+<td>3</td>
+<td>40</td>
+<td>admin.</td>
+<td>married</td>
+<td>basic.6y</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2023-01-01</td>
+<td>4</td>
+<td>56</td>
+<td>services</td>
+<td>married</td>
+<td>high.school</td>
+<td>no</td>
+<td>no</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="39cdbd4b" class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># NULL로 채워넣어 행의 수가 줄지 않음</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"""INNER JOIN의 결과 행의 개수 : </span><span class="sc">{</span>co2<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">}</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="ss">기존 tb_cst의 행의 개수 : </span><span class="sc">{</span>tb_cst<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">"""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>INNER JOIN의 결과 행의 개수 : 41188
+기존 tb_cst의 행의 개수 : 41188</code></pre>
+</div>
+</div>
+</section>
+<section id="join과-coalese-실습" class="level2">
+<h2 class="anchored" data-anchor-id="join과-coalese-실습">JOIN과 COALESE 실습</h2>
+<ul>
+<li>tb_cst, tb_camp, tb_out, tb_y를 전부 JOIN해 tb_master table을 만들어 저장하세요.</li>
+<li>tb_cst, tb_camp, tb_y는 date, idx를 key로, tb_out은 date를 key로 갖습니다.</li>
+<li>tb_y가 null인 경우, ’unknown’으로 값을 채워 넣으세요.</li>
+</ul>
+<div id="4bbdaa34" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>conn.execute(<span class="st">"DROP TABLE IF EXISTS tb_master"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>&lt;sqlite3.Cursor at 0x150ffa8a5c0&gt;</code></pre>
+</div>
+</div>
+<div id="2ed4691a" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="st">CREATE TABLE tb_master AS</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="st">    SELECT</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="st">        *</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="st">        ,COALESCE(c3.y, 'unknown')</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="st">    FROM tb_cst as c1</span></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a><span class="st">    LEFT JOIN tb_camp as c2</span></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="st">        ON c1.date = c2.date AND c1.idx = c2.idx</span></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="st">    LEFT JOIN tb_y as c3</span></span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a><span class="st">        ON c1.date = c3.date AND c1.idx = c3.idx</span></span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a><span class="st">    LEFT JOIN tb_out as d1</span></span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a><span class="st">        ON c1.date = d1.date</span></span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>conn.execute(q)</span>
+<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a>pd.read_sql(<span class="st">'SELECT * FROM tb_master'</span>, conn).head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">idx</th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">job</th>
+<th data-quarto-table-cell-role="th">marital</th>
+<th data-quarto-table-cell-role="th">education</th>
+<th data-quarto-table-cell-role="th">is_default</th>
+<th data-quarto-table-cell-role="th">housing</th>
+<th data-quarto-table-cell-role="th">loan</th>
+<th data-quarto-table-cell-role="th">date:1</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">date:2</th>
+<th data-quarto-table-cell-role="th">idx:2</th>
+<th data-quarto-table-cell-role="th">y</th>
+<th data-quarto-table-cell-role="th">date:3</th>
+<th data-quarto-table-cell-role="th">emp_var_rate</th>
+<th data-quarto-table-cell-role="th">cons_price_idx</th>
+<th data-quarto-table-cell-role="th">cons_conf_idx</th>
+<th data-quarto-table-cell-role="th">euribor3m</th>
+<th data-quarto-table-cell-role="th">nr_employed</th>
+<th data-quarto-table-cell-role="th">COALESCE(c3.y, 'unknown')</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2023-01-01</td>
+<td>0</td>
+<td>56</td>
+<td>housemaid</td>
+<td>married</td>
+<td>basic.4y</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+<td>2023-01-01</td>
+<td>...</td>
+<td>2023-01-01</td>
+<td>0.0</td>
+<td>no</td>
+<td>2023-01-01</td>
+<td>1.1</td>
+<td>93.994</td>
+<td>-36.4</td>
+<td>4.857</td>
+<td>5191.0</td>
+<td>no</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2023-01-01</td>
+<td>1</td>
+<td>57</td>
+<td>services</td>
+<td>married</td>
+<td>high.school</td>
+<td>unknown</td>
+<td>no</td>
+<td>no</td>
+<td>2023-01-01</td>
+<td>...</td>
+<td>2023-01-01</td>
+<td>1.0</td>
+<td>no</td>
+<td>2023-01-01</td>
+<td>1.1</td>
+<td>93.994</td>
+<td>-36.4</td>
+<td>4.857</td>
+<td>5191.0</td>
+<td>no</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2023-01-01</td>
+<td>2</td>
+<td>37</td>
+<td>services</td>
+<td>married</td>
+<td>high.school</td>
+<td>no</td>
+<td>yes</td>
+<td>no</td>
+<td>2023-01-01</td>
+<td>...</td>
+<td>2023-01-01</td>
+<td>2.0</td>
+<td>no</td>
+<td>2023-01-01</td>
+<td>1.1</td>
+<td>93.994</td>
+<td>-36.4</td>
+<td>4.857</td>
+<td>5191.0</td>
+<td>no</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2023-01-01</td>
+<td>3</td>
+<td>40</td>
+<td>admin.</td>
+<td>married</td>
+<td>basic.6y</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+<td>2023-01-01</td>
+<td>...</td>
+<td>2023-01-01</td>
+<td>3.0</td>
+<td>no</td>
+<td>2023-01-01</td>
+<td>1.1</td>
+<td>93.994</td>
+<td>-36.4</td>
+<td>4.857</td>
+<td>5191.0</td>
+<td>no</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2023-01-01</td>
+<td>4</td>
+<td>56</td>
+<td>services</td>
+<td>married</td>
+<td>high.school</td>
+<td>no</td>
+<td>no</td>
+<td>yes</td>
+<td>2023-01-01</td>
+<td>...</td>
+<td>None</td>
+<td>NaN</td>
+<td>None</td>
+<td>2023-01-01</td>
+<td>1.1</td>
+<td>93.994</td>
+<td>-36.4</td>
+<td>4.857</td>
+<td>5191.0</td>
+<td>unknown</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>2023-01-01</td>
+<td>5</td>
+<td>45</td>
+<td>services</td>
+<td>married</td>
+<td>basic.9y</td>
+<td>unknown</td>
+<td>no</td>
+<td>no</td>
+<td>2023-01-01</td>
+<td>...</td>
+<td>2023-01-01</td>
+<td>5.0</td>
+<td>no</td>
+<td>2023-01-01</td>
+<td>1.1</td>
+<td>93.994</td>
+<td>-36.4</td>
+<td>4.857</td>
+<td>5191.0</td>
+<td>no</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>2023-01-01</td>
+<td>6</td>
+<td>59</td>
+<td>admin.</td>
+<td>married</td>
+<td>professional.course</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+<td>2023-01-01</td>
+<td>...</td>
+<td>2023-01-01</td>
+<td>6.0</td>
+<td>no</td>
+<td>2023-01-01</td>
+<td>1.1</td>
+<td>93.994</td>
+<td>-36.4</td>
+<td>4.857</td>
+<td>5191.0</td>
+<td>no</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>2023-01-01</td>
+<td>7</td>
+<td>41</td>
+<td>blue-collar</td>
+<td>married</td>
+<td>unknown</td>
+<td>unknown</td>
+<td>no</td>
+<td>no</td>
+<td>2023-01-01</td>
+<td>...</td>
+<td>2023-01-01</td>
+<td>7.0</td>
+<td>no</td>
+<td>2023-01-01</td>
+<td>1.1</td>
+<td>93.994</td>
+<td>-36.4</td>
+<td>4.857</td>
+<td>5191.0</td>
+<td>no</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>2023-01-01</td>
+<td>8</td>
+<td>24</td>
+<td>technician</td>
+<td>single</td>
+<td>professional.course</td>
+<td>no</td>
+<td>yes</td>
+<td>no</td>
+<td>2023-01-01</td>
+<td>...</td>
+<td>2023-01-01</td>
+<td>8.0</td>
+<td>no</td>
+<td>2023-01-01</td>
+<td>1.1</td>
+<td>93.994</td>
+<td>-36.4</td>
+<td>4.857</td>
+<td>5191.0</td>
+<td>no</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>2023-01-01</td>
+<td>9</td>
+<td>25</td>
+<td>services</td>
+<td>single</td>
+<td>high.school</td>
+<td>no</td>
+<td>yes</td>
+<td>no</td>
+<td>2023-01-01</td>
+<td>...</td>
+<td>2023-01-01</td>
+<td>9.0</td>
+<td>no</td>
+<td>2023-01-01</td>
+<td>1.1</td>
+<td>93.994</td>
+<td>-36.4</td>
+<td>4.857</td>
+<td>5191.0</td>
+<td>no</td>
+</tr>
+</tbody>
+</table>
+
+<p>10 rows × 29 columns</p>
+</div>
+</div>
+</div>
+</section>
+<section id="서브쿼리와-cte" class="level2">
+<h2 class="anchored" data-anchor-id="서브쿼리와-cte">서브쿼리와 CTE</h2>
+<ul>
+<li>실무에서는 쿼리가 길고 많은 테이블을 가져다가 쓰게 됨</li>
+<li>매번 위처럼 CREATE TABLE로 업무하면 전산팀 등에서 용량 문제로 연락올 수 있음</li>
+<li>이런 문제가 발생치 않도록 할 수 있는 것이 <code>서브쿼리</code>와 <code>CTE</code></li>
+<li>서브쿼리는 사용이 편하나 가독성/재활용성이 떨어지고, CTE는 이해하기 용이함
+<ul>
+<li>본인의 업무에 맞게 활용</li>
+</ul></li>
+</ul>
+<section id="서브쿼리" class="level3">
+<h3 class="anchored" data-anchor-id="서브쿼리">서브쿼리</h3>
+<ul>
+<li>FROM, WHERE, HAVING 등 다양한 곳에 사용할 수 있음
+<ul>
+<li>보통 FROM, JOIN, WHERE에 많이 사용</li>
+</ul></li>
+<li>장점 : 별도 테이블로 저장/삭제할 필요없이 쿼리를 적어 사용가능</li>
+<li>단점 : 가독성, 재활용</li>
+<li>서브쿼리 샘플 (LEFT JOIN부분)</li>
+</ul>
+<div class="sourceCode" id="cb45"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>    c1.<span class="op">*</span>,</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>    c2.marital_rate_per_job</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> tb_cst <span class="kw">AS</span> c1</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> (</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>    job,</span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">SUM</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> marital <span class="op">=</span> <span class="st">'married'</span> <span class="cf">THEN</span> <span class="fl">1.0</span> <span class="cf">ELSE</span> <span class="fl">0.0</span> <span class="cf">END</span>) <span class="op">/</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> marital_rate_per_job</span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> tb_cst</span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> job</span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>) <span class="kw">AS</span> c2 <span class="kw">ON</span> c1.job <span class="op">=</span> c2.job</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="ctecommon-table-expressions" class="level3">
+<h3 class="anchored" data-anchor-id="ctecommon-table-expressions">CTE(Common Table Expressions)</h3>
+<ul>
+<li>WITH + 임시테이블명을 지정 후, 호출하여 사용가능</li>
+</ul>
+<div class="sourceCode" id="cb46"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> 임시테이블명 <span class="kw">AS</span> (</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>원래 서브쿼리에 들어가던 쿼리</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>)<span class="op">..</span>.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>여러개를 지정할 경우, WITH는 한번만 쓰고 ,(쉼표)로 구분</li>
+<li>적절한 테이블네이밍과 주석을 통해, 장기적 관점에서 관리/활용이 용이함</li>
+<li>CTE 샘플</li>
+</ul>
+<div class="sourceCode" id="cb47"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> tb_marital_rate_per_job <span class="kw">AS</span> (</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>        job,</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">SUM</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> marital <span class="op">=</span> <span class="st">'married'</span> <span class="cf">THEN</span> <span class="fl">1.0</span> <span class="cf">ELSE</span> <span class="fl">0.0</span> <span class="cf">END</span>) <span class="op">/</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> marital_rate_per_job</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> tb_cst</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">GROUP</span> <span class="kw">BY</span> job</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span></span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>        c1.<span class="op">*</span>,</span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>        c2.marital_rate_per_job</span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> tb_cst <span class="kw">AS</span> c1</span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">LEFT</span> <span class="kw">JOIN</span> tb_marital_rate_per_job <span class="kw">AS</span> c2 <span class="kw">ON</span> c1.job <span class="op">=</span> c2.job</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="서브쿼리와-cte실습" class="level2">
+<h2 class="anchored" data-anchor-id="서브쿼리와-cte실습">서브쿼리와 CTE실습</h2>
+<ul>
+<li>켐페인 정보 테이블에 대해서</li>
+<li>contact별 평균 pdays를 구해 avg_pdays_per_contact에 할당하고 (단 999는 제외할 것)</li>
+<li>day_of_week별 평균 duration을 구해 avg_duration_per_dow에 할당하고</li>
+<li>해당 두 컬럼을 켐페인 정보 테이블에 LEFT JOIN한 결과를 서브쿼리와 CTE 각각을 사용해 구하세요.</li>
+</ul>
+<div id="ad8f9191" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 서브쿼리</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="st">    *</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="st">FROM tb_camp AS main</span></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="st">LEFT JOIN (SELECT contact, AVG(pdays)</span></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="st">      FROM tb_camp</span></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a><span class="st">      WHERE pdays != 999</span></span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a><span class="st">      GROUP BY contact) AS avg_pdays_per_contact</span></span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a><span class="st">    ON main.contact = avg_pdays_per_contact.contact</span></span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a><span class="st">LEFT JOIN (SELECT day_of_week, AVG(duration)</span></span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a><span class="st">            FROM tb_camp</span></span>
+<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a><span class="st">            GROUP BY day_of_week) AS avg_duration_per_dow</span></span>
+<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a><span class="st">    ON main.day_of_week = avg_duration_per_dow.day_of_week</span></span>
+<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a>pd.read_sql_query(q, conn).head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">idx</th>
+<th data-quarto-table-cell-role="th">contact</th>
+<th data-quarto-table-cell-role="th">month</th>
+<th data-quarto-table-cell-role="th">day_of_week</th>
+<th data-quarto-table-cell-role="th">duration</th>
+<th data-quarto-table-cell-role="th">campaign</th>
+<th data-quarto-table-cell-role="th">pdays</th>
+<th data-quarto-table-cell-role="th">previous</th>
+<th data-quarto-table-cell-role="th">poutcome</th>
+<th data-quarto-table-cell-role="th">contact</th>
+<th data-quarto-table-cell-role="th">AVG(pdays)</th>
+<th data-quarto-table-cell-role="th">day_of_week</th>
+<th data-quarto-table-cell-role="th">AVG(duration)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2023-01-01</td>
+<td>0</td>
+<td>telephone</td>
+<td>may</td>
+<td>mon</td>
+<td>261</td>
+<td>1</td>
+<td>999</td>
+<td>0</td>
+<td>nonexistent</td>
+<td>telephone</td>
+<td>6.212389</td>
+<td>mon</td>
+<td>246.568358</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2023-01-01</td>
+<td>1</td>
+<td>telephone</td>
+<td>may</td>
+<td>mon</td>
+<td>149</td>
+<td>1</td>
+<td>999</td>
+<td>0</td>
+<td>nonexistent</td>
+<td>telephone</td>
+<td>6.212389</td>
+<td>mon</td>
+<td>246.568358</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2023-01-01</td>
+<td>2</td>
+<td>telephone</td>
+<td>may</td>
+<td>mon</td>
+<td>226</td>
+<td>1</td>
+<td>999</td>
+<td>0</td>
+<td>nonexistent</td>
+<td>telephone</td>
+<td>6.212389</td>
+<td>mon</td>
+<td>246.568358</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2023-01-01</td>
+<td>3</td>
+<td>telephone</td>
+<td>may</td>
+<td>mon</td>
+<td>151</td>
+<td>1</td>
+<td>999</td>
+<td>0</td>
+<td>nonexistent</td>
+<td>telephone</td>
+<td>6.212389</td>
+<td>mon</td>
+<td>246.568358</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2023-01-01</td>
+<td>4</td>
+<td>telephone</td>
+<td>may</td>
+<td>mon</td>
+<td>307</td>
+<td>1</td>
+<td>999</td>
+<td>0</td>
+<td>nonexistent</td>
+<td>telephone</td>
+<td>6.212389</td>
+<td>mon</td>
+<td>246.568358</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>2023-01-01</td>
+<td>5</td>
+<td>telephone</td>
+<td>may</td>
+<td>mon</td>
+<td>198</td>
+<td>1</td>
+<td>999</td>
+<td>0</td>
+<td>nonexistent</td>
+<td>telephone</td>
+<td>6.212389</td>
+<td>mon</td>
+<td>246.568358</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>2023-01-01</td>
+<td>6</td>
+<td>telephone</td>
+<td>may</td>
+<td>mon</td>
+<td>139</td>
+<td>1</td>
+<td>999</td>
+<td>0</td>
+<td>nonexistent</td>
+<td>telephone</td>
+<td>6.212389</td>
+<td>mon</td>
+<td>246.568358</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>2023-01-01</td>
+<td>7</td>
+<td>telephone</td>
+<td>may</td>
+<td>mon</td>
+<td>217</td>
+<td>1</td>
+<td>999</td>
+<td>0</td>
+<td>nonexistent</td>
+<td>telephone</td>
+<td>6.212389</td>
+<td>mon</td>
+<td>246.568358</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>2023-01-01</td>
+<td>8</td>
+<td>telephone</td>
+<td>may</td>
+<td>mon</td>
+<td>380</td>
+<td>1</td>
+<td>999</td>
+<td>0</td>
+<td>nonexistent</td>
+<td>telephone</td>
+<td>6.212389</td>
+<td>mon</td>
+<td>246.568358</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>2023-01-01</td>
+<td>9</td>
+<td>telephone</td>
+<td>may</td>
+<td>mon</td>
+<td>50</td>
+<td>1</td>
+<td>999</td>
+<td>0</td>
+<td>nonexistent</td>
+<td>telephone</td>
+<td>6.212389</td>
+<td>mon</td>
+<td>246.568358</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="27153501" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># CTE</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="st">"""WITH avg_pdays_per_contact AS (</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="st">        SELECT contact, AVG(pdays) as average_pdays</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="st">      FROM tb_camp</span></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="st">      WHERE pdays != 999</span></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a><span class="st">      GROUP BY contact</span></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a><span class="st">      ),</span></span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a><span class="st">avg_duration_per_dow AS (</span></span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a><span class="st">        SELECT day_of_week, AVG(duration) as average_duration</span></span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a><span class="st">        FROM tb_camp</span></span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a><span class="st">        GROUP BY day_of_week</span></span>
+<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a><span class="st">      )</span></span>
+<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT</span></span>
+<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a><span class="st">    main.*</span></span>
+<span id="cb49-15"><a href="#cb49-15" aria-hidden="true" tabindex="-1"></a><span class="st">    ,c1.average_pdays</span></span>
+<span id="cb49-16"><a href="#cb49-16" aria-hidden="true" tabindex="-1"></a><span class="st">    ,c2.average_duration</span></span>
+<span id="cb49-17"><a href="#cb49-17" aria-hidden="true" tabindex="-1"></a><span class="st">FROM tb_camp AS main</span></span>
+<span id="cb49-18"><a href="#cb49-18" aria-hidden="true" tabindex="-1"></a><span class="st">LEFT JOIN avg_pdays_per_contact AS c1</span></span>
+<span id="cb49-19"><a href="#cb49-19" aria-hidden="true" tabindex="-1"></a><span class="st">    ON main.contact = c1.contact</span></span>
+<span id="cb49-20"><a href="#cb49-20" aria-hidden="true" tabindex="-1"></a><span class="st">LEFT JOIN avg_duration_per_dow AS c2</span></span>
+<span id="cb49-21"><a href="#cb49-21" aria-hidden="true" tabindex="-1"></a><span class="st">    ON main.day_of_week = c2.day_of_week</span></span>
+<span id="cb49-22"><a href="#cb49-22" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb49-23"><a href="#cb49-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-24"><a href="#cb49-24" aria-hidden="true" tabindex="-1"></a>pd.read_sql_query(q, conn).head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">idx</th>
+<th data-quarto-table-cell-role="th">contact</th>
+<th data-quarto-table-cell-role="th">month</th>
+<th data-quarto-table-cell-role="th">day_of_week</th>
+<th data-quarto-table-cell-role="th">duration</th>
+<th data-quarto-table-cell-role="th">campaign</th>
+<th data-quarto-table-cell-role="th">pdays</th>
+<th data-quarto-table-cell-role="th">previous</th>
+<th data-quarto-table-cell-role="th">poutcome</th>
+<th data-quarto-table-cell-role="th">average_pdays</th>
+<th data-quarto-table-cell-role="th">average_duration</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2023-01-01</td>
+<td>0</td>
+<td>telephone</td>
+<td>may</td>
+<td>mon</td>
+<td>261</td>
+<td>1</td>
+<td>999</td>
+<td>0</td>
+<td>nonexistent</td>
+<td>6.212389</td>
+<td>246.568358</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2023-01-01</td>
+<td>1</td>
+<td>telephone</td>
+<td>may</td>
+<td>mon</td>
+<td>149</td>
+<td>1</td>
+<td>999</td>
+<td>0</td>
+<td>nonexistent</td>
+<td>6.212389</td>
+<td>246.568358</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2023-01-01</td>
+<td>2</td>
+<td>telephone</td>
+<td>may</td>
+<td>mon</td>
+<td>226</td>
+<td>1</td>
+<td>999</td>
+<td>0</td>
+<td>nonexistent</td>
+<td>6.212389</td>
+<td>246.568358</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2023-01-01</td>
+<td>3</td>
+<td>telephone</td>
+<td>may</td>
+<td>mon</td>
+<td>151</td>
+<td>1</td>
+<td>999</td>
+<td>0</td>
+<td>nonexistent</td>
+<td>6.212389</td>
+<td>246.568358</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2023-01-01</td>
+<td>4</td>
+<td>telephone</td>
+<td>may</td>
+<td>mon</td>
+<td>307</td>
+<td>1</td>
+<td>999</td>
+<td>0</td>
+<td>nonexistent</td>
+<td>6.212389</td>
+<td>246.568358</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>2023-01-01</td>
+<td>5</td>
+<td>telephone</td>
+<td>may</td>
+<td>mon</td>
+<td>198</td>
+<td>1</td>
+<td>999</td>
+<td>0</td>
+<td>nonexistent</td>
+<td>6.212389</td>
+<td>246.568358</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>2023-01-01</td>
+<td>6</td>
+<td>telephone</td>
+<td>may</td>
+<td>mon</td>
+<td>139</td>
+<td>1</td>
+<td>999</td>
+<td>0</td>
+<td>nonexistent</td>
+<td>6.212389</td>
+<td>246.568358</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>2023-01-01</td>
+<td>7</td>
+<td>telephone</td>
+<td>may</td>
+<td>mon</td>
+<td>217</td>
+<td>1</td>
+<td>999</td>
+<td>0</td>
+<td>nonexistent</td>
+<td>6.212389</td>
+<td>246.568358</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>2023-01-01</td>
+<td>8</td>
+<td>telephone</td>
+<td>may</td>
+<td>mon</td>
+<td>380</td>
+<td>1</td>
+<td>999</td>
+<td>0</td>
+<td>nonexistent</td>
+<td>6.212389</td>
+<td>246.568358</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>2023-01-01</td>
+<td>9</td>
+<td>telephone</td>
+<td>may</td>
+<td>mon</td>
+<td>50</td>
+<td>1</td>
+<td>999</td>
+<td>0</td>
+<td>nonexistent</td>
+<td>6.212389</td>
+<td>246.568358</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="심화-window함수" class="level2">
+<h2 class="anchored" data-anchor-id="심화-window함수">심화 : Window함수</h2>
+<ul>
+<li><p>Window함수는 데이터의 현재 구조를 유지하며 추가 정보를 제공하기 위해 사용</p>
+<ul>
+<li>앞서 서브쿼리로 했던, 집계함수 계산 후 Join했던 부분을 대체가능함</li>
+</ul></li>
+<li><p>(Sorting영향을 많이 받으므로)데이터가 엉망일수록 오히려 성능이 안좋을 수 있으나, 가독성 측면에서 이점</p></li>
+<li><p>Window함수의 문법</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>집계 함수 <span class="kw">OVER</span> ([<span class="kw">PARTITION</span> <span class="kw">BY</span> 파티션 기준 열] [<span class="kw">ORDER</span> <span class="kw">BY</span> 정렬 기준 열])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>집계 함수
+<ul>
+<li>RANK, SUM, AVG, COUNT, MIN, MAX</li>
+<li>ROW_NUMBER : RANK와 유사하나, 값이 같아도 행 번호는 다름</li>
+</ul></li>
+<li>OVER
+<ul>
+<li>모든 WINDOW함수와 함께 사용되는 기본 문법</li>
+</ul></li>
+<li>PARTITION BY
+<ul>
+<li>해당 열을 기준으로 데이터를 쪼개어(GROUP BY와 유사) 계산</li>
+<li>서브쿼리와 CTE에서 GROUP BY에 해당하는 열이 들어가는 자리</li>
+</ul></li>
+<li>ORDER BY
+<ul>
+<li>RANK처럼 순서가 유의미한 함수를 사용할 때 사용</li>
+<li>SQLITE3은 미지정시 첫 열을 기준으로 정렬</li>
+</ul></li>
+</ul></li>
+</ul>
+<div id="a4b5a111" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Window함수 적용 전 샘플</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="st">"""WITH tb_marital_rate_per_job AS (</span></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="st">  SELECT</span></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="st">    job,</span></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="st">    SUM(CASE WHEN marital = 'married' THEN 1.0 ELSE 0.0 END) / COUNT(*) AS marital_rate_per_job</span></span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a><span class="st">  FROM tb_cst</span></span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a><span class="st">  GROUP BY job</span></span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a><span class="st">)</span></span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT</span></span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a><span class="st">    c1.*,</span></span>
+<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a><span class="st">    c2.marital_rate_per_job</span></span>
+<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a><span class="st">FROM tb_cst AS c1</span></span>
+<span id="cb51-13"><a href="#cb51-13" aria-hidden="true" tabindex="-1"></a><span class="st">LEFT JOIN tb_marital_rate_per_job AS c2 ON c1.job = c2.job</span></span>
+<span id="cb51-14"><a href="#cb51-14" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb51-15"><a href="#cb51-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-16"><a href="#cb51-16" aria-hidden="true" tabindex="-1"></a>tb_cte <span class="op">=</span> pd.read_sql_query(q, conn)</span>
+<span id="cb51-17"><a href="#cb51-17" aria-hidden="true" tabindex="-1"></a>tb_cte.head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">idx</th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">job</th>
+<th data-quarto-table-cell-role="th">marital</th>
+<th data-quarto-table-cell-role="th">education</th>
+<th data-quarto-table-cell-role="th">is_default</th>
+<th data-quarto-table-cell-role="th">housing</th>
+<th data-quarto-table-cell-role="th">loan</th>
+<th data-quarto-table-cell-role="th">marital_rate_per_job</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2023-01-01</td>
+<td>0</td>
+<td>56</td>
+<td>housemaid</td>
+<td>married</td>
+<td>basic.4y</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+<td>0.733019</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2023-01-01</td>
+<td>1</td>
+<td>57</td>
+<td>services</td>
+<td>married</td>
+<td>high.school</td>
+<td>unknown</td>
+<td>no</td>
+<td>no</td>
+<td>0.577979</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2023-01-01</td>
+<td>2</td>
+<td>37</td>
+<td>services</td>
+<td>married</td>
+<td>high.school</td>
+<td>no</td>
+<td>yes</td>
+<td>no</td>
+<td>0.577979</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2023-01-01</td>
+<td>3</td>
+<td>40</td>
+<td>admin.</td>
+<td>married</td>
+<td>basic.6y</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+<td>0.504030</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2023-01-01</td>
+<td>4</td>
+<td>56</td>
+<td>services</td>
+<td>married</td>
+<td>high.school</td>
+<td>no</td>
+<td>no</td>
+<td>yes</td>
+<td>0.577979</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>2023-01-01</td>
+<td>5</td>
+<td>45</td>
+<td>services</td>
+<td>married</td>
+<td>basic.9y</td>
+<td>unknown</td>
+<td>no</td>
+<td>no</td>
+<td>0.577979</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>2023-01-01</td>
+<td>6</td>
+<td>59</td>
+<td>admin.</td>
+<td>married</td>
+<td>professional.course</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+<td>0.504030</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>2023-01-01</td>
+<td>7</td>
+<td>41</td>
+<td>blue-collar</td>
+<td>married</td>
+<td>unknown</td>
+<td>unknown</td>
+<td>no</td>
+<td>no</td>
+<td>0.722606</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>2023-01-01</td>
+<td>8</td>
+<td>24</td>
+<td>technician</td>
+<td>single</td>
+<td>professional.course</td>
+<td>no</td>
+<td>yes</td>
+<td>no</td>
+<td>0.544268</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>2023-01-01</td>
+<td>9</td>
+<td>25</td>
+<td>services</td>
+<td>single</td>
+<td>high.school</td>
+<td>no</td>
+<td>yes</td>
+<td>no</td>
+<td>0.577979</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="5e51ff77" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Window함수 적용 후 샘플</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="st">"""SELECT</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="st">    *,</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="st">    SUM(CASE WHEN marital = 'married' THEN 1.0 ELSE 0.0 END) OVER(PARTITION BY job) / COUNT(*) OVER(PARTITION BY job) AS marital_rate_per_job</span></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="st">FROM tb_cst</span></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>tb_window <span class="op">=</span> pd.read_sql_query(q, conn)</span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a>tb_window.head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">idx</th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">job</th>
+<th data-quarto-table-cell-role="th">marital</th>
+<th data-quarto-table-cell-role="th">education</th>
+<th data-quarto-table-cell-role="th">is_default</th>
+<th data-quarto-table-cell-role="th">housing</th>
+<th data-quarto-table-cell-role="th">loan</th>
+<th data-quarto-table-cell-role="th">marital_rate_per_job</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2023-01-01</td>
+<td>3</td>
+<td>40</td>
+<td>admin.</td>
+<td>married</td>
+<td>basic.6y</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+<td>0.50403</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2023-01-01</td>
+<td>6</td>
+<td>59</td>
+<td>admin.</td>
+<td>married</td>
+<td>professional.course</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+<td>0.50403</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2023-01-01</td>
+<td>24</td>
+<td>37</td>
+<td>admin.</td>
+<td>married</td>
+<td>high.school</td>
+<td>no</td>
+<td>yes</td>
+<td>no</td>
+<td>0.50403</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2023-01-01</td>
+<td>30</td>
+<td>46</td>
+<td>admin.</td>
+<td>married</td>
+<td>unknown</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+<td>0.50403</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2023-01-01</td>
+<td>38</td>
+<td>41</td>
+<td>admin.</td>
+<td>married</td>
+<td>university.degree</td>
+<td>no</td>
+<td>yes</td>
+<td>no</td>
+<td>0.50403</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>2023-01-01</td>
+<td>42</td>
+<td>38</td>
+<td>admin.</td>
+<td>single</td>
+<td>professional.course</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+<td>0.50403</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>2023-01-01</td>
+<td>43</td>
+<td>57</td>
+<td>admin.</td>
+<td>married</td>
+<td>university.degree</td>
+<td>no</td>
+<td>no</td>
+<td>yes</td>
+<td>0.50403</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>2023-01-01</td>
+<td>44</td>
+<td>44</td>
+<td>admin.</td>
+<td>married</td>
+<td>university.degree</td>
+<td>unknown</td>
+<td>yes</td>
+<td>no</td>
+<td>0.50403</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>2023-01-01</td>
+<td>46</td>
+<td>57</td>
+<td>admin.</td>
+<td>married</td>
+<td>university.degree</td>
+<td>no</td>
+<td>yes</td>
+<td>yes</td>
+<td>0.50403</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>2023-01-01</td>
+<td>48</td>
+<td>35</td>
+<td>admin.</td>
+<td>married</td>
+<td>university.degree</td>
+<td>no</td>
+<td>yes</td>
+<td>no</td>
+<td>0.50403</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="기타" class="level2">
+<h2 class="anchored" data-anchor-id="기타">기타</h2>
+<ul>
+<li>GROUPBY와 PARTITION BY의 차이 : PARTITION BY는 원래 데이터 형태를 해치치 않음
+<ul>
+<li>GROUPBY는 지정한 컬럼에 대해 값만 남겨놓고 계산(그룹핑할 데이터를 가져 옴옴)
+<ul>
+<li>예를 들어 위의 데이터는 41188 row를 가지고있었는데, 이 row를 모두 쓰지 않음</li>
+</ul></li>
+<li>PARTITION BY는 원래 데이터 형태를 해치치않고, 계산을 위한 임시Window를 활용</li>
+</ul></li>
+<li>파이썬은 느린편이어서, 가능한 SQL 등으로 전처리를 하고 넘어오는 것이 좋다
+<ul>
+<li>(강사님 기준 대용량 처리) Polar(가 duckdb보다 좀 더 편했음), ductdb &gt; 파이썬</li>
+</ul></li>
+</ul>
+</section>
+<section id="과제" class="level2">
+<h2 class="anchored" data-anchor-id="과제">과제</h2>
+<section id="프로그래머스-과제-풀기" class="level3">
+<h3 class="anchored" data-anchor-id="프로그래머스-과제-풀기">프로그래머스 과제 풀기</h3>
+<ul>
+<li>저작권 관련 <a href="https://docs.channel.io/grepp_qna/ko/articles/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4%EC%9D%98-%EB%AC%B8%EC%A0%9C%EB%A5%BC-%EC%99%B8%EB%B6%80%EC%97%90-%EA%B2%8C%EC%8B%9C%ED%95%A0-%EC%88%98-%EC%9E%88%EB%82%98%EC%9A%94-3f8537c9">프로그래머스 링크</a></li>
+</ul>
+<pre><code>  코딩 테스트 연습 문제
+  코딩테스트 연습에 공개된 문제는 (주)그렙이 저작권을 가지고 있습니다.(지문 하단에 별도 저작권 표시 문제 제외)코딩테스트 연습 문제의 지문, 테스트케이스, 풀이 등과 같은 정보는 비상업적, 비영리적 용도로 게시할 수 있습니다.다만 문제의 지문, 풀이 등과 같은 정보를 단순히 게시하는 것을 넘어, 이를 바탕으로 문제를 풀고 채점이 가능하도록 하는 등의 방식으로 활용하는 것은 제한됩니다.
+
+  ※ 2020 KAKAO BLIND RECRUITMENT, Summer/Winter Coding 등의 문제는 기업 코딩 테스트에 나온 문제이나, 코딩테스트 연습에 공개된 문제이기 때문에 마찬가지로 비상업적, 비영리적 용도로 게시할 수 있습니다.
+
+  (2021. 01. 08 업데이트)</code></pre>
+<ul>
+<li>문제 이미지가 너무 길어서 풀이했던 것만 남김</li>
+<li>https://school.programmers.co.kr/learn/courses/30/lessons/299307</li>
+</ul>
+<div class="sourceCode" id="cb54"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">ID</span>, </span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">CASE</span> </span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">WHEN</span> SIZE_OF_COLONY <span class="op">&lt;=</span> <span class="dv">100</span> <span class="cf">THEN</span> <span class="st">'LOW'</span></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">WHEN</span> SIZE_OF_COLONY <span class="op">&gt;</span> <span class="dv">100</span> <span class="kw">AND</span> SIZE_OF_COLONY <span class="op">&lt;=</span> <span class="dv">1000</span> <span class="cf">THEN</span> <span class="st">'MEDIUM'</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">WHEN</span> SIZE_OF_COLONY <span class="op">&gt;</span> <span class="dv">1000</span> <span class="cf">THEN</span> <span class="st">'HIGH'</span></span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span> <span class="kw">AS</span> <span class="kw">SIZE</span></span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> ECOLI_DATA</span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> <span class="kw">ID</span> <span class="kw">ASC</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>https://school.programmers.co.kr/learn/courses/30/lessons/151139</li>
+</ul>
+<div class="sourceCode" id="cb55"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> C1.CAR_ID</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>    ,C1.CAR_TYPE</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>    ,<span class="fu">ROUND</span>(C1.DAILY_FEE <span class="op">*</span> <span class="dv">30</span> <span class="op">*</span> (<span class="dv">1</span><span class="op">-</span>C3.DISCOUNT_RATE<span class="op">/</span><span class="dv">100</span>)) <span class="kw">AS</span> FEE</span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> CAR_RENTAL_COMPANY_CAR <span class="kw">AS</span> C1</span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">LEFT</span> <span class="kw">JOIN</span> CAR_RENTAL_COMPANY_RENTAL_HISTORY <span class="kw">AS</span> C2</span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">ON</span> C1.CAR_ID <span class="op">=</span> C2.CAR_ID</span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>            <span class="kw">AND</span> C2.END_DATE <span class="op">&gt;=</span> <span class="st">'2022-11-01'</span></span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>            <span class="kw">AND</span> C2.START_DATE <span class="op">&lt;=</span> <span class="st">'2022-11-30'</span>        </span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">JOIN</span> (<span class="kw">SELECT</span> <span class="op">*</span></span>
+<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a>                <span class="kw">FROM</span> CAR_RENTAL_COMPANY_DISCOUNT_PLAN</span>
+<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a>                <span class="kw">WHERE</span> DURATION_TYPE <span class="op">=</span> <span class="st">'30일 이상'</span>) <span class="kw">AS</span> C3</span>
+<span id="cb55-12"><a href="#cb55-12" aria-hidden="true" tabindex="-1"></a>        <span class="kw">ON</span> C1.CAR_TYPE <span class="op">=</span> C3.CAR_TYPE</span>
+<span id="cb55-13"><a href="#cb55-13" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> <span class="dv">1</span><span class="op">=</span><span class="dv">1</span></span>
+<span id="cb55-14"><a href="#cb55-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">AND</span> C2.CAR_ID <span class="kw">IS</span> <span class="kw">NULL</span></span>
+<span id="cb55-15"><a href="#cb55-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">AND</span> C1.CAR_TYPE <span class="kw">IN</span> (<span class="st">'세단'</span>, <span class="st">'SUV'</span>)</span>
+<span id="cb55-16"><a href="#cb55-16" aria-hidden="true" tabindex="-1"></a><span class="kw">HAVING</span> <span class="dv">500000</span> <span class="op">&lt;=</span> FEE <span class="kw">AND</span> FEE <span class="op">&lt;</span> <span class="dv">2000000</span></span>
+<span id="cb55-17"><a href="#cb55-17" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> FEE <span class="kw">DESC</span>, CAR_TYPE <span class="kw">ASC</span>, CAR_ID <span class="kw">DESC</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>https://school.programmers.co.kr/learn/courses/30/lessons/59044</li>
+</ul>
+<div class="sourceCode" id="cb56"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>    AI.NAME,</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>    AI.DATETIME</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> ANIMAL_INS <span class="kw">AS</span> AI</span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> ANIMAL_OUTS <span class="kw">AS</span> AO</span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ON</span> AI.ANIMAL_ID <span class="op">=</span> AO.ANIMAL_ID</span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> <span class="dv">1</span><span class="op">=</span><span class="dv">1</span></span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">AND</span> AO.ANIMAL_ID <span class="kw">IS</span> <span class="kw">NULL</span></span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> DATETIME</span>
+<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>https://school.programmers.co.kr/learn/courses/30/lessons/157339</li>
+</ul>
+<div class="sourceCode" id="cb57"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="dt">MONTH</span>(START_DATE) <span class="kw">AS</span> <span class="dt">MONTH</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>    , CAR_ID</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>    , <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> RECORDS</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> CAR_RENTAL_COMPANY_RENTAL_HISTORY</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> <span class="dv">1</span><span class="op">=</span><span class="dv">1</span></span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">AND</span> START_DATE <span class="kw">BETWEEN</span> <span class="st">'2022-08-01'</span> <span class="kw">AND</span> <span class="st">'2022-11-01'</span></span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">AND</span> CAR_ID <span class="kw">IN</span> (<span class="kw">SELECT</span></span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>                CAR_ID</span>
+<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a>                <span class="kw">FROM</span> CAR_RENTAL_COMPANY_RENTAL_HISTORY</span>
+<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a>                <span class="kw">WHERE</span> <span class="dv">1</span><span class="op">=</span><span class="dv">1</span></span>
+<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a>                <span class="kw">AND</span> START_DATE <span class="kw">BETWEEN</span> <span class="st">'2022-08-01'</span> <span class="kw">AND</span> <span class="st">'2022-11-01'</span></span>
+<span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a>                <span class="kw">GROUP</span> <span class="kw">BY</span> CAR_ID</span>
+<span id="cb57-13"><a href="#cb57-13" aria-hidden="true" tabindex="-1"></a>                <span class="kw">HAVING</span> <span class="fu">COUNT</span>(<span class="op">*</span>)<span class="op">&gt;=</span><span class="dv">5</span>)</span>
+<span id="cb57-14"><a href="#cb57-14" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> <span class="dt">MONTH</span>, CAR_ID</span>
+<span id="cb57-15"><a href="#cb57-15" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> <span class="dt">MONTH</span> <span class="kw">ASC</span>, CAR_ID <span class="kw">DESC</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+
+</section>
+</section>
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/kr9268\.github\.io\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="kr9268/giscus_for_blog" data-repo-id="R_kgDOL0Sthw" data-category="General" data-category-id="DIC_kwDOL0Sth84Ce_5h" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+</div> <!-- /content -->
+<script>
+    const baseFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    const watermark = new XWatermark.XWatermark();
+    watermark.init("Kibok Park", {
+      parentSelector: "body",
+      prevent: true,
+      observer: true,
+      mode: "normal",
+      font: "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', 'Liberation Sans', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
+      fontsize: baseFontSize * 1.000000,
+      angle: -15.000000,
+      color: "#000000",
+      alpha: 0.100000,
+      cols: 10,
+      rows: 50,
+      xSpace: baseFontSize * 4.000000,
+      ySpace: baseFontSize * 4.000000,
+      zIndex: -1
+    });
+    </script>
+
+
+
+
+</body></html>
