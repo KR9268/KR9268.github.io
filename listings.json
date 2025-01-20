@@ -1,9 +1,5 @@
 [
   {
-    "listing": "/index_dashboards.html",
-    "items": []
-  },
-  {
     "listing": "/index_miniprojects.html",
     "items": [
       "/posts_miniprojects/sel-py-ml_predict_shiptype-20240801/index.html",
@@ -16,8 +12,13 @@
     ]
   },
   {
+    "listing": "/index_dashboards.html",
+    "items": []
+  },
+  {
     "listing": "/index.html",
     "items": [
+      "/posts/meta-cm-sql_and_ml_xai-20250112/index.html",
       "/posts/meta-cm-sql_and_ml_xai-20250107/index.html",
       "/posts/meta-cm-sql_and_ml_xai-20250105/index.html",
       "/posts/meta-cm-sql_and_ml_xai-20241229/index.html",

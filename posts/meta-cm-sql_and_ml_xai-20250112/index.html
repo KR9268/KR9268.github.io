@@ -1,0 +1,2544 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Kibok Park">
+<meta name="dcterms.date" content="2025-01-12">
+
+<title>[DA스터디/4주차] 불균형데이터 처리, 파생변수, 모델선택 – Blog</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.jpg" rel="icon" type="image/jpeg">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ea72dc5fed832574809a9c94082fbbb.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-04dd6a5ca28aac96903e51a8fbffbcaa.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-eadd22555550656e957725f4adb214c0.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/watermark-1.0.11/watermark.min.js"></script>
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-LPL499WQBH"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Blog</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index_dashboards.html"> 
+<span class="menu-text">Dashboards</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index_miniprojects.html"> 
+<span class="menu-text">Mini Projects</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About me</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/KR9268"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/%EA%B8%B0%EB%B3%B5-%EB%B0%95-573a68268/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">[DA스터디/4주차] 불균형데이터 처리, 파생변수, 모델선택</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Python</div>
+                <div class="quarto-category">Under-sampling</div>
+                <div class="quarto-category">Over-sampling</div>
+                <div class="quarto-category">Hybrid-sampling</div>
+                <div class="quarto-category">Model selection</div>
+                <div class="quarto-category">202412Study_DataAnalysis</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Kibok Park </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">January 12, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#개요" id="toc-개요" class="nav-link active" data-scroll-target="#개요">개요</a></li>
+  <li><a href="#주차-과제-내용정리" id="toc-주차-과제-내용정리" class="nav-link" data-scroll-target="#주차-과제-내용정리">3주차 과제 내용정리</a></li>
+  <li><a href="#주차-수업정리" id="toc-주차-수업정리" class="nav-link" data-scroll-target="#주차-수업정리">4주차 수업정리</a>
+  <ul class="collapse">
+  <li><a href="#불균형-데이터-처리" id="toc-불균형-데이터-처리" class="nav-link" data-scroll-target="#불균형-데이터-처리">불균형 데이터 처리</a>
+  <ul class="collapse">
+  <li><a href="#불균형-데이터-처리데이터수준---under-sampling" id="toc-불균형-데이터-처리데이터수준---under-sampling" class="nav-link" data-scroll-target="#불균형-데이터-처리데이터수준---under-sampling">불균형 데이터 처리(데이터수준) - Under-Sampling</a></li>
+  <li><a href="#불균형-데이터-처리데이터수준---over-sampling" id="toc-불균형-데이터-처리데이터수준---over-sampling" class="nav-link" data-scroll-target="#불균형-데이터-처리데이터수준---over-sampling">불균형 데이터 처리(데이터수준) - Over-Sampling</a></li>
+  <li><a href="#불균형-데이터-처리데이터수준---hybrid-method" id="toc-불균형-데이터-처리데이터수준---hybrid-method" class="nav-link" data-scroll-target="#불균형-데이터-처리데이터수준---hybrid-method">불균형 데이터 처리(데이터수준) - Hybrid Method</a></li>
+  <li><a href="#불균형-데이터-처리알고리즘-수준---가중치-조절" id="toc-불균형-데이터-처리알고리즘-수준---가중치-조절" class="nav-link" data-scroll-target="#불균형-데이터-처리알고리즘-수준---가중치-조절">불균형 데이터 처리(알고리즘 수준) - 가중치 조절</a></li>
+  </ul></li>
+  <li><a href="#파생변수" id="toc-파생변수" class="nav-link" data-scroll-target="#파생변수">파생변수</a></li>
+  <li><a href="#모델-선택" id="toc-모델-선택" class="nav-link" data-scroll-target="#모델-선택">모델 선택</a></li>
+  <li><a href="#불균형데이터imbalnced-data-처리-실습-샘플데이터" id="toc-불균형데이터imbalnced-data-처리-실습-샘플데이터" class="nav-link" data-scroll-target="#불균형데이터imbalnced-data-처리-실습-샘플데이터">불균형데이터(Imbalnced Data) 처리 실습 (샘플데이터)</a>
+  <ul class="collapse">
+  <li><a href="#undersampling---rus" id="toc-undersampling---rus" class="nav-link" data-scroll-target="#undersampling---rus">Undersampling - RUS</a></li>
+  <li><a href="#undersampling---enn" id="toc-undersampling---enn" class="nav-link" data-scroll-target="#undersampling---enn">Undersampling - ENN</a></li>
+  <li><a href="#undersampling---tomek-links" id="toc-undersampling---tomek-links" class="nav-link" data-scroll-target="#undersampling---tomek-links">Undersampling - Tomek Links</a></li>
+  <li><a href="#oversampling---ros" id="toc-oversampling---ros" class="nav-link" data-scroll-target="#oversampling---ros">Oversampling - ROS</a></li>
+  <li><a href="#oversampling---smote" id="toc-oversampling---smote" class="nav-link" data-scroll-target="#oversampling---smote">Oversampling - SMOTE</a></li>
+  <li><a href="#oversampling---adasyn" id="toc-oversampling---adasyn" class="nav-link" data-scroll-target="#oversampling---adasyn">Oversampling - ADASYN</a></li>
+  <li><a href="#hybrid-method---smoteenn" id="toc-hybrid-method---smoteenn" class="nav-link" data-scroll-target="#hybrid-method---smoteenn">Hybrid Method - SMOTEENN</a></li>
+  <li><a href="#hybrid-method---smotetomek" id="toc-hybrid-method---smotetomek" class="nav-link" data-scroll-target="#hybrid-method---smotetomek">Hybrid Method - SMOTETomek</a></li>
+  </ul></li>
+  <li><a href="#불균형-데이터-처리방법별-성능비교-실습" id="toc-불균형-데이터-처리방법별-성능비교-실습" class="nav-link" data-scroll-target="#불균형-데이터-처리방법별-성능비교-실습">불균형 데이터 처리방법별 성능비교 실습</a>
+  <ul class="collapse">
+  <li><a href="#데이터-로딩-및-traintest-나누기" id="toc-데이터-로딩-및-traintest-나누기" class="nav-link" data-scroll-target="#데이터-로딩-및-traintest-나누기">데이터 로딩 및 train/test 나누기</a></li>
+  <li><a href="#성능비교-vanilla별도-처리하지-않음" id="toc-성능비교-vanilla별도-처리하지-않음" class="nav-link" data-scroll-target="#성능비교-vanilla별도-처리하지-않음">성능비교 : Vanilla(별도 처리하지 않음)</a></li>
+  <li><a href="#심화-1-rapids" id="toc-심화-1-rapids" class="nav-link" data-scroll-target="#심화-1-rapids">심화 1 : Rapids</a></li>
+  <li><a href="#성능비교-rus" id="toc-성능비교-rus" class="nav-link" data-scroll-target="#성능비교-rus">성능비교 : RUS</a></li>
+  <li><a href="#성능비교-enn" id="toc-성능비교-enn" class="nav-link" data-scroll-target="#성능비교-enn">성능비교 : ENN</a></li>
+  <li><a href="#성능비교-tomek-links" id="toc-성능비교-tomek-links" class="nav-link" data-scroll-target="#성능비교-tomek-links">성능비교 : Tomek-Links</a></li>
+  <li><a href="#성능비교-ros" id="toc-성능비교-ros" class="nav-link" data-scroll-target="#성능비교-ros">성능비교 : ROS</a></li>
+  <li><a href="#성능비교-smote" id="toc-성능비교-smote" class="nav-link" data-scroll-target="#성능비교-smote">성능비교 : SMOTE</a></li>
+  <li><a href="#성능비교-결과" id="toc-성능비교-결과" class="nav-link" data-scroll-target="#성능비교-결과">성능비교 결과</a></li>
+  </ul></li>
+  <li><a href="#model별-성능-비교-실습" id="toc-model별-성능-비교-실습" class="nav-link" data-scroll-target="#model별-성능-비교-실습">Model별 성능 비교 실습</a>
+  <ul class="collapse">
+  <li><a href="#라이브러리-설치-및-데이터-분할" id="toc-라이브러리-설치-및-데이터-분할" class="nav-link" data-scroll-target="#라이브러리-설치-및-데이터-분할">라이브러리 설치 및 데이터 분할</a></li>
+  <li><a href="#모델-성능-비교" id="toc-모델-성능-비교" class="nav-link" data-scroll-target="#모델-성능-비교">모델 성능 비교</a></li>
+  </ul></li>
+  <li><a href="#model-selection-후-케이스별-비교" id="toc-model-selection-후-케이스별-비교" class="nav-link" data-scroll-target="#model-selection-후-케이스별-비교">Model selection 후 케이스별 비교</a></li>
+  </ul></li>
+  <li><a href="#과제" id="toc-과제" class="nav-link" data-scroll-target="#과제">과제</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>금융권 데이터를 활용한 분석 스터디 - 4주차</p>
+<section id="개요" class="level1">
+<h1>개요</h1>
+<ul>
+<li>아래의 목적/이유로 참가한 스터디에 대한 기록
+<ul>
+<li>SQLD취득 후 장기 미사용 &amp; GPT를 통한 SQL사용 등으로 많이 잊은 SQL을 복기</li>
+<li>기존에 사용해 본 Optuna가 아닌 Autogluon이 커리큘럼에 있어 익혀보고자 함</li>
+<li>기존에 관심있던 XAI(설명가능한 AI)를 익히고자 함</li>
+</ul></li>
+<li>4주차 요약
+<ul>
+<li>불균형 처리기법 - Under/Over/Hybrid Sampling</li>
+<li>파생변수</li>
+<li>모델선택(불균형처리, 가중치조절 등)</li>
+</ul></li>
+</ul>
+</section>
+<section id="주차-과제-내용정리" class="level1">
+<h1>3주차 과제 내용정리</h1>
+<ul>
+<li>Skew한 데이터는 mean보다는 median으로 대체하는 것이 효과가 좋을 때가 많았음
+<ul>
+<li>구체적인 사유가 확인되었다기보다는 실험적인 부분</li>
+</ul></li>
+<li>데이터의 의미가 없는 경우, Drop하여 메모리 절약하는 것이 나음</li>
+<li>Encoder의 저장과 <code>inverse_transform</code>(숫자로 변환된 범주형변수의 원래값 반환)</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>le <span class="op">=</span> LabelEncoder()</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>le.fit_transform(column)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>le.inverse_transform([<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="주차-수업정리" class="level1">
+<h1>4주차 수업정리</h1>
+<section id="불균형-데이터-처리" class="level2">
+<h2 class="anchored" data-anchor-id="불균형-데이터-처리">불균형 데이터 처리</h2>
+<ul>
+<li>불균형이 많은 금융데이터의 경우, 단순히 하나의 값만 예측해내더라도 accuracy는 99%가 될 수 있음
+<ul>
+<li>하지만 목표는 1%의 사기/이상 데이터를 찾아내는 것임</li>
+<li>이러한 문제를 막기위해 불균형 데이터의 처리가 필요함</li>
+</ul></li>
+<li>불균형데이터의 처리 방법
+<ul>
+<li>데이터 수준 방법(학습전 데이터 처리)
+<ul>
+<li>Under-Sampling : RUS, Tomek Links, ENN 등</li>
+<li>Over-Sampling : SMOTE, ADASYN 등</li>
+<li>Hybrid Method : SMOTETomek(SMOTE-Tomek), SMOTEENN(SMOTE-ENN)</li>
+</ul></li>
+<li>알고리즘 수준 방법(학습시 가중치 조정)
+<ul>
+<li>가중치 조정</li>
+</ul></li>
+</ul></li>
+</ul>
+<section id="불균형-데이터-처리데이터수준---under-sampling" class="level3">
+<h3 class="anchored" data-anchor-id="불균형-데이터-처리데이터수준---under-sampling">불균형 데이터 처리(데이터수준) - Under-Sampling</h3>
+<ul>
+<li><code>Under-Sampling</code> : 수가 더 많은 class의 값을 <strong>줄이는 것</strong></li>
+<li>Under-Sampling 종류
+<ul>
+<li><code>RUS(Random Under Sampling)</code> : 랜덤하게 제거
+<ul>
+<li>데이터가 커지면 알고리즘적 방법 적용이 어려워,1차적으로 많이 사용됨</li>
+<li>파이썬에서도 빠르게 가능하며, SQL에서는 더 빠르게 가능(ORDER BY RAND() LIMIT)</li>
+</ul></li>
+<li><code>ENN(Edited Nearest Neighbors)</code> : KNN알고리즘 기반의 노이즈 제거
+<ul>
+<li>근접한 N개의 class분포 내에서, 해당 class와 다른 값을 제거</li>
+<li>데이터의 분포가 정돈되는 효과</li>
+<li>정확한 비율을 설정할수는 없음</li>
+</ul></li>
+<li><code>Tomeklinks</code> : class의 경계를 기반으로 노이즈 제거
+<ul>
+<li>클러스터링 한 2개의 그룹에서, 알고리즘으로 경계를 찾아서, 많은 쪽의 class를 제거</li>
+<li>경계선 구분이 명확해지는 효과</li>
+</ul></li>
+</ul></li>
+<li>Under-Sampling 방법별 결과 비교
+<ul>
+<li>RUS : 수가 많은 class 임의 제거</li>
+<li>ENN : 오분류로 추정되는 값 제거 (예:주황색 그룹 안의 파란점 제거)</li>
+<li>Tomeklinks : 경계선에 있는 값 제거 (경계를 찾아낸 후, 경계에서 많은 점을 제거)</li>
+<li><div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/7a91c2bf-1-Note_week4_1.jpg" class="img-fluid figure-img"></p>
+<figcaption>Note_week4_1.jpg</figcaption>
+</figure>
+</div></li>
+</ul></li>
+</ul>
+</section>
+<section id="불균형-데이터-처리데이터수준---over-sampling" class="level3">
+<h3 class="anchored" data-anchor-id="불균형-데이터-처리데이터수준---over-sampling">불균형 데이터 처리(데이터수준) - Over-Sampling</h3>
+<ul>
+<li><code>Over-Sampling</code> : 수가 적은 class의 값 <strong>늘리는 것</strong>
+<ul>
+<li>아래의 사유들로, 잘 쓰이지 않음
+<ul>
+<li>전반적으로 과적합 위험이 있으며, 삭제가 아닌 생성으로 시간이 오래 걸림</li>
+</ul></li>
+</ul></li>
+<li>Over-Sampling 종류
+<ul>
+<li><code>ROS(Random Over Sampling)</code> : (RUS와 같이) 랜덤하게 제거
+<ul>
+<li>실제로 쓰이지는 않으며, 빠르지만 <strong>과적합의 위험</strong></li>
+</ul></li>
+<li><code>SMOTE</code> : KNN알고리즘 기반, 인접한 이웃과의 선형보간을 통한 데이터 생성
+<ul>
+<li>기존 데이터의 단순 재생산이 아니므로 (상대적으로) 과적합 위험 적음</li>
+</ul></li>
+<li><code>ADASYN</code> : SMOTE의 개량형. 학습이 어려운 샘플(분류상 경계에 있는)에 더 많은 데이터를 생성
+<ul>
+<li>(Tomeklink와 유사하게)경계 근처의 데이터에 더 많은 샘플을 생성
+<ul>
+<li>SMOTE에 Weight를 추가한 개념(구분이 어려운 경계 근처 샘플에 Weight를 더 줌)</li>
+</ul></li>
+<li>경계 구분이 어려울 때 이점. 그러나 특정 데이터에 과적합될 위험</li>
+</ul></li>
+</ul></li>
+<li>Over-Sampling 방법별 결과 비교
+<ul>
+<li>ROS : 수가 적은 CLASS 임의 추가</li>
+<li>SMOTE : (ROS와 달리)기존 분포를 어느정보 반영하여 추가 (SMOTE알고리즘 활용)</li>
+<li>ADASYN : 경계선에 걸친 값 위주로 값 추가 (ADASYN알고리즘 활용)</li>
+<li><div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/7a91c2bf-2-Note_week4_2.jpg" class="img-fluid figure-img"></p>
+<figcaption>Note_week4_2.jpg</figcaption>
+</figure>
+</div></li>
+</ul></li>
+</ul>
+</section>
+<section id="불균형-데이터-처리데이터수준---hybrid-method" class="level3">
+<h3 class="anchored" data-anchor-id="불균형-데이터-처리데이터수준---hybrid-method">불균형 데이터 처리(데이터수준) - Hybrid Method</h3>
+<ul>
+<li><code>Hybrid Method</code> : Over와 Under Sampling을 합친 Combined Method</li>
+<li>Hybrid Method의 종류
+<ul>
+<li><code>SMOTETomeks</code> : SMOTE로 소수 클래스 증강 후, Tomeklinks로 제거
+<ul>
+<li>경계가 뚜렷하지 않은 경우에 적합</li>
+<li>SMOTE + Tomeklinks</li>
+</ul></li>
+<li><code>SMOTEEN</code> : SMOTE로 소수 클래스 증강 후, ENN으로 제거
+<ul>
+<li>경계 근처에 노이즈가 많은 경우 적합</li>
+<li>SMOTE + ENN</li>
+</ul></li>
+</ul></li>
+<li>ADASYN이 아닌, SMOTE로 먼저 보강하는 이유
+<ul>
+<li>(ADASYN에 비해) SMOTE가 간단히/직관적으로 데이터를 증강해 안정적</li>
+<li>소수 클래스에 대한 균일한 보강으로(ADASYN은 경계값 위주), 일관적인 성능 발휘
+<ul>
+<li>Test데이터의 적중이 목표이므로 Train과적합이 ADASYN보다 SMOTE가 덜함</li>
+</ul></li>
+<li>오래/넓게 쓰여왔던 방법론으로, 선호도가 높음</li>
+</ul></li>
+<li>Hybrid Method 방법별 결과 비교
+<ul>
+<li>SMOTETomeks : 제거된 값이 주로 경계에 모여있음</li>
+<li>SMOTEEN : 제거된 값이 경계 이외에도, 노이즈들에 해당</li>
+<li>추가를 의미하는 파란점은 유사하고[SMOTE공통사용]. 삭제를 의미하는 빨간점은 분포가 다름<br> <img src="index_files/figure-html/7a91c2bf-3-Note_week4_3.jpg" class="img-fluid" alt="Note_week4_3.jpg"></li>
+</ul></li>
+</ul>
+</section>
+<section id="불균형-데이터-처리알고리즘-수준---가중치-조절" class="level3">
+<h3 class="anchored" data-anchor-id="불균형-데이터-처리알고리즘-수준---가중치-조절">불균형 데이터 처리(알고리즘 수준) - 가중치 조절</h3>
+<ul>
+<li><code>가중치 조절</code> : 데이터 수정시가 아닌, 알고리즘 학습시에 가중치를 조절
+<ul>
+<li>데이터 수준에서의 처리(Oversampling 등)는 시간이 오래걸리므로 학습시 처리하자는 관점</li>
+<li>데이터 처리를 하지 않아도 된다는 장점이 있어, 실제로 많이 사용</li>
+<li>가중치는 분석가의 직감이 아닌, 데이터의 비중을 참고하여 반영(a가 b보다 10배많다면 b에 가중치 10 부여)</li>
+<li>불균형이 극단적인 경우, 데이터 처리(Oversampling 등)로 비율을 맞춘 후 가중치부여</li>
+</ul></li>
+<li>Logloss 예시
+<ul>
+<li><span class="math inline">\(y_i\)</span>와 <span class="math inline">\((1 - y_i)\)</span> 앞에 가중치를 두고, 더 중요한 부분에 가중치를 높게 설정</li>
+<li><strong>조정 전 Logloss</strong> <span class="math display">\[\text{LogLoss} = -\frac{1}{N} \sum_{i=1}^{N} \left[ y_i \log(\hat{y}_i) + (1 - y_i) \log(1 - \hat{y}_i) \right]\]</span></li>
+<li><strong>조정 후 Logloss</strong> : Class가중치(Class weight)인 <span class="math inline">\(w0\)</span>, <span class="math inline">\(w1\)</span>을 추가 <span class="math display">\[\text{Weighted LogLoss} = -\frac{1}{N} \sum_{i=1}^{N} \left[ \omega_1 \cdot y_i \cdot \log(\hat{y}_i) + \omega_0 \cdot (1 - y_i) \cdot \log(1 - \hat{y}_i) \right]\]</span></li>
+<li>1일 때 <span class="math inline">\(w1\)</span>, 0일 때 <span class="math inline">\(w0\)</span>을 곱해 가중치를 부여했음</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="파생변수" class="level2">
+<h2 class="anchored" data-anchor-id="파생변수">파생변수</h2>
+<ul>
+<li><code>파생변수</code> : 기존 데이터에서 새로운 정보를 추출하여 생성한 변수
+<ul>
+<li><strong>EDA 후 파생변수 생성이 필요하다고 판단</strong>될 때, <strong>데이터 전처리를 완료</strong>한 후 진행
+<ul>
+<li>전처리전 파생변수를 만들면, 전처리할 양도 많아지고 오래걸리게 됨</li>
+</ul></li>
+<li>전처리시 진행했던 변환, 인코딩, 군집화도 파생변수의 일종</li>
+<li><strong>도메인 지식이 매우 중요함함</strong></li>
+</ul></li>
+<li>파생변수의 유형
+<ul>
+<li><code>집계 관련 변수</code> : 추가적인 집계가 필요하다면, SQL 등을 통해 생성 가능
+<ul>
+<li>특정 집단/기간 등을 기준으로 추가할 수 있음</li>
+<li>연령별 평균 교통비 등의 변수. 보통 SQL에서 처리하여 가져옴</li>
+</ul></li>
+<li><code>날짜 관련 변수</code> : 시간/요일/휴일/공휴일 등을 추가
+<ul>
+<li>요일, 휴일 등의 경우 도움이 될 수 있음
+<ul>
+<li>예를 들어, 물동량 예측시 요일의존도가 높은데, 날짜기반으로 전주대비 물동량 차이 등을 파생변수로</li>
+<li></li>
+</ul></li>
+</ul></li>
+<li><code>상호작용 변수</code> : 변수간의 상호작용 가능 &amp; 본인의 도메인지식이 충분한 경우, SQL 등으로 생성가능
+<ul>
+<li>Polynomial Interation(오래된 통계모델링 코드 등에서 보임)
+<ul>
+<li>변수 간 상호작용에서 발생하는 비선형적 관계를 설명하기 위해, 기존 변수들의 곱을 변수로 추가한 것. 기존 통계적 모델링에서 활용됨</li>
+<li>차원의 저주에 쉽게 빠지는 단점과, 트리기반 모델에서 자체적으로 비선형관계를 처리하는 등(다중공선성 문제에서 자유롭다) ML로 넘어오며 <strong>이제는 거의 사용되지 않음</strong>
+<ul>
+<li>트리 기반 모델이 Best가 되며 다중공선성은 덜 고려해도되지 않나 하는 경향이 있음</li>
+</ul></li>
+<li><code>sklearn.preprocessing</code>으로 가능</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="모델-선택" class="level2">
+<h2 class="anchored" data-anchor-id="모델-선택">모델 선택</h2>
+<ul>
+<li><p>모델 선택 : 유형에 따라 적절한 모델을 선택해야 함.</p>
+<ul>
+<li>베이스라인 모델로 Regression 등을 먼저 돌려보기도 함
+<ul>
+<li>Regression모델이 계수로 나와 해석이 쉽고 보고하기 좋음, 다만 성능이 좋지 않음</li>
+</ul></li>
+</ul></li>
+<li><p>모델 선택 유형</p>
+<ul>
+<li><code>문제 유형에 따른 분류</code> : 회귀 or 분류
+<ul>
+<li><code>회귀</code> : 선형 회귀 등 <code>Regressor</code>로 끝나는 모델</li>
+<li><code>분류</code> : 로지스틱 회귀 등 <code>Classifier</code>로 끝나는 모델</li>
+</ul></li>
+<li><code>데이터 특성에 따른 분류</code> :
+<ul>
+<li>데이터 크기 : 데이터가 클수록 계산효율이 좋은 모델
+<ul>
+<li>큰 데이터에 약한 SVM모델 vs 상대적으로 나은 트리 기반 모델</li>
+</ul></li>
+<li>데이터 형태 : 데이터에 선형성이 없는 경우, Linear모델 지양
+<ul>
+<li>반대라면 빠르게 결과를 볼 수 있는 선형 모델 사용</li>
+</ul></li>
+</ul></li>
+<li><code>해석 가능성에 따른 분류</code> : 통계적 회귀모델 vs 트리기반 모델 vs SVM/DNN
+<ul>
+<li>통계적 회귀모델 : 가장 해석이 쉬움</li>
+<li>트리기반 모델 : feature importance 반환으로 어느정도 해석 가능</li>
+<li>SVN/DNN 모델 : 해석이 거의 불가한 Black box</li>
+</ul></li>
+</ul></li>
+<li><p>모델별 장단점</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 26%">
+<col style="width: 25%">
+<col style="width: 32%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>구분</th>
+<th>선형/로지스틱 회귀</th>
+<th>SVM</th>
+<th>트리 기반 모델</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>해석 가능성</td>
+<td>높음</td>
+<td>매우 낮음</td>
+<td>낮음</td>
+</tr>
+<tr class="even">
+<td>데이터 크기</td>
+<td>소규모에서 효과적</td>
+<td>소규모에서 효과적</td>
+<td>대규모 데이터 처리 가능</td>
+</tr>
+<tr class="odd">
+<td>데이터 전처리</td>
+<td>고차원에서 매우 비효율적<br>다중공선성 등 취약</td>
+<td>고차원 데이터에서 효율적<br>많은 컬럼에 강해 SOTA였음<br>많은 행은 어려움</td>
+<td>상대적으로 고차원에서 나쁘지 않음</td>
+</tr>
+<tr class="even">
+<td>정확 / 이상치</td>
+<td>취약</td>
+<td>취약</td>
+<td>강건<br>(노드가 나뉘므로)</td>
+</tr>
+<tr class="odd">
+<td>학습 속도</td>
+<td>빠름</td>
+<td>데이터 크기가 클수록 급격하게 느림</td>
+<td>보통</td>
+</tr>
+</tbody>
+</table></li>
+<li><p>트리기반 모델 장단점 비교</p>
+<ul>
+<li><p>LightGBM이 가장 빠르고, 이후는 병렬학습인 Bagging모델이 다음으로 빠름</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>구분</th>
+<th>Random Forest</th>
+<th>XGBoost</th>
+<th>LightGBM</th>
+<th>CATBOOST</th>
+<th>Extra Trees</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>학습방식</td>
+<td>Bagging<br>(다수 트리의 평균)</td>
+<td>Boosting<br>(순차적트리학습)</td>
+<td>Boosting<br>(순차적트리학습)</td>
+<td>Boosting<br>(순차적트리학습)</td>
+<td>Bagging<br>(다수 트리의 평균)</td>
+</tr>
+<tr class="even">
+<td>속도</td>
+<td>빠름</td>
+<td>상대적으로 느림</td>
+<td>가장 빠름</td>
+<td>중간</td>
+<td>빠름</td>
+</tr>
+<tr class="odd">
+<td>특성중요도</td>
+<td>제공</td>
+<td>제공</td>
+<td>제공</td>
+<td>제공</td>
+<td>제공</td>
+</tr>
+<tr class="even">
+<td>장점</td>
+<td>가장 간단</td>
+<td>(충분한 시간/리소스 있다면)성능이 뛰어감</td>
+<td>가장 빠름/ 대규모 데이터처리에 능함</td>
+<td>범주형 변수처리 특화. 자동처리 가능</td>
+<td>RF에서 더 랜덤성을 강화하여 강건한 모델 생성</td>
+</tr>
+<tr class="odd">
+<td>단점</td>
+<td>가장 간단</td>
+<td>느리고 메모리소모 많음</td>
+<td>메모리사용량 높음</td>
+<td>일부 설정에서 느림</td>
+<td>RF보다 성능 떨어지는 경우가 많음</td>
+</tr>
+</tbody>
+</table></li>
+</ul></li>
+<li><p>배깅(Bagging)과 부스팅(Boosting)</p>
+<ul>
+<li><p>보통은 부스팅이 이기는 경우가 많으며, 분산이 높고 불안정한 경우 배깅이 이기기도 함</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>구분</th>
+<th>배깅(Bagging)</th>
+<th>부스팅(Boosting)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>개요</td>
+<td><strong>여러 약한 모델의 결과</strong>를 결합<br>→하나의 결과</td>
+<td><strong>이전 약한 모델의 틀린 결과</strong>를 개선하며<br>→순차적 학습</td>
+</tr>
+<tr class="even">
+<td>학습방식</td>
+<td>원본 데이터에서 <strong>여러 하위집합(Bag)</strong> 생성하고,<br>개별 Bag에 대해 <strong>약한 모델이 병렬적으로 학습</strong>됨</td>
+<td>원본 데이터에서 <strong>하위 집합</strong>을 생성하고,기본 모델을 생성<br>해당 <strong>기본모델로 예측 후</strong> 틀린 예측에 더 높은 가중치를 부여하며 <strong>점차 개선</strong></td>
+</tr>
+<tr class="odd">
+<td>특징</td>
+<td>모델의 분산을 줄이고 <strong>과적합을 피하는데</strong> 도움<br>특히 <strong>분산을 줄이는데 중점</strong></td>
+<td>모델의 분산을 줄이고 <strong>어려운 문제를 푸는데</strong> 도움<br>특히 <strong>편향을 줄이는데 중점</strong></td>
+</tr>
+<tr class="even">
+<td>사용처</td>
+<td>분류기가 불안정하고 분산이 높을 때 유용</td>
+<td>모델의 안정성보다 문제 난이도가 어려울 때 유용</td>
+</tr>
+</tbody>
+</table></li>
+</ul></li>
+<li><p>배깅(Bagging)과 부스팅(Boosting)의 작동방식 차이<br> <img src="index_files/figure-html/8d5bf56c-1-Note_week4_4.jpg" class="img-fluid" alt="Note_week4_4.jpg"></p></li>
+</ul>
+</section>
+<section id="불균형데이터imbalnced-data-처리-실습-샘플데이터" class="level2">
+<h2 class="anchored" data-anchor-id="불균형데이터imbalnced-data-처리-실습-샘플데이터">불균형데이터(Imbalnced Data) 처리 실습 (샘플데이터)</h2>
+<div id="fa69b800" class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 샘플데이터 생성 : 3개 클래스의 2차원 데이터 생성 (더 겹치도록 분산 조정함)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>class_0 <span class="op">=</span> np.random.multivariate_normal([<span class="dv">2</span>, <span class="dv">2</span>], [[<span class="dv">1</span>, <span class="fl">0.8</span>], [<span class="fl">0.8</span>, <span class="dv">1</span>]], <span class="dv">300</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>class_1 <span class="op">=</span> np.random.multivariate_normal([<span class="dv">4</span>, <span class="dv">4</span>], [[<span class="dv">1</span>, <span class="fl">0.6</span>], [<span class="fl">0.6</span>, <span class="dv">1</span>]], <span class="dv">150</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>class_2 <span class="op">=</span> np.random.multivariate_normal([<span class="dv">6</span>, <span class="dv">2</span>], [[<span class="dv">1</span>, <span class="fl">0.5</span>], [<span class="fl">0.5</span>, <span class="dv">1</span>]], <span class="dv">50</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.vstack([class_0, class_1, class_2])</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> np.array([<span class="dv">0</span>] <span class="op">*</span> <span class="dv">300</span> <span class="op">+</span> [<span class="dv">1</span>] <span class="op">*</span> <span class="dv">150</span> <span class="op">+</span> [<span class="dv">2</span>] <span class="op">*</span> <span class="dv">50</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data, columns<span class="op">=</span>[<span class="st">"feature1"</span>, <span class="st">"feature2"</span>])</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"TARGET"</span>] <span class="op">=</span> labels</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co"># 원본 클래스 분포</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>original_counts <span class="op">=</span> Counter(df[<span class="st">"TARGET"</span>])</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>original_counts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>Counter({0: 300, 1: 150, 2: 50})</code></pre>
+</div>
+</div>
+<section id="undersampling---rus" class="level3">
+<h3 class="anchored" data-anchor-id="undersampling---rus">Undersampling - RUS</h3>
+<div id="62f90ffb" class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.under_sampling <span class="im">import</span> RandomUnderSampler</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># RUS 적용</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>rus <span class="op">=</span> RandomUnderSampler(random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>X_rus, y_rus <span class="op">=</span> rus.fit_resample(df[[<span class="st">"feature1"</span>, <span class="st">"feature2"</span>]], df[<span class="st">"TARGET"</span>])</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># RUS 제거된 데이터 계산</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>rus_removed <span class="op">=</span> df.merge(pd.DataFrame(X_rus, columns<span class="op">=</span>[<span class="st">"feature1"</span>, <span class="st">"feature2"</span>]), how<span class="op">=</span><span class="st">"outer"</span>, indicator<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>rus_removed <span class="op">=</span> rus_removed[rus_removed[<span class="st">"_merge"</span>] <span class="op">==</span> <span class="st">"left_only"</span>]</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 시각화</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># plt.figure(figsize=(3, 3))</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 원본 데이터</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> target_class <span class="kw">in</span> original_counts.keys():</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    subset <span class="op">=</span> df[df[<span class="st">"TARGET"</span>] <span class="op">==</span> target_class]</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    plt.scatter(subset[<span class="st">"feature1"</span>], subset[<span class="st">"feature2"</span>], label<span class="op">=</span><span class="ss">f"Class </span><span class="sc">{</span>target_class<span class="sc">}</span><span class="ss">"</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Original Data"</span>)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Feature 1"</span>)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Feature 2"</span>)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="co"># RUS 데이터</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> target_class <span class="kw">in</span> np.unique(y_rus):</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    subset <span class="op">=</span> pd.DataFrame(X_rus, columns<span class="op">=</span>[<span class="st">"feature1"</span>, <span class="st">"feature2"</span>])[y_rus <span class="op">==</span> target_class]</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    plt.scatter(subset[<span class="st">"feature1"</span>], subset[<span class="st">"feature2"</span>], label<span class="op">=</span><span class="ss">f"Class </span><span class="sc">{</span>target_class<span class="sc">}</span><span class="ss">"</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>plt.scatter(rus_removed[<span class="st">"feature1"</span>], rus_removed[<span class="st">"feature2"</span>], color<span class="op">=</span><span class="st">"red"</span>, label<span class="op">=</span><span class="st">"Removed by RUS"</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, marker<span class="op">=</span><span class="st">'x'</span>)</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"RUS (Random Under Sampling)"</span>)</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Feature 1"</span>)</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Feature 2"</span>)</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-3-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="undersampling---enn" class="level3">
+<h3 class="anchored" data-anchor-id="undersampling---enn">Undersampling - ENN</h3>
+<div id="2e3a74d9" class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.under_sampling <span class="im">import</span> EditedNearestNeighbours</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ENN 적용</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>enn <span class="op">=</span> EditedNearestNeighbours()</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>X_enn, y_enn <span class="op">=</span> enn.fit_resample(df[[<span class="st">"feature1"</span>, <span class="st">"feature2"</span>]], df[<span class="st">"TARGET"</span>])</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 제거된 데이터 계산</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>enn_removed <span class="op">=</span> df.merge(pd.DataFrame(X_enn, columns<span class="op">=</span>[<span class="st">"feature1"</span>, <span class="st">"feature2"</span>]), how<span class="op">=</span><span class="st">"outer"</span>, indicator<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>enn_removed <span class="op">=</span> enn_removed[enn_removed[<span class="st">"_merge"</span>] <span class="op">==</span> <span class="st">"left_only"</span>]</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 원본 데이터</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>,<span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> target_class <span class="kw">in</span> original_counts.keys():</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    subset <span class="op">=</span> df[df[<span class="st">"TARGET"</span>] <span class="op">==</span> target_class]</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    plt.scatter(subset[<span class="st">"feature1"</span>], subset[<span class="st">"feature2"</span>], label<span class="op">=</span><span class="ss">f"Class </span><span class="sc">{</span>target_class<span class="sc">}</span><span class="ss">"</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Original Data"</span>)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Feature 1"</span>)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Feature 2"</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co"># ENN 데이터</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>,<span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> target_class <span class="kw">in</span> np.unique(y_enn):</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    subset <span class="op">=</span> pd.DataFrame(X_enn, columns<span class="op">=</span>[<span class="st">"feature1"</span>, <span class="st">"feature2"</span>])[y_enn <span class="op">==</span> target_class]</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    plt.scatter(subset[<span class="st">"feature1"</span>], subset[<span class="st">"feature2"</span>], label<span class="op">=</span><span class="ss">f"Class </span><span class="sc">{</span>target_class<span class="sc">}</span><span class="ss">"</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>plt.scatter(enn_removed[<span class="st">"feature1"</span>], enn_removed[<span class="st">"feature2"</span>], color<span class="op">=</span><span class="st">"red"</span>, label<span class="op">=</span><span class="st">"Removed by ENN"</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, marker<span class="op">=</span><span class="st">'x'</span>)</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"ENN (Edited Nearest Neighbours)"</span>)</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Feature 1"</span>)</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Feature 2"</span>)</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-4-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="undersampling---tomek-links" class="level3">
+<h3 class="anchored" data-anchor-id="undersampling---tomek-links">Undersampling - Tomek Links</h3>
+<div id="58d3b208" class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.under_sampling <span class="im">import</span> TomekLinks</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Tomek Links 적용</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>tomek <span class="op">=</span> TomekLinks()</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>X_tomek, y_tomek <span class="op">=</span> tomek.fit_resample(df[[<span class="st">"feature1"</span>, <span class="st">"feature2"</span>]], df[<span class="st">"TARGET"</span>])</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>tomek_removed <span class="op">=</span> df.merge(pd.DataFrame(X_tomek, columns<span class="op">=</span>[<span class="st">"feature1"</span>, <span class="st">"feature2"</span>]), how<span class="op">=</span><span class="st">"outer"</span>, indicator<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>tomek_removed <span class="op">=</span> tomek_removed[tomek_removed[<span class="st">"_merge"</span>] <span class="op">==</span> <span class="st">"left_only"</span>]</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 원본 데이터</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> target_class <span class="kw">in</span> original_counts.keys():</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    subset <span class="op">=</span> df[df[<span class="st">"TARGET"</span>] <span class="op">==</span> target_class]</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    plt.scatter(subset[<span class="st">"feature1"</span>], subset[<span class="st">"feature2"</span>], label<span class="op">=</span><span class="ss">f"Class </span><span class="sc">{</span>target_class<span class="sc">}</span><span class="ss">"</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Original Data"</span>)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Feature 1"</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Feature 2"</span>)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Tomek Links 데이터</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>,<span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> target_class <span class="kw">in</span> np.unique(y_tomek):</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    subset <span class="op">=</span> pd.DataFrame(X_tomek, columns<span class="op">=</span>[<span class="st">"feature1"</span>, <span class="st">"feature2"</span>])[y_tomek <span class="op">==</span> target_class]</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    plt.scatter(subset[<span class="st">"feature1"</span>], subset[<span class="st">"feature2"</span>], label<span class="op">=</span><span class="ss">f"Class </span><span class="sc">{</span>target_class<span class="sc">}</span><span class="ss">"</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>plt.scatter(tomek_removed[<span class="st">"feature1"</span>], tomek_removed[<span class="st">"feature2"</span>], color<span class="op">=</span><span class="st">"red"</span>, label<span class="op">=</span><span class="st">"Removed by Tomek Links"</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, marker<span class="op">=</span><span class="st">'x'</span>)</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Tomek Links"</span>)</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Feature 1"</span>)</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Feature 2"</span>)</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="oversampling---ros" class="level3">
+<h3 class="anchored" data-anchor-id="oversampling---ros">Oversampling - ROS</h3>
+<div id="640484d5" class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.over_sampling <span class="im">import</span> RandomOverSampler</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Original class distribution</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>original_counts <span class="op">=</span> Counter(df[<span class="st">"TARGET"</span>])</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Random Oversampling</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>ros <span class="op">=</span> RandomOverSampler(random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>X_ros, y_ros <span class="op">=</span> ros.fit_resample(df[[<span class="st">"feature1"</span>, <span class="st">"feature2"</span>]], df[<span class="st">"TARGET"</span>])</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>ros_added <span class="op">=</span> pd.DataFrame(X_ros, columns<span class="op">=</span>[<span class="st">"feature1"</span>, <span class="st">"feature2"</span>]).iloc[<span class="bu">len</span>(df):]</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualization for Random Oversampling</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> target_class <span class="kw">in</span> original_counts.keys():</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    subset <span class="op">=</span> df[df[<span class="st">"TARGET"</span>] <span class="op">==</span> target_class]</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    plt.scatter(subset[<span class="st">"feature1"</span>], subset[<span class="st">"feature2"</span>], label<span class="op">=</span><span class="ss">f"Class </span><span class="sc">{</span>target_class<span class="sc">}</span><span class="ss">"</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Original Data"</span>)</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Feature 1"</span>)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Feature 2"</span>)</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> target_class <span class="kw">in</span> np.unique(y_ros):</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    subset <span class="op">=</span> pd.DataFrame(X_ros, columns<span class="op">=</span>[<span class="st">"feature1"</span>, <span class="st">"feature2"</span>])[y_ros <span class="op">==</span> target_class]</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    plt.scatter(subset[<span class="st">"feature1"</span>], subset[<span class="st">"feature2"</span>], label<span class="op">=</span><span class="ss">f"Class </span><span class="sc">{</span>target_class<span class="sc">}</span><span class="ss">"</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>plt.scatter(ros_added[<span class="st">"feature1"</span>], ros_added[<span class="st">"feature2"</span>], color<span class="op">=</span><span class="st">"red"</span>, label<span class="op">=</span><span class="st">"Added by Random Oversampling"</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, marker<span class="op">=</span><span class="st">'x'</span>)</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Random Oversampling"</span>)</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Feature 1"</span>)</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Feature 2"</span>)</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="oversampling---smote" class="level3">
+<h3 class="anchored" data-anchor-id="oversampling---smote">Oversampling - SMOTE</h3>
+<div id="c1b31d92" class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.over_sampling <span class="im">import</span> SMOTE</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># SMOTE Oversampling</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>smote <span class="op">=</span> SMOTE(random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>X_smote, y_smote <span class="op">=</span> smote.fit_resample(df[[<span class="st">"feature1"</span>, <span class="st">"feature2"</span>]], df[<span class="st">"TARGET"</span>])</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>smote_added <span class="op">=</span> pd.DataFrame(X_smote, columns<span class="op">=</span>[<span class="st">"feature1"</span>, <span class="st">"feature2"</span>]).iloc[<span class="bu">len</span>(df):]</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualization for SMOTE</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> target_class <span class="kw">in</span> original_counts.keys():</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    subset <span class="op">=</span> df[df[<span class="st">"TARGET"</span>] <span class="op">==</span> target_class]</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    plt.scatter(subset[<span class="st">"feature1"</span>], subset[<span class="st">"feature2"</span>], label<span class="op">=</span><span class="ss">f"Class </span><span class="sc">{</span>target_class<span class="sc">}</span><span class="ss">"</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Original Data"</span>)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Feature 1"</span>)</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Feature 2"</span>)</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> target_class <span class="kw">in</span> np.unique(y_smote):</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    subset <span class="op">=</span> pd.DataFrame(X_smote, columns<span class="op">=</span>[<span class="st">"feature1"</span>, <span class="st">"feature2"</span>])[y_smote <span class="op">==</span> target_class]</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    plt.scatter(subset[<span class="st">"feature1"</span>], subset[<span class="st">"feature2"</span>], label<span class="op">=</span><span class="ss">f"Class </span><span class="sc">{</span>target_class<span class="sc">}</span><span class="ss">"</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>plt.scatter(smote_added[<span class="st">"feature1"</span>], smote_added[<span class="st">"feature2"</span>], color<span class="op">=</span><span class="st">"red"</span>, label<span class="op">=</span><span class="st">"Added by SMOTE"</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, marker<span class="op">=</span><span class="st">'x'</span>)</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"SMOTE Oversampling"</span>)</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Feature 1"</span>)</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Feature 2"</span>)</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="oversampling---adasyn" class="level3">
+<h3 class="anchored" data-anchor-id="oversampling---adasyn">Oversampling - ADASYN</h3>
+<div id="620743b2" class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.over_sampling <span class="im">import</span> ADASYN</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ADASYN Oversampling</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>adasyn <span class="op">=</span> ADASYN(random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>X_adasyn, y_adasyn <span class="op">=</span> adasyn.fit_resample(df[[<span class="st">"feature1"</span>, <span class="st">"feature2"</span>]], df[<span class="st">"TARGET"</span>])</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>adasyn_added <span class="op">=</span> pd.DataFrame(X_adasyn, columns<span class="op">=</span>[<span class="st">"feature1"</span>, <span class="st">"feature2"</span>]).iloc[<span class="bu">len</span>(df):]</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualization for ADASYN</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> target_class <span class="kw">in</span> original_counts.keys():</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    subset <span class="op">=</span> df[df[<span class="st">"TARGET"</span>] <span class="op">==</span> target_class]</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    plt.scatter(subset[<span class="st">"feature1"</span>], subset[<span class="st">"feature2"</span>], label<span class="op">=</span><span class="ss">f"Class </span><span class="sc">{</span>target_class<span class="sc">}</span><span class="ss">"</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Original Data"</span>)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Feature 1"</span>)</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Feature 2"</span>)</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> target_class <span class="kw">in</span> np.unique(y_adasyn):</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    subset <span class="op">=</span> pd.DataFrame(X_adasyn, columns<span class="op">=</span>[<span class="st">"feature1"</span>, <span class="st">"feature2"</span>])[y_adasyn <span class="op">==</span> target_class]</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    plt.scatter(subset[<span class="st">"feature1"</span>], subset[<span class="st">"feature2"</span>], label<span class="op">=</span><span class="ss">f"Class </span><span class="sc">{</span>target_class<span class="sc">}</span><span class="ss">"</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>plt.scatter(adasyn_added[<span class="st">"feature1"</span>], adasyn_added[<span class="st">"feature2"</span>], color<span class="op">=</span><span class="st">"red"</span>, label<span class="op">=</span><span class="st">"Added by ADASYN"</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, marker<span class="op">=</span><span class="st">'x'</span>)</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"ADASYN Oversampling"</span>)</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Feature 1"</span>)</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Feature 2"</span>)</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="hybrid-method---smoteenn" class="level3">
+<h3 class="anchored" data-anchor-id="hybrid-method---smoteenn">Hybrid Method - SMOTEENN</h3>
+<div id="b28060a0" class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.combine <span class="im">import</span> SMOTEENN</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Original class distribution</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>original_counts <span class="op">=</span> Counter(df[<span class="st">"TARGET"</span>])</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># SMOTEENN Oversampling</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>smoteenn <span class="op">=</span> SMOTEENN(random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>X_smoteenn, y_smoteenn <span class="op">=</span> smoteenn.fit_resample(df[[<span class="st">"feature1"</span>, <span class="st">"feature2"</span>]], df[<span class="st">"TARGET"</span>])</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify added and deleted data for SMOTEENN</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>smoteenn_all <span class="op">=</span> pd.DataFrame(X_smoteenn, columns<span class="op">=</span>[<span class="st">"feature1"</span>, <span class="st">"feature2"</span>])</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>smoteenn_deleted <span class="op">=</span> df[<span class="op">~</span>df[[<span class="st">"feature1"</span>, <span class="st">"feature2"</span>]].<span class="bu">apply</span>(<span class="bu">tuple</span>, axis<span class="op">=</span><span class="dv">1</span>).isin(smoteenn_all.<span class="bu">apply</span>(<span class="bu">tuple</span>, axis<span class="op">=</span><span class="dv">1</span>))]</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>smoteenn_added <span class="op">=</span> smoteenn_all[<span class="op">~</span>smoteenn_all.<span class="bu">apply</span>(<span class="bu">tuple</span>, axis<span class="op">=</span><span class="dv">1</span>).isin(df[[<span class="st">"feature1"</span>, <span class="st">"feature2"</span>]].<span class="bu">apply</span>(<span class="bu">tuple</span>, axis<span class="op">=</span><span class="dv">1</span>))]</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualization function</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> visualize(title, original_df, processed_df, added_df, deleted_df):</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Original data</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    plt.subplot(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> target_class <span class="kw">in</span> original_counts.keys():</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>        subset <span class="op">=</span> original_df[original_df[<span class="st">"TARGET"</span>] <span class="op">==</span> target_class]</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>        plt.scatter(subset[<span class="st">"feature1"</span>], subset[<span class="st">"feature2"</span>], label<span class="op">=</span><span class="ss">f"Class </span><span class="sc">{</span>target_class<span class="sc">}</span><span class="ss">"</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="st">"Original Data"</span>)</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">"Feature 1"</span>)</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">"Feature 2"</span>)</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    plt.legend()</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>    plt.grid(<span class="va">True</span>)</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Processed data</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>    plt.subplot(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> target_class <span class="kw">in</span> np.unique(processed_df[<span class="st">"TARGET"</span>]):</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>        subset <span class="op">=</span> processed_df[processed_df[<span class="st">"TARGET"</span>] <span class="op">==</span> target_class]</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>        plt.scatter(subset[<span class="st">"feature1"</span>], subset[<span class="st">"feature2"</span>], label<span class="op">=</span><span class="ss">f"Class </span><span class="sc">{</span>target_class<span class="sc">}</span><span class="ss">"</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>    plt.scatter(added_df[<span class="st">"feature1"</span>], added_df[<span class="st">"feature2"</span>], color<span class="op">=</span><span class="st">"blue"</span>, label<span class="op">=</span><span class="st">"Added Samples"</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, marker<span class="op">=</span><span class="st">'x'</span>)</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>    plt.scatter(deleted_df[<span class="st">"feature1"</span>], deleted_df[<span class="st">"feature2"</span>], color<span class="op">=</span><span class="st">"red"</span>, label<span class="op">=</span><span class="st">"Deleted Samples"</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, marker<span class="op">=</span><span class="st">'x'</span>)</span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>    plt.title(title)</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">"Feature 1"</span>)</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">"Feature 2"</span>)</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>    plt.legend()</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>    plt.grid(<span class="va">True</span>)</span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>    plt.tight_layout()</span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize SMOTEENN</span></span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>visualize(<span class="st">"SMOTEENN Oversampling"</span>, df, smoteenn_all.assign(TARGET<span class="op">=</span>y_smoteenn), smoteenn_added, smoteenn_deleted)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="hybrid-method---smotetomek" class="level3">
+<h3 class="anchored" data-anchor-id="hybrid-method---smotetomek">Hybrid Method - SMOTETomek</h3>
+<div id="ad292dd5" class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.combine <span class="im">import</span> SMOTETomek</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># SMOTETomek Oversampling</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>smotetomek <span class="op">=</span> SMOTETomek(random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>X_smotetomek, y_smotetomek <span class="op">=</span> smotetomek.fit_resample(df[[<span class="st">"feature1"</span>, <span class="st">"feature2"</span>]], df[<span class="st">"TARGET"</span>])</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify added and deleted data for SMOTETomek</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>smotetomek_all <span class="op">=</span> pd.DataFrame(X_smotetomek, columns<span class="op">=</span>[<span class="st">"feature1"</span>, <span class="st">"feature2"</span>])</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>smotetomek_deleted <span class="op">=</span> df[<span class="op">~</span>df[[<span class="st">"feature1"</span>, <span class="st">"feature2"</span>]].<span class="bu">apply</span>(<span class="bu">tuple</span>, axis<span class="op">=</span><span class="dv">1</span>).isin(smotetomek_all.<span class="bu">apply</span>(<span class="bu">tuple</span>, axis<span class="op">=</span><span class="dv">1</span>))]</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>smotetomek_added <span class="op">=</span> smotetomek_all[<span class="op">~</span>smotetomek_all.<span class="bu">apply</span>(<span class="bu">tuple</span>, axis<span class="op">=</span><span class="dv">1</span>).isin(df[[<span class="st">"feature1"</span>, <span class="st">"feature2"</span>]].<span class="bu">apply</span>(<span class="bu">tuple</span>, axis<span class="op">=</span><span class="dv">1</span>))]</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize SMOTETomek</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>visualize(<span class="st">"SMOTETomek Oversampling"</span>, df, smotetomek_all.assign(TARGET<span class="op">=</span>y_smotetomek), smotetomek_added, smotetomek_deleted)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="불균형-데이터-처리방법별-성능비교-실습" class="level2">
+<h2 class="anchored" data-anchor-id="불균형-데이터-처리방법별-성능비교-실습">불균형 데이터 처리방법별 성능비교 실습</h2>
+<section id="데이터-로딩-및-traintest-나누기" class="level3">
+<h3 class="anchored" data-anchor-id="데이터-로딩-및-traintest-나누기">데이터 로딩 및 train/test 나누기</h3>
+<div id="b19e4225" class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data split</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 지난수업에서 전처리한 csv파일 로딩</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.read_csv(<span class="st">'data_preprocessed.csv'</span>)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Train/Test셋 데이터 분할 (stratify : y비율을 비슷하게 유지하는 층화추출출)</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>train , test <span class="op">=</span> train_test_split(data, test_size <span class="op">=</span> <span class="fl">0.1</span>, random_state <span class="op">=</span> <span class="dv">42</span>, stratify <span class="op">=</span> data[<span class="st">'TARGET'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="성능비교-vanilla별도-처리하지-않음" class="level3">
+<h3 class="anchored" data-anchor-id="성능비교-vanilla별도-처리하지-않음">성능비교 : Vanilla(별도 처리하지 않음)</h3>
+<ul>
+<li>RandomForestClassifier 활용</li>
+<li>아래 코드에서 사용된 predict_proba() : predict가 확률계산 후 확률에 따라 속하는 y를 산출했다면, predict_proba는 확률까지만 계산
+<ul>
+<li>AUC를 계산하기 위해 사용함 (Imbalance data는 단순히 accuracy로 평가할 수 없음)</li>
+<li>AUC/ROC 이해를 돕기위한 움직이는 그래프 자료 : https://angeloyeo.github.io/2020/08/05/ROC.html</li>
+</ul></li>
+</ul>
+<div id="07ade28a" class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>X_vanila <span class="op">=</span> train.drop([<span class="st">'TARGET'</span>], axis <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>y_vanila <span class="op">=</span> train[<span class="st">'TARGET'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="e560f10a" class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>time</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>rf_vanila <span class="op">=</span> RandomForestClassifier(random_state <span class="op">=</span> <span class="dv">42</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>rf_vanila.fit(X_vanila, y_vanila)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>y_vanila_pred <span class="op">=</span> rf_vanila.predict(test.drop([<span class="st">'TARGET'</span>], axis <span class="op">=</span> <span class="dv">1</span>))</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>y_vanila_proba <span class="op">=</span> rf_vanila.predict_proba(test.drop([<span class="st">'TARGET'</span>], axis <span class="op">=</span> <span class="dv">1</span>)) <span class="co"># predict_proba : 0.5보다 높고 낮음까지 계산하지말고, 그전의 확률까지만계산</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>y_test <span class="op">=</span> test[<span class="st">'TARGET'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>CPU times: total: 32.3 s
+Wall time: 1min 54s</code></pre>
+</div>
+</div>
+<div id="91d564cc" class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>vanila_accuracy <span class="op">=</span> accuracy_score(y_test, y_vanila_pred)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>vanila_cf <span class="op">=</span> confusion_matrix(y_test, y_vanila_pred)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>vanila_roc_auc <span class="op">=</span> roc_auc_score(y_test, y_vanila_proba[:,<span class="dv">1</span>])</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"* Vanila_accuracy : </span><span class="sc">{</span>vanila_accuracy<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"* Vanila_roc_auc</span><span class="sc">{</span>vanila_roc_auc<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"* Vanila_confusion materix :</span><span class="ch">\n</span><span class="ss"> </span><span class="sc">{</span>vanila_cf<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>* Vanila_accuracy : 0.9193223204994797
+* Vanila_roc_auc0.7084669152907
+* Vanila_confusion materix :
+ [[28266     3]
+ [ 2478     5]]</code></pre>
+</div>
+</div>
+</section>
+<section id="심화-1-rapids" class="level3">
+<h3 class="anchored" data-anchor-id="심화-1-rapids">심화 1 : Rapids</h3>
+<ul>
+<li><p>sklearn은 GPU미지원 시기에 개발되어, sklearn의 RandomForest는 GPU연산 미지원</p>
+<ul>
+<li>XGB나 LGBM은 지원 (XGB의 RandomForest는 지원원)</li>
+</ul></li>
+<li><p>GPU연산 미지원 라이브러리를 GPU연산 하고싶을 때, RAPIDS라이브러리의 <code>cuml</code> 사용 가능</p>
+<ul>
+<li>cuml은 이외에도 다양한 sklearn의 기능을 대체 가능</li>
+</ul></li>
+<li><p>RAPIDS 설치</p>
+<ul>
+<li><p>CUDA버전을 먼저 확인</p>
+<pre><code>!nvcc --version</code></pre></li>
+<li><p>공식git(설치법 등) : https://github.com/rapidsai/cuml?tab=readme-ov-file</p></li>
+<li><p>the RAPIDS Release Selector : https://docs.rapids.ai/install/#selector</p>
+<ul>
+<li><p>환경에 맞춰 선택하면, 아래와 같이 Command가 생성됨</p>
+<pre><code>  pip install \
+      --extra-index-url=https://pypi.nvidia.com \
+      "cudf-cu12==24.12.*" "dask-cudf-cu12==24.12.*" "cuml-cu12==24.12.*" \
+      "cugraph-cu12==24.12.*" "nx-cugraph-cu12==24.12.*" "cuspatial-cu12==24.12.*" \
+      "cuproj-cu12==24.12.*" "cuxfilter-cu12==24.12.*" "cucim-cu12==24.12.*" \
+      "pylibraft-cu12==24.12.*" "raft-dask-cu12==24.12.*" "cuvs-cu12==24.12.*" \
+      "nx-cugraph-cu12==24.12.*"</code></pre></li>
+</ul></li>
+</ul></li>
+<li><p>RAPIDS <code>cuml</code> 사용 예시 ``` from cuml.ensemble import RandomForestClassifier as cuml_RandomForestClassifier</p>
+<p>rf_vanila_rapid = cuml_RandomForestClassifier(random_state=42) rf_vanila_rapid.fit(X_vanila, y_vanila) y_vanila_rapid_pred = rf_vanila_rapid.predict(test.drop([‘TARGET’], axis = 1)) y_vanila_rapid_proba = rf_vanila_rapid.predict_proba(test.drop([‘TARGET’], axis = 1)) y_test = test[‘TARGET’] ```</p></li>
+<li><p>CUDA버전확인 샘플</p></li>
+</ul>
+<div id="f94c3cc8" class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># CUDA버전확인 샘플</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>nvcc <span class="op">--</span>version</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>cuml의 RandomForestClassifier 샘플</li>
+</ul>
+<div id="5d005700" class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>time</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cuml.ensemble <span class="im">import</span> RandomForestClassifier <span class="im">as</span> cuml_RandomForestClassifier</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>rf_vanila_rapid <span class="op">=</span> cuml_RandomForestClassifier(random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>rf_vanila_rapid.fit(X_vanila, y_vanila)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>y_vanila_rapid_pred <span class="op">=</span> rf_vanila_rapid.predict(test.drop([<span class="st">'TARGET'</span>], axis <span class="op">=</span> <span class="dv">1</span>))</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>y_vanila_rapid_proba <span class="op">=</span> rf_vanila_rapid.predict_proba(test.drop([<span class="st">'TARGET'</span>], axis <span class="op">=</span> <span class="dv">1</span>))</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>y_test <span class="op">=</span> test[<span class="st">'TARGET'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="성능비교-rus" class="level3">
+<h3 class="anchored" data-anchor-id="성능비교-rus">성능비교 : RUS</h3>
+<ul>
+<li><p>Wall time: 1min 54s → 16.2 s</p></li>
+<li><p>Vanila_accuracy : 0.9193223204994797 → 0.694686524453694</p></li>
+<li><p>Vanila_roc_auc0.7084669152907 → 0.7370645914878501</p></li>
+<li><p>Vanila_confusion materix : [[28266 3] → [[19723 8546] [ 2478 5]] → [ 843 1640]]</p></li>
+</ul>
+<div id="75e2e131" class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>time</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.under_sampling <span class="im">import</span> RandomUnderSampler</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># RUS 적용</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>rus <span class="op">=</span> RandomUnderSampler(random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>X_rus, y_rus <span class="op">=</span> rus.fit_resample(train.drop([<span class="st">'TARGET'</span>], axis <span class="op">=</span> <span class="dv">1</span>), train[<span class="st">"TARGET"</span>])</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>X_rus.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>CPU times: total: 156 ms
+Wall time: 513 ms</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>(44684, 131)</code></pre>
+</div>
+</div>
+<div id="5d1b93ee" class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>time</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>rf_rus <span class="op">=</span> RandomForestClassifier(random_state <span class="op">=</span> <span class="dv">42</span>)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>rf_rus.fit(X_rus, y_rus)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>y_rus_pred <span class="op">=</span> rf_rus.predict(test.drop([<span class="st">'TARGET'</span>], axis <span class="op">=</span> <span class="dv">1</span>))</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>y_rus_proba <span class="op">=</span> rf_rus.predict_proba(test.drop([<span class="st">'TARGET'</span>], axis <span class="op">=</span> <span class="dv">1</span>))</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>y_test <span class="op">=</span> test[<span class="st">'TARGET'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>CPU times: total: 4.41 s
+Wall time: 16.2 s</code></pre>
+</div>
+</div>
+<div id="ae890494" class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>rus_accuracy <span class="op">=</span> accuracy_score(y_test, y_rus_pred)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>rus_cf <span class="op">=</span> confusion_matrix(y_test, y_rus_pred)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>rus_roc_auc <span class="op">=</span> roc_auc_score(y_test, y_rus_proba[:,<span class="dv">1</span>])</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>sampling_method <span class="op">=</span> <span class="st">'RUS'</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"* </span><span class="sc">{</span>sampling_method<span class="sc">}</span><span class="ss">_accuracy : </span><span class="sc">{</span>rus_accuracy<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"* </span><span class="sc">{</span>sampling_method<span class="sc">}</span><span class="ss">_roc_auc : </span><span class="sc">{</span>rus_roc_auc<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"*</span><span class="sc">{</span>sampling_method<span class="sc">}</span><span class="ss">_confusion materix :</span><span class="ch">\n</span><span class="ss"> </span><span class="sc">{</span>rus_cf<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>* RUS_accuracy : 0.694686524453694
+* RUS_roc_auc : 0.7370645914878501
+*RUS_confusion materix :
+ [[19723  8546]
+ [  843  1640]]</code></pre>
+</div>
+</div>
+<ul>
+<li>함수화 (이후부터 함수로 진행)</li>
+</ul>
+<div id="4c3747d9" class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_for_samplers(train, test, sampler, return_metric_only<span class="op">=</span> <span class="va">False</span>):</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  X_sampled, y_sampled <span class="op">=</span> sampler.fit_resample(train.drop([<span class="st">'TARGET'</span>], axis <span class="op">=</span> <span class="dv">1</span>), train[<span class="st">"TARGET"</span>])</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  model <span class="op">=</span> RandomForestClassifier(random_state <span class="op">=</span> <span class="dv">42</span>)</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  model.fit(X_sampled, y_sampled)</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>  y_pred <span class="op">=</span> model.predict(test.drop([<span class="st">'TARGET'</span>], axis <span class="op">=</span> <span class="dv">1</span>))</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  y_proba <span class="op">=</span> model.predict_proba(test.drop([<span class="st">'TARGET'</span>], axis <span class="op">=</span> <span class="dv">1</span>))</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>  y_test <span class="op">=</span> test[<span class="st">'TARGET'</span>]</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>  accuracy <span class="op">=</span> accuracy_score(y_test, y_pred)</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>  auc <span class="op">=</span> roc_auc_score(y_test, y_proba[:,<span class="dv">1</span>])</span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>  cf <span class="op">=</span> confusion_matrix(y_test, y_pred)</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> return_metric_only:</span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> accuracy, cf, auc</span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span>:</span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {<span class="st">'acc'</span>:accuracy,</span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>            <span class="st">'auc'</span>:auc,</span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>            <span class="st">'cf'</span>:cf,</span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>            <span class="st">'X_sampled'</span> : X_sampled,</span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a>            <span class="st">'y_sampled'</span> : y_sampled,</span>
+<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a>            <span class="st">'model'</span> : model,</span>
+<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a>            <span class="st">'y_pred'</span> : y_pred,</span>
+<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a>            <span class="st">'y_proba'</span> : y_proba}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="성능비교-enn" class="level3">
+<h3 class="anchored" data-anchor-id="성능비교-enn">성능비교 : ENN</h3>
+<ul>
+<li><p>요약</p>
+<ul>
+<li>시간이 더 오래걸리고, 성능 도움도 되지 않았음</li>
+<li>비율을 맞춰주는 알고리즘이 아니고, 연산시간이 길어짐</li>
+</ul></li>
+<li><p>Wall time: 1min 54s → 3min 37s</p></li>
+<li><p>Vanila_accuracy : 0.9193223204994797 → 0.9192572840790842</p></li>
+<li><p>Vanila_roc_auc : 0.7084669152907 → 0.7138916844382973</p></li>
+<li><p>Vanila_confusion materix : [[28266 3] → [[28240 29] [ 2478 5]] → [ 2454 29]]</p></li>
+</ul>
+<div id="40651503" class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>time</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.under_sampling <span class="im">import</span> EditedNearestNeighbours</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>enn <span class="op">=</span> EditedNearestNeighbours()</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>enn_result <span class="op">=</span> compute_for_samplers(train, test, enn)</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(enn_result[<span class="st">'acc'</span>])</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(enn_result[<span class="st">'auc'</span>])</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(enn_result[<span class="st">'cf'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.9192572840790842
+0.7138916844382973
+[[28240    29]
+ [ 2454    29]]
+CPU times: total: 6min 13s
+Wall time: 3min 37s</code></pre>
+</div>
+</div>
+<ul>
+<li>Imbalance를 적절히 제거했다면, y에 맞춰 2만여개의 데이터가 남아있어야 함</li>
+<li>실제로는 22만개가 남아있는데, ENN은 비율을 맞추는 알고리즘이 아닌 이상한 것(노이즈)을 걸러내기 때문</li>
+<li>k값을 늘릴수록 없애는 값이 늘어남(knn기반이므로로)</li>
+</ul>
+<div id="9de77cab" class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># X_train 샘플 차이</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"""* ENN전 : </span><span class="sc">{</span>train<span class="sc">.</span>shape<span class="sc">}</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="ss">* ENN후 : "</span><span class="sc">{</span>enn_result[<span class="st">'X_sampled'</span>]<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>* ENN전 : (276759, 132)
+* ENN후 : "(221430, 131)</code></pre>
+</div>
+</div>
+<div id="384e0a15" class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># y_train 값 분포</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"""</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="ss">* ENN 전</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>train<span class="sc">.</span>groupby(<span class="st">'TARGET'</span>)<span class="sc">.</span>size()<span class="sc">}</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="ss">* ENN 후</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>enn_result[<span class="st">'y_sampled'</span>]<span class="sc">.</span>value_counts()<span class="sc">}</span><span class="ss">"""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+* ENN 전
+TARGET
+0    254417
+1     22342
+dtype: int64
+
+* ENN 후
+TARGET
+0    199088
+1     22342
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+</section>
+<section id="성능비교-tomek-links" class="level3">
+<h3 class="anchored" data-anchor-id="성능비교-tomek-links">성능비교 : Tomek-Links</h3>
+<ul>
+<li><p>요약</p>
+<ul>
+<li>오래 걸리고, 성능도 개선되지 않음</li>
+</ul></li>
+<li><p>Wall time: 1min 54s → 4min 8s</p></li>
+<li><p>Vanila_accuracy : 0.9193223204994797 → 0.9194198751300728</p></li>
+<li><p>Vanila_roc_auc : 0.7084669152907 → 0.7135753731337223</p></li>
+<li><p>Vanila_confusion materix : [[28266 3] → [[28266 3] [ 2478 5]] → [ 2475 8]]</p></li>
+</ul>
+<div id="c8c9f507" class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>time</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.under_sampling <span class="im">import</span> TomekLinks</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>tml <span class="op">=</span> TomekLinks()</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>tml_result <span class="op">=</span> compute_for_samplers(train, test, tml)</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tml_result[<span class="st">'acc'</span>])</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tml_result[<span class="st">'auc'</span>])</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tml_result[<span class="st">'cf'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.9194198751300728
+0.7135753731337223
+[[28266     3]
+ [ 2475     8]]
+CPU times: total: 7min 37s
+Wall time: 4min 8s</code></pre>
+</div>
+</div>
+<div id="e0543c69" class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># X_train 샘플 차이</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"""* TomekLinks 전 : </span><span class="sc">{</span>train<span class="sc">.</span>shape<span class="sc">}</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="ss">* TomekLinks 후 : "</span><span class="sc">{</span>tml_result[<span class="st">'X_sampled'</span>]<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>* TomekLinks 전 : (276759, 132)
+* TomekLinks 후 : "(266325, 131)</code></pre>
+</div>
+</div>
+<div id="374f4030" class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># y_train 값 분포</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"""</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="ss">* TomekLinks 전</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>train<span class="sc">.</span>groupby(<span class="st">'TARGET'</span>)<span class="sc">.</span>size()<span class="sc">}</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="ss">* TomekLinks 후</span></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>tml_result[<span class="st">'y_sampled'</span>]<span class="sc">.</span>value_counts()<span class="sc">}</span><span class="ss">"""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+* TomekLinks 전
+TARGET
+0    254417
+1     22342
+dtype: int64
+
+* TomekLinks 후
+TARGET
+0    243983
+1     22342
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+</section>
+<section id="성능비교-ros" class="level3">
+<h3 class="anchored" data-anchor-id="성능비교-ros">성능비교 : ROS</h3>
+<ul>
+<li><p>Wall time: 1min 54s → 3min 4s</p></li>
+<li><p>Vanila_accuracy : 0.9193223204994797 → 0.919062174817898</p></li>
+<li><p>Vanila_roc_auc : 0.7084669152907 → 0.7287776769542174</p></li>
+<li><p>Vanila_confusion materix : [[28266 3] → [[28223 46] [ 2478 5]] → [ 2443 40]]</p></li>
+</ul>
+<div id="66cdba27" class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>time</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.over_sampling <span class="im">import</span> RandomOverSampler</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>ros <span class="op">=</span> RandomOverSampler(random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>ros_result <span class="op">=</span> compute_for_samplers(train, test, ros)</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ros_result[<span class="st">'acc'</span>])</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ros_result[<span class="st">'auc'</span>])</span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ros_result[<span class="st">'cf'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.919062174817898
+0.7287776769542174
+[[28223    46]
+ [ 2443    40]]
+CPU times: total: 1min 1s
+Wall time: 3min 4s</code></pre>
+</div>
+</div>
+<div id="743ee4e4" class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># X_train 샘플 차이</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"""* ROS 전 : </span><span class="sc">{</span>train<span class="sc">.</span>shape<span class="sc">}</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="ss">* ROS 후 : </span><span class="sc">{</span>ros_result[<span class="st">'X_sampled'</span>]<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>* ROS 전 : (276759, 132)
+* ROS 후 : (508834, 131)</code></pre>
+</div>
+</div>
+<div id="6e334de3" class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># y_train 값 분포</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"""</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="ss">* ROS 전</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>train<span class="sc">.</span>groupby(<span class="st">'TARGET'</span>)<span class="sc">.</span>size()<span class="sc">}</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="ss">* ROS 후</span></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>ros_result[<span class="st">'y_sampled'</span>]<span class="sc">.</span>value_counts()<span class="sc">}</span><span class="ss">"""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+* ROS 전
+TARGET
+0    254417
+1     22342
+dtype: int64
+
+* ROS 후
+TARGET
+0    254417
+1    254417
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+</section>
+<section id="성능비교-smote" class="level3">
+<h3 class="anchored" data-anchor-id="성능비교-smote">성능비교 : SMOTE</h3>
+<ul>
+<li><p>Wall time: 1min 54s → 3min 23s</p></li>
+<li><p>Vanila_accuracy : 0.9193223204994797 → 0.9192572840790842</p></li>
+<li><p>Vanila_roc_auc : 0.7084669152907 → 0.6958898421466617</p></li>
+<li><p>Vanila_confusion materix : [[28266 3] → [[28268 1] [ 2478 5]] → [ 2482 1]]</p></li>
+</ul>
+<div id="4b801695" class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>time</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.over_sampling <span class="im">import</span> SMOTE</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>smote <span class="op">=</span> SMOTE(random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>smote_result <span class="op">=</span> compute_for_samplers(train, test, smote)</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(smote_result[<span class="st">'acc'</span>])</span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(smote_result[<span class="st">'auc'</span>])</span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(smote_result[<span class="st">'cf'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.9192572840790842
+0.6958898421466617
+[[28268     1]
+ [ 2482     1]]
+CPU times: total: 1min 16s
+Wall time: 3min 23s</code></pre>
+</div>
+</div>
+<div id="9cc7eede" class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># X_train 샘플 차이</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"""* SMOTE 전 : </span><span class="sc">{</span>train<span class="sc">.</span>shape<span class="sc">}</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="ss">* SMOTE 후 : "</span><span class="sc">{</span>smote_result[<span class="st">'X_sampled'</span>]<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>* SMOTE 전 : (276759, 132)
+* SMOTE 후 : "(508834, 131)</code></pre>
+</div>
+</div>
+<div id="9962612c" class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># y_train 값 분포</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"""</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="ss">* SMOTE 전</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>train<span class="sc">.</span>groupby(<span class="st">'TARGET'</span>)<span class="sc">.</span>size()<span class="sc">}</span></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a><span class="ss">* SMOTE 후</span></span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>smote_result[<span class="st">'y_sampled'</span>]<span class="sc">.</span>value_counts()<span class="sc">}</span><span class="ss">"""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+* SMOTE 전
+TARGET
+0    254417
+1     22342
+dtype: int64
+
+* SMOTE 후
+TARGET
+0    254417
+1    254417
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+</section>
+<section id="성능비교-결과" class="level3">
+<h3 class="anchored" data-anchor-id="성능비교-결과">성능비교 결과</h3>
+<ul>
+<li>imblearn의 성능개선에 비해 들어가는 노력(시간)이 큼</li>
+<li>데이터 사이즈와 변수가 적었던 과거와 달리, 유의미한 결과를 내지 못하게 되었음</li>
+<li>어느정도 비율을 맞추는데 사용되고, class weights를 통한 가중치 조절에 자리를 내어줌</li>
+</ul>
+<div id="9d7e05c1" class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 이제 모델 성능 비교</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 선형 회귀 vs SVR vs RFR</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 로지스틱회귀 vs svc vs RFC</span></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="co"># RFC vs XGBC vs LGBMC vs CATBOOSTC vs EXTRATREEC</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="model별-성능-비교-실습" class="level2">
+<h2 class="anchored" data-anchor-id="model별-성능-비교-실습">Model별 성능 비교 실습</h2>
+<ul>
+<li>SVM의 실행시간문제로 데이터 사이즈를 줄여서 실습</li>
+</ul>
+<section id="라이브러리-설치-및-데이터-분할" class="level3">
+<h3 class="anchored" data-anchor-id="라이브러리-설치-및-데이터-분할">라이브러리 설치 및 데이터 분할</h3>
+<div id="80263e3d" class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install catboost xgboost lightgbm</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 라이브러리 설치</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="c7979b1f" class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier, ExtraTreesClassifier</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.svm <span class="im">import</span> SVC</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> lightgbm <span class="im">import</span> LGBMClassifier</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> xgboost <span class="im">import</span> XGBClassifier</span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> catboost <span class="im">import</span> CatBoostClassifier</span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> make_classification</span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> classification_report</span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score</span>
+<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-12"><a href="#cb56-12" aria-hidden="true" tabindex="-1"></a>train_, _  <span class="op">=</span> train_test_split(train, random_state <span class="op">=</span> <span class="dv">42</span>, test_size <span class="op">=</span> <span class="fl">0.9</span>)</span>
+<span id="cb56-13"><a href="#cb56-13" aria-hidden="true" tabindex="-1"></a>train_.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+Index: 27675 entries, 105024 to 224936
+Columns: 132 entries, SK_ID_CURR to EMERGENCYSTATE_MODE_nan
+dtypes: float64(89), int64(43)
+memory usage: 28.1 MB</code></pre>
+</div>
+</div>
+</section>
+<section id="모델-성능-비교" class="level3">
+<h3 class="anchored" data-anchor-id="모델-성능-비교">모델 성능 비교</h3>
+<div id="9360b810" class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 모델 리스트</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>models <span class="op">=</span> {</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Random Forest"</span>: RandomForestClassifier(class_weight<span class="op">=</span><span class="st">"balanced"</span>, random_state<span class="op">=</span><span class="dv">42</span>),</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SVC"</span>: SVC(class_weight<span class="op">=</span><span class="st">"balanced"</span>, probability <span class="op">=</span> <span class="va">True</span>, random_state<span class="op">=</span><span class="dv">42</span>),</span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LightGBM"</span>: LGBMClassifier(class_weight<span class="op">=</span><span class="st">"balanced"</span>, random_state<span class="op">=</span><span class="dv">42</span>),</span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"XGBoost"</span>: XGBClassifier(scale_pos_weight<span class="op">=</span><span class="dv">10</span>, eval_metric<span class="op">=</span><span class="st">"logloss"</span>, random_state<span class="op">=</span><span class="dv">42</span>),</span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CatBoost"</span>: CatBoostClassifier(class_weights<span class="op">=</span>[<span class="dv">1</span>, <span class="dv">10</span>], verbose<span class="op">=</span><span class="dv">0</span>, random_state<span class="op">=</span><span class="dv">42</span>),</span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Extra Trees"</span>: ExtraTreesClassifier(class_weight<span class="op">=</span><span class="st">"balanced"</span>, random_state<span class="op">=</span><span class="dv">42</span>),</span>
+<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> train_.drop([<span class="st">'TARGET'</span>], axis <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb58-12"><a href="#cb58-12" aria-hidden="true" tabindex="-1"></a>y_train <span class="op">=</span> train_[<span class="st">'TARGET'</span>]</span>
+<span id="cb58-13"><a href="#cb58-13" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> test.drop([<span class="st">'TARGET'</span>], axis <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb58-14"><a href="#cb58-14" aria-hidden="true" tabindex="-1"></a>y_test <span class="op">=</span> test[<span class="st">'TARGET'</span>]</span>
+<span id="cb58-15"><a href="#cb58-15" aria-hidden="true" tabindex="-1"></a>rsts <span class="op">=</span> {}</span>
+<span id="cb58-16"><a href="#cb58-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 학습 및 평가</span></span>
+<span id="cb58-17"><a href="#cb58-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name, model <span class="kw">in</span> models.items():</span>
+<span id="cb58-18"><a href="#cb58-18" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb58-19"><a href="#cb58-19" aria-hidden="true" tabindex="-1"></a>    start <span class="op">=</span> time.time()</span>
+<span id="cb58-20"><a href="#cb58-20" aria-hidden="true" tabindex="-1"></a>    model.fit(X_train, y_train)</span>
+<span id="cb58-21"><a href="#cb58-21" aria-hidden="true" tabindex="-1"></a>    y_pred <span class="op">=</span> model.predict(X_test)</span>
+<span id="cb58-22"><a href="#cb58-22" aria-hidden="true" tabindex="-1"></a>    y_proba <span class="op">=</span> model.predict_proba(X_test)</span>
+<span id="cb58-23"><a href="#cb58-23" aria-hidden="true" tabindex="-1"></a>    accuracy <span class="op">=</span> accuracy_score(y_test, y_pred)</span>
+<span id="cb58-24"><a href="#cb58-24" aria-hidden="true" tabindex="-1"></a>    auc <span class="op">=</span> roc_auc_score(y_test, y_proba[:,<span class="dv">1</span>])</span>
+<span id="cb58-25"><a href="#cb58-25" aria-hidden="true" tabindex="-1"></a>    cf <span class="op">=</span> confusion_matrix(y_test, y_pred)</span>
+<span id="cb58-26"><a href="#cb58-26" aria-hidden="true" tabindex="-1"></a>    rsts[name] <span class="op">=</span> {<span class="st">'acc'</span>:accuracy,</span>
+<span id="cb58-27"><a href="#cb58-27" aria-hidden="true" tabindex="-1"></a>                  <span class="st">'auc'</span>:auc,</span>
+<span id="cb58-28"><a href="#cb58-28" aria-hidden="true" tabindex="-1"></a>                  <span class="st">'cf'</span>:cf,</span>
+<span id="cb58-29"><a href="#cb58-29" aria-hidden="true" tabindex="-1"></a>                  <span class="st">'model'</span> : model,</span>
+<span id="cb58-30"><a href="#cb58-30" aria-hidden="true" tabindex="-1"></a>                  <span class="st">'y_pred'</span> : y_pred,</span>
+<span id="cb58-31"><a href="#cb58-31" aria-hidden="true" tabindex="-1"></a>                  <span class="st">'y_proba'</span> : y_proba,</span>
+<span id="cb58-32"><a href="#cb58-32" aria-hidden="true" tabindex="-1"></a>                  <span class="st">'time'</span> : time.time() <span class="op">-</span> start }</span>
+<span id="cb58-33"><a href="#cb58-33" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb58-34"><a href="#cb58-34" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"""</span></span>
+<span id="cb58-35"><a href="#cb58-35" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>classification_report(y_test, y_pred)<span class="sc">}</span><span class="ss">"""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Random Forest
+
+              precision    recall  f1-score   support
+
+           0       0.92      1.00      0.96     28269
+           1       0.50      0.00      0.00      2483
+
+    accuracy                           0.92     30752
+   macro avg       0.71      0.50      0.48     30752
+weighted avg       0.89      0.92      0.88     30752
+
+
+SVC
+
+              precision    recall  f1-score   support
+
+           0       0.94      0.53      0.67     28269
+           1       0.10      0.60      0.17      2483
+
+    accuracy                           0.53     30752
+   macro avg       0.52      0.56      0.42     30752
+weighted avg       0.87      0.53      0.63     30752
+
+
+LightGBM
+[LightGBM] [Warning] Found whitespace in feature_names, replace with underlines
+[LightGBM] [Info] Number of positive: 2199, number of negative: 25476
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.009680 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 10852
+[LightGBM] [Info] Number of data points in the train set: 27675, number of used features: 120
+[LightGBM] [Info] [binary:BoostFromScore]: pavg=0.500000 -&gt; initscore=-0.000000
+[LightGBM] [Info] Start training from score -0.000000
+
+              precision    recall  f1-score   support
+
+           0       0.95      0.80      0.87     28269
+           1       0.19      0.52      0.28      2483
+
+    accuracy                           0.78     30752
+   macro avg       0.57      0.66      0.57     30752
+weighted avg       0.89      0.78      0.82     30752
+
+
+XGBoost
+
+              precision    recall  f1-score   support
+
+           0       0.94      0.89      0.91     28269
+           1       0.21      0.33      0.26      2483
+
+    accuracy                           0.85     30752
+   macro avg       0.57      0.61      0.58     30752
+weighted avg       0.88      0.85      0.86     30752
+
+
+CatBoost
+
+              precision    recall  f1-score   support
+
+           0       0.94      0.88      0.91     28269
+           1       0.22      0.38      0.28      2483
+
+    accuracy                           0.84     30752
+   macro avg       0.58      0.63      0.59     30752
+weighted avg       0.88      0.84      0.86     30752
+
+
+Extra Trees
+
+              precision    recall  f1-score   support
+
+           0       0.92      1.00      0.96     28269
+           1       0.00      0.00      0.00      2483
+
+    accuracy                           0.92     30752
+   macro avg       0.46      0.50      0.48     30752
+weighted avg       0.85      0.92      0.88     30752
+</code></pre>
+</div>
+</div>
+<div id="d856b66c" class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 파일로 저장</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pickle</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'rsts.pkl'</span>, <span class="st">'wb'</span>) <span class="im">as</span> f:</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>  pickle.dump(rsts, f)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="c52ee11b" class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>df_results <span class="op">=</span> pd.DataFrame(rsts).loc[[<span class="st">'acc'</span>,<span class="st">'auc'</span>,<span class="st">'cf'</span>,<span class="st">'time'</span>],:]</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>df_results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Random Forest</th>
+<th data-quarto-table-cell-role="th">SVC</th>
+<th data-quarto-table-cell-role="th">LightGBM</th>
+<th data-quarto-table-cell-role="th">XGBoost</th>
+<th data-quarto-table-cell-role="th">CatBoost</th>
+<th data-quarto-table-cell-role="th">Extra Trees</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">acc</td>
+<td>0.919257</td>
+<td>0.531835</td>
+<td>0.779429</td>
+<td>0.846839</td>
+<td>0.839588</td>
+<td>0.91916</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">auc</td>
+<td>0.707628</td>
+<td>0.596337</td>
+<td>0.736252</td>
+<td>0.703948</td>
+<td>0.735909</td>
+<td>0.689785</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">cf</td>
+<td>[[28266, 3], [2480, 3]]</td>
+<td>[[14872, 13397], [1000, 1483]]</td>
+<td>[[22670, 5599], [1184, 1299]]</td>
+<td>[[25235, 3034], [1676, 807]]</td>
+<td>[[24872, 3397], [1536, 947]]</td>
+<td>[[28266, 3], [2483, 0]]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">time</td>
+<td>9.124638</td>
+<td>762.844463</td>
+<td>0.5796</td>
+<td>0.665159</td>
+<td>9.372309</td>
+<td>5.709153</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<ul>
+<li><strong>LGBM으로 Model selection</strong>
+<ul>
+<li>AUC기준 LGBM(0.736252), CatBoost(0.735909) 순으로 좋음</li>
+<li>CF기준 LightGBM과 XGBoost는 Tradeoff가 있음
+<ul>
+<li>LightGBM과는 실제 1인 데이터를 잘 찾고(1299), XGBoost는 1이 아닌데 1로 분류하는 경우가 적다(3034)</li>
+<li>과제의 성격에 따라 모델을 선택</li>
+</ul></li>
+<li>Time기준 LGBM과 XGBoost가 빠름</li>
+<li><strong>현재 과제는 실제 1을 찾아내는 것이 중요하다는 관점으로, LGBM선택</strong></li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="model-selection-후-케이스별-비교" class="level2">
+<h2 class="anchored" data-anchor-id="model-selection-후-케이스별-비교">Model selection 후 케이스별 비교</h2>
+<ul>
+<li><p>비교할 2가지 Case</p>
+<ul>
+<li><strong>LightGBM</strong> with RUS</li>
+<li><strong>LightGBM</strong>(Weighted) with<strong>out</strong> RUS</li>
+</ul></li>
+<li><p>Weight에 대한 설정방법은 모델별로 다름</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>  models <span class="op">=</span> {</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Random Forest"</span>: RandomForestClassifier(class_weight<span class="op">=</span><span class="st">"balanced"</span>),</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SVC"</span>: SVC(class_weight<span class="op">=</span><span class="st">"balanced"</span>, probability <span class="op">=</span> <span class="va">True</span>),</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"LightGBM"</span>: LGBMClassifier(class_weight<span class="op">=</span><span class="st">"balanced"</span>),</span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"XGBoost"</span>: XGBClassifier(scale_pos_weight<span class="op">=</span><span class="dv">10</span>, eval_metric<span class="op">=</span><span class="st">"logloss"</span>),</span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CatBoost"</span>: CatBoostClassifier(class_weights<span class="op">=</span>[<span class="dv">1</span>, <span class="dv">10</span>], verbose<span class="op">=</span><span class="dv">0</span>),</span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Extra Trees"</span>: ExtraTreesClassifier(class_weight<span class="op">=</span><span class="st">"balanced"</span>),</span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+<div id="0d316d40" class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Base model with RUS</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>X_train_rus, y_train_rus <span class="op">=</span> X_rus, y_rus</span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>rus_model <span class="op">=</span> LGBMClassifier(random_state<span class="op">=</span><span class="dv">42</span>).fit(X_train_rus, y_train_rus)</span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>y_pred_rus <span class="op">=</span> rus_model.predict(X_test)</span>
+<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a>y_proba_rus <span class="op">=</span> rus_model.predict_proba(X_test)</span>
+<span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a>accuracy_rus <span class="op">=</span> accuracy_score(y_test, y_pred_rus)</span>
+<span id="cb63-9"><a href="#cb63-9" aria-hidden="true" tabindex="-1"></a>auc_rus <span class="op">=</span> roc_auc_score(y_test, y_proba_rus[:,<span class="dv">1</span>])</span>
+<span id="cb63-10"><a href="#cb63-10" aria-hidden="true" tabindex="-1"></a>cf_rus <span class="op">=</span> confusion_matrix(y_test, y_pred_rus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[LightGBM] [Warning] Found whitespace in feature_names, replace with underlines
+[LightGBM] [Info] Number of positive: 22342, number of negative: 22342
+[LightGBM] [Info] Auto-choosing row-wise multi-threading, the overhead of testing was 0.005589 seconds.
+You can set `force_row_wise=true` to remove the overhead.
+And if memory is not enough, you can set `force_col_wise=true`.
+[LightGBM] [Info] Total Bins 11024
+[LightGBM] [Info] Number of data points in the train set: 44684, number of used features: 121
+[LightGBM] [Info] [binary:BoostFromScore]: pavg=0.500000 -&gt; initscore=0.000000</code></pre>
+</div>
+</div>
+<div id="7cba1fa1" class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Weight model without RUS</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>weights_model <span class="op">=</span> LGBMClassifier(random_state<span class="op">=</span><span class="dv">42</span>, class_weight<span class="op">=</span><span class="st">'balanced'</span>).fit(X_train, y_train)</span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>y_pred_weights <span class="op">=</span> weights_model.predict(X_test)</span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>y_proba_weights <span class="op">=</span> weights_model.predict_proba(X_test)</span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a>accuracy_weights <span class="op">=</span> accuracy_score(y_test, y_pred_weights)</span>
+<span id="cb65-7"><a href="#cb65-7" aria-hidden="true" tabindex="-1"></a>auc_weights <span class="op">=</span> roc_auc_score(y_test, y_proba_weights[:,<span class="dv">1</span>])</span>
+<span id="cb65-8"><a href="#cb65-8" aria-hidden="true" tabindex="-1"></a>cf_weights <span class="op">=</span> confusion_matrix(y_test, y_pred_weights)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[LightGBM] [Warning] Found whitespace in feature_names, replace with underlines
+[LightGBM] [Info] Number of positive: 2199, number of negative: 25476
+[LightGBM] [Info] Auto-choosing row-wise multi-threading, the overhead of testing was 0.003091 seconds.
+You can set `force_row_wise=true` to remove the overhead.
+And if memory is not enough, you can set `force_col_wise=true`.
+[LightGBM] [Info] Total Bins 10852
+[LightGBM] [Info] Number of data points in the train set: 27675, number of used features: 120
+[LightGBM] [Info] [binary:BoostFromScore]: pavg=0.500000 -&gt; initscore=-0.000000
+[LightGBM] [Info] Start training from score -0.000000</code></pre>
+</div>
+</div>
+<div id="bc33f5c5" class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Base model with RUS</span></span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'accuracy of LGBM with RUS : </span><span class="sc">{</span><span class="bu">round</span>(accuracy_rus,<span class="dv">4</span>)<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'auc of LGBM with RUS : </span><span class="sc">{</span><span class="bu">round</span>(auc_rus,<span class="dv">4</span>)<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'-'</span><span class="op">*</span><span class="dv">100</span>)</span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'CF of LGBM With RUS'</span>)</span>
+<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cf_rus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>accuracy of LGBM with RUS : 0.6924
+auc of LGBM with RUS : 0.7565
+----------------------------------------------------------------------------------------------------
+CF of LGBM With RUS
+[[19587  8682]
+ [  777  1706]]</code></pre>
+</div>
+</div>
+<div id="70d3b305" class="cell">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Weight model without RUS</span></span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'accuracy of LGBM with Class Weight : </span><span class="sc">{</span><span class="bu">round</span>(accuracy_weights,<span class="dv">4</span>)<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'auc of LGBM with Class Weight : </span><span class="sc">{</span><span class="bu">round</span>(auc_weights,<span class="dv">4</span>)<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'-'</span><span class="op">*</span><span class="dv">100</span>)</span>
+<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'CF of LGBM With Class Weight'</span>)</span>
+<span id="cb69-6"><a href="#cb69-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cf_weights)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>accuracy of LGBM with Class Weight : 0.7794
+auc of LGBM with Class Weight : 0.7363
+----------------------------------------------------------------------------------------------------
+CF of LGBM With Class Weight
+[[22670  5599]
+ [ 1184  1299]]</code></pre>
+</div>
+</div>
+<ul>
+<li>결과 비교 및 선택
+<ul>
+<li>Test데이터에 대해 강건(Robust)한 모델은, 데이터를 많이 본 모델</li>
+<li>특히 장기적으로 쓴다면 더 많은 데이터를 본 강건한 모델이 더 유지하기 쉬움</li>
+<li>위 기준으로는 후자의 모델(Weight model without RUS)을 선택</li>
+</ul></li>
+<li>참고
+<ul>
+<li>현재의 모델도 100% 완벽하다고는 볼 수 없으나, 연체 위험자 등을 찾아낼 수 있다는 점에서 의의</li>
+<li>Hybrid method를 실제로 쓸 일은 잘 없음(SMOTE의 오버피팅 문제로)</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="과제" class="level1">
+<h1>과제</h1>
+<ol type="1">
+<li>Week3 과제에서 전처리 완료된 데이터를 가지고, Week4에 배운 다양한 불균형 처리 기법을 시험해보세요.</li>
+<li>1)에서 결정된 불균형 처리 방법을 기준으로 최종 Model을 결정해 보세요.</li>
+</ol>
+
+
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/kr9268\.github\.io\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="kr9268/giscus_for_blog" data-repo-id="R_kgDOL0Sthw" data-category="General" data-category-id="DIC_kwDOL0Sth84Ce_5h" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+</div> <!-- /content -->
+<script>
+    const baseFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    const watermark = new XWatermark.XWatermark();
+    watermark.init("Kibok Park", {
+      parentSelector: "body",
+      prevent: true,
+      observer: true,
+      mode: "normal",
+      font: "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', 'Liberation Sans', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
+      fontsize: baseFontSize * 1.000000,
+      angle: -15.000000,
+      color: "#000000",
+      alpha: 0.100000,
+      cols: 10,
+      rows: 50,
+      xSpace: baseFontSize * 4.000000,
+      ySpace: baseFontSize * 4.000000,
+      zIndex: -1
+    });
+    </script>
+
+
+
+
+</body></html>
