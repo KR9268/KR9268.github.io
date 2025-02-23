@@ -1,0 +1,2379 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.41">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Kibok Park">
+<meta name="dcterms.date" content="2025-01-19">
+
+<title>[DA스터디/5주차] 평가Metric, XAI, SHAP – Blog</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.jpg" rel="icon" type="image/jpeg">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-48ffa3e5b9d089919c6712c39e5b00f2.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-71390cc8b9bae10139428574d3aab2c6.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-c37a40b267d3139d93432c283e34c257.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-bdc1e6ac3e28299057f0fc16b5bab4ae.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/watermark-1.0.11/watermark.min.js"></script>
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-LPL499WQBH"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Blog</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index_dashboards.html"> 
+<span class="menu-text">Dashboards</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index_miniprojects.html"> 
+<span class="menu-text">Mini Projects</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About me</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/KR9268"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/%EA%B8%B0%EB%B3%B5-%EB%B0%95-573a68268/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">[DA스터디/5주차] 평가Metric, XAI, SHAP</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Python</div>
+                <div class="quarto-category">Metric</div>
+                <div class="quarto-category">XAI</div>
+                <div class="quarto-category">ExplainableAI</div>
+                <div class="quarto-category">SHAP</div>
+                <div class="quarto-category">202412Study_DataAnalysis</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Kibok Park </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">January 19, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#개요" id="toc-개요" class="nav-link active" data-scroll-target="#개요">개요</a></li>
+  <li><a href="#주차-과제-내용정리" id="toc-주차-과제-내용정리" class="nav-link" data-scroll-target="#주차-과제-내용정리">4주차 과제 내용정리</a></li>
+  <li><a href="#주차-수업정리" id="toc-주차-수업정리" class="nav-link" data-scroll-target="#주차-수업정리">5주차 수업정리</a>
+  <ul class="collapse">
+  <li><a href="#metric" id="toc-metric" class="nav-link" data-scroll-target="#metric">Metric</a>
+  <ul class="collapse">
+  <li><a href="#분류-문제-metric" id="toc-분류-문제-metric" class="nav-link" data-scroll-target="#분류-문제-metric">분류 문제 Metric</a></li>
+  <li><a href="#다중-분류-문제-metric" id="toc-다중-분류-문제-metric" class="nav-link" data-scroll-target="#다중-분류-문제-metric">다중 분류 문제 Metric</a></li>
+  <li><a href="#회귀-문제-metric" id="toc-회귀-문제-metric" class="nav-link" data-scroll-target="#회귀-문제-metric">회귀 문제 Metric</a></li>
+  <li><a href="#metric-선정시-고려사항" id="toc-metric-선정시-고려사항" class="nav-link" data-scroll-target="#metric-선정시-고려사항">Metric 선정시 고려사항</a></li>
+  <li><a href="#metric-선정관련-참고사항" id="toc-metric-선정관련-참고사항" class="nav-link" data-scroll-target="#metric-선정관련-참고사항">Metric 선정관련 참고사항</a></li>
+  </ul></li>
+  <li><a href="#xai" id="toc-xai" class="nav-link" data-scroll-target="#xai">XAI</a>
+  <ul class="collapse">
+  <li><a href="#xai와-금융데이터" id="toc-xai와-금융데이터" class="nav-link" data-scroll-target="#xai와-금융데이터">XAI와 금융데이터</a></li>
+  <li><a href="#shap-xai-with-shap" id="toc-shap-xai-with-shap" class="nav-link" data-scroll-target="#shap-xai-with-shap">SHAP (XAI with SHAP)</a></li>
+  <li><a href="#shap의-해석분해" id="toc-shap의-해석분해" class="nav-link" data-scroll-target="#shap의-해석분해">SHAP의 해석분해</a></li>
+  <li><a href="#shap의-global-해석-column" id="toc-shap의-global-해석-column" class="nav-link" data-scroll-target="#shap의-global-해석-column">SHAP의 Global 해석 (Column)</a></li>
+  <li><a href="#shap의-local-해석-row" id="toc-shap의-local-해석-row" class="nav-link" data-scroll-target="#shap의-local-해석-row">SHAP의 Local 해석 (Row)</a></li>
+  <li><a href="#feature-selection-with-shap" id="toc-feature-selection-with-shap" class="nav-link" data-scroll-target="#feature-selection-with-shap">Feature Selection with SHAP</a></li>
+  <li><a href="#참고사항" id="toc-참고사항" class="nav-link" data-scroll-target="#참고사항">참고사항</a></li>
+  </ul></li>
+  <li><a href="#week4-보완-xgboost의-rf-w-gpu" id="toc-week4-보완-xgboost의-rf-w-gpu" class="nav-link" data-scroll-target="#week4-보완-xgboost의-rf-w-gpu">Week4 보완 : XGBoost의 RF w/ GPU</a>
+  <ul class="collapse">
+  <li><a href="#더미데이터를-활용한-비교-실습xgboost-vs-sklearn" id="toc-더미데이터를-활용한-비교-실습xgboost-vs-sklearn" class="nav-link" data-scroll-target="#더미데이터를-활용한-비교-실습xgboost-vs-sklearn">더미데이터를 활용한 비교 실습(XGBoost vs Sklearn)</a></li>
+  <li><a href="#실습데이터를-활용한-비교-실습xgboost-vs-sklearn" id="toc-실습데이터를-활용한-비교-실습xgboost-vs-sklearn" class="nav-link" data-scroll-target="#실습데이터를-활용한-비교-실습xgboost-vs-sklearn">실습데이터를 활용한 비교 실습(XGBoost vs Sklearn)</a></li>
+  </ul></li>
+  <li><a href="#metrics" id="toc-metrics" class="nav-link" data-scroll-target="#metrics">Metrics</a>
+  <ul class="collapse">
+  <li><a href="#분류-metrics" id="toc-분류-metrics" class="nav-link" data-scroll-target="#분류-metrics">분류 Metrics</a></li>
+  <li><a href="#다중분류-metrics-multi-label" id="toc-다중분류-metrics-multi-label" class="nav-link" data-scroll-target="#다중분류-metrics-multi-label">다중분류 Metrics (Multi Label)</a></li>
+  <li><a href="#회귀-metrics" id="toc-회귀-metrics" class="nav-link" data-scroll-target="#회귀-metrics">회귀 Metrics</a></li>
+  </ul></li>
+  <li><a href="#xai-with-shap" id="toc-xai-with-shap" class="nav-link" data-scroll-target="#xai-with-shap">XAI With SHAP</a>
+  <ul class="collapse">
+  <li><a href="#트리기반-모델로-shap-실습하기" id="toc-트리기반-모델로-shap-실습하기" class="nav-link" data-scroll-target="#트리기반-모델로-shap-실습하기">트리기반 모델로 SHAP 실습하기</a></li>
+  <li><a href="#shap시각화" id="toc-shap시각화" class="nav-link" data-scroll-target="#shap시각화">SHAP시각화</a></li>
+  <li><a href="#shap-feature-importance구하기-feature-selection" id="toc-shap-feature-importance구하기-feature-selection" class="nav-link" data-scroll-target="#shap-feature-importance구하기-feature-selection">SHAP Feature Importance구하기 &amp; Feature Selection</a></li>
+  </ul></li>
+  <li><a href="#기타-참고사항" id="toc-기타-참고사항" class="nav-link" data-scroll-target="#기타-참고사항">기타 참고사항</a></li>
+  <li><a href="#과제" id="toc-과제" class="nav-link" data-scroll-target="#과제">과제</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>금융권 데이터를 활용한 분석 스터디 - 5주차</p>
+<section id="개요" class="level1">
+<h1>개요</h1>
+<ul>
+<li>아래의 목적/이유로 참가한 스터디에 대한 기록
+<ul>
+<li>SQLD취득 후 장기 미사용 &amp; GPT를 통한 SQL사용 등으로 많이 잊은 SQL을 복기</li>
+<li>기존에 사용해 본 Optuna가 아닌 Autogluon이 커리큘럼에 있어 익혀보고자 함</li>
+<li>기존에 관심있던 XAI(설명가능한 AI)를 익히고자 함</li>
+</ul></li>
+<li>5주차 요약
+<ul>
+<li>모델을 평가하기 위한 평가Metric
+<ul>
+<li>분류 : Accuraccy, F1-score, AUC-ROC, Log loss 등</li>
+<li>회귀 : MSE, RMSE, MAE, MAPE 등</li>
+</ul></li>
+<li>SHAP(Shaply Value)를 통한 모델(변수) 설명</li>
+</ul></li>
+</ul>
+</section>
+<section id="주차-과제-내용정리" class="level1">
+<h1>4주차 과제 내용정리</h1>
+<ul>
+<li>모델별로 각자 잘 푸는 문제가 다름을 인지하자
+<ul>
+<li>Random Forest가 오래된 모델이지만, 성능이 좋은편임</li>
+</ul></li>
+</ul>
+</section>
+<section id="주차-수업정리" class="level1">
+<h1>5주차 수업정리</h1>
+<section id="metric" class="level2">
+<h2 class="anchored" data-anchor-id="metric">Metric</h2>
+<ul>
+<li>Metric : 모델을 평가하기 위해 사용하는 수치 지표</li>
+</ul>
+<section id="분류-문제-metric" class="level3">
+<h3 class="anchored" data-anchor-id="분류-문제-metric">분류 문제 Metric</h3>
+<ul>
+<li><code>Accuracy</code> : 전체 예측 중 옳게 예측한 비율
+<ul>
+<li>해석이 용이함. <strong>불균형 데이터에서 과대평가 문제</strong>가 있음</li>
+<li><span class="math inline">\(\frac{TP + TN}{TP + TN + FP + FN}\)</span></li>
+</ul></li>
+<li><code>F1-score</code> : Precision과 Recall의 조화평균
+<ul>
+<li><strong>TP중심(TP Oriented)이고 직관적이지 못한 단점</strong></li>
+<li><strong>불균형 데이터의 Accuracy의 과대평가를 피할 수 있는 장점</strong></li>
+<li><span class="math inline">\(F1 \text{ Score} = 2 \times \left( \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}} \right)\)</span></li>
+<li><span class="math inline">\(\text{Precision} = \frac{TP}{TP + FP}\)</span></li>
+<li><span class="math inline">\(\text{Recall} = \frac{TP}{TP + FN}\)</span></li>
+</ul></li>
+<li><code>AUC-ROC</code> : ROC커브의 하단 면적
+<ul>
+<li>전반적인 분류 성능평가에 용이 (상대적으로)불균형데이터에서도 유용</li>
+<li>ROC커브에 대한 설명이 필요하여 직관적이지 못함</li>
+</ul></li>
+<li><code>Log loss</code> : Loss의 로그값으로, 0 이상이며 낮을수록 높은 신뢰도
+<ul>
+<li>다른 Metric과 달리 예측 확률의 신뢰도에 대한 평가
+<ul>
+<li>예측이 얼마나 적중했는지를 보는 <code>다른 Metric</code> <strong>vs</strong> 예측확률이 얼마나 믿을만한지 보는 <code>Log loss</code></li>
+<li>분류 결과만으로 평가하는 <code>다른 Metric</code> <strong>vs</strong> 확률까지 반영하는 <code>Log loss</code></li>
+<li>틀린 확률이 극단적인 경우 큰 패널티 부여
+<ul>
+<li>예를 들어, 모델이 확인을 가지고 1일 확률 99%로 예측했으나 0인 경우 Log loss값 커짐</li>
+<li>이러한 특성으로 모델의 잘못된 예측을 방지하는데 유용</li>
+</ul></li>
+</ul></li>
+<li>다른 metric과 달리 다중분류에서도 사용 가능
+<ul>
+<li>class불균형 영향을 받으므로 가중치 조절 필요</li>
+</ul></li>
+<li><span class="math inline">\(\text{Log Loss} = -\frac{1}{N} \sum_{i=1}^{N} \left[ y_i \log(p_i) + (1 - y_i) \log(1 - p_i) \right]\)</span></li>
+</ul></li>
+</ul>
+</section>
+<section id="다중-분류-문제-metric" class="level3">
+<h3 class="anchored" data-anchor-id="다중-분류-문제-metric">다중 분류 문제 Metric</h3>
+<ul>
+<li><code>Overall Accuracy</code> : 전반적인 정확도(전체 예측 중 올바른 예측 비율)
+<ul>
+<li>불균형데이터에서는 부적합</li>
+<li>3*3 Matrix기준으로 대각선이 정답이며, 이 대각선이 하단의 <span class="math inline">\(\text{Number of Correct Predictions}\)</span>에 해당</li>
+<li><span class="math inline">\(\text{Overall Accuracy} = \frac{\text{Number of Correct Predictions}}{\text{Number of Total Predictions}}\)</span></li>
+</ul></li>
+<li><code>Macro Precision/Recall/F1-Score</code> : 각 class(y)별로 Precision/Recall/F1-Score를 계산한 후 평균
+<ul>
+<li><strong>숫자가 많은 class를 잘맞추는게 중요한게 아니라, 중요도를 균등하게 반영, 전반적인 예측을 중요시</strong></li>
+<li><strong>위와 같은 이유로 불균형에 취약함</strong></li>
+<li><span class="math inline">\(\text{Macro Precision, Recall, F1-Score} = -\frac{1}{M} \sum_{i=1}^{M} \left[ \text{Precision, Recall, F1-Score} \right]_i\)</span></li>
+</ul></li>
+<li><code>Micro Precision/Recall/F1-Score</code> : 각 class(y)에 대해 맞게 예측한 수(TP)/ 모든 class(y)에 대해 예측한 수
+<ul>
+<li><strong>(단순평균이 아니므로)상대적으로 불균형에 강함, 거시적으로 보기는 어려움</strong></li>
+<li><span class="math inline">\(\text{Micro Precision} = \frac{\sum_{i=1}^{M} \left[ TP \right]_i}{\sum_{i=1}^{M} \left[ TP + FP \right]_i}\)</span></li>
+</ul></li>
+<li><strong>다중분류문제의 경우, 보통 <code>Macro</code>와 <code>Micro</code>를 함께 병기하여 사용</strong>
+<ul>
+<li>불균형한 경우, 한가지만 보면 문제될 수 있음</li>
+</ul></li>
+</ul>
+</section>
+<section id="회귀-문제-metric" class="level3">
+<h3 class="anchored" data-anchor-id="회귀-문제-metric">회귀 문제 Metric</h3>
+<ul>
+<li><code>RMSE(평균제곱오차)</code>, <code>MSE(평균제곱근오차)</code>
+<ul>
+<li>제곱을 취하므로 <strong>상대적으로 이상치에 민감</strong> (이상치에 따라 크게 오차값이 튄다)</li>
+<li>RMSE로 단위를 통일하여 사용하는 경우 많음 *(단<strong>위가 통일되어 scale왜곡이 되지 않음</strong>)</li>
+<li><span class="math inline">\(\text{MSE} = \frac{1}{n} \sum_{i=1}^{n} \left( y_i - \hat{y}_i \right)^2\)</span></li>
+<li><span class="math inline">\(\text{RMSE} = \sqrt{\text{MSE}}\)</span></li>
+</ul></li>
+<li><code>MAE(평균절대오차)</code>, <code>MAPE(평균절대비오차, Percentage error)</code>
+<ul>
+<li>절대값으로 계산하므로 SE(제곱오차)보다 <strong>이상치에 덜 민감</strong> (수학적으로는 깔끔하지 않음)</li>
+<li>MAPE는 <strong>백분율로 나타내기에 (예측하고자 하는 값이 일반적 범우에 있는 경우)해석이 용이함</strong>
+<ul>
+<li>분류문제 대비, 회귀문제 Metric은 설명이 어려움(모델의 scale이나 분산등을 설명해야 함)</li>
+<li>y로 나누기 때문에, y가 0에 가까워질수록 값이 튀는 문제(<strong>MAPE는 이 문제로 사용하기 어려움</strong>)</li>
+</ul></li>
+<li><span class="math inline">\(\text{MAE} = \frac{1}{n} \sum_{i=1}^{n} \left| y_i - \hat{y}_i \right|\)</span></li>
+<li><span class="math inline">\(\text{MAPE} = \frac{1}{n} \sum_{i=1}^{n} \left| \frac{y_i - \hat{y}_i}{y_i} \right| \times 100\)</span></li>
+</ul></li>
+</ul>
+</section>
+<section id="metric-선정시-고려사항" class="level3">
+<h3 class="anchored" data-anchor-id="metric-선정시-고려사항">Metric 선정시 고려사항</h3>
+<ul>
+<li>Metric 선정시 고려사항
+<ul>
+<li>문제 유형</li>
+<li>데이터의 특성(불균형도, 이상치의 비중, 스케일 차이)</li>
+<li>모델의 목표, 비즈니스 맥락</li>
+<li>비교 가능성</li>
+<li>결과 해석 및 소통 용이성</li>
+</ul></li>
+</ul>
+</section>
+<section id="metric-선정관련-참고사항" class="level3">
+<h3 class="anchored" data-anchor-id="metric-선정관련-참고사항">Metric 선정관련 참고사항</h3>
+<ul>
+<li>과제의 성격에 맞는 Metric의 설정이 중요함
+<ul>
+<li>물동량 예측문제라면, Under estimate가 더 치명적임
+<ul>
+<li>Over estimate : 차를 더 부르고 끝</li>
+<li>Under estimate : 급하게 차를 불러야 하므로 비용이 더 큼</li>
+</ul></li>
+<li>위와 같은 상황에서 Pinball loss라는 것을 사용하기도 함
+<ul>
+<li>Pinball loss : 과소예측과 과대예측에 대해 각각 다른 가중치를 부여</li>
+<li>분위수(τ) 0.5(균형)을 기준으로, τ&lt;0.5는 과대예측에 큰 패널티, τ&gt;0.5는 과소예측에 큰 패널티</li>
+<li>재고관리, 금융리스크모델링 등에서 활용</li>
+</ul></li>
+</ul></li>
+<li><strong>학습하기 위한 Main metric과, 소통을 위한 Sub metric을 함께 설정</strong></li>
+</ul>
+</section>
+</section>
+<section id="xai" class="level2">
+<h2 class="anchored" data-anchor-id="xai">XAI</h2>
+<section id="xai와-금융데이터" class="level3">
+<h3 class="anchored" data-anchor-id="xai와-금융데이터">XAI와 금융데이터</h3>
+<ul>
+<li><code>XAI(Explainable AI)</code> : 기존의 Black box였던 모델 부분을 설명하는 방법론들을 통칭</li>
+<li>(예시로 이해하는) XAI가 금융 데이터 분석에서 중요한 이유(예시)
+<ul>
+<li>편향탐지 : AI기반 대출 승인 모델을 돌렸는데 특정 인종(흑인 등)이 거절되는 경우를 탐지
+<ul>
+<li>Feature importance는 영향도를 보여줄 뿐, 어떤 방향으로 작용할지 확인이 어려움</li>
+<li>XAI로 미리 확인하여, 흑인이면 대출을 안해준다는 사실을 알았다면 문제를 방지할 수 있었음</li>
+<li><strong>XAI로 어떤 변수가 얼마나 어떻게 중요한지 설명/적용하는 것과, 단순히 변수가 중요하다는 것은 다름</strong></li>
+</ul></li>
+<li>비즈니스 의사결정 지원 : 변수가 어떻게 작용하는지 이해하여 사기 탐지 모델을 적용
+<ul>
+<li>모델링하여 단순히 Batch를 태우기도 하지만, <strong>분석과제로 인사이트를 얻고 커뮤니케이션을 할 수 있음</strong></li>
+</ul></li>
+<li>데이터 처리 신뢰성 확보 및 손실 최소화
+<ul>
+<li>모델 오류가 발생하기 전에, XAI를 통해 도메인 지식에서 어긋나는 변수나 과대대표되는 변수를 확인</li>
+<li>단위가 큰 금융 데이터에게는 특히 중요한 작업</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="shap-xai-with-shap" class="level3">
+<h3 class="anchored" data-anchor-id="shap-xai-with-shap">SHAP (XAI with SHAP)</h3>
+<ul>
+<li><code>SHAP</code> : <strong>변수가 예측에 기여하는 정도를 계산</strong> (Shapley Value에 기반하여 설명)
+<ul>
+<li>계산방식
+<ul>
+<li>모든 가능한 Feature 조합을 생성한 뒤</li>
+<li>각 조합에서 특정 Feature가 추가되었을 때 예측값의 변화를 계산</li>
+<li>기여도 계산 후 평균을 내는 방식으로 최종 산출</li>
+</ul></li>
+</ul></li>
+<li>SHAP의 해석
+<ul>
+<li>해당 변수가 추가되었을 때 예측 값 변화의 평균이므로, <strong>회귀계수와는 다름</strong>
+<ul>
+<li>변수만큼 증가하는 회귀계수 <strong>vs</strong> 변수의 단위만큼 증가하는 Shapley value</li>
+</ul></li>
+<li>Shapley value는 <strong>단위의 영향을 받는 값</strong>
+<ul>
+<li>파산확률 추론 분류모델 예시로 이해하기
+<ul>
+<li>변수 A의 Shapley value가 0.1 → 변수 A의 추가로 파산 확률이 10%p 증가</li>
+<li>변수 B의 Shapley value가 -0.2 → 변수 B의 추가로 파산 확률이 20%p 감소</li>
+</ul></li>
+<li>대출한도 추론 회귀모델 예시로 이해하기
+<ul>
+<li>변수 C의 Shapley value가 2백만 → 변수 C가 고객의 대출 한도를 2백만원만큼 감소시키는데 기여함</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="shap의-해석분해" class="level3">
+<h3 class="anchored" data-anchor-id="shap의-해석분해">SHAP의 해석분해</h3>
+<ul>
+<li>SHAP의 해석분해 (해석분해 : 모델의 예측 값을 구성 요소(특성)별로 분리하여 설명)
+<ul>
+<li>$예측값 = SHAP기준값 + _{i=1}^{n} (_i) $
+<ul>
+<li>예측값 = SHAP기준값 + SHAP값 전체의 합</li>
+<li>SHAP 기준값 : 모델이 아무런 정보가 없을 때의 예측값
+<ul>
+<li>회귀문제 : 모든 데이터의 평균 / 분류문제 : 전체 데이터 확률 평균의 로그 오즈(에 근사한 값)</li>
+</ul></li>
+<li>기준값에서 시작해, 각 변수의 Shapley value를 더해 예측값을 나타냄</li>
+</ul></li>
+<li>SHAP는 각각의 예측(Row)에 종속적 (100명을 예측한다면 변수별로 100개의 SHAP)</li>
+<li>절대값의 평균 = SHAP을 통해 구한 Feature importance
+<ul>
+<li>여러가지 방법으로 Global / Local하게 해석 가능</li>
+</ul></li>
+<li>요약
+<ul>
+<li>SHAP은 row단위의 값이며, 평균냈을 때 feature importance, 변수 유무에 따른 값의 변화를 나타냄</li>
+<li>예를 들어, MxN개의 관측값이 있는 표라면, MxN개의 Shapley value가 나옴
+<ul>
+<li>컬럼단위로 절대값의 평균을 내면, 해당 컬럼의 feature importance</li>
+<li>ROW단위로 더해 SHAP기준값까지 더해주면 예측값이 됨</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>추가사항
+<ul>
+<li>SHAP은 트리모델과 달리 feature importance의 일관성이 있음
+<ul>
+<li>트리모델은 feature importance가 변수의 추가/삭제에 따라 크게 바뀜
+<ul>
+<li>트리모델이 feature importance구하는 방법이, 변수가 분기에서 얼마나 사용되고, 많은 데이터를 나눌 수 있는지이기 때문</li>
+</ul></li>
+<li>SHAP은 변수의 예측력 차이이므로 크게 달라지지 않음(일관성있음)</li>
+</ul></li>
+<li>SHAP는 각 변수의 설명력을 나타냄</li>
+</ul></li>
+</ul>
+</section>
+<section id="shap의-global-해석-column" class="level3">
+<h3 class="anchored" data-anchor-id="shap의-global-해석-column">SHAP의 Global 해석 (Column)</h3>
+<ul>
+<li><code>SHAP Summary Plot</code>
+<ul>
+<li><strong>Top변수들(SHAP 절대값의 합 Top)</strong>의 SHAP value를 시각화한 것</li>
+<li>SHAP Summary Plot샘플을 통한 이해<br> <img src="index_files/figure-html/b3f42cb3-1-Note_week5_1.jpg" class="img-fluid" alt="Note_week5_1.jpg">
+<ul>
+<li>색이 푸를수록 값이 낮고 / 붉을수록 값이 높음</li>
+<li>EXT_SOURCE_3 변수 : 모델에 추가될 때, 값이 낮을수록 모델OUTPUT증가(X축)</li>
+<li>AMT_CREDIT 변수 : 모델에 추가될 때, 값이 높을수록 모델OUTPUT증가(X축)</li>
+<li>EXT_SOURCE_3 변수처럼 색이 일관될수록, 변수의 영향도 일관된 방향으로 작동</li>
+</ul></li>
+</ul></li>
+<li><code>SHAP Feature Importance Plot</code>
+<ul>
+<li><strong>SHAP 절대값의 평균</strong>을 시각화한 것(Feature Importance를 SHAP으로 나타낸 것)
+<ul>
+<li><code>SHAP Summary Plot</code>에서 일관되지 못한 변수였다면, 상위에 나타나지 않음</li>
+</ul></li>
+<li>절대적인 크기를 구하기 위해 <strong>방향성을 삭제했다는 한계</strong></li>
+<li>SHAP Feature Importance Plot샘플<br> <img src="index_files/figure-html/b3f42cb3-2-Note_week5_2.jpg" class="img-fluid" alt="Note_week5_2.jpg"></li>
+</ul></li>
+<li><code>SHAP Dependence Plot</code>
+<ul>
+<li><strong>Row별 SHAP value와 변수값</strong>을 시각화한 것</li>
+<li>SHAP Dependence Plot샘플을 통한 이해<br> <img src="index_files/figure-html/b3f42cb3-3-Note_week5_3.jpg" class="img-fluid" alt="Note_week5_3.jpg">
+<ul>
+<li>AMD_GOODS_PRICE변수는, 값이 증가할수록 예측(y)에 양의 영향을 끼침
+<ul>
+<li>5만~15만쯤에 위치한 ’임계값’부터 방향이 바뀜</li>
+<li>만약 이 변수에 대해 조치(행동)한다면 이 값(threshold, 임계값)을 참고해야 함</li>
+</ul></li>
+</ul></li>
+<li>SHAP Dependence Plot샘플을 통한 이해2<br> <img src="index_files/figure-html/b3f42cb3-4-Note_week5_4.jpg" class="img-fluid" alt="Note_week5_4.jpg">
+<ul>
+<li>AMT_CREDIT변수는, 값이 작을때는 음의 영향
+<ul>
+<li>5만~25만의 임계점부터 양의 방향으로 바뀜</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="shap의-local-해석-row" class="level3">
+<h3 class="anchored" data-anchor-id="shap의-local-해석-row">SHAP의 Local 해석 (Row)</h3>
+<ul>
+<li><code>SHAP Force Plot</code>
+<ul>
+<li>특정 데이터 하나(row)에서, 각 변수가 끼치는 영향을 1차원 평면에 정렬하여 시각화한 것</li>
+<li>`SHAP Force Plot샘플을 통한 이해<br> <img src="index_files/figure-html/b3f42cb3-5-Note_week5_5.jpg" class="img-fluid" alt="Note_week5_5.jpg">
+<ul>
+<li>Base value를 기준으로 파란색은 부정적 / 빨간색은 긍정적 영향을 끼친 변수</li>
+<li>전체적으로 파란색이 더 많아, Base value에 비해 예측(y)값이 줄어든 것 (로그오즈 기준)</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="feature-selection-with-shap" class="level3">
+<h3 class="anchored" data-anchor-id="feature-selection-with-shap">Feature Selection with SHAP</h3>
+<ul>
+<li>Feature Selection with SHAP
+<ul>
+<li>각 feature의 절대값의 평균을 기반으로 계산
+<ul>
+<li>값이 클수록 중요한 기여</li>
+</ul></li>
+<li>분할 횟수나 분산 감소를 기준으로 계산되는 트리모델의 Feature importance과 다른 점
+<ul>
+<li>SHAP Feature importance는 실제 y와 연관성이 명확히 보이고 설명하기 쉬움
+<ul>
+<li>SHAP값의 합 = 모델의 예측값 이기 때문.</li>
+</ul></li>
+</ul></li>
+<li><strong>뚜렷한 방향성을 갖거나, 변수유무에 따른 변동폭이 클수록 Feature importance 증가</strong></li>
+</ul></li>
+</ul>
+</section>
+<section id="참고사항" class="level3">
+<h3 class="anchored" data-anchor-id="참고사항">참고사항</h3>
+<ul>
+<li>SHAP가 가장 많이 사용되고 직관적이며, 다른 XAI로는 LIME 등도 있음</li>
+<li>SHAP은 변수의 관계(a변수 증가시 어느정도 y증가)를 직관적으로 설명 가능
+<ul>
+<li>분할 횟수나 분산 감소로 계산되는 트리모델의 Feature importance로는 단위통일 등 되어있지 않고 해석이 어려움</li>
+</ul></li>
+<li>분류문제의 SHAP는 로그오즈 형태로 나오지만, 회귀문제의 SHAP는 숫자로 나옴</li>
+<li>SHAP Dependence Plot을 통해, 현재까지 몰랐던 모델의 input/output 사이의 작용을 알게됨
+<ul>
+<li>모델이 어떻게 반영해왔는지에 대한 경향을 알 수 있음</li>
+<li>XAI시각화를 통해, 모델링으로 해결할만한 과제가 아님을 인지하게되어 추가로 DA적인 분석 등 조치가능</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="week4-보완-xgboost의-rf-w-gpu" class="level2">
+<h2 class="anchored" data-anchor-id="week4-보완-xgboost의-rf-w-gpu">Week4 보완 : XGBoost의 RF w/ GPU</h2>
+<ul>
+<li>XGBoost와 SKlearn은 목적함수에 차이가 있어, 독립적 트리 기반의 모델인 RF에서 성능차이가 있을 수 있음
+<ul>
+<li>목적함수의 차이
+<ul>
+<li>XGBoost : (목적합수의 정확한 값 대신) 2차 근사 (1차gradient미분, 2차hessian미분). 근사는 계산량을 줄이는데 효과적</li>
+<li>SKlearn : 목적함수의 정확한 실제값 (정확한 손실함수 값)</li>
+</ul></li>
+<li>SKlearn은 분할기준을 정확히 최적화하지만, XGBoost는 근사 최적화여서 개별 트리 성능이 저하될 수 있음</li>
+</ul></li>
+<li>XGBoost는 중복샘플링을 수행하지 않음(subsample시 replacement를 수행하지 않음, 각 트리가 고유한 서브셋을 사용함)
+<ul>
+<li>중복샘플링은 각 트리가 원본데이터와 다른 구조/분포를 갖게 해 각 트리의 독립성, 다양성이 높아져 일반화 성능이 높아짐(Bagging에 적합)</li>
+<li>Boosting은 순차적 학습이므로, 중복허용시 특정 샘플이 과도하게 중복되거나 포함되지 않아 안정성이 낮아짐</li>
+<li><strong>위의 이유로 XGBoost와 SKlearn은 다르게 학습되며, XGBoost의 RF는 XGB알고리즘에 따라 성능상의 Penalty가 있음</strong></li>
+</ul></li>
+</ul>
+<section id="더미데이터를-활용한-비교-실습xgboost-vs-sklearn" class="level3">
+<h3 class="anchored" data-anchor-id="더미데이터를-활용한-비교-실습xgboost-vs-sklearn">더미데이터를 활용한 비교 실습(XGBoost vs Sklearn)</h3>
+<div id="d61329d2" class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> make_classification</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xgboost <span class="im">as</span> xgb</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Dummy 분류데이터 생성</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">## Generate a large synthetic dataset</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>X, y <span class="op">=</span> make_classification(n_samples<span class="op">=</span><span class="dv">100000</span>, n_features<span class="op">=</span><span class="dv">100</span>, n_informative<span class="op">=</span><span class="dv">25</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                           n_redundant<span class="op">=</span><span class="dv">10</span>, n_classes<span class="op">=</span><span class="dv">2</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">## Split into train and test sets</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="9091c637" class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(X.shape)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(y_test).value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(100000, 100)</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>0
+0    10039
+1     9961
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<div id="05e6f263" class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 공통 하이퍼파라미터 설정 (설정 후 Sklearn과 XGBoost에서 사용)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># "n_estimators": 100,      # 트리 개수</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># "max_depth": 10,          # 최대 깊이</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"random_state"</span>: <span class="dv">42</span>,         <span class="co"># 재현성을 위한 random state</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"n_jobs"</span>: <span class="op">-</span><span class="dv">1</span>                <span class="co"># 사용하는 Thread수, -1은 최대한 사용</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="ac525c63" class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Train sklearn Random Forest</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>sklearn_rf <span class="op">=</span> RandomForestClassifier(<span class="op">**</span>params)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">## fit</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>sklearn_fit_start <span class="op">=</span> time.time()</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>sklearn_rf.fit(X_train, y_train)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>sklearn_fit_time <span class="op">=</span> time.time() <span class="op">-</span> sklearn_fit_start</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">## predict</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>sklearn_predict_start <span class="op">=</span> time.time()</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>sklearn_rf_preds <span class="op">=</span> sklearn_rf.predict(X_test)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>sklearn_predict_time <span class="op">=</span> time.time() <span class="op">-</span> sklearn_predict_start</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>sklearn_rf_accuracy <span class="op">=</span> accuracy_score(y_test, sklearn_rf_preds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="d68503e1" class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Train XGBoost Random Forest</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>xgb_rf <span class="op">=</span> xgb.XGBRFClassifier(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># n_estimators=params["n_estimators"],</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># max_depth=params["max_depth"],</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span>params[<span class="st">"random_state"</span>],</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    verbosity<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    n_jobs<span class="op">=</span>params[<span class="st">"n_jobs"</span>],</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    tree_method<span class="op">=</span><span class="st">'gpu_hist'</span>,      <span class="co"># GPU 사용</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    subsample<span class="op">=</span><span class="fl">1.0</span>,               <span class="co"># 전체 샘플 사용</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    colsample_bynode<span class="op">=</span><span class="fl">1.0</span>         <span class="co"># 전체 피처 사용</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">## fit</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>xgb_fit_start <span class="op">=</span> time.time()</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>xgb_rf.fit(X_train, y_train)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>xgb_fit_time <span class="op">=</span> time.time() <span class="op">-</span> xgb_fit_start</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co">## predict</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>xgb_predict_start <span class="op">=</span> time.time()</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>xgb_rf_preds <span class="op">=</span> xgb_rf.predict(X_test)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>xgb_predict_time <span class="op">=</span> time.time() <span class="op">-</span> xgb_predict_start</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>xgb_rf_accuracy <span class="op">=</span> accuracy_score(y_test, xgb_rf_preds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="f22e8157" class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize results</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Sklearn Random Forest Accuracy: </span><span class="sc">{</span>sklearn_rf_accuracy<span class="sc">:.4f}</span><span class="ss">'</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Sklearn Random Forest Fit Time: </span><span class="sc">{</span>sklearn_fit_time<span class="sc">:.4f}</span><span class="ss"> seconds'</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Sklearn Random Forest Predict Time: </span><span class="sc">{</span>sklearn_predict_time<span class="sc">:.4f}</span><span class="ss"> seconds'</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'XGBoost Random Forest Accuracy: </span><span class="sc">{</span>xgb_rf_accuracy<span class="sc">:.4f}</span><span class="ss">'</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'XGBoost Random Forest Fit Time: </span><span class="sc">{</span>xgb_fit_time<span class="sc">:.4f}</span><span class="ss"> seconds'</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'XGBoost Random Forest Predict Time: </span><span class="sc">{</span>xgb_predict_time<span class="sc">:.4f}</span><span class="ss"> seconds'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Sklearn Random Forest Accuracy: 0.9443
+Sklearn Random Forest Fit Time: 16.6355 seconds
+Sklearn Random Forest Predict Time: 0.0863 seconds
+
+XGBoost Random Forest Accuracy: 0.7635
+XGBoost Random Forest Fit Time: 1.3666 seconds
+XGBoost Random Forest Predict Time: 0.0480 seconds</code></pre>
+</div>
+</div>
+</section>
+<section id="실습데이터를-활용한-비교-실습xgboost-vs-sklearn" class="level3">
+<h3 class="anchored" data-anchor-id="실습데이터를-활용한-비교-실습xgboost-vs-sklearn">실습데이터를 활용한 비교 실습(XGBoost vs Sklearn)</h3>
+<div id="4d8e1ec5" class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># data split</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">## 전처리해둔 데이터 로딩</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.read_csv(<span class="st">"data_preprocessed.csv"</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">## 데이터셋 나누기</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>train , test <span class="op">=</span> train_test_split(data, test_size <span class="op">=</span> <span class="fl">0.1</span>, random_state <span class="op">=</span> <span class="dv">42</span>, stratify <span class="op">=</span> data[<span class="st">'TARGET'</span>])</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> train.drop([<span class="st">'TARGET'</span>], axis <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>y_train <span class="op">=</span> train[<span class="st">'TARGET'</span>]</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> test.drop([<span class="st">'TARGET'</span>], axis <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>y_test <span class="op">=</span> test[<span class="st">'TARGET'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="b53db9d9" class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Train sklearn Random Forest</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>sklearn_rf <span class="op">=</span> RandomForestClassifier(<span class="op">**</span>params)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">## fit</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>sklearn_fit_start <span class="op">=</span> time.time()</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>sklearn_rf.fit(X_train, y_train)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>sklearn_fit_time <span class="op">=</span> time.time() <span class="op">-</span> sklearn_fit_start</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co">## predict</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>sklearn_predict_start <span class="op">=</span> time.time()</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>sklearn_rf_preds <span class="op">=</span> sklearn_rf.predict(X_test)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>sklearn_predict_time <span class="op">=</span> time.time() <span class="op">-</span> sklearn_predict_start</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>sklearn_rf_accuracy <span class="op">=</span> accuracy_score(y_test, sklearn_rf_preds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="8af39683" class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Train XGBoost Random Forest</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>xgb_rf <span class="op">=</span> xgb.XGBRFClassifier(</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># n_estimators=params["n_estimators"],</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># max_depth=params["max_depth"],</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span>params[<span class="st">"random_state"</span>],</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    verbosity<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    n_jobs<span class="op">=</span>params[<span class="st">"n_jobs"</span>],</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    tree_method<span class="op">=</span><span class="st">'gpu_hist'</span>,      <span class="co"># GPU 사용</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    subsample<span class="op">=</span><span class="fl">1.0</span>,               <span class="co"># 전체 샘플 사용</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    colsample_bynode<span class="op">=</span><span class="fl">1.0</span>         <span class="co"># 전체 피처 사용</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co">## fit</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>xgb_fit_start <span class="op">=</span> time.time()</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>xgb_rf.fit(X_train, y_train)</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>xgb_fit_time <span class="op">=</span> time.time() <span class="op">-</span> xgb_fit_start</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="co">## predict</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>xgb_predict_start <span class="op">=</span> time.time()</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>xgb_rf_preds <span class="op">=</span> xgb_rf.predict(X_test)</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>xgb_predict_time <span class="op">=</span> time.time() <span class="op">-</span> xgb_predict_start</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>xgb_rf_accuracy <span class="op">=</span> accuracy_score(y_test, xgb_rf_preds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="d431fe47" class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize results</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Sklearn REAL DATA Random Forest Accuracy: </span><span class="sc">{</span>sklearn_rf_accuracy<span class="sc">:.4f}</span><span class="ss">'</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Sklearn REAL DATA Random Forest Fit Time: </span><span class="sc">{</span>sklearn_fit_time<span class="sc">:.4f}</span><span class="ss"> seconds'</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Sklearn REAL DATA Random Forest Predict Time: </span><span class="sc">{</span>sklearn_predict_time<span class="sc">:.4f}</span><span class="ss"> seconds'</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'XGBoost REAL DATA Random Forest Accuracy: </span><span class="sc">{</span>xgb_rf_accuracy<span class="sc">:.4f}</span><span class="ss">'</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'XGBoost REAL DATA Random Forest Fit Time: </span><span class="sc">{</span>xgb_fit_time<span class="sc">:.4f}</span><span class="ss"> seconds'</span>)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'XGBoost REAL DATA Random Forest Predict Time: </span><span class="sc">{</span>xgb_predict_time<span class="sc">:.4f}</span><span class="ss"> seconds'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Sklearn REAL DATA Random Forest Accuracy: 0.9193
+Sklearn REAL DATA Random Forest Fit Time: 24.7601 seconds
+Sklearn REAL DATA Random Forest Predict Time: 0.2899 seconds
+
+XGBoost REAL DATA Random Forest Accuracy: 0.9176
+XGBoost REAL DATA Random Forest Fit Time: 2.6202 seconds
+XGBoost REAL DATA Random Forest Predict Time: 0.0680 seconds</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="metrics" class="level2">
+<h2 class="anchored" data-anchor-id="metrics">Metrics</h2>
+<section id="분류-metrics" class="level3">
+<h3 class="anchored" data-anchor-id="분류-metrics">분류 Metrics</h3>
+<div id="4db65884" class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score, f1_score</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate example data</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)  <span class="co"># For reproducibility</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>n_samples <span class="op">=</span> <span class="dv">1000</span>  <span class="co"># Number of samples</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co"># True labels and predictions</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>y_true <span class="op">=</span> np.random.choice([<span class="dv">0</span>, <span class="dv">1</span>], size<span class="op">=</span>n_samples, p<span class="op">=</span>[<span class="fl">0.5</span>, <span class="fl">0.5</span>])  <span class="co"># Balanced true labels</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> np.random.choice([<span class="dv">0</span>, <span class="dv">1</span>], size<span class="op">=</span>n_samples, p<span class="op">=</span>[<span class="fl">0.6</span>, <span class="fl">0.4</span>])  <span class="co"># Predictions with different distribution</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate metrics</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>accuracy <span class="op">=</span> accuracy_score(y_true, y_pred)</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>f1 <span class="op">=</span> f1_score(y_true, y_pred)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Display results</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Accuracy: </span><span class="sc">{</span>accuracy<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"F1 Score: </span><span class="sc">{</span>f1<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Accuracy: 0.5050
+F1 Score: 0.4660</code></pre>
+</div>
+</div>
+<div id="a5bfd197" class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> roc_auc_score, log_loss</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate example data</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>n_samples <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co"># True labels and predicted probabilities</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>y_true <span class="op">=</span> np.random.choice([<span class="dv">0</span>, <span class="dv">1</span>], size<span class="op">=</span>n_samples, p<span class="op">=</span>[<span class="fl">0.5</span>, <span class="fl">0.5</span>])  <span class="co"># Balanced true labels</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>y_pred_proba <span class="op">=</span> np.random.uniform(<span class="dv">0</span>, <span class="dv">1</span>, size<span class="op">=</span>n_samples)  <span class="co"># Predicted probabilities</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate AUC-ROC</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>auc_roc <span class="op">=</span> roc_auc_score(y_true, y_pred_proba)</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate Log Loss</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>log_loss_value <span class="op">=</span> log_loss(y_true, y_pred_proba)</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Display results</span></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"AUC-ROC: </span><span class="sc">{</span>auc_roc<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Log Loss: </span><span class="sc">{</span>log_loss_value<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>AUC-ROC: 0.5060
+Log Loss: 0.9939</code></pre>
+</div>
+</div>
+<div id="527bab03" class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>y_pred_proba[:<span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>array([0.18513293, 0.54190095, 0.87294584, 0.73222489, 0.80656115,
+       0.65878337, 0.69227656, 0.84919565, 0.24966801, 0.48942496])</code></pre>
+</div>
+</div>
+<div id="1269ae7e" class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> roc_curve</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate ROC curve</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>fpr, tpr, thresholds <span class="op">=</span> roc_curve(y_true, y_pred_proba)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>auc_roc <span class="op">=</span> roc_auc_score(y_true, y_pred_proba)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot ROC curve</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>plt.plot(fpr, tpr, label<span class="op">=</span><span class="ss">f"AUC-ROC = </span><span class="sc">{</span>auc_roc<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>plt.plot([<span class="dv">0</span>, <span class="dv">1</span>], [<span class="dv">0</span>, <span class="dv">1</span>], <span class="st">'k--'</span>, label<span class="op">=</span><span class="st">"Random Guess"</span>)  <span class="co"># Dashed diagonal</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"False Positive Rate"</span>)</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"True Positive Rate"</span>)</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"ROC Curve"</span>)</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>plt.legend(loc<span class="op">=</span><span class="st">"lower right"</span>)</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-15-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="다중분류-metrics-multi-label" class="level3">
+<h3 class="anchored" data-anchor-id="다중분류-metrics-multi-label">다중분류 Metrics (Multi Label)</h3>
+<div id="50ca263a" class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score, precision_score, recall_score, f1_score</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Example data: true labels and predicted labels</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>n_samples <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>n_classes <span class="op">=</span> <span class="dv">4</span>  <span class="co"># Number of classes</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate true labels and predictions</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>y_true <span class="op">=</span> np.random.randint(<span class="dv">0</span>, n_classes, size<span class="op">=</span>n_samples)  <span class="co"># True labels</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> np.random.randint(<span class="dv">0</span>, n_classes, size<span class="op">=</span>n_samples)  <span class="co"># Predicted labels</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="44e968c2" class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Overall Accuracy</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>overall_accuracy <span class="op">=</span> accuracy_score(y_true, y_pred)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Macro Precision, Recall, F1-Score</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>macro_precision <span class="op">=</span> precision_score(y_true, y_pred, average<span class="op">=</span><span class="st">'macro'</span>)</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>macro_recall <span class="op">=</span> recall_score(y_true, y_pred, average<span class="op">=</span><span class="st">'macro'</span>)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>macro_f1 <span class="op">=</span> f1_score(y_true, y_pred, average<span class="op">=</span><span class="st">'macro'</span>)</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Micro Precision, Recall, F1-Score</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>micro_precision <span class="op">=</span> precision_score(y_true, y_pred, average<span class="op">=</span><span class="st">'micro'</span>)</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>micro_recall <span class="op">=</span> recall_score(y_true, y_pred, average<span class="op">=</span><span class="st">'micro'</span>)</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>micro_f1 <span class="op">=</span> f1_score(y_true, y_pred, average<span class="op">=</span><span class="st">'micro'</span>)</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Display results</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Overall Accuracy: </span><span class="sc">{</span>overall_accuracy<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Macro Precision: </span><span class="sc">{</span>macro_precision<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Macro Recall: </span><span class="sc">{</span>macro_recall<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Macro F1-Score: </span><span class="sc">{</span>macro_f1<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Micro Precision: </span><span class="sc">{</span>micro_precision<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Micro Recall: </span><span class="sc">{</span>micro_recall<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Micro F1-Score: </span><span class="sc">{</span>micro_f1<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Overall Accuracy: 0.2400
+Macro Precision: 0.2445
+Macro Recall: 0.2402
+Macro F1-Score: 0.2405
+Micro Precision: 0.2400
+Micro Recall: 0.2400
+Micro F1-Score: 0.2400</code></pre>
+</div>
+</div>
+<div id="b72c4ee4" class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> confusion_matrix, ConfusionMatrixDisplay</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the confusion matrix</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>cm <span class="op">=</span> confusion_matrix(y_true, y_pred)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the confusion matrix</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>disp <span class="op">=</span> ConfusionMatrixDisplay(confusion_matrix<span class="op">=</span>cm, display_labels<span class="op">=</span>[<span class="ss">f"Class </span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n_classes)])</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>disp.plot(cmap<span class="op">=</span>plt.cm.Blues)</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Confusion Matrix"</span>)</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-18-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="회귀-metrics" class="level3">
+<h3 class="anchored" data-anchor-id="회귀-metrics">회귀 Metrics</h3>
+<div id="dc41941e" class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error, mean_absolute_error, root_mean_squared_error, mean_absolute_percentage_error</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate example data</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>n_samples <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="co"># True values (y) and predicted values (y_hat)</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>y_true <span class="op">=</span> np.random.uniform(<span class="dv">10</span>, <span class="dv">10000</span>, size<span class="op">=</span>n_samples)  <span class="co"># True values</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> y_true <span class="op">+</span> np.random.normal(<span class="dv">0</span>, <span class="dv">10</span>, size<span class="op">=</span>n_samples)  <span class="co"># Predicted values with noise</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate MSE and RMSE</span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>mse <span class="op">=</span> mean_squared_error(y_true, y_pred)</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>rmse <span class="op">=</span> root_mean_squared_error(y_true, y_pred)</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a><span class="co"># rmse = np.sqrt(mse)</span></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate MAE and MAPE</span></span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>mae <span class="op">=</span> mean_absolute_error(y_true, y_pred)</span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>mape <span class="op">=</span> mean_absolute_percentage_error(y_true, y_pred)</span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a><span class="co"># mape = np.mean(np.abs((y_true - y_pred) / y_true)) * 100</span></span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Display results</span></span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"MSE: </span><span class="sc">{</span>mse<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"RMSE: </span><span class="sc">{</span>rmse<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"MAE: </span><span class="sc">{</span>mae<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"MAPE: </span><span class="sc">{</span>mape<span class="sc">:.4f}</span><span class="ss">%"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>MSE: 98.6791
+RMSE: 9.9337
+MAE: 7.8999
+MAPE: 0.0046%</code></pre>
+</div>
+</div>
+<ul>
+<li>MAPE값이 튀는 경우에 대한 샘플Case (y가 0에 가까울 때)
+<ul>
+<li>이런 문제가 있을 때는 사용할 수 없고, 설명력을 갖지 못함을 유의</li>
+<li>예를 들어, 주기적으로 0이 발생하는 택배물동량의 경우도 사용할 수 없음</li>
+</ul></li>
+</ul>
+<div id="6eabdc3a" class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example of small true value causing high MAPE</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>y_true_example <span class="op">=</span> np.array([<span class="fl">0.01</span>, <span class="dv">50</span>, <span class="dv">100</span>])  <span class="co"># Small true value included</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>y_pred_example <span class="op">=</span> np.array([<span class="fl">0.05</span>, <span class="dv">55</span>, <span class="dv">90</span>])  <span class="co"># Predicted values</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate MAPE</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>mape_example <span class="op">=</span> np.mean(np.<span class="bu">abs</span>((y_true_example <span class="op">-</span> y_pred_example) <span class="op">/</span> y_true_example)) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"True values: </span><span class="sc">{</span>y_true_example<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Predicted values: </span><span class="sc">{</span>y_pred_example<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"MAPE: </span><span class="sc">{</span>mape_example<span class="sc">:.4f}</span><span class="ss">%"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>True values: [1.e-02 5.e+01 1.e+02]
+Predicted values: [5.0e-02 5.5e+01 9.0e+01]
+MAPE: 140.0000%</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="xai-with-shap" class="level2">
+<h2 class="anchored" data-anchor-id="xai-with-shap">XAI With SHAP</h2>
+<ul>
+<li>SHAP 설치</li>
+</ul>
+<div id="b0677651" class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install SHAP</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="트리기반-모델로-shap-실습하기" class="level3">
+<h3 class="anchored" data-anchor-id="트리기반-모델로-shap-실습하기">트리기반 모델로 SHAP 실습하기</h3>
+<ul>
+<li>실습을 위한 모델 설정</li>
+</ul>
+<div id="189e558b" class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> shap</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> lightgbm <span class="im">as</span> lgb</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 로딩 및 나누기</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.read_csv(<span class="st">'data_preprocessed.csv'</span>)</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> data.drop(columns<span class="op">=</span>[<span class="st">"TARGET"</span>])</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> data[<span class="st">"TARGET"</span>]</span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Train a LightGBM classifier</span></span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>lgb_model <span class="op">=</span> lgb.LGBMClassifier(</span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>    objective<span class="op">=</span><span class="st">"binary"</span>,</span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">42</span>,</span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>lgb_model.fit(</span>
+<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a>    X_train,</span>
+<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a>    y_train,</span>
+<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a>    eval_set<span class="op">=</span>[(X_test, y_test)],</span>
+<span id="cb31-25"><a href="#cb31-25" aria-hidden="true" tabindex="-1"></a>    eval_metric<span class="op">=</span><span class="st">"logloss"</span>,</span>
+<span id="cb31-26"><a href="#cb31-26" aria-hidden="true" tabindex="-1"></a>    callbacks<span class="op">=</span>[lgb.early_stopping(stopping_rounds<span class="op">=</span><span class="dv">10</span>)],</span>
+<span id="cb31-27"><a href="#cb31-27" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb31-28"><a href="#cb31-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-29"><a href="#cb31-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the model</span></span>
+<span id="cb31-30"><a href="#cb31-30" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> lgb_model.predict(X_test)</span>
+<span id="cb31-31"><a href="#cb31-31" aria-hidden="true" tabindex="-1"></a>accuracy <span class="op">=</span> accuracy_score(y_test, y_pred)</span>
+<span id="cb31-32"><a href="#cb31-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Accuracy: </span><span class="sc">{</span>accuracy<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[LightGBM] [Warning] Found whitespace in feature_names, replace with underlines
+[LightGBM] [Info] Number of positive: 19876, number of negative: 226132
+[LightGBM] [Info] Auto-choosing row-wise multi-threading, the overhead of testing was 0.018294 seconds.
+You can set `force_row_wise=true` to remove the overhead.
+And if memory is not enough, you can set `force_col_wise=true`.
+[LightGBM] [Info] Total Bins 11686
+[LightGBM] [Info] Number of data points in the train set: 246008, number of used features: 125
+[LightGBM] [Warning] Found whitespace in feature_names, replace with underlines
+[LightGBM] [Info] [binary:BoostFromScore]: pavg=0.080794 -&gt; initscore=-2.431606
+[LightGBM] [Info] Start training from score -2.431606
+Training until validation scores don't improve for 10 rounds
+Did not meet early stopping. Best iteration is:
+[100]   valid_0's binary_logloss: 0.24629
+Accuracy: 0.9198</code></pre>
+</div>
+</div>
+<ul>
+<li>TreeExplainer 설정 및 SHAP value 확인
+<ul>
+<li>train에 대해서도, test에 대해서도 SHAP value확인가능
+<ul>
+<li>다만, 기본적으로 test데이터는 unseen이어야 하므로 train에 대해서 본다</li>
+</ul></li>
+</ul></li>
+</ul>
+<div id="8e1d49ce" class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate SHAP values</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>explainer <span class="op">=</span> shap.TreeExplainer(lgb_model)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 트레인 셋에서의 SHAP value</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>shap_values_train <span class="op">=</span> explainer.shap_values(X_train)</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 테스트 셋에서의 SHAP value</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>shap_values_test <span class="op">=</span> explainer.shap_values(X_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>c:\Users\kibok\AppData\Local\Programs\Python\Python312\Lib\site-packages\shap\explainers\_tree.py:448: UserWarning: LightGBM binary classifier with TreeExplainer shap values output has changed to a list of ndarray
+  warnings.warn('LightGBM binary classifier with TreeExplainer shap values output has changed to a list of ndarray')
+c:\Users\kibok\AppData\Local\Programs\Python\Python312\Lib\site-packages\shap\explainers\_tree.py:448: UserWarning: LightGBM binary classifier with TreeExplainer shap values output has changed to a list of ndarray
+  warnings.warn('LightGBM binary classifier with TreeExplainer shap values output has changed to a list of ndarray')</code></pre>
+</div>
+</div>
+<ul>
+<li>SHAP value 확인하기</li>
+</ul>
+<div id="946fdc18" class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>df_shap_train <span class="op">=</span> pd.DataFrame(shap_values_train, columns <span class="op">=</span> X_train.columns)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>df_shap_test  <span class="op">=</span> pd.DataFrame(shap_values_test, columns <span class="op">=</span> X_test.columns)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"""* 값의 shape 확인하기</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="ss">  X_train           : </span><span class="sc">{</span>X_train<span class="sc">.</span>shape<span class="sc">}</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="ss">  shap_values_train : </span><span class="sc">{</span>shap_values_train<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"""</span>)</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>df_shap_train.head(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>* 값의 shape 확인하기
+  X_train           : (246008, 131)
+  shap_values_train : (246008, 131)</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">SK_ID_CURR</th>
+<th data-quarto-table-cell-role="th">CNT_CHILDREN</th>
+<th data-quarto-table-cell-role="th">AMT_INCOME_TOTAL</th>
+<th data-quarto-table-cell-role="th">AMT_CREDIT</th>
+<th data-quarto-table-cell-role="th">AMT_ANNUITY</th>
+<th data-quarto-table-cell-role="th">AMT_GOODS_PRICE</th>
+<th data-quarto-table-cell-role="th">REGION_POPULATION_RELATIVE</th>
+<th data-quarto-table-cell-role="th">DAYS_BIRTH</th>
+<th data-quarto-table-cell-role="th">DAYS_EMPLOYED</th>
+<th data-quarto-table-cell-role="th">DAYS_REGISTRATION</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">FLAG_OWN_CAR_Y</th>
+<th data-quarto-table-cell-role="th">FLAG_OWN_REALTY_N</th>
+<th data-quarto-table-cell-role="th">FLAG_OWN_REALTY_Y</th>
+<th data-quarto-table-cell-role="th">HOUSETYPE_MODE_block of flats</th>
+<th data-quarto-table-cell-role="th">HOUSETYPE_MODE_specific housing</th>
+<th data-quarto-table-cell-role="th">HOUSETYPE_MODE_terraced house</th>
+<th data-quarto-table-cell-role="th">HOUSETYPE_MODE_nan</th>
+<th data-quarto-table-cell-role="th">EMERGENCYSTATE_MODE_No</th>
+<th data-quarto-table-cell-role="th">EMERGENCYSTATE_MODE_Yes</th>
+<th data-quarto-table-cell-role="th">EMERGENCYSTATE_MODE_nan</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>0.001434</td>
+<td>-0.000103</td>
+<td>-0.002647</td>
+<td>0.040973</td>
+<td>-0.134860</td>
+<td>-0.037693</td>
+<td>-0.008186</td>
+<td>-0.036237</td>
+<td>0.046080</td>
+<td>-0.005266</td>
+<td>...</td>
+<td>0.0</td>
+<td>-0.001680</td>
+<td>0.000372</td>
+<td>0.007599</td>
+<td>-0.000594</td>
+<td>-0.000023</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.000039</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>0.035705</td>
+<td>0.000411</td>
+<td>-0.002086</td>
+<td>-0.239073</td>
+<td>-0.055616</td>
+<td>0.194492</td>
+<td>-0.003785</td>
+<td>0.052061</td>
+<td>0.060291</td>
+<td>0.004833</td>
+<td>...</td>
+<td>0.0</td>
+<td>0.000848</td>
+<td>-0.000106</td>
+<td>-0.000023</td>
+<td>-0.000032</td>
+<td>-0.000005</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>-0.000012</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>0.003548</td>
+<td>-0.000015</td>
+<td>-0.001610</td>
+<td>0.109762</td>
+<td>-0.025149</td>
+<td>-0.002882</td>
+<td>0.113585</td>
+<td>0.014116</td>
+<td>-0.008174</td>
+<td>0.003287</td>
+<td>...</td>
+<td>0.0</td>
+<td>0.000834</td>
+<td>-0.000061</td>
+<td>0.001993</td>
+<td>-0.000078</td>
+<td>-0.000005</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.000370</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>0.000996</td>
+<td>-0.000067</td>
+<td>0.003211</td>
+<td>0.106862</td>
+<td>0.091010</td>
+<td>-0.258358</td>
+<td>0.018849</td>
+<td>-0.011067</td>
+<td>-0.080588</td>
+<td>-0.009850</td>
+<td>...</td>
+<td>0.0</td>
+<td>0.000839</td>
+<td>-0.000180</td>
+<td>0.001513</td>
+<td>-0.000029</td>
+<td>0.003533</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>-0.000012</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>0.001159</td>
+<td>0.000270</td>
+<td>-0.002707</td>
+<td>0.005237</td>
+<td>-0.021219</td>
+<td>-0.062577</td>
+<td>0.005898</td>
+<td>0.041537</td>
+<td>-0.065084</td>
+<td>-0.003805</td>
+<td>...</td>
+<td>0.0</td>
+<td>0.000812</td>
+<td>-0.000052</td>
+<td>0.001695</td>
+<td>-0.000027</td>
+<td>-0.000005</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.000019</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 131 columns</p>
+</div>
+</div>
+</div>
+<ul>
+<li>Base value(기준값), 특정 row의 SHAP value구하기</li>
+</ul>
+<div id="48d7986b" class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get base value</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>base_value <span class="op">=</span> explainer.expected_value  <span class="co"># For the positive class (1)</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Base value (expected value): </span><span class="sc">{</span>base_value<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Select a specific row and feature</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>row_index <span class="op">=</span> <span class="dv">10</span>  <span class="co"># Index of the row</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>feature_name <span class="op">=</span> <span class="st">"EXT_SOURCE_3"</span>  <span class="co"># Name of the specific feature</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="co">## Get SHAP value for the selected feature and row</span></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>specific_shap_value <span class="op">=</span> shap_values_train[row_index, X_train.columns.get_loc(feature_name)]</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a><span class="co">## Print results</span></span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"SHAP value for row </span><span class="sc">{</span>row_index<span class="sc">}</span><span class="ss">, feature '</span><span class="sc">{</span>feature_name<span class="sc">}</span><span class="ss">': </span><span class="sc">{</span>specific_shap_value<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Base value (expected value): -2.7856
+SHAP value for row 10, feature 'EXT_SOURCE_3': 1.5446</code></pre>
+</div>
+</div>
+<ul>
+<li>SHAP value와 Base value의 합이 예측값과 근사함을 보여주는 예제</li>
+</ul>
+<div id="4444fd7e" class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> shap</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> lightgbm <span class="im">as</span> lgb</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 사용자 데이터 예제 (사용자 데이터를 여기에서 불러옵니다)</span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 예: 데이터프레임 `data`가 존재한다고 가정합니다</span></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="co"># data = pd.read_csv("your_data.csv")</span></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a><span class="co"># X = data.drop("target", axis=1)</span></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a><span class="co"># y = data["target"]</span></span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 예제 데이터 생성 (사용자 데이터를 여기에 적용하세요)</span></span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"feature1"</span>: np.random.rand(<span class="dv">100</span>),</span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"feature2"</span>: np.random.rand(<span class="dv">100</span>),</span>
+<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"feature3"</span>: np.random.rand(<span class="dv">100</span>)</span>
+<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> X[<span class="st">"feature1"</span>] <span class="op">+</span> <span class="dv">2</span> <span class="op">*</span> X[<span class="st">"feature2"</span>] <span class="op">+</span> X[<span class="st">"feature3"</span>] <span class="op">+</span> np.random.randn(<span class="dv">100</span>) <span class="op">*</span> <span class="fl">0.1</span></span>
+<span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-23"><a href="#cb39-23" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 분리</span></span>
+<span id="cb39-24"><a href="#cb39-24" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb39-25"><a href="#cb39-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-26"><a href="#cb39-26" aria-hidden="true" tabindex="-1"></a><span class="co"># 모델 학습</span></span>
+<span id="cb39-27"><a href="#cb39-27" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> lgb.LGBMRegressor(silent <span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb39-28"><a href="#cb39-28" aria-hidden="true" tabindex="-1"></a>model.fit(X_train, y_train)</span>
+<span id="cb39-29"><a href="#cb39-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-30"><a href="#cb39-30" aria-hidden="true" tabindex="-1"></a><span class="co"># SHAP value의 합과 base value를 더한 값 계산</span></span>
+<span id="cb39-31"><a href="#cb39-31" aria-hidden="true" tabindex="-1"></a>explainer <span class="op">=</span> shap.TreeExplainer(model)</span>
+<span id="cb39-32"><a href="#cb39-32" aria-hidden="true" tabindex="-1"></a>shap_values <span class="op">=</span> explainer.shap_values(X_test)</span>
+<span id="cb39-33"><a href="#cb39-33" aria-hidden="true" tabindex="-1"></a>shap_sum <span class="op">=</span> np.<span class="bu">sum</span>(shap_values, axis<span class="op">=</span><span class="dv">1</span>) <span class="op">+</span> explainer.expected_value</span>
+<span id="cb39-34"><a href="#cb39-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-35"><a href="#cb39-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-36"><a href="#cb39-36" aria-hidden="true" tabindex="-1"></a><span class="co"># 예측값</span></span>
+<span id="cb39-37"><a href="#cb39-37" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> model.predict(X_test)</span>
+<span id="cb39-38"><a href="#cb39-38" aria-hidden="true" tabindex="-1"></a><span class="co"># 각 변수별 SHAP 값, 예측값, SHAP 합, Expected Value를 포함한 데이터프레임 생성</span></span>
+<span id="cb39-39"><a href="#cb39-39" aria-hidden="true" tabindex="-1"></a>df_shap <span class="op">=</span> pd.DataFrame(shap_values, columns<span class="op">=</span>X_test.columns)</span>
+<span id="cb39-40"><a href="#cb39-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-41"><a href="#cb39-41" aria-hidden="true" tabindex="-1"></a>df_shap[<span class="st">"Expected Value"</span>] <span class="op">=</span> explainer.expected_value</span>
+<span id="cb39-42"><a href="#cb39-42" aria-hidden="true" tabindex="-1"></a>df_shap[<span class="st">"SHAP Sum"</span>] <span class="op">=</span> shap_sum</span>
+<span id="cb39-43"><a href="#cb39-43" aria-hidden="true" tabindex="-1"></a>df_shap[<span class="st">"Prediction"</span>] <span class="op">=</span> predictions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="b3a27363" class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># feature1, feature2, feature3 : 변수 3종</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Expected Value : Base Value</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="co"># SHAP Sum : 위 4가지 값의 합</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Prediction : 예측값</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>df_shap.head(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">feature1</th>
+<th data-quarto-table-cell-role="th">feature2</th>
+<th data-quarto-table-cell-role="th">feature3</th>
+<th data-quarto-table-cell-role="th">Expected Value</th>
+<th data-quarto-table-cell-role="th">SHAP Sum</th>
+<th data-quarto-table-cell-role="th">Prediction</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>-1.116524</td>
+<td>0.727300</td>
+<td>-0.301556</td>
+<td>2.953377</td>
+<td>2.262596</td>
+<td>2.262596</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>1.175684</td>
+<td>-0.358968</td>
+<td>-0.228965</td>
+<td>2.953377</td>
+<td>3.541127</td>
+<td>3.541127</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>1.059330</td>
+<td>0.362629</td>
+<td>0.215773</td>
+<td>2.953377</td>
+<td>4.591108</td>
+<td>4.591108</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>0.430526</td>
+<td>-0.687566</td>
+<td>0.238544</td>
+<td>2.953377</td>
+<td>2.934881</td>
+<td>2.934881</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>-0.660002</td>
+<td>-0.460247</td>
+<td>-0.347192</td>
+<td>2.953377</td>
+<td>1.485935</td>
+<td>1.485935</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="12816996" class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 검증: 두 값의 차이가 거의 0인지 확인</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>difference <span class="op">=</span> np.<span class="bu">abs</span>(df_shap[<span class="st">"Prediction"</span>] <span class="op">-</span> df_shap[<span class="st">"SHAP Sum"</span>])</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Difference Mean: </span><span class="sc">{</span>difference<span class="sc">.</span>mean()<span class="sc">}</span><span class="ss">, Max Difference: </span><span class="sc">{</span>difference<span class="sc">.</span><span class="bu">max</span>()<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Difference Mean: 1.5931700403370996e-15, Max Difference: 4.440892098500626e-15</code></pre>
+</div>
+</div>
+</section>
+<section id="shap시각화" class="level3">
+<h3 class="anchored" data-anchor-id="shap시각화">SHAP시각화</h3>
+<ul>
+<li>대표적으로 많이 사용되는 3가지 예시
+<ul>
+<li>Summary Plot, Feature Importance Plot, Dependence Plot</li>
+<li>SHAP를 Global하게 해석(컬럼 기준)</li>
+</ul></li>
+</ul>
+<section id="shap-global해석-shap-summary-plotviolin-plot" class="level4">
+<h4 class="anchored" data-anchor-id="shap-global해석-shap-summary-plotviolin-plot">SHAP Global해석 : SHAP Summary Plot(Violin Plot)</h4>
+<ul>
+<li>아래 그래프에서의 높이(너비) : 점의 수가 많고 적음을 알 수 있음</li>
+</ul>
+<div id="bdca55bd" class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize SHAP summary plot for the positive class</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>shap.summary_plot(shap_values_train, X_train, feature_names<span class="op">=</span>X.columns)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-29-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="shap-global해석-shap-feature-importance-plotbar-plot" class="level4">
+<h4 class="anchored" data-anchor-id="shap-global해석-shap-feature-importance-plotbar-plot">SHAP Global해석 : SHAP Feature Importance Plot(Bar Plot)</h4>
+<ul>
+<li>절대값이므로 방향성이 제거됨</li>
+<li>위의 Summary Plot보다는 청중을 이해시키기 쉬움</li>
+</ul>
+<div id="418e8af1" class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>shap.summary_plot(shap_values_train,</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>                  X_train,</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>                  plot_type<span class="op">=</span><span class="st">'bar'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-30-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="shap-global해석-shap-dependence-plotscatter-plot" class="level4">
+<h4 class="anchored" data-anchor-id="shap-global해석-shap-dependence-plotscatter-plot">SHAP Global해석 : SHAP Dependence Plot(Scatter Plot)</h4>
+<ul>
+<li>임계점을 확인하여 변수에 조치 등을 취할 수 있음</li>
+</ul>
+<div id="034dcdbd" class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># AMT_GOODS_PRICE의 TAGRGET에 끼치는 영향</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="co">## 해석 예시 : 하단 그래프는 5만(0.5)을 기점으로 음의 영향이 있다</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">7</span>))</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>shap.dependence_plot(<span class="st">"AMT_GOODS_PRICE"</span>, shap_values_train, X_train, interaction_index<span class="op">=</span><span class="va">None</span>, ax<span class="op">=</span>ax)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-31-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="b79f4252" class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># AMT_CREDIT이 TAGRGET에 끼치는 영향</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="co">## 해석예시 : 5만(0.5)~25만(2.5)까지 양의 영향을 끼친다</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">7</span>))</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>shap.dependence_plot(<span class="st">"AMT_CREDIT"</span>, shap_values_train, X_train, interaction_index<span class="op">=</span><span class="va">None</span>, ax<span class="op">=</span>ax)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-32-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="shap-local해석-shap-force-plot" class="level4">
+<h4 class="anchored" data-anchor-id="shap-local해석-shap-force-plot">SHAP Local해석 : SHAP Force Plot</h4>
+<ul>
+<li>특정 row에서의 각 변수가 미치는 영향을 시각화</li>
+</ul>
+<div id="d3c655eb" class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>jupyter labextension install <span class="op">@</span>jupyter<span class="op">-</span>widgets<span class="op">/</span>jupyterlab<span class="op">-</span>manager</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Colab으로 실행시에만 위의 코드 실행</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="7cd9731f" class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>shap.force_plot(explainer.expected_value, shap_values_train[<span class="dv">0</span>, :], X_train.iloc[<span class="dv">0</span>, :],     matplotlib<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-34-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="shap-feature-importance구하기-feature-selection" class="level3">
+<h3 class="anchored" data-anchor-id="shap-feature-importance구하기-feature-selection">SHAP Feature Importance구하기 &amp; Feature Selection</h3>
+<ul>
+<li><code>Feature Selection</code> : 사용하지 않을 변수를 제외해, 메모리와 학습시간 등을 절약
+<ul>
+<li>Feature Selection은 트리기반의 부스팅/배깅모델에서는 성능이 좋아지는 경우가 많지 않음
+<ul>
+<li>떨어지는 경우가 많으며, <strong>데이터 많이 넣는 쪽이 오히려 성능이 좋기도 함</strong> (Trade-off)</li>
+<li>그러나, 메모리 등 <strong>리소스적인 한계로 활용하게 될 가능성이 큼</strong>(+학습시간 줄이기 등)</li>
+</ul></li>
+</ul></li>
+</ul>
+<div id="c9eee333" class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Train데이터의 Feature Importance(절대값의 평균)</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>shap_fi_train <span class="op">=</span> df_shap_train.<span class="bu">apply</span>(<span class="kw">lambda</span> x : np.mean(np.<span class="bu">abs</span>(x)), axis <span class="op">=</span> <span class="dv">0</span>).sort_values()[::<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Feature Importance가 0인 값을 제외</span></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>selected_features <span class="op">=</span> shap_fi_train[shap_fi_train <span class="op">&gt;</span> <span class="dv">0</span>].index.tolist()</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Feature Importance가 0이상인 값</span></span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"* 전체 feature의 수 : </span><span class="sc">{</span><span class="bu">len</span>(shap_fi_train)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"* 추려진 feature의 수 : </span><span class="sc">{</span><span class="bu">len</span>(selected_features)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"* 추려진 feature 목록</span><span class="ch">\n</span><span class="st">"</span>, selected_features)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>* 전체 feature의 수 : 131
+* 추려진 feature의 수 : 109
+* 추려진 feature 목록
+ ['EXT_SOURCE_3', 'EXT_SOURCE_2', 'AMT_GOODS_PRICE', 'EXT_SOURCE_1', 'AMT_CREDIT', 'DAYS_EMPLOYED', 'NAME_EDUCATION_TYPE_Encoded', 'AMT_ANNUITY', 'DAYS_BIRTH', 'CODE_GENDER_F', 'DAYS_ID_PUBLISH', 'OWN_CAR_AGE', 'FLAG_OWN_CAR_N', 'CODE_GENDER_M', 'NAME_CONTRACT_TYPE_Cash loans', 'NAME_FAMILY_STATUS', 'FLAG_DOCUMENT_3', 'ORGANIZATION_TYPE', 'DAYS_LAST_PHONE_CHANGE', 'REGION_RATING_CLIENT_W_CITY', 'DEF_30_CNT_SOCIAL_CIRCLE', 'NAME_INCOME_TYPE', 'FLAG_WORK_PHONE', 'AMT_REQ_CREDIT_BUREAU_QRT', 'OCCUPATION_TYPE', 'AMT_REQ_CREDIT_BUREAU_YEAR', 'REGION_POPULATION_RELATIVE', 'DAYS_REGISTRATION', 'REG_CITY_NOT_LIVE_CITY', 'FLOORSMAX_AVG', 'DEF_60_CNT_SOCIAL_CIRCLE', 'AMT_INCOME_TOTAL', 'TOTALAREA_MODE', 'WEEKDAY_APPR_PROCESS_START', 'APARTMENTS_MEDI', 'AMT_REQ_CREDIT_BUREAU_DAY', 'OBS_60_CNT_SOCIAL_CIRCLE', 'HOUR_APPR_PROCESS_START', 'FLAG_PHONE', 'AMT_REQ_CREDIT_BUREAU_HOUR', 'APARTMENTS_AVG', 'SK_ID_CURR', 'FLAG_DOCUMENT_16', 'YEARS_BEGINEXPLUATATION_MEDI', 'APARTMENTS_MODE', 'ENTRANCES_MEDI', 'FLAG_DOCUMENT_18', 'YEARS_BEGINEXPLUATATION_MODE', 'NAME_HOUSING_TYPE', 'LIVINGAREA_AVG', 'LIVINGAPARTMENTS_AVG', 'LANDAREA_MEDI', 'ELEVATORS_MODE', 'YEARS_BEGINEXPLUATATION_AVG', 'COMMONAREA_MEDI', 'WALLSMATERIAL_MODE', 'ELEVATORS_AVG', 'FLAG_OWN_REALTY_N', 'NONLIVINGAREA_MEDI', 'BASEMENTAREA_AVG', 'FLOORSMIN_MODE', 'OBS_30_CNT_SOCIAL_CIRCLE', 'COMMONAREA_AVG', 'LANDAREA_AVG', 'YEARS_BUILD_MODE', 'FLOORSMAX_MEDI', 'COMMONAREA_MODE', 'FLOORSMAX_MODE', 'LIVINGAREA_MEDI', 'LIVINGAPARTMENTS_MODE', 'ENTRANCES_MODE', 'FLOORSMIN_AVG', 'NONLIVINGAPARTMENTS_AVG', 'HOUSETYPE_MODE_block of flats', 'BASEMENTAREA_MODE', 'YEARS_BUILD_MEDI', 'FLAG_DOCUMENT_13', 'LANDAREA_MODE', 'CNT_FAM_MEMBERS', 'REG_REGION_NOT_WORK_REGION', 'LIVINGAREA_MODE', 'NAME_TYPE_SUITE', 'AMT_REQ_CREDIT_BUREAU_MON', 'REG_CITY_NOT_WORK_CITY', 'NONLIVINGAPARTMENTS_MEDI', 'FLAG_DOCUMENT_14', 'ENTRANCES_AVG', 'AMT_REQ_CREDIT_BUREAU_WEEK', 'NONLIVINGAREA_MODE', 'BASEMENTAREA_MEDI', 'NONLIVINGAREA_AVG', 'FLOORSMIN_MEDI', 'REG_REGION_NOT_LIVE_REGION', 'FLAG_DOCUMENT_5', 'NONLIVINGAPARTMENTS_MODE', 'YEARS_BUILD_AVG', 'FLAG_OWN_REALTY_Y', 'CNT_CHILDREN', 'FONDKAPREMONT_MODE', 'LIVE_REGION_NOT_WORK_REGION', 'FLAG_EMAIL', 'LIVINGAPARTMENTS_MEDI', 'REGION_RATING_CLIENT', 'FLAG_DOCUMENT_8', 'HOUSETYPE_MODE_specific housing', 'LIVE_CITY_NOT_WORK_CITY', 'EMERGENCYSTATE_MODE_nan', 'FLAG_DOCUMENT_6', 'HOUSETYPE_MODE_terraced house']</code></pre>
+</div>
+</div>
+<ul>
+<li>SHAP으로 Feature Selection한 뒤의 결과 비교
+<ul>
+<li>아래 모델/데이터를 기준으로, 성능에서 크게 차이나지 않음</li>
+</ul></li>
+</ul>
+<div id="05abffc8" class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> lightgbm <span class="im">import</span> LGBMClassifier</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 전체 변수 데이터</span></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"전체 데이터로 학습"</span>)</span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a><span class="co">## Full Model</span></span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>full_model <span class="op">=</span> LGBMClassifier(class_weight<span class="op">=</span><span class="st">"balanced"</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>full_model.fit(X_train, y_train)</span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a><span class="co">## Full Pred</span></span>
+<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a>y_pred_full <span class="op">=</span> full_model.predict(X_test)</span>
+<span id="cb51-13"><a href="#cb51-13" aria-hidden="true" tabindex="-1"></a>y_proba_full <span class="op">=</span> full_model.predict_proba(X_test)</span>
+<span id="cb51-14"><a href="#cb51-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-15"><a href="#cb51-15" aria-hidden="true" tabindex="-1"></a><span class="co">## Full Results</span></span>
+<span id="cb51-16"><a href="#cb51-16" aria-hidden="true" tabindex="-1"></a>accuracy_full <span class="op">=</span> accuracy_score(y_test, y_pred_full)</span>
+<span id="cb51-17"><a href="#cb51-17" aria-hidden="true" tabindex="-1"></a>auc_full <span class="op">=</span> roc_auc_score(y_test, y_proba_full[:, <span class="dv">1</span>])</span>
+<span id="cb51-18"><a href="#cb51-18" aria-hidden="true" tabindex="-1"></a>cf_full <span class="op">=</span> confusion_matrix(y_test, y_pred_full)</span>
+<span id="cb51-19"><a href="#cb51-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-20"><a href="#cb51-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-21"><a href="#cb51-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Feature selection된 데이터</span></span>
+<span id="cb51-22"><a href="#cb51-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Feature selection된 데이터로 학습"</span>)</span>
+<span id="cb51-23"><a href="#cb51-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-24"><a href="#cb51-24" aria-hidden="true" tabindex="-1"></a>X_train_filtered <span class="op">=</span> X_train.loc[:, selected_features]</span>
+<span id="cb51-25"><a href="#cb51-25" aria-hidden="true" tabindex="-1"></a>X_test_filtered <span class="op">=</span> X_test.loc[:, selected_features]</span>
+<span id="cb51-26"><a href="#cb51-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-27"><a href="#cb51-27" aria-hidden="true" tabindex="-1"></a><span class="co">## Filtered Model</span></span>
+<span id="cb51-28"><a href="#cb51-28" aria-hidden="true" tabindex="-1"></a>filtered_model  <span class="op">=</span> LGBMClassifier(class_weight<span class="op">=</span><span class="st">"balanced"</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb51-29"><a href="#cb51-29" aria-hidden="true" tabindex="-1"></a>filtered_model.fit(X_train_filtered, y_train)</span>
+<span id="cb51-30"><a href="#cb51-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-31"><a href="#cb51-31" aria-hidden="true" tabindex="-1"></a><span class="co">## Filtered Pred</span></span>
+<span id="cb51-32"><a href="#cb51-32" aria-hidden="true" tabindex="-1"></a>y_pred_filtered <span class="op">=</span> filtered_model.predict(X_test_filtered)</span>
+<span id="cb51-33"><a href="#cb51-33" aria-hidden="true" tabindex="-1"></a>y_proba_filtered <span class="op">=</span> filtered_model.predict_proba(X_test_filtered)</span>
+<span id="cb51-34"><a href="#cb51-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-35"><a href="#cb51-35" aria-hidden="true" tabindex="-1"></a><span class="co">## Filtered Results</span></span>
+<span id="cb51-36"><a href="#cb51-36" aria-hidden="true" tabindex="-1"></a>accuracy_filtered <span class="op">=</span> accuracy_score(y_test, y_pred_filtered)</span>
+<span id="cb51-37"><a href="#cb51-37" aria-hidden="true" tabindex="-1"></a>auc_filtered <span class="op">=</span> roc_auc_score(y_test, y_proba_filtered[:, <span class="dv">1</span>])</span>
+<span id="cb51-38"><a href="#cb51-38" aria-hidden="true" tabindex="-1"></a>cf_filtered <span class="op">=</span> confusion_matrix(y_test, y_pred_filtered)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>전체 데이터로 학습
+[LightGBM] [Warning] Found whitespace in feature_names, replace with underlines
+[LightGBM] [Info] Number of positive: 19876, number of negative: 226132
+[LightGBM] [Info] Auto-choosing row-wise multi-threading, the overhead of testing was 0.020035 seconds.
+You can set `force_row_wise=true` to remove the overhead.
+And if memory is not enough, you can set `force_col_wise=true`.
+[LightGBM] [Info] Total Bins 11686
+[LightGBM] [Info] Number of data points in the train set: 246008, number of used features: 125
+[LightGBM] [Info] [binary:BoostFromScore]: pavg=0.500000 -&gt; initscore=0.000000
+[LightGBM] [Info] Start training from score 0.000000
+
+Feature selection된 데이터로 학습
+[LightGBM] [Warning] Found whitespace in feature_names, replace with underlines
+[LightGBM] [Info] Number of positive: 19876, number of negative: 226132
+[LightGBM] [Info] Auto-choosing row-wise multi-threading, the overhead of testing was 0.017355 seconds.
+You can set `force_row_wise=true` to remove the overhead.
+And if memory is not enough, you can set `force_col_wise=true`.
+[LightGBM] [Info] Total Bins 11610
+[LightGBM] [Info] Number of data points in the train set: 246008, number of used features: 109
+[LightGBM] [Info] [binary:BoostFromScore]: pavg=0.500000 -&gt; initscore=0.000000
+[LightGBM] [Info] Start training from score 0.000000</code></pre>
+</div>
+</div>
+<div id="f0858b01" class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'모든 변수를 사용한 정확도 : </span><span class="sc">{</span><span class="bu">round</span>(accuracy_full,<span class="dv">4</span>)<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'무의미한 변수를 삭제한 정확도 : </span><span class="sc">{</span><span class="bu">round</span>(accuracy_filtered,<span class="dv">4</span>)<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cf_full)</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'-'</span><span class="op">*</span><span class="dv">100</span>)</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'모든 변수를 사용한 AUC : </span><span class="sc">{</span><span class="bu">round</span>(auc_full,<span class="dv">4</span>)<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'무의미한 변수를 삭제한 AUC : </span><span class="sc">{</span><span class="bu">round</span>(auc_filtered,<span class="dv">4</span>)<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cf_filtered)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>모든 변수를 사용한 정확도 : 0.703
+무의미한 변수를 삭제한 정확도 : 0.7028
+[[39914 16640]
+ [ 1629  3320]]
+----------------------------------------------------------------------------------------------------
+모든 변수를 사용한 AUC : 0.7578
+무의미한 변수를 삭제한 AUC : 0.7577
+[[39908 16646]
+ [ 1634  3315]]</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="기타-참고사항" class="level2">
+<h2 class="anchored" data-anchor-id="기타-참고사항">기타 참고사항</h2>
+<ul>
+<li>실제로는 모델학습이 끝난 후에도, <code>feature importance구하기-무의미한 변수 제거하기-(파생변수생성)-모델학습</code>의 반복적 수행
+<ul>
+<li>처음에는 간단히 베이스모델을 만들어, SHAP로 1차로 무의미한 변수를 걸러냄</li>
+<li>베스트 모델을 추려낸 후, 오래걸리는 파라미터 튜닝을 퇴근시간 등 활용해 처리</li>
+</ul></li>
+<li>현업케이스 참고
+<ul>
+<li>카드사 내부적으로 마케팅을 위해 이탈고객, 휴면예정고객 등에 대한 분석(산출)을 DA에게 의뢰
+<ul>
+<li>혜택을 줄여 Mass마케팅 or 예상되는 이탈고객에게 Target마케팅</li>
+<li>위를 위한 모델을 만들어달라는 의뢰를 받아, 데이터마트 생성과 모델링 등을 수행</li>
+<li>중간에 프로모션을 해보며 개선한 뒤, 최종적으로 이탈가능성이 높은 고객을 추려 현업(마케팅)에서 계획 수립</li>
+<li>지속하게되는 경우, ’Batch개발’을 통해 <code>데이터마트(Input데이터)-모델Output의 데이터마트 저장-현업에서 활용</code>을 자동화</li>
+<li>Batch로 운영되는 모델은 주기적으로 고도화되기도 함(모델의 Metric이 아닌, 현업에서 보는 안정성관련 모니터링 지표 등을 확인)</li>
+</ul></li>
+<li>고객센터에서 통화내용의 Speech-to-text로 토픽모델링을 활용해, 고객이 하고픈 말이 어떤 것인지 찾아내는 NLP과제도 있음</li>
+</ul></li>
+<li>Case별 Metric을 선택할 시각 키우는 방법
+<ul>
+<li>다양한 대회(공모전)의 케이스를 참고 (주로 쓰이는 것이 몇가지 있다)</li>
+<li>논문 참고하기(성능을 표기한 Metric참고)
+<ul>
+<li>SQuAD(LLM을 평가하는 문제지 같은 것)에 대한 성능표기나, SOTA 등 참고</li>
+<li>NLP newsletter(요즘 핫한 NLP모델 논문을 매주 보내주는 글)
+<ul>
+<li>CAG(↔︎RAG) : 처리용량이 커졌으므로, 검색이 아니라 데이터를 캐시에 모두 넣고 실행
+<ul>
+<li>런타임 오류 감소 등 의외로 성능이 좋았음</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>Metric을 정하는 것은 지속하다보면 익숙해질 수 있는 부분</li>
+</ul></li>
+<li>Metric에서 보통 제공하지 않는 Pinball loss등이 필요한 경우
+<ul>
+<li>모델학습이 loss를 줄이는 방향이라는 관점에서 맞춰주는 것이 좋음</li>
+<li>없으면 커스텀함수로 만들어서 맞추는 편(다만 크게 차이가 나지는 않는다)</li>
+<li>Loss함수를 일치시켜서 얻는 이득이 큰 편(일부라도 성능올리기 위해 하이퍼파라미터 튜닝 등을 한다는 관점에서 볼 때)</li>
+</ul></li>
+</ul>
+</section>
+<section id="과제" class="level2">
+<h2 class="anchored" data-anchor-id="과제">과제</h2>
+<ul>
+<li>지난 주에 모델 학습을 시켜본 뒤 모델에 대해 SHAP을 통해 FI를 구해보세요.</li>
+<li>Feature Selection을 진행 한 뒤 재학습을 진행해 보세요.</li>
+<li>재학습한 모델에 대해 SHAP의 다양한 시각화를 통해 변수들의 설명력을 구해보세요.</li>
+</ul>
+
+
+</section>
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/kr9268\.github\.io\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="kr9268/giscus_for_blog" data-repo-id="R_kgDOL0Sthw" data-category="General" data-category-id="DIC_kwDOL0Sth84Ce_5h" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+</div> <!-- /content -->
+<script>
+    const baseFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    const watermark = new XWatermark.XWatermark();
+    watermark.init("Kibok Park", {
+      parentSelector: "body",
+      prevent: true,
+      observer: true,
+      mode: "normal",
+      font: "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', 'Liberation Sans', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
+      fontsize: baseFontSize * 1.000000,
+      angle: -15.000000,
+      color: "#000000",
+      alpha: 0.100000,
+      cols: 10,
+      rows: 50,
+      xSpace: baseFontSize * 4.000000,
+      ySpace: baseFontSize * 4.000000,
+      zIndex: -1
+    });
+    </script>
+
+
+
+
+</body></html>

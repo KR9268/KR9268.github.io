@@ -1,9 +1,5 @@
 [
   {
-    "listing": "/index_dashboards.html",
-    "items": []
-  },
-  {
     "listing": "/index_miniprojects.html",
     "items": [
       "/posts_miniprojects/sel-py-ml_predict_shiptype-20240801/index.html",
@@ -18,6 +14,8 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/meta-cm-sql_and_ml_xai-20250121/index.html",
+      "/posts/meta-cm-sql_and_ml_xai-20250119/index.html",
       "/posts/meta-cm-sql_and_ml_xai-20250114/index.html",
       "/posts/meta-cm-sql_and_ml_xai-20250112/index.html",
       "/posts/meta-cm-sql_and_ml_xai-20250107/index.html",
@@ -54,9 +52,9 @@
       "/posts/dtcontest-ore-20240621/index.html",
       "/posts/dtcontest-ore-20240616/index.html",
       "/posts/meta-dl-creditcard-20240616/index.html",
-      "/posts/dtcontest-ore-20240615/index.html",
-      "/posts/meta-dl-creditcard-20240615_2/index.html",
       "/posts/meta-dl-creditcard-20240615_1/index.html",
+      "/posts/meta-dl-creditcard-20240615_2/index.html",
+      "/posts/dtcontest-ore-20240615/index.html",
       "/posts/dtcontest-ore-20240612/index.html",
       "/posts/meta-dl-creditcard-20240609/index.html",
       "/posts/dtcontest-ore-20240610/index.html",
@@ -76,5 +74,9 @@
       "/posts/coach-ds-20221113/index.html",
       "/posts/coach-ds-20230506/index.html"
     ]
+  },
+  {
+    "listing": "/index_dashboards.html",
+    "items": []
   }
 ]
