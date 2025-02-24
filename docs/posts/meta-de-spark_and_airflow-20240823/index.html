@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.6.41">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Kibok Park">
 <meta name="dcterms.date" content="2024-08-23">
 
-<title>Blog - [DE스터디/2주차과제1] 다양한 데이터처리 플랫폼을 사용한 데이터 수집~모니터링</title>
+<title>[DE스터디/2주차과제1] 다양한 데이터처리 플랫폼을 사용한 데이터 수집~모니터링 – Blog</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -35,7 +35,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -72,12 +72,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-48ffa3e5b9d089919c6712c39e5b00f2.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-71390cc8b9bae10139428574d3aab2c6.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-f3c2ea88cadbcfb37ba28ffa2c97cfc1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-ae2d0dcda2edce4ab590422bb373b64f.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script src="../../site_libs/quarto-contrib/watermark-1.0.11/watermark.min.js"></script>
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
@@ -132,7 +132,7 @@ gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -168,7 +168,7 @@ gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
@@ -1925,229 +1925,439 @@ IndexError: string index out of range
 24/08/23 12:21:30 ERROR TaskSetManager: Task 0 in stage 62.0 failed 1 times; aborting job</code></pre>
 </div>
 <div class="cell-output cell-output-error">
-<pre><code>Py4JJavaError: An error occurred while calling z:org.apache.spark.api.python.PythonRDD.runJob.
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+
+<span class="ansi-red-fg">Py4JJavaError</span>                             Traceback (most recent call last)
+
+<span class="ansi-green-fg">/tmp/ipykernel_722/413939631.py</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+
+<span class="ansi-green-fg ansi-bold">      1</span> <span class="ansi-red-fg"># rdd1은 key-pair value가 아님</span>
+
+<span class="ansi-green-fg">----&gt; 2</span><span class="ansi-red-fg"> </span>rdd1<span class="ansi-blue-fg">.</span>mapValues<span class="ansi-blue-fg">(</span><span class="ansi-green-fg">lambda</span> v<span class="ansi-blue-fg">:</span> v <span class="ansi-blue-fg">+</span> <span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>take<span class="ansi-blue-fg">(</span><span class="ansi-cyan-fg">10</span><span class="ansi-blue-fg">)</span> <span class="ansi-red-fg"># error</span>
+
+
+
+<span class="ansi-green-fg">/usr/local/spark/python/pyspark/rdd.py</span> in <span class="ansi-cyan-fg">take</span><span class="ansi-blue-fg">(self, num)</span>
+
+<span class="ansi-green-fg ansi-bold">   1564</span> 
+
+<span class="ansi-green-fg ansi-bold">   1565</span>             p <span class="ansi-blue-fg">=</span> range<span class="ansi-blue-fg">(</span>partsScanned<span class="ansi-blue-fg">,</span> min<span class="ansi-blue-fg">(</span>partsScanned <span class="ansi-blue-fg">+</span> numPartsToTry<span class="ansi-blue-fg">,</span> totalParts<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">-&gt; 1566</span><span class="ansi-red-fg">             </span>res <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>context<span class="ansi-blue-fg">.</span>runJob<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> takeUpToNumLeft<span class="ansi-blue-fg">,</span> p<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg ansi-bold">   1567</span> 
+
+<span class="ansi-green-fg ansi-bold">   1568</span>             items <span class="ansi-blue-fg">+=</span> res
+
+
+
+<span class="ansi-green-fg">/usr/local/spark/python/pyspark/context.py</span> in <span class="ansi-cyan-fg">runJob</span><span class="ansi-blue-fg">(self, rdd, partitionFunc, partitions, allowLocal)</span>
+
+<span class="ansi-green-fg ansi-bold">   1231</span>         <span class="ansi-red-fg"># SparkContext#runJob.</span>
+
+<span class="ansi-green-fg ansi-bold">   1232</span>         mappedRDD <span class="ansi-blue-fg">=</span> rdd<span class="ansi-blue-fg">.</span>mapPartitions<span class="ansi-blue-fg">(</span>partitionFunc<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">-&gt; 1233</span><span class="ansi-red-fg">         </span>sock_info <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>_jvm<span class="ansi-blue-fg">.</span>PythonRDD<span class="ansi-blue-fg">.</span>runJob<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>_jsc<span class="ansi-blue-fg">.</span>sc<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">,</span> mappedRDD<span class="ansi-blue-fg">.</span>_jrdd<span class="ansi-blue-fg">,</span> partitions<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg ansi-bold">   1234</span>         <span class="ansi-green-fg">return</span> list<span class="ansi-blue-fg">(</span>_load_from_socket<span class="ansi-blue-fg">(</span>sock_info<span class="ansi-blue-fg">,</span> mappedRDD<span class="ansi-blue-fg">.</span>_jrdd_deserializer<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg ansi-bold">   1235</span> 
+
+
+
+<span class="ansi-green-fg">/usr/local/spark/python/lib/py4j-0.10.9-src.zip/py4j/java_gateway.py</span> in <span class="ansi-cyan-fg">__call__</span><span class="ansi-blue-fg">(self, *args)</span>
+
+<span class="ansi-green-fg ansi-bold">   1302</span> 
+
+<span class="ansi-green-fg ansi-bold">   1303</span>         answer <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>gateway_client<span class="ansi-blue-fg">.</span>send_command<span class="ansi-blue-fg">(</span>command<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">-&gt; 1304</span><span class="ansi-red-fg">         return_value = get_return_value(
+
+</span><span class="ansi-green-fg ansi-bold">   1305</span>             answer, self.gateway_client, self.target_id, self.name)
+
+<span class="ansi-green-fg ansi-bold">   1306</span> 
+
+
+
+<span class="ansi-green-fg">/usr/local/spark/python/pyspark/sql/utils.py</span> in <span class="ansi-cyan-fg">deco</span><span class="ansi-blue-fg">(*a, **kw)</span>
+
+<span class="ansi-green-fg ansi-bold">    109</span>     <span class="ansi-green-fg">def</span> deco<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">*</span>a<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kw<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg ansi-bold">    110</span>         <span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">--&gt; 111</span><span class="ansi-red-fg">             </span><span class="ansi-green-fg">return</span> f<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">*</span>a<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kw<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg ansi-bold">    112</span>         <span class="ansi-green-fg">except</span> py4j<span class="ansi-blue-fg">.</span>protocol<span class="ansi-blue-fg">.</span>Py4JJavaError <span class="ansi-green-fg">as</span> e<span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg ansi-bold">    113</span>             converted <span class="ansi-blue-fg">=</span> convert_exception<span class="ansi-blue-fg">(</span>e<span class="ansi-blue-fg">.</span>java_exception<span class="ansi-blue-fg">)</span>
+
+
+
+<span class="ansi-green-fg">/usr/local/spark/python/lib/py4j-0.10.9-src.zip/py4j/protocol.py</span> in <span class="ansi-cyan-fg">get_return_value</span><span class="ansi-blue-fg">(answer, gateway_client, target_id, name)</span>
+
+<span class="ansi-green-fg ansi-bold">    324</span>             value <span class="ansi-blue-fg">=</span> OUTPUT_CONVERTER<span class="ansi-blue-fg">[</span>type<span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">(</span>answer<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">2</span><span class="ansi-blue-fg">:</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">,</span> gateway_client<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg ansi-bold">    325</span>             <span class="ansi-green-fg">if</span> answer<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">]</span> <span class="ansi-blue-fg">==</span> REFERENCE_TYPE<span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">--&gt; 326</span><span class="ansi-red-fg">                 raise Py4JJavaError(
+
+</span><span class="ansi-green-fg ansi-bold">    327</span>                     <span class="ansi-blue-fg">"An error occurred while calling {0}{1}{2}.\n"</span><span class="ansi-blue-fg">.</span>
+
+<span class="ansi-green-fg ansi-bold">    328</span>                     format(target_id, ".", name), value)
+
+
+
+<span class="ansi-red-fg">Py4JJavaError</span>: An error occurred while calling z:org.apache.spark.api.python.PythonRDD.runJob.
+
 : org.apache.spark.SparkException: Job aborted due to stage failure: Task 0 in stage 62.0 failed 1 times, most recent failure: Lost task 0.0 in stage 62.0 (TID 113) (7b9e2a0ad7ba executor driver): org.apache.spark.api.python.PythonException: Traceback (most recent call last):
+
   File "/usr/local/spark/python/lib/pyspark.zip/pyspark/worker.py", line 604, in main
+
     process()
+
   File "/usr/local/spark/python/lib/pyspark.zip/pyspark/worker.py", line 596, in process
+
     serializer.dump_stream(out_iter, outfile)
+
   File "/usr/local/spark/python/lib/pyspark.zip/pyspark/serializers.py", line 259, in dump_stream
+
     vs = list(itertools.islice(iterator, batch))
+
   File "/usr/local/spark/python/pyspark/rdd.py", line 1560, in takeUpToNumLeft
+
     yield next(iterator)
+
   File "/usr/local/spark/python/lib/pyspark.zip/pyspark/util.py", line 73, in wrapper
+
     return f(*args, **kwargs)
+
   File "/usr/local/spark/python/pyspark/rdd.py", line 2276, in &lt;lambda&gt;
+
     map_values_fn = lambda kv: (kv[0], f(kv[1]))
+
 IndexError: string index out of range
 
+
+
     at org.apache.spark.api.python.BasePythonRunner$ReaderIterator.handlePythonException(PythonRunner.scala:517)
+
     at org.apache.spark.api.python.PythonRunner$$anon$3.read(PythonRunner.scala:652)
+
     at org.apache.spark.api.python.PythonRunner$$anon$3.read(PythonRunner.scala:635)
+
     at org.apache.spark.api.python.BasePythonRunner$ReaderIterator.hasNext(PythonRunner.scala:470)
+
     at org.apache.spark.InterruptibleIterator.hasNext(InterruptibleIterator.scala:37)
+
     at scala.collection.Iterator.foreach(Iterator.scala:941)
+
     at scala.collection.Iterator.foreach$(Iterator.scala:941)
+
     at org.apache.spark.InterruptibleIterator.foreach(InterruptibleIterator.scala:28)
+
     at scala.collection.generic.Growable.$plus$plus$eq(Growable.scala:62)
+
     at scala.collection.generic.Growable.$plus$plus$eq$(Growable.scala:53)
+
     at scala.collection.mutable.ArrayBuffer.$plus$plus$eq(ArrayBuffer.scala:105)
+
     at scala.collection.mutable.ArrayBuffer.$plus$plus$eq(ArrayBuffer.scala:49)
+
     at scala.collection.TraversableOnce.to(TraversableOnce.scala:315)
+
     at scala.collection.TraversableOnce.to$(TraversableOnce.scala:313)
+
     at org.apache.spark.InterruptibleIterator.to(InterruptibleIterator.scala:28)
+
     at scala.collection.TraversableOnce.toBuffer(TraversableOnce.scala:307)
+
     at scala.collection.TraversableOnce.toBuffer$(TraversableOnce.scala:307)
+
     at org.apache.spark.InterruptibleIterator.toBuffer(InterruptibleIterator.scala:28)
+
     at scala.collection.TraversableOnce.toArray(TraversableOnce.scala:294)
+
     at scala.collection.TraversableOnce.toArray$(TraversableOnce.scala:288)
+
     at org.apache.spark.InterruptibleIterator.toArray(InterruptibleIterator.scala:28)
+
     at org.apache.spark.api.python.PythonRDD$.$anonfun$runJob$1(PythonRDD.scala:166)
+
     at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2236)
+
     at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:90)
+
     at org.apache.spark.scheduler.Task.run(Task.scala:131)
+
     at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$3(Executor.scala:497)
+
     at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:1439)
+
     at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:500)
+
     at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+
     at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+
     at java.base/java.lang.Thread.run(Thread.java:829)
+
+
 
 Driver stacktrace:
+
     at org.apache.spark.scheduler.DAGScheduler.failJobAndIndependentStages(DAGScheduler.scala:2258)
+
     at org.apache.spark.scheduler.DAGScheduler.$anonfun$abortStage$2(DAGScheduler.scala:2207)
+
     at org.apache.spark.scheduler.DAGScheduler.$anonfun$abortStage$2$adapted(DAGScheduler.scala:2206)
+
     at scala.collection.mutable.ResizableArray.foreach(ResizableArray.scala:62)
+
     at scala.collection.mutable.ResizableArray.foreach$(ResizableArray.scala:55)
+
     at scala.collection.mutable.ArrayBuffer.foreach(ArrayBuffer.scala:49)
+
     at org.apache.spark.scheduler.DAGScheduler.abortStage(DAGScheduler.scala:2206)
+
     at org.apache.spark.scheduler.DAGScheduler.$anonfun$handleTaskSetFailed$1(DAGScheduler.scala:1079)
+
     at org.apache.spark.scheduler.DAGScheduler.$anonfun$handleTaskSetFailed$1$adapted(DAGScheduler.scala:1079)
+
     at scala.Option.foreach(Option.scala:407)
+
     at org.apache.spark.scheduler.DAGScheduler.handleTaskSetFailed(DAGScheduler.scala:1079)
+
     at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.doOnReceive(DAGScheduler.scala:2445)
+
     at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onReceive(DAGScheduler.scala:2387)
+
     at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onReceive(DAGScheduler.scala:2376)
+
     at org.apache.spark.util.EventLoop$$anon$1.run(EventLoop.scala:49)
+
     at org.apache.spark.scheduler.DAGScheduler.runJob(DAGScheduler.scala:868)
+
     at org.apache.spark.SparkContext.runJob(SparkContext.scala:2196)
+
     at org.apache.spark.SparkContext.runJob(SparkContext.scala:2217)
+
     at org.apache.spark.SparkContext.runJob(SparkContext.scala:2236)
+
     at org.apache.spark.api.python.PythonRDD$.runJob(PythonRDD.scala:166)
+
     at org.apache.spark.api.python.PythonRDD.runJob(PythonRDD.scala)
+
     at jdk.internal.reflect.GeneratedMethodAccessor77.invoke(Unknown Source)
+
     at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+
     at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+
     at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+
     at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:357)
+
     at py4j.Gateway.invoke(Gateway.java:282)
+
     at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+
     at py4j.commands.CallCommand.execute(CallCommand.java:79)
+
     at py4j.GatewayConnection.run(GatewayConnection.java:238)
+
     at java.base/java.lang.Thread.run(Thread.java:829)
+
 Caused by: org.apache.spark.api.python.PythonException: Traceback (most recent call last):
+
   File "/usr/local/spark/python/lib/pyspark.zip/pyspark/worker.py", line 604, in main
+
     process()
+
   File "/usr/local/spark/python/lib/pyspark.zip/pyspark/worker.py", line 596, in process
+
     serializer.dump_stream(out_iter, outfile)
+
   File "/usr/local/spark/python/lib/pyspark.zip/pyspark/serializers.py", line 259, in dump_stream
+
     vs = list(itertools.islice(iterator, batch))
+
   File "/usr/local/spark/python/pyspark/rdd.py", line 1560, in takeUpToNumLeft
+
     yield next(iterator)
+
   File "/usr/local/spark/python/lib/pyspark.zip/pyspark/util.py", line 73, in wrapper
+
     return f(*args, **kwargs)
+
   File "/usr/local/spark/python/pyspark/rdd.py", line 2276, in &lt;lambda&gt;
+
     map_values_fn = lambda kv: (kv[0], f(kv[1]))
+
 IndexError: string index out of range
 
+
+
     at org.apache.spark.api.python.BasePythonRunner$ReaderIterator.handlePythonException(PythonRunner.scala:517)
+
     at org.apache.spark.api.python.PythonRunner$$anon$3.read(PythonRunner.scala:652)
+
     at org.apache.spark.api.python.PythonRunner$$anon$3.read(PythonRunner.scala:635)
+
     at org.apache.spark.api.python.BasePythonRunner$ReaderIterator.hasNext(PythonRunner.scala:470)
+
     at org.apache.spark.InterruptibleIterator.hasNext(InterruptibleIterator.scala:37)
+
     at scala.collection.Iterator.foreach(Iterator.scala:941)
+
     at scala.collection.Iterator.foreach$(Iterator.scala:941)
+
     at org.apache.spark.InterruptibleIterator.foreach(InterruptibleIterator.scala:28)
+
     at scala.collection.generic.Growable.$plus$plus$eq(Growable.scala:62)
+
     at scala.collection.generic.Growable.$plus$plus$eq$(Growable.scala:53)
+
     at scala.collection.mutable.ArrayBuffer.$plus$plus$eq(ArrayBuffer.scala:105)
+
     at scala.collection.mutable.ArrayBuffer.$plus$plus$eq(ArrayBuffer.scala:49)
+
     at scala.collection.TraversableOnce.to(TraversableOnce.scala:315)
+
     at scala.collection.TraversableOnce.to$(TraversableOnce.scala:313)
+
     at org.apache.spark.InterruptibleIterator.to(InterruptibleIterator.scala:28)
+
     at scala.collection.TraversableOnce.toBuffer(TraversableOnce.scala:307)
+
     at scala.collection.TraversableOnce.toBuffer$(TraversableOnce.scala:307)
+
     at org.apache.spark.InterruptibleIterator.toBuffer(InterruptibleIterator.scala:28)
+
     at scala.collection.TraversableOnce.toArray(TraversableOnce.scala:294)
+
     at scala.collection.TraversableOnce.toArray$(TraversableOnce.scala:288)
+
     at org.apache.spark.InterruptibleIterator.toArray(InterruptibleIterator.scala:28)
+
     at org.apache.spark.api.python.PythonRDD$.$anonfun$runJob$1(PythonRDD.scala:166)
+
     at org.apache.spark.SparkContext.$anonfun$runJob$5(SparkContext.scala:2236)
+
     at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:90)
+
     at org.apache.spark.scheduler.Task.run(Task.scala:131)
+
     at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$3(Executor.scala:497)
+
     at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:1439)
+
     at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:500)
+
     at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+
     at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
-    ... 1 more</code></pre>
+
+    ... 1 more
+</pre>
+</div>
 </div>
 </div>
 <div id="16ece568" class="cell">
-<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mapValues : rdd2는 key-value pair가 맞음</span></span>
-<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a>rdd3 <span class="op">=</span> rdd2.mapValues(<span class="kw">lambda</span> v: v <span class="op">+</span> <span class="dv">1</span>)</span>
-<span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a>rdd3.take(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mapValues : rdd2는 key-value pair가 맞음</span></span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>rdd3 <span class="op">=</span> rdd2.mapValues(<span class="kw">lambda</span> v: v <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a>rdd3.take(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>[('a', 2), ('b', 2), ('c', 2), ('b', 2), ('b', 2), ('d', 2)]</code></pre>
 </div>
 </div>
 <div id="9e3ee2d0" class="cell">
-<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="co"># flatMapValues</span></span>
-<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> [(<span class="st">"a"</span>, <span class="st">"1,2,3"</span>), (<span class="st">"b"</span>, <span class="st">"4,5,6"</span>)]</span>
-<span id="cb92-3"><a href="#cb92-3" aria-hidden="true" tabindex="-1"></a>rdd <span class="op">=</span> sc.parallelize(data)</span>
-<span id="cb92-4"><a href="#cb92-4" aria-hidden="true" tabindex="-1"></a>rdd.take(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="co"># flatMapValues</span></span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> [(<span class="st">"a"</span>, <span class="st">"1,2,3"</span>), (<span class="st">"b"</span>, <span class="st">"4,5,6"</span>)]</span>
+<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a>rdd <span class="op">=</span> sc.parallelize(data)</span>
+<span id="cb91-4"><a href="#cb91-4" aria-hidden="true" tabindex="-1"></a>rdd.take(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>[('a', '1,2,3'), ('b', '4,5,6')]</code></pre>
 </div>
 </div>
 <div id="ef61d83b" class="cell">
-<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>rdd4 <span class="op">=</span> rdd.flatMapValues(<span class="kw">lambda</span> v: v.split(<span class="st">","</span>))</span>
-<span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a>rdd4.take(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>rdd4 <span class="op">=</span> rdd.flatMapValues(<span class="kw">lambda</span> v: v.split(<span class="st">","</span>))</span>
+<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>rdd4.take(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>[('a', '1'), ('a', '2'), ('a', '3'), ('b', '4'), ('b', '5'), ('b', '6')]</code></pre>
 </div>
 </div>
 <div id="7a4ec7b0" class="cell">
-<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="co"># reduceByKey</span></span>
-<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb96-3"><a href="#cb96-3" aria-hidden="true" tabindex="-1"></a><span class="co"># rdd2 = [('a', 1), ('b', 1), ('c', 1), ('b', 1), ('b', 1), ('d', 1)]</span></span>
-<span id="cb96-4"><a href="#cb96-4" aria-hidden="true" tabindex="-1"></a>rdd6 <span class="op">=</span> rdd2.reduceByKey(<span class="kw">lambda</span> a, b: a <span class="op">+</span> b)</span>
-<span id="cb96-5"><a href="#cb96-5" aria-hidden="true" tabindex="-1"></a>rdd6.take(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="co"># reduceByKey</span></span>
+<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a><span class="co"># rdd2 = [('a', 1), ('b', 1), ('c', 1), ('b', 1), ('b', 1), ('d', 1)]</span></span>
+<span id="cb95-4"><a href="#cb95-4" aria-hidden="true" tabindex="-1"></a>rdd6 <span class="op">=</span> rdd2.reduceByKey(<span class="kw">lambda</span> a, b: a <span class="op">+</span> b)</span>
+<span id="cb95-5"><a href="#cb95-5" aria-hidden="true" tabindex="-1"></a>rdd6.take(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>[('a', 1), ('b', 3), ('c', 1), ('d', 1)]</code></pre>
 </div>
 </div>
 <div id="0c3e6f94" class="cell">
-<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="co"># groupByKey</span></span>
-<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>rdd7 <span class="op">=</span> rdd6.groupByKey()</span>
-<span id="cb98-3"><a href="#cb98-3" aria-hidden="true" tabindex="-1"></a>rdd7.<span class="bu">map</span>(<span class="kw">lambda</span> x : (x[<span class="dv">0</span>], <span class="bu">list</span>(x[<span class="dv">1</span>]))).collect()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="co"># groupByKey</span></span>
+<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a>rdd7 <span class="op">=</span> rdd6.groupByKey()</span>
+<span id="cb97-3"><a href="#cb97-3" aria-hidden="true" tabindex="-1"></a>rdd7.<span class="bu">map</span>(<span class="kw">lambda</span> x : (x[<span class="dv">0</span>], <span class="bu">list</span>(x[<span class="dv">1</span>]))).collect()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>[('a', [1]), ('b', [3]), ('c', [1]), ('d', [1])]</code></pre>
 </div>
 </div>
 <div id="733c3284" class="cell">
-<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cogroup</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cogroup</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="86a2ef27" class="cell">
-<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="co">## group1 : rdd8</span></span>
-<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a>kv1 <span class="op">=</span> [(<span class="st">"k1"</span>, <span class="st">"v1"</span>), (<span class="st">"k2"</span>, <span class="st">"v2"</span>), (<span class="st">"k3"</span>, <span class="st">"v3"</span>)]</span>
-<span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a>rdd8 <span class="op">=</span> sc.parallelize(kv1)</span>
-<span id="cb101-4"><a href="#cb101-4" aria-hidden="true" tabindex="-1"></a>rdd8.take(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="co">## group1 : rdd8</span></span>
+<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a>kv1 <span class="op">=</span> [(<span class="st">"k1"</span>, <span class="st">"v1"</span>), (<span class="st">"k2"</span>, <span class="st">"v2"</span>), (<span class="st">"k3"</span>, <span class="st">"v3"</span>)]</span>
+<span id="cb100-3"><a href="#cb100-3" aria-hidden="true" tabindex="-1"></a>rdd8 <span class="op">=</span> sc.parallelize(kv1)</span>
+<span id="cb100-4"><a href="#cb100-4" aria-hidden="true" tabindex="-1"></a>rdd8.take(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>[('k1', 'v1'), ('k2', 'v2'), ('k3', 'v3')]</code></pre>
 </div>
 </div>
 <div id="5ee638b4" class="cell">
-<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="co">#3 group2 : rdd9</span></span>
-<span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a>kv2 <span class="op">=</span> [(<span class="st">"k1"</span>, <span class="st">"v4"</span>), (<span class="st">"k2"</span>, <span class="st">"v5"</span>), (<span class="st">"k3"</span>, <span class="st">"v6"</span>)]</span>
-<span id="cb103-3"><a href="#cb103-3" aria-hidden="true" tabindex="-1"></a>rdd9 <span class="op">=</span> sc.parallelize(kv2)</span>
-<span id="cb103-4"><a href="#cb103-4" aria-hidden="true" tabindex="-1"></a>rdd9.take(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="co">#3 group2 : rdd9</span></span>
+<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a>kv2 <span class="op">=</span> [(<span class="st">"k1"</span>, <span class="st">"v4"</span>), (<span class="st">"k2"</span>, <span class="st">"v5"</span>), (<span class="st">"k3"</span>, <span class="st">"v6"</span>)]</span>
+<span id="cb102-3"><a href="#cb102-3" aria-hidden="true" tabindex="-1"></a>rdd9 <span class="op">=</span> sc.parallelize(kv2)</span>
+<span id="cb102-4"><a href="#cb102-4" aria-hidden="true" tabindex="-1"></a>rdd9.take(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>[('k1', 'v4'), ('k2', 'v5'), ('k3', 'v6')]</code></pre>
 </div>
 </div>
 <div id="408e430b" class="cell">
-<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a>rdd10 <span class="op">=</span> rdd8.cogroup(rdd9)</span>
-<span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a>[(x, <span class="bu">tuple</span>(<span class="bu">map</span>(<span class="bu">list</span>, y))) <span class="cf">for</span> x, y <span class="kw">in</span> <span class="bu">sorted</span>(<span class="bu">list</span>(rdd10.collect()))]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a>rdd10 <span class="op">=</span> rdd8.cogroup(rdd9)</span>
+<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a>[(x, <span class="bu">tuple</span>(<span class="bu">map</span>(<span class="bu">list</span>, y))) <span class="cf">for</span> x, y <span class="kw">in</span> <span class="bu">sorted</span>(<span class="bu">list</span>(rdd10.collect()))]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>[('k1', (['v1'], ['v4'])), ('k2', (['v2'], ['v5'])), ('k3', (['v3'], ['v6']))]</code></pre>
 </div>
 </div>
 <div id="95c47088" class="cell">
-<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="co"># join  실제로는 cogroup보다는 join을 많이 사용</span></span>
-<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a>rdd11 <span class="op">=</span> rdd8.join(rdd9)</span>
-<span id="cb107-3"><a href="#cb107-3" aria-hidden="true" tabindex="-1"></a>rdd11.take(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="co"># join  실제로는 cogroup보다는 join을 많이 사용</span></span>
+<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a>rdd11 <span class="op">=</span> rdd8.join(rdd9)</span>
+<span id="cb106-3"><a href="#cb106-3" aria-hidden="true" tabindex="-1"></a>rdd11.take(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>[('k2', ('v2', 'v5')), ('k1', ('v1', 'v4')), ('k3', ('v3', 'v6'))]</code></pre>
 </div>
 </div>
 <div id="833bc60f" class="cell">
-<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="co"># combineByKey</span></span>
-<span id="cb109-2"><a href="#cb109-2" aria-hidden="true" tabindex="-1"></a>r1 <span class="op">=</span> sc.parallelize([(<span class="st">"Math"</span>, <span class="dv">100</span>), (<span class="st">"Eng"</span>, <span class="dv">80</span>), (<span class="st">"Math"</span>, <span class="dv">50</span>), (<span class="st">"Eng"</span>, <span class="dv">70</span>), (<span class="st">"Eng"</span>, <span class="dv">90</span>)])</span>
-<span id="cb109-3"><a href="#cb109-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb109-4"><a href="#cb109-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> to_list(a):</span>
-<span id="cb109-5"><a href="#cb109-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [a]</span>
-<span id="cb109-6"><a href="#cb109-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb109-7"><a href="#cb109-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> append(a, b):</span>
-<span id="cb109-8"><a href="#cb109-8" aria-hidden="true" tabindex="-1"></a>    a.append(b)</span>
-<span id="cb109-9"><a href="#cb109-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> a</span>
-<span id="cb109-10"><a href="#cb109-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb109-11"><a href="#cb109-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> extend(a, b):</span>
-<span id="cb109-12"><a href="#cb109-12" aria-hidden="true" tabindex="-1"></a>    a.extend(b)</span>
-<span id="cb109-13"><a href="#cb109-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> a</span>
-<span id="cb109-14"><a href="#cb109-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb109-15"><a href="#cb109-15" aria-hidden="true" tabindex="-1"></a>rdd12 <span class="op">=</span> r1.combineByKey(to_list, append, extend)</span>
-<span id="cb109-16"><a href="#cb109-16" aria-hidden="true" tabindex="-1"></a>rdd12.take(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="co"># combineByKey</span></span>
+<span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a>r1 <span class="op">=</span> sc.parallelize([(<span class="st">"Math"</span>, <span class="dv">100</span>), (<span class="st">"Eng"</span>, <span class="dv">80</span>), (<span class="st">"Math"</span>, <span class="dv">50</span>), (<span class="st">"Eng"</span>, <span class="dv">70</span>), (<span class="st">"Eng"</span>, <span class="dv">90</span>)])</span>
+<span id="cb108-3"><a href="#cb108-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-4"><a href="#cb108-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> to_list(a):</span>
+<span id="cb108-5"><a href="#cb108-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [a]</span>
+<span id="cb108-6"><a href="#cb108-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-7"><a href="#cb108-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> append(a, b):</span>
+<span id="cb108-8"><a href="#cb108-8" aria-hidden="true" tabindex="-1"></a>    a.append(b)</span>
+<span id="cb108-9"><a href="#cb108-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> a</span>
+<span id="cb108-10"><a href="#cb108-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-11"><a href="#cb108-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> extend(a, b):</span>
+<span id="cb108-12"><a href="#cb108-12" aria-hidden="true" tabindex="-1"></a>    a.extend(b)</span>
+<span id="cb108-13"><a href="#cb108-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> a</span>
+<span id="cb108-14"><a href="#cb108-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-15"><a href="#cb108-15" aria-hidden="true" tabindex="-1"></a>rdd12 <span class="op">=</span> r1.combineByKey(to_list, append, extend)</span>
+<span id="cb108-16"><a href="#cb108-16" aria-hidden="true" tabindex="-1"></a>rdd12.take(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>[('Math', [100, 50]), ('Eng', [80, 70, 90])]</code></pre>
 </div>
@@ -2161,18 +2371,18 @@ IndexError: string index out of range
 <li>보통은 데이터를 읽어오지만, Row를 활용해 데이터를 정의해줄 수도 있음</li>
 </ul>
 <div id="b21c691f" class="cell">
-<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql <span class="im">import</span> Row</span>
-<span id="cb111-2"><a href="#cb111-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb111-3"><a href="#cb111-3" aria-hidden="true" tabindex="-1"></a>r1 <span class="op">=</span> Row(<span class="dv">1</span>, <span class="st">"two"</span>, <span class="va">True</span>)</span>
-<span id="cb111-4"><a href="#cb111-4" aria-hidden="true" tabindex="-1"></a>r1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql <span class="im">import</span> Row</span>
+<span id="cb110-2"><a href="#cb110-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb110-3"><a href="#cb110-3" aria-hidden="true" tabindex="-1"></a>r1 <span class="op">=</span> Row(<span class="dv">1</span>, <span class="st">"two"</span>, <span class="va">True</span>)</span>
+<span id="cb110-4"><a href="#cb110-4" aria-hidden="true" tabindex="-1"></a>r1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>&lt;Row(1, 'two', True)&gt;</code></pre>
 </div>
 </div>
 <div id="d8188db3" class="cell">
-<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(r1[<span class="dv">0</span>])</span>
-<span id="cb113-2"><a href="#cb113-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(r1[<span class="dv">1</span>])</span>
-<span id="cb113-3"><a href="#cb113-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(r1[<span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(r1[<span class="dv">0</span>])</span>
+<span id="cb112-2"><a href="#cb112-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(r1[<span class="dv">1</span>])</span>
+<span id="cb112-3"><a href="#cb112-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(r1[<span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>1
 two
@@ -2187,21 +2397,21 @@ True</code></pre>
 <li>컬럼명 미지정시 _1, _2와 같이 생성됨</li>
 </ul>
 <div id="29764a2b" class="cell">
-<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="co"># DataFrame생성 불가능 예시 (TypeError 발생)</span></span>
-<span id="cb115-2"><a href="#cb115-2" aria-hidden="true" tabindex="-1"></a>data1 <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
-<span id="cb115-3"><a href="#cb115-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb115-4"><a href="#cb115-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> spark.createDataFrame(data1)</span>
-<span id="cb115-5"><a href="#cb115-5" aria-hidden="true" tabindex="-1"></a>df.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="co"># DataFrame생성 불가능 예시 (TypeError 발생)</span></span>
+<span id="cb114-2"><a href="#cb114-2" aria-hidden="true" tabindex="-1"></a>data1 <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
+<span id="cb114-3"><a href="#cb114-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb114-4"><a href="#cb114-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> spark.createDataFrame(data1)</span>
+<span id="cb114-5"><a href="#cb114-5" aria-hidden="true" tabindex="-1"></a>df.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>TypeError: Can not infer schema for type: &lt;class ‘int’&gt;</p>
 <div id="5c1ccebf" class="cell">
-<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="co"># DataFrame생성 가능 예시 (컬럼 미지정)</span></span>
-<span id="cb116-2"><a href="#cb116-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql <span class="im">import</span> Row</span>
-<span id="cb116-3"><a href="#cb116-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-4"><a href="#cb116-4" aria-hidden="true" tabindex="-1"></a>data2 <span class="op">=</span> [Row(<span class="dv">1</span>), Row(<span class="dv">2</span>), Row(<span class="dv">3</span>)]</span>
-<span id="cb116-5"><a href="#cb116-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-6"><a href="#cb116-6" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> spark.createDataFrame(data2)</span>
-<span id="cb116-7"><a href="#cb116-7" aria-hidden="true" tabindex="-1"></a>df.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="co"># DataFrame생성 가능 예시 (컬럼 미지정)</span></span>
+<span id="cb115-2"><a href="#cb115-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql <span class="im">import</span> Row</span>
+<span id="cb115-3"><a href="#cb115-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb115-4"><a href="#cb115-4" aria-hidden="true" tabindex="-1"></a>data2 <span class="op">=</span> [Row(<span class="dv">1</span>), Row(<span class="dv">2</span>), Row(<span class="dv">3</span>)]</span>
+<span id="cb115-5"><a href="#cb115-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb115-6"><a href="#cb115-6" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> spark.createDataFrame(data2)</span>
+<span id="cb115-7"><a href="#cb115-7" aria-hidden="true" tabindex="-1"></a>df.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+---+
 | _1|
@@ -2214,9 +2424,9 @@ True</code></pre>
 </div>
 </div>
 <div id="c73a2efa" class="cell">
-<div class="sourceCode cell-code" id="cb118"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="co"># DataFrame생성 가능 예시 (컬럼 지정)</span></span>
-<span id="cb118-2"><a href="#cb118-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> spark.createDataFrame(data2, [<span class="st">'num'</span>])</span>
-<span id="cb118-3"><a href="#cb118-3" aria-hidden="true" tabindex="-1"></a>df.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb117"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="co"># DataFrame생성 가능 예시 (컬럼 지정)</span></span>
+<span id="cb117-2"><a href="#cb117-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> spark.createDataFrame(data2, [<span class="st">'num'</span>])</span>
+<span id="cb117-3"><a href="#cb117-3" aria-hidden="true" tabindex="-1"></a>df.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+---+
 |num|
@@ -2229,21 +2439,21 @@ True</code></pre>
 </div>
 </div>
 <div id="01cb51cb" class="cell">
-<div class="sourceCode cell-code" id="cb120"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="co"># DataFrame생성 가능 예시 (Class를 활용)</span></span>
-<span id="cb120-2"><a href="#cb120-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Person:</span>
-<span id="cb120-3"><a href="#cb120-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
-<span id="cb120-4"><a href="#cb120-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.name <span class="op">=</span> <span class="st">"name"</span></span>
-<span id="cb120-5"><a href="#cb120-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.age <span class="op">=</span> <span class="dv">20</span></span>
-<span id="cb120-6"><a href="#cb120-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.job <span class="op">=</span> <span class="st">"student"</span></span>
-<span id="cb120-7"><a href="#cb120-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name, age, job):</span>
-<span id="cb120-8"><a href="#cb120-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.name <span class="op">=</span> name</span>
-<span id="cb120-9"><a href="#cb120-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.age <span class="op">=</span> age</span>
-<span id="cb120-10"><a href="#cb120-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.job <span class="op">=</span> job</span>
-<span id="cb120-11"><a href="#cb120-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb120-12"><a href="#cb120-12" aria-hidden="true" tabindex="-1"></a>p1 <span class="op">=</span> Person(<span class="st">"foo"</span>, <span class="dv">30</span>, <span class="st">"programmer"</span>)</span>
-<span id="cb120-13"><a href="#cb120-13" aria-hidden="true" tabindex="-1"></a>p2 <span class="op">=</span> Person(<span class="st">"bar"</span>, <span class="dv">10</span>, <span class="st">"student"</span>)</span>
-<span id="cb120-14"><a href="#cb120-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb120-15"><a href="#cb120-15" aria-hidden="true" tabindex="-1"></a>spark.createDataFrame([p1, p2]).show(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb119"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="co"># DataFrame생성 가능 예시 (Class를 활용)</span></span>
+<span id="cb119-2"><a href="#cb119-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Person:</span>
+<span id="cb119-3"><a href="#cb119-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb119-4"><a href="#cb119-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.name <span class="op">=</span> <span class="st">"name"</span></span>
+<span id="cb119-5"><a href="#cb119-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.age <span class="op">=</span> <span class="dv">20</span></span>
+<span id="cb119-6"><a href="#cb119-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.job <span class="op">=</span> <span class="st">"student"</span></span>
+<span id="cb119-7"><a href="#cb119-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name, age, job):</span>
+<span id="cb119-8"><a href="#cb119-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.name <span class="op">=</span> name</span>
+<span id="cb119-9"><a href="#cb119-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.age <span class="op">=</span> age</span>
+<span id="cb119-10"><a href="#cb119-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.job <span class="op">=</span> job</span>
+<span id="cb119-11"><a href="#cb119-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb119-12"><a href="#cb119-12" aria-hidden="true" tabindex="-1"></a>p1 <span class="op">=</span> Person(<span class="st">"foo"</span>, <span class="dv">30</span>, <span class="st">"programmer"</span>)</span>
+<span id="cb119-13"><a href="#cb119-13" aria-hidden="true" tabindex="-1"></a>p2 <span class="op">=</span> Person(<span class="st">"bar"</span>, <span class="dv">10</span>, <span class="st">"student"</span>)</span>
+<span id="cb119-14"><a href="#cb119-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb119-15"><a href="#cb119-15" aria-hidden="true" tabindex="-1"></a>spark.createDataFrame([p1, p2]).show(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+---+----------+----+
 |age|       job|name|
@@ -2255,11 +2465,11 @@ True</code></pre>
 </div>
 </div>
 <div id="96783b66" class="cell">
-<div class="sourceCode cell-code" id="cb122"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="co"># DataFrame생성 가능 예시 (Tuple 활용)</span></span>
-<span id="cb122-2"><a href="#cb122-2" aria-hidden="true" tabindex="-1"></a>t1 <span class="op">=</span> (<span class="st">"foo"</span>, <span class="dv">30</span>, <span class="st">"programmer"</span>)</span>
-<span id="cb122-3"><a href="#cb122-3" aria-hidden="true" tabindex="-1"></a>t2 <span class="op">=</span> (<span class="st">"bar"</span>, <span class="dv">10</span>, <span class="st">"student"</span>)</span>
-<span id="cb122-4"><a href="#cb122-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb122-5"><a href="#cb122-5" aria-hidden="true" tabindex="-1"></a>spark.createDataFrame([t1, t2]).show(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb121"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb121-1"><a href="#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="co"># DataFrame생성 가능 예시 (Tuple 활용)</span></span>
+<span id="cb121-2"><a href="#cb121-2" aria-hidden="true" tabindex="-1"></a>t1 <span class="op">=</span> (<span class="st">"foo"</span>, <span class="dv">30</span>, <span class="st">"programmer"</span>)</span>
+<span id="cb121-3"><a href="#cb121-3" aria-hidden="true" tabindex="-1"></a>t2 <span class="op">=</span> (<span class="st">"bar"</span>, <span class="dv">10</span>, <span class="st">"student"</span>)</span>
+<span id="cb121-4"><a href="#cb121-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb121-5"><a href="#cb121-5" aria-hidden="true" tabindex="-1"></a>spark.createDataFrame([t1, t2]).show(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+---+---+----------+
 | _1| _2|        _3|
@@ -2271,11 +2481,11 @@ True</code></pre>
 </div>
 </div>
 <div id="b7e502e7" class="cell">
-<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="co"># DataFrame생성 가능 예시 (Tuple 활용+컬럼지정)</span></span>
-<span id="cb124-2"><a href="#cb124-2" aria-hidden="true" tabindex="-1"></a>t1 <span class="op">=</span> (<span class="st">"foo"</span>, <span class="dv">30</span>, <span class="st">"programmer"</span>)</span>
-<span id="cb124-3"><a href="#cb124-3" aria-hidden="true" tabindex="-1"></a>t2 <span class="op">=</span> (<span class="st">"bar"</span>, <span class="dv">10</span>, <span class="st">"student"</span>)</span>
-<span id="cb124-4"><a href="#cb124-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb124-5"><a href="#cb124-5" aria-hidden="true" tabindex="-1"></a>spark.createDataFrame([t1, t2],[<span class="st">'name'</span>,<span class="st">'age'</span>,<span class="st">'job'</span>]).show(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb123"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb123-1"><a href="#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="co"># DataFrame생성 가능 예시 (Tuple 활용+컬럼지정)</span></span>
+<span id="cb123-2"><a href="#cb123-2" aria-hidden="true" tabindex="-1"></a>t1 <span class="op">=</span> (<span class="st">"foo"</span>, <span class="dv">30</span>, <span class="st">"programmer"</span>)</span>
+<span id="cb123-3"><a href="#cb123-3" aria-hidden="true" tabindex="-1"></a>t2 <span class="op">=</span> (<span class="st">"bar"</span>, <span class="dv">10</span>, <span class="st">"student"</span>)</span>
+<span id="cb123-4"><a href="#cb123-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb123-5"><a href="#cb123-5" aria-hidden="true" tabindex="-1"></a>spark.createDataFrame([t1, t2],[<span class="st">'name'</span>,<span class="st">'age'</span>,<span class="st">'job'</span>]).show(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+----+---+----------+
 |name|age|       job|
@@ -2287,24 +2497,24 @@ True</code></pre>
 </div>
 </div>
 <div id="5e6c9c12" class="cell">
-<div class="sourceCode cell-code" id="cb126"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="co"># DataFrame생성 가능 예시 (스키마 정의)</span></span>
-<span id="cb126-2"><a href="#cb126-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb126-3"><a href="#cb126-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.types <span class="im">import</span> StructType,StructField,StringType,IntegerType</span>
-<span id="cb126-4"><a href="#cb126-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb126-5"><a href="#cb126-5" aria-hidden="true" tabindex="-1"></a>schema <span class="op">=</span> StructType(</span>
-<span id="cb126-6"><a href="#cb126-6" aria-hidden="true" tabindex="-1"></a>    [StructField(<span class="st">"name"</span>, StringType(), nullable <span class="op">=</span> <span class="va">True</span>),</span>
-<span id="cb126-7"><a href="#cb126-7" aria-hidden="true" tabindex="-1"></a>     StructField(<span class="st">"age"</span>, IntegerType(), nullable <span class="op">=</span> <span class="va">True</span>),</span>
-<span id="cb126-8"><a href="#cb126-8" aria-hidden="true" tabindex="-1"></a>     StructField(<span class="st">"job"</span>, StringType(), nullable <span class="op">=</span> <span class="va">True</span>)]</span>
-<span id="cb126-9"><a href="#cb126-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb126-10"><a href="#cb126-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb126-11"><a href="#cb126-11" aria-hidden="true" tabindex="-1"></a>rowRDD <span class="op">=</span> sc.parallelize([Row(<span class="st">"foo"</span>, <span class="dv">7</span>, <span class="st">"programmer"</span>), Row(<span class="st">"bar"</span>, <span class="dv">13</span>, <span class="st">"student"</span>)])</span>
-<span id="cb126-12"><a href="#cb126-12" aria-hidden="true" tabindex="-1"></a>rowRDD.collect()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb125"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb125-1"><a href="#cb125-1" aria-hidden="true" tabindex="-1"></a><span class="co"># DataFrame생성 가능 예시 (스키마 정의)</span></span>
+<span id="cb125-2"><a href="#cb125-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-3"><a href="#cb125-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.types <span class="im">import</span> StructType,StructField,StringType,IntegerType</span>
+<span id="cb125-4"><a href="#cb125-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-5"><a href="#cb125-5" aria-hidden="true" tabindex="-1"></a>schema <span class="op">=</span> StructType(</span>
+<span id="cb125-6"><a href="#cb125-6" aria-hidden="true" tabindex="-1"></a>    [StructField(<span class="st">"name"</span>, StringType(), nullable <span class="op">=</span> <span class="va">True</span>),</span>
+<span id="cb125-7"><a href="#cb125-7" aria-hidden="true" tabindex="-1"></a>     StructField(<span class="st">"age"</span>, IntegerType(), nullable <span class="op">=</span> <span class="va">True</span>),</span>
+<span id="cb125-8"><a href="#cb125-8" aria-hidden="true" tabindex="-1"></a>     StructField(<span class="st">"job"</span>, StringType(), nullable <span class="op">=</span> <span class="va">True</span>)]</span>
+<span id="cb125-9"><a href="#cb125-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb125-10"><a href="#cb125-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-11"><a href="#cb125-11" aria-hidden="true" tabindex="-1"></a>rowRDD <span class="op">=</span> sc.parallelize([Row(<span class="st">"foo"</span>, <span class="dv">7</span>, <span class="st">"programmer"</span>), Row(<span class="st">"bar"</span>, <span class="dv">13</span>, <span class="st">"student"</span>)])</span>
+<span id="cb125-12"><a href="#cb125-12" aria-hidden="true" tabindex="-1"></a>rowRDD.collect()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>[&lt;Row('foo', 7, 'programmer')&gt;, &lt;Row('bar', 13, 'student')&gt;]</code></pre>
 </div>
 </div>
 <div id="e06fce22" class="cell">
-<div class="sourceCode cell-code" id="cb128"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a>spark.createDataFrame(rowRDD, schema).show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb127"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb127-1"><a href="#cb127-1" aria-hidden="true" tabindex="-1"></a>spark.createDataFrame(rowRDD, schema).show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+----+---+----------+
 |name|age|       job|
@@ -2316,10 +2526,10 @@ True</code></pre>
 </div>
 </div>
 <div id="f0bee0c2" class="cell">
-<div class="sourceCode cell-code" id="cb130"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SparkSession을 활용해 DataFrame으로 생성 [spark.read.text()]</span></span>
-<span id="cb130-2"><a href="#cb130-2" aria-hidden="true" tabindex="-1"></a>spark.read.text(<span class="st">"../data/movies.csv"</span>).show(<span class="dv">3</span>)</span>
-<span id="cb130-3"><a href="#cb130-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb130-4"><a href="#cb130-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 참고 : sc.textFile() : SparkContext를 활용해 RDD로 생성</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb129"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb129-1"><a href="#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SparkSession을 활용해 DataFrame으로 생성 [spark.read.text()]</span></span>
+<span id="cb129-2"><a href="#cb129-2" aria-hidden="true" tabindex="-1"></a>spark.read.text(<span class="st">"../data/movies.csv"</span>).show(<span class="dv">3</span>)</span>
+<span id="cb129-3"><a href="#cb129-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb129-4"><a href="#cb129-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 참고 : sc.textFile() : SparkContext를 활용해 RDD로 생성</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+--------------------+
 |               value|
@@ -2333,8 +2543,8 @@ only showing top 3 rows
 </div>
 </div>
 <div id="ba260c08" class="cell">
-<div class="sourceCode cell-code" id="cb132"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SparkSession을 활용해 DataFrame으로 생성 [read.option()]</span></span>
-<span id="cb132-2"><a href="#cb132-2" aria-hidden="true" tabindex="-1"></a>spark.read.option(<span class="st">"sep"</span>, <span class="st">","</span>).csv(<span class="st">"../data/movies.csv"</span>).show(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb131"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb131-1"><a href="#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SparkSession을 활용해 DataFrame으로 생성 [read.option()]</span></span>
+<span id="cb131-2"><a href="#cb131-2" aria-hidden="true" tabindex="-1"></a>spark.read.option(<span class="st">"sep"</span>, <span class="st">","</span>).csv(<span class="st">"../data/movies.csv"</span>).show(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+-------+----------------+--------------------+
 |    _c0|             _c1|                 _c2|
@@ -2348,8 +2558,8 @@ only showing top 3 rows
 </div>
 </div>
 <div id="e810ec21" class="cell">
-<div class="sourceCode cell-code" id="cb134"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SparkSession을 활용해 DataFrame으로 생성 [read.option(), 여러 데이터 소스]</span></span>
-<span id="cb134-2"><a href="#cb134-2" aria-hidden="true" tabindex="-1"></a>spark.read.option(<span class="st">"basePath"</span>, <span class="st">"../data/"</span>).csv(<span class="st">"../data/*.csv"</span>).show(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb133"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb133-1"><a href="#cb133-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SparkSession을 활용해 DataFrame으로 생성 [read.option(), 여러 데이터 소스]</span></span>
+<span id="cb133-2"><a href="#cb133-2" aria-hidden="true" tabindex="-1"></a>spark.read.option(<span class="st">"basePath"</span>, <span class="st">"../data/"</span>).csv(<span class="st">"../data/*.csv"</span>).show(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+------+-------+------+---------+
 |   _c0|    _c1|   _c2|      _c3|
@@ -2363,26 +2573,26 @@ only showing top 3 rows
 </div>
 </div>
 <div id="6f1c3ac2" class="cell">
-<div class="sourceCode cell-code" id="cb136"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb136-1"><a href="#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Table을 만들고 쿼리해서 사용 (영구적으로 사용할 수 없는 테이블임을 유의)</span></span>
-<span id="cb136-2"><a href="#cb136-2" aria-hidden="true" tabindex="-1"></a><span class="co">## buckected_table이란 이름의 table이 없으면(count == 0)</span></span>
-<span id="cb136-3"><a href="#cb136-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (spark.sql(<span class="st">"show tables"</span>).where(<span class="st">"tableName = 'buckected_table' "</span>).count() <span class="op">==</span> <span class="dv">0</span>):</span>
-<span id="cb136-4"><a href="#cb136-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">## Data를 읽고</span></span>
-<span id="cb136-5"><a href="#cb136-5" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> spark.read.csv(<span class="st">"../data/movies.csv"</span>)</span>
-<span id="cb136-6"><a href="#cb136-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">## created_at 기준으로 3개의 bucket으로 나누고 / buckected_table로 테이블 생성</span></span>
-<span id="cb136-7"><a href="#cb136-7" aria-hidden="true" tabindex="-1"></a>    df.repartition(<span class="dv">1</span>).write.mode(<span class="st">"Overwrite"</span>).bucketBy(<span class="dv">3</span>, <span class="st">"id"</span>).saveAsTable(<span class="st">"buckected_table"</span>)</span>
-<span id="cb136-8"><a href="#cb136-8" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb136-9"><a href="#cb136-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">## 테이블을 읽고 SQL 쿼리 사용</span></span>
-<span id="cb136-10"><a href="#cb136-10" aria-hidden="true" tabindex="-1"></a>    spark.read.table(<span class="st">"buckected_table"</span>)</span>
-<span id="cb136-11"><a href="#cb136-11" aria-hidden="true" tabindex="-1"></a>    spark.sql(<span class="st">"select * from buckected_table limit 10"</span>)    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb135"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Table을 만들고 쿼리해서 사용 (영구적으로 사용할 수 없는 테이블임을 유의)</span></span>
+<span id="cb135-2"><a href="#cb135-2" aria-hidden="true" tabindex="-1"></a><span class="co">## buckected_table이란 이름의 table이 없으면(count == 0)</span></span>
+<span id="cb135-3"><a href="#cb135-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (spark.sql(<span class="st">"show tables"</span>).where(<span class="st">"tableName = 'buckected_table' "</span>).count() <span class="op">==</span> <span class="dv">0</span>):</span>
+<span id="cb135-4"><a href="#cb135-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">## Data를 읽고</span></span>
+<span id="cb135-5"><a href="#cb135-5" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> spark.read.csv(<span class="st">"../data/movies.csv"</span>)</span>
+<span id="cb135-6"><a href="#cb135-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">## created_at 기준으로 3개의 bucket으로 나누고 / buckected_table로 테이블 생성</span></span>
+<span id="cb135-7"><a href="#cb135-7" aria-hidden="true" tabindex="-1"></a>    df.repartition(<span class="dv">1</span>).write.mode(<span class="st">"Overwrite"</span>).bucketBy(<span class="dv">3</span>, <span class="st">"id"</span>).saveAsTable(<span class="st">"buckected_table"</span>)</span>
+<span id="cb135-8"><a href="#cb135-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb135-9"><a href="#cb135-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">## 테이블을 읽고 SQL 쿼리 사용</span></span>
+<span id="cb135-10"><a href="#cb135-10" aria-hidden="true" tabindex="-1"></a>    spark.read.table(<span class="st">"buckected_table"</span>)</span>
+<span id="cb135-11"><a href="#cb135-11" aria-hidden="true" tabindex="-1"></a>    spark.sql(<span class="st">"select * from buckected_table limit 10"</span>)    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="dataframe-api" class="level4">
 <h4 class="anchored" data-anchor-id="dataframe-api">DataFrame API</h4>
 <div id="24caf430" class="cell">
-<div class="sourceCode cell-code" id="cb137"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb137-1"><a href="#cb137-1" aria-hidden="true" tabindex="-1"></a><span class="co"># .select()를 사용해 쿼리</span></span>
-<span id="cb137-2"><a href="#cb137-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb137-3"><a href="#cb137-3" aria-hidden="true" tabindex="-1"></a>df1 <span class="op">=</span> spark.read.json(<span class="st">"../data/*.json"</span>)</span>
-<span id="cb137-4"><a href="#cb137-4" aria-hidden="true" tabindex="-1"></a>df1.show(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb136"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb136-1"><a href="#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="co"># .select()를 사용해 쿼리</span></span>
+<span id="cb136-2"><a href="#cb136-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb136-3"><a href="#cb136-3" aria-hidden="true" tabindex="-1"></a>df1 <span class="op">=</span> spark.read.json(<span class="st">"../data/*.json"</span>)</span>
+<span id="cb136-4"><a href="#cb136-4" aria-hidden="true" tabindex="-1"></a>df1.show(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+--------------------+----------+--------------------+--------------------+------+--------------------+------------------+
 |               actor|created_at|                 org|             payload|public|                repo|              type|
@@ -2396,7 +2606,7 @@ only showing top 3 rows
 </div>
 </div>
 <div id="7c8b135d" class="cell">
-<div class="sourceCode cell-code" id="cb139"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb139-1"><a href="#cb139-1" aria-hidden="true" tabindex="-1"></a>df1.printSchema()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb138"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb138-1"><a href="#cb138-1" aria-hidden="true" tabindex="-1"></a>df1.printSchema()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>root
  |-- actor: string (nullable = true)
@@ -2410,7 +2620,7 @@ only showing top 3 rows
 </div>
 </div>
 <div id="1667f4dd" class="cell">
-<div class="sourceCode cell-code" id="cb141"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb141-1"><a href="#cb141-1" aria-hidden="true" tabindex="-1"></a>df1.select(<span class="st">"actor"</span>, <span class="st">"created_at"</span>).show(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb140"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb140-1"><a href="#cb140-1" aria-hidden="true" tabindex="-1"></a>df1.select(<span class="st">"actor"</span>, <span class="st">"created_at"</span>).show(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+--------------------+----------+
 |               actor|created_at|
@@ -2424,8 +2634,8 @@ only showing top 3 rows
 </div>
 </div>
 <div id="e9b8389c" class="cell">
-<div class="sourceCode cell-code" id="cb143"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb143-1"><a href="#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SparkSQL (Expression) 활용</span></span>
-<span id="cb143-2"><a href="#cb143-2" aria-hidden="true" tabindex="-1"></a>df1.selectExpr(<span class="st">'actor'</span>).show(<span class="dv">3</span>, <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb142"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb142-1"><a href="#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SparkSQL (Expression) 활용</span></span>
+<span id="cb142-2"><a href="#cb142-2" aria-hidden="true" tabindex="-1"></a>df1.selectExpr(<span class="st">'actor'</span>).show(<span class="dv">3</span>, <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |actor                                                                                                                                                                                                                    |
@@ -2439,8 +2649,8 @@ only showing top 3 rows
 </div>
 </div>
 <div id="edc943f0" class="cell">
-<div class="sourceCode cell-code" id="cb145"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb145-1"><a href="#cb145-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SparkSQL (Expression) 활용</span></span>
-<span id="cb145-2"><a href="#cb145-2" aria-hidden="true" tabindex="-1"></a>df1.selectExpr(<span class="st">'upper(actor) as upperName'</span>).show(<span class="dv">3</span>, <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb144"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb144-1"><a href="#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SparkSQL (Expression) 활용</span></span>
+<span id="cb144-2"><a href="#cb144-2" aria-hidden="true" tabindex="-1"></a>df1.selectExpr(<span class="st">'upper(actor) as upperName'</span>).show(<span class="dv">3</span>, <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |upperName                                                                                                                                                                                                                |
@@ -2454,16 +2664,16 @@ only showing top 3 rows
 </div>
 </div>
 <div id="b80d99f7" class="cell">
-<div class="sourceCode cell-code" id="cb147"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb147-1"><a href="#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="co"># col을 사용해 쿼리</span></span>
-<span id="cb147-2"><a href="#cb147-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb147-3"><a href="#cb147-3" aria-hidden="true" tabindex="-1"></a><span class="co">## pyspark.sql.functions.* 의 모든 타입은 column을 input으로 받는다</span></span>
-<span id="cb147-4"><a href="#cb147-4" aria-hidden="true" tabindex="-1"></a><span class="co">## split('id',', ')는 미동작 → split(col('id'),', ')해야 동작</span></span>
-<span id="cb147-5"><a href="#cb147-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> col</span>
-<span id="cb147-6"><a href="#cb147-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb147-7"><a href="#cb147-7" aria-hidden="true" tabindex="-1"></a>c1 <span class="op">=</span> col(<span class="st">"actor"</span>)</span>
-<span id="cb147-8"><a href="#cb147-8" aria-hidden="true" tabindex="-1"></a>c2 <span class="op">=</span> col(<span class="st">"org"</span>)</span>
-<span id="cb147-9"><a href="#cb147-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb147-10"><a href="#cb147-10" aria-hidden="true" tabindex="-1"></a>df1.select(c1, c2).show(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb146"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb146-1"><a href="#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="co"># col을 사용해 쿼리</span></span>
+<span id="cb146-2"><a href="#cb146-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb146-3"><a href="#cb146-3" aria-hidden="true" tabindex="-1"></a><span class="co">## pyspark.sql.functions.* 의 모든 타입은 column을 input으로 받는다</span></span>
+<span id="cb146-4"><a href="#cb146-4" aria-hidden="true" tabindex="-1"></a><span class="co">## split('id',', ')는 미동작 → split(col('id'),', ')해야 동작</span></span>
+<span id="cb146-5"><a href="#cb146-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> col</span>
+<span id="cb146-6"><a href="#cb146-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb146-7"><a href="#cb146-7" aria-hidden="true" tabindex="-1"></a>c1 <span class="op">=</span> col(<span class="st">"actor"</span>)</span>
+<span id="cb146-8"><a href="#cb146-8" aria-hidden="true" tabindex="-1"></a>c2 <span class="op">=</span> col(<span class="st">"org"</span>)</span>
+<span id="cb146-9"><a href="#cb146-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb146-10"><a href="#cb146-10" aria-hidden="true" tabindex="-1"></a>df1.select(c1, c2).show(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+--------------------+--------------------+
 |               actor|                 org|
@@ -2477,11 +2687,11 @@ only showing top 3 rows
 </div>
 </div>
 <div id="74da9e24" class="cell">
-<div class="sourceCode cell-code" id="cb149"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb149-1"><a href="#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter 사용</span></span>
-<span id="cb149-2"><a href="#cb149-2" aria-hidden="true" tabindex="-1"></a>data2 <span class="op">=</span> [Row(<span class="dv">1</span>), Row(<span class="dv">2</span>), Row(<span class="dv">3</span>)]</span>
-<span id="cb149-3"><a href="#cb149-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> spark.createDataFrame(data2)</span>
-<span id="cb149-4"><a href="#cb149-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb149-5"><a href="#cb149-5" aria-hidden="true" tabindex="-1"></a>df.<span class="bu">filter</span>(<span class="st">"_1 == 2"</span>).show(<span class="dv">3</span>, <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb148"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb148-1"><a href="#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter 사용</span></span>
+<span id="cb148-2"><a href="#cb148-2" aria-hidden="true" tabindex="-1"></a>data2 <span class="op">=</span> [Row(<span class="dv">1</span>), Row(<span class="dv">2</span>), Row(<span class="dv">3</span>)]</span>
+<span id="cb148-3"><a href="#cb148-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> spark.createDataFrame(data2)</span>
+<span id="cb148-4"><a href="#cb148-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb148-5"><a href="#cb148-5" aria-hidden="true" tabindex="-1"></a>df.<span class="bu">filter</span>(<span class="st">"_1 == 2"</span>).show(<span class="dv">3</span>, <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+---+
 |_1 |
@@ -2492,11 +2702,11 @@ only showing top 3 rows
 </div>
 </div>
 <div id="adbfd8a5" class="cell">
-<div class="sourceCode cell-code" id="cb151"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb151-1"><a href="#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="co"># where 사용</span></span>
-<span id="cb151-2"><a href="#cb151-2" aria-hidden="true" tabindex="-1"></a>data2 <span class="op">=</span> [Row(<span class="dv">1</span>), Row(<span class="dv">2</span>), Row(<span class="dv">3</span>)]</span>
-<span id="cb151-3"><a href="#cb151-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> spark.createDataFrame(data2)</span>
-<span id="cb151-4"><a href="#cb151-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb151-5"><a href="#cb151-5" aria-hidden="true" tabindex="-1"></a>df.where(<span class="st">"_1 == 2"</span>).show(<span class="dv">3</span>, <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb150"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb150-1"><a href="#cb150-1" aria-hidden="true" tabindex="-1"></a><span class="co"># where 사용</span></span>
+<span id="cb150-2"><a href="#cb150-2" aria-hidden="true" tabindex="-1"></a>data2 <span class="op">=</span> [Row(<span class="dv">1</span>), Row(<span class="dv">2</span>), Row(<span class="dv">3</span>)]</span>
+<span id="cb150-3"><a href="#cb150-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> spark.createDataFrame(data2)</span>
+<span id="cb150-4"><a href="#cb150-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb150-5"><a href="#cb150-5" aria-hidden="true" tabindex="-1"></a>df.where(<span class="st">"_1 == 2"</span>).show(<span class="dv">3</span>, <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+---+
 |_1 |
@@ -2507,11 +2717,11 @@ only showing top 3 rows
 </div>
 </div>
 <div id="4ece3720" class="cell">
-<div class="sourceCode cell-code" id="cb153"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb153-1"><a href="#cb153-1" aria-hidden="true" tabindex="-1"></a><span class="co"># orderBy</span></span>
-<span id="cb153-2"><a href="#cb153-2" aria-hidden="true" tabindex="-1"></a>data2 <span class="op">=</span> [Row(<span class="dv">3</span>), Row(<span class="dv">2</span>), Row(<span class="dv">4</span>)]</span>
-<span id="cb153-3"><a href="#cb153-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> spark.createDataFrame(data2)</span>
-<span id="cb153-4"><a href="#cb153-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb153-5"><a href="#cb153-5" aria-hidden="true" tabindex="-1"></a>df.orderBy(<span class="st">"_1"</span>).show(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb152"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb152-1"><a href="#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="co"># orderBy</span></span>
+<span id="cb152-2"><a href="#cb152-2" aria-hidden="true" tabindex="-1"></a>data2 <span class="op">=</span> [Row(<span class="dv">3</span>), Row(<span class="dv">2</span>), Row(<span class="dv">4</span>)]</span>
+<span id="cb152-3"><a href="#cb152-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> spark.createDataFrame(data2)</span>
+<span id="cb152-4"><a href="#cb152-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb152-5"><a href="#cb152-5" aria-hidden="true" tabindex="-1"></a>df.orderBy(<span class="st">"_1"</span>).show(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+---+
 | _1|
@@ -2524,11 +2734,11 @@ only showing top 3 rows
 </div>
 </div>
 <div id="027b6394" class="cell">
-<div class="sourceCode cell-code" id="cb155"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb155-1"><a href="#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sort</span></span>
-<span id="cb155-2"><a href="#cb155-2" aria-hidden="true" tabindex="-1"></a>data2 <span class="op">=</span> [Row(<span class="dv">3</span>), Row(<span class="dv">2</span>), Row(<span class="dv">4</span>)]</span>
-<span id="cb155-3"><a href="#cb155-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> spark.createDataFrame(data2)</span>
-<span id="cb155-4"><a href="#cb155-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-5"><a href="#cb155-5" aria-hidden="true" tabindex="-1"></a>df.sort(col(<span class="st">"_1"</span>)).show(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb154"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb154-1"><a href="#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sort</span></span>
+<span id="cb154-2"><a href="#cb154-2" aria-hidden="true" tabindex="-1"></a>data2 <span class="op">=</span> [Row(<span class="dv">3</span>), Row(<span class="dv">2</span>), Row(<span class="dv">4</span>)]</span>
+<span id="cb154-3"><a href="#cb154-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> spark.createDataFrame(data2)</span>
+<span id="cb154-4"><a href="#cb154-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-5"><a href="#cb154-5" aria-hidden="true" tabindex="-1"></a>df.sort(col(<span class="st">"_1"</span>)).show(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+---+
 | _1|
@@ -2541,14 +2751,14 @@ only showing top 3 rows
 </div>
 </div>
 <div id="1fb98244" class="cell">
-<div class="sourceCode cell-code" id="cb157"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb157-1"><a href="#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="co"># groupBy</span></span>
-<span id="cb157-2"><a href="#cb157-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyspark.sql.functions <span class="im">as</span> F</span>
-<span id="cb157-3"><a href="#cb157-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb157-4"><a href="#cb157-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> spark.read.json(<span class="st">"../data/*.json"</span>)</span>
-<span id="cb157-5"><a href="#cb157-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb157-6"><a href="#cb157-6" aria-hidden="true" tabindex="-1"></a><span class="co"># aggregations</span></span>
-<span id="cb157-7"><a href="#cb157-7" aria-hidden="true" tabindex="-1"></a>groupedDF <span class="op">=</span> df.groupBy(<span class="st">"type"</span>)</span>
-<span id="cb157-8"><a href="#cb157-8" aria-hidden="true" tabindex="-1"></a>groupedDF.agg(F.<span class="bu">max</span>(F.col(<span class="st">"created_at"</span>))).show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb156"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb156-1"><a href="#cb156-1" aria-hidden="true" tabindex="-1"></a><span class="co"># groupBy</span></span>
+<span id="cb156-2"><a href="#cb156-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyspark.sql.functions <span class="im">as</span> F</span>
+<span id="cb156-3"><a href="#cb156-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb156-4"><a href="#cb156-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> spark.read.json(<span class="st">"../data/*.json"</span>)</span>
+<span id="cb156-5"><a href="#cb156-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb156-6"><a href="#cb156-6" aria-hidden="true" tabindex="-1"></a><span class="co"># aggregations</span></span>
+<span id="cb156-7"><a href="#cb156-7" aria-hidden="true" tabindex="-1"></a>groupedDF <span class="op">=</span> df.groupBy(<span class="st">"type"</span>)</span>
+<span id="cb156-8"><a href="#cb156-8" aria-hidden="true" tabindex="-1"></a>groupedDF.agg(F.<span class="bu">max</span>(F.col(<span class="st">"created_at"</span>))).show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+------------------+---------------+
 |              type|max(created_at)|
@@ -2559,18 +2769,23 @@ only showing top 3 rows
 </div>
 </div>
 <div id="bb954f3a" class="cell">
-<div class="sourceCode cell-code" id="cb159"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb159-1"><a href="#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 중복제거</span></span>
-<span id="cb159-2"><a href="#cb159-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df.count())</span>
-<span id="cb159-3"><a href="#cb159-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df.distinct().count())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb158"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb158-1"><a href="#cb158-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 중복제거</span></span>
+<span id="cb158-2"><a href="#cb158-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df.count())</span>
+<span id="cb158-3"><a href="#cb158-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df.distinct().count())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>228
-228</code></pre>
+<pre><code>228</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 [Stage 218:=================================&gt;                   (128 + 1) / 200]
 
-[Stage 218:==============================================&gt;      (176 + 1) / 200]
+[Stage 218:==============================================&gt;      (176 + 1) / 200]</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>228</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
                                                                                 </code></pre>
 </div>
 </div>
@@ -2588,10 +2803,10 @@ only showing top 3 rows
 </ul></li>
 </ul>
 <div id="019fa8fc" class="cell">
-<div class="sourceCode cell-code" id="cb162"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb162-1"><a href="#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyspark.sql.functions <span class="im">as</span> F</span>
-<span id="cb162-2"><a href="#cb162-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb162-3"><a href="#cb162-3" aria-hidden="true" tabindex="-1"></a><span class="co"># actor컬럼을 trim해서, newColumn라는 컬럼을 새로 만들어 저장</span></span>
-<span id="cb162-4"><a href="#cb162-4" aria-hidden="true" tabindex="-1"></a>df.withColumn(<span class="st">"newColumn"</span>, F.trim(F.col(<span class="st">"actor"</span>))).show(<span class="dv">3</span>,<span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb163"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb163-1"><a href="#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyspark.sql.functions <span class="im">as</span> F</span>
+<span id="cb163-2"><a href="#cb163-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-3"><a href="#cb163-3" aria-hidden="true" tabindex="-1"></a><span class="co"># actor컬럼을 trim해서, newColumn라는 컬럼을 새로 만들어 저장</span></span>
+<span id="cb163-4"><a href="#cb163-4" aria-hidden="true" tabindex="-1"></a>df.withColumn(<span class="st">"newColumn"</span>, F.trim(F.col(<span class="st">"actor"</span>))).show(<span class="dv">3</span>,<span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------+----------------------------------------------------------------------------------------------------------------+------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |actor                                                                                                                                                                                                                    |created_at|org                                                                                                                                                                          |payload                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |public|repo                                                                                                            |type              |newColumn                                                                                                                                                                                                                |
@@ -2608,9 +2823,9 @@ only showing top 3 rows
 <section id="column-api" class="level4">
 <h4 class="anchored" data-anchor-id="column-api">Column API</h4>
 <div id="894fa3a5" class="cell">
-<div class="sourceCode cell-code" id="cb164"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb164-1"><a href="#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Seㅣect + Col로 DataFrame생성하기</span></span>
-<span id="cb164-2"><a href="#cb164-2" aria-hidden="true" tabindex="-1"></a>df1 <span class="op">=</span> spark.read.json(<span class="st">"../data/*.json"</span>)</span>
-<span id="cb164-3"><a href="#cb164-3" aria-hidden="true" tabindex="-1"></a>df1.printSchema()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb165"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb165-1"><a href="#cb165-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Seㅣect + Col로 DataFrame생성하기</span></span>
+<span id="cb165-2"><a href="#cb165-2" aria-hidden="true" tabindex="-1"></a>df1 <span class="op">=</span> spark.read.json(<span class="st">"../data/*.json"</span>)</span>
+<span id="cb165-3"><a href="#cb165-3" aria-hidden="true" tabindex="-1"></a>df1.printSchema()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>root
  |-- actor: string (nullable = true)
@@ -2624,11 +2839,11 @@ only showing top 3 rows
 </div>
 </div>
 <div id="b356be5f" class="cell">
-<div class="sourceCode cell-code" id="cb166"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb166-1"><a href="#cb166-1" aria-hidden="true" tabindex="-1"></a>c1 <span class="op">=</span> F.col(<span class="st">"actor"</span>)</span>
-<span id="cb166-2"><a href="#cb166-2" aria-hidden="true" tabindex="-1"></a>c2 <span class="op">=</span> F.col(<span class="st">"org"</span>)</span>
-<span id="cb166-3"><a href="#cb166-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb166-4"><a href="#cb166-4" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> df1.select(c1, c2)</span>
-<span id="cb166-5"><a href="#cb166-5" aria-hidden="true" tabindex="-1"></a>df2.printSchema()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb167"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb167-1"><a href="#cb167-1" aria-hidden="true" tabindex="-1"></a>c1 <span class="op">=</span> F.col(<span class="st">"actor"</span>)</span>
+<span id="cb167-2"><a href="#cb167-2" aria-hidden="true" tabindex="-1"></a>c2 <span class="op">=</span> F.col(<span class="st">"org"</span>)</span>
+<span id="cb167-3"><a href="#cb167-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb167-4"><a href="#cb167-4" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> df1.select(c1, c2)</span>
+<span id="cb167-5"><a href="#cb167-5" aria-hidden="true" tabindex="-1"></a>df2.printSchema()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>root
  |-- actor: string (nullable = true)
@@ -2637,8 +2852,8 @@ only showing top 3 rows
 </div>
 </div>
 <div id="22ddabe8" class="cell">
-<div class="sourceCode cell-code" id="cb168"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb168-1"><a href="#cb168-1" aria-hidden="true" tabindex="-1"></a><span class="co"># orderBy</span></span>
-<span id="cb168-2"><a href="#cb168-2" aria-hidden="true" tabindex="-1"></a>df1.select(<span class="st">"org"</span>).orderBy(<span class="st">"created_at"</span>).show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb169"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb169-1"><a href="#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="co"># orderBy</span></span>
+<span id="cb169-2"><a href="#cb169-2" aria-hidden="true" tabindex="-1"></a>df1.select(<span class="st">"org"</span>).orderBy(<span class="st">"created_at"</span>).show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+--------------------+
 |                 org|
@@ -2654,12 +2869,12 @@ only showing top 5 rows
 </div>
 </div>
 <div id="0c7e835d" class="cell">
-<div class="sourceCode cell-code" id="cb170"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb170-1"><a href="#cb170-1" aria-hidden="true" tabindex="-1"></a><span class="co"># F.split 예제 (데이터 불러오기)</span></span>
-<span id="cb170-2"><a href="#cb170-2" aria-hidden="true" tabindex="-1"></a><span class="co">## F.split(F.col("genres"), '[|]', 2) : 마지막 숫자는 최대로 나눌 수 있는 수. -1넣으면 무제한</span></span>
-<span id="cb170-3"><a href="#cb170-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb170-4"><a href="#cb170-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyspark.sql.functions <span class="im">as</span> F</span>
-<span id="cb170-5"><a href="#cb170-5" aria-hidden="true" tabindex="-1"></a>df1 <span class="op">=</span> spark.read.options(header<span class="op">=</span><span class="st">'True'</span>).csv(<span class="st">"../data/movies.csv"</span>)</span>
-<span id="cb170-6"><a href="#cb170-6" aria-hidden="true" tabindex="-1"></a>df1.show(<span class="dv">3</span>, <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb171"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb171-1"><a href="#cb171-1" aria-hidden="true" tabindex="-1"></a><span class="co"># F.split 예제 (데이터 불러오기)</span></span>
+<span id="cb171-2"><a href="#cb171-2" aria-hidden="true" tabindex="-1"></a><span class="co">## F.split(F.col("genres"), '[|]', 2) : 마지막 숫자는 최대로 나눌 수 있는 수. -1넣으면 무제한</span></span>
+<span id="cb171-3"><a href="#cb171-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb171-4"><a href="#cb171-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyspark.sql.functions <span class="im">as</span> F</span>
+<span id="cb171-5"><a href="#cb171-5" aria-hidden="true" tabindex="-1"></a>df1 <span class="op">=</span> spark.read.options(header<span class="op">=</span><span class="st">'True'</span>).csv(<span class="st">"../data/movies.csv"</span>)</span>
+<span id="cb171-6"><a href="#cb171-6" aria-hidden="true" tabindex="-1"></a>df1.show(<span class="dv">3</span>, <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+-------+-----------------------+-------------------------------------------+
 |movieId|title                  |genres                                     |
@@ -2673,10 +2888,10 @@ only showing top 3 rows
 </div>
 </div>
 <div id="2bfdb0c5" class="cell">
-<div class="sourceCode cell-code" id="cb172"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb172-1"><a href="#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="co"># F.split (limit를 2로 지정)</span></span>
-<span id="cb172-2"><a href="#cb172-2" aria-hidden="true" tabindex="-1"></a>cc <span class="op">=</span> F.split(F.col(<span class="st">"genres"</span>), <span class="st">'[|]'</span>, <span class="dv">2</span>)</span>
-<span id="cb172-3"><a href="#cb172-3" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> df1.select(cc.alias(<span class="st">"cc"</span>))</span>
-<span id="cb172-4"><a href="#cb172-4" aria-hidden="true" tabindex="-1"></a>df2.show(<span class="dv">5</span>, <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb173"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb173-1"><a href="#cb173-1" aria-hidden="true" tabindex="-1"></a><span class="co"># F.split (limit를 2로 지정)</span></span>
+<span id="cb173-2"><a href="#cb173-2" aria-hidden="true" tabindex="-1"></a>cc <span class="op">=</span> F.split(F.col(<span class="st">"genres"</span>), <span class="st">'[|]'</span>, <span class="dv">2</span>)</span>
+<span id="cb173-3"><a href="#cb173-3" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> df1.select(cc.alias(<span class="st">"cc"</span>))</span>
+<span id="cb173-4"><a href="#cb173-4" aria-hidden="true" tabindex="-1"></a>df2.show(<span class="dv">5</span>, <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+----------------------------------------------+
 |cc                                            |
@@ -2692,10 +2907,10 @@ only showing top 5 rows
 </div>
 </div>
 <div id="3c98ead7" class="cell">
-<div class="sourceCode cell-code" id="cb174"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb174-1"><a href="#cb174-1" aria-hidden="true" tabindex="-1"></a><span class="co"># F.split (limit를 -1로 지정, 무제한)</span></span>
-<span id="cb174-2"><a href="#cb174-2" aria-hidden="true" tabindex="-1"></a>cc <span class="op">=</span> F.split(F.col(<span class="st">"genres"</span>), <span class="st">'[|]'</span>, <span class="op">-</span><span class="dv">1</span>)</span>
-<span id="cb174-3"><a href="#cb174-3" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> df1.select(cc.alias(<span class="st">"cc"</span>))</span>
-<span id="cb174-4"><a href="#cb174-4" aria-hidden="true" tabindex="-1"></a>df2.show(<span class="dv">5</span>, <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb175"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb175-1"><a href="#cb175-1" aria-hidden="true" tabindex="-1"></a><span class="co"># F.split (limit를 -1로 지정, 무제한)</span></span>
+<span id="cb175-2"><a href="#cb175-2" aria-hidden="true" tabindex="-1"></a>cc <span class="op">=</span> F.split(F.col(<span class="st">"genres"</span>), <span class="st">'[|]'</span>, <span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb175-3"><a href="#cb175-3" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> df1.select(cc.alias(<span class="st">"cc"</span>))</span>
+<span id="cb175-4"><a href="#cb175-4" aria-hidden="true" tabindex="-1"></a>df2.show(<span class="dv">5</span>, <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+-------------------------------------------------+
 |cc                                               |
@@ -2711,11 +2926,11 @@ only showing top 5 rows
 </div>
 </div>
 <div id="a0a35022" class="cell">
-<div class="sourceCode cell-code" id="cb176"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb176-1"><a href="#cb176-1" aria-hidden="true" tabindex="-1"></a><span class="co"># F.expr &amp; select(cols)</span></span>
-<span id="cb176-2"><a href="#cb176-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb176-3"><a href="#cb176-3" aria-hidden="true" tabindex="-1"></a>cols <span class="op">=</span> [F.expr(<span class="ss">f"cc[</span><span class="sc">{</span>idx<span class="sc">}</span><span class="ss">]"</span>) <span class="cf">for</span> idx <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, <span class="dv">2</span>)]</span>
-<span id="cb176-4"><a href="#cb176-4" aria-hidden="true" tabindex="-1"></a>df3 <span class="op">=</span> df2.select(cols)</span>
-<span id="cb176-5"><a href="#cb176-5" aria-hidden="true" tabindex="-1"></a>df3.show(<span class="dv">5</span>, <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb177"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb177-1"><a href="#cb177-1" aria-hidden="true" tabindex="-1"></a><span class="co"># F.expr &amp; select(cols)</span></span>
+<span id="cb177-2"><a href="#cb177-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb177-3"><a href="#cb177-3" aria-hidden="true" tabindex="-1"></a>cols <span class="op">=</span> [F.expr(<span class="ss">f"cc[</span><span class="sc">{</span>idx<span class="sc">}</span><span class="ss">]"</span>) <span class="cf">for</span> idx <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, <span class="dv">2</span>)]</span>
+<span id="cb177-4"><a href="#cb177-4" aria-hidden="true" tabindex="-1"></a>df3 <span class="op">=</span> df2.select(cols)</span>
+<span id="cb177-5"><a href="#cb177-5" aria-hidden="true" tabindex="-1"></a>df3.show(<span class="dv">5</span>, <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+---------+---------+
 |cc[0]    |cc[1]    |
@@ -2731,9 +2946,9 @@ only showing top 5 rows
 </div>
 </div>
 <div id="98ff3641" class="cell">
-<div class="sourceCode cell-code" id="cb178"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb178-1"><a href="#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="co"># withColumn + F.lit : 컬럼 생성 후 값 채우기</span></span>
-<span id="cb178-2"><a href="#cb178-2" aria-hidden="true" tabindex="-1"></a>df4 <span class="op">=</span> df3.withColumn(<span class="st">"c3"</span>, F.lit(<span class="st">"Korea"</span>))</span>
-<span id="cb178-3"><a href="#cb178-3" aria-hidden="true" tabindex="-1"></a>df4.show(<span class="dv">5</span>, <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb179"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb179-1"><a href="#cb179-1" aria-hidden="true" tabindex="-1"></a><span class="co"># withColumn + F.lit : 컬럼 생성 후 값 채우기</span></span>
+<span id="cb179-2"><a href="#cb179-2" aria-hidden="true" tabindex="-1"></a>df4 <span class="op">=</span> df3.withColumn(<span class="st">"c3"</span>, F.lit(<span class="st">"Korea"</span>))</span>
+<span id="cb179-3"><a href="#cb179-3" aria-hidden="true" tabindex="-1"></a>df4.show(<span class="dv">5</span>, <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+---------+---------+-----+
 |cc[0]    |cc[1]    |c3   |
@@ -2749,8 +2964,8 @@ only showing top 5 rows
 </div>
 </div>
 <div id="029a7ed2" class="cell">
-<div class="sourceCode cell-code" id="cb180"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb180-1"><a href="#cb180-1" aria-hidden="true" tabindex="-1"></a>df5 <span class="op">=</span> df4.withColumn(<span class="st">"c4"</span>, F.lit(<span class="st">"Test"</span>))</span>
-<span id="cb180-2"><a href="#cb180-2" aria-hidden="true" tabindex="-1"></a>df5.show(<span class="dv">5</span>, <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb181"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb181-1"><a href="#cb181-1" aria-hidden="true" tabindex="-1"></a>df5 <span class="op">=</span> df4.withColumn(<span class="st">"c4"</span>, F.lit(<span class="st">"Test"</span>))</span>
+<span id="cb181-2"><a href="#cb181-2" aria-hidden="true" tabindex="-1"></a>df5.show(<span class="dv">5</span>, <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+---------+---------+-----+----+
 |cc[0]    |cc[1]    |c3   |c4  |
@@ -2766,9 +2981,9 @@ only showing top 5 rows
 </div>
 </div>
 <div id="e8c8088e" class="cell">
-<div class="sourceCode cell-code" id="cb182"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb182-1"><a href="#cb182-1" aria-hidden="true" tabindex="-1"></a><span class="co"># explode : 각 행의 list-like값을, 모두 각자 다른 행으로 쪼개어 분리</span></span>
-<span id="cb182-2"><a href="#cb182-2" aria-hidden="true" tabindex="-1"></a><span class="co">## 아래 예시로, df2의 첫 행의 데이터라 df6의 1~5행으로 나뉘고, 두번째 행이 6~8로 나뉨</span></span>
-<span id="cb182-3"><a href="#cb182-3" aria-hidden="true" tabindex="-1"></a>df2.show(<span class="dv">5</span>,<span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb183"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb183-1"><a href="#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="co"># explode : 각 행의 list-like값을, 모두 각자 다른 행으로 쪼개어 분리</span></span>
+<span id="cb183-2"><a href="#cb183-2" aria-hidden="true" tabindex="-1"></a><span class="co">## 아래 예시로, df2의 첫 행의 데이터라 df6의 1~5행으로 나뉘고, 두번째 행이 6~8로 나뉨</span></span>
+<span id="cb183-3"><a href="#cb183-3" aria-hidden="true" tabindex="-1"></a>df2.show(<span class="dv">5</span>,<span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+-------------------------------------------------+
 |cc                                               |
@@ -2784,8 +2999,8 @@ only showing top 5 rows
 </div>
 </div>
 <div id="6d764d67" class="cell">
-<div class="sourceCode cell-code" id="cb184"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb184-1"><a href="#cb184-1" aria-hidden="true" tabindex="-1"></a>df6 <span class="op">=</span> df2.select(F.explode(col(<span class="st">"cc"</span>)))</span>
-<span id="cb184-2"><a href="#cb184-2" aria-hidden="true" tabindex="-1"></a>df6.show(<span class="dv">10</span>, <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb185"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb185-1"><a href="#cb185-1" aria-hidden="true" tabindex="-1"></a>df6 <span class="op">=</span> df2.select(F.explode(col(<span class="st">"cc"</span>)))</span>
+<span id="cb185-2"><a href="#cb185-2" aria-hidden="true" tabindex="-1"></a>df6.show(<span class="dv">10</span>, <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+---------+
 |col      |
@@ -2806,8 +3021,8 @@ only showing top 10 rows
 </div>
 </div>
 <div id="c0432dee" class="cell">
-<div class="sourceCode cell-code" id="cb186"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb186-1"><a href="#cb186-1" aria-hidden="true" tabindex="-1"></a><span class="co"># drop</span></span>
-<span id="cb186-2"><a href="#cb186-2" aria-hidden="true" tabindex="-1"></a>df4.show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb187"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb187-1"><a href="#cb187-1" aria-hidden="true" tabindex="-1"></a><span class="co"># drop</span></span>
+<span id="cb187-2"><a href="#cb187-2" aria-hidden="true" tabindex="-1"></a>df4.show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+---------+---------+-----+
 |    cc[0]|    cc[1]|   c3|
@@ -2823,7 +3038,7 @@ only showing top 5 rows
 </div>
 </div>
 <div id="8a5dda80" class="cell">
-<div class="sourceCode cell-code" id="cb188"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb188-1"><a href="#cb188-1" aria-hidden="true" tabindex="-1"></a>df4.drop(<span class="st">"cc[1]"</span>, <span class="st">"c3"</span>).show(<span class="dv">5</span>, <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb189"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb189-1"><a href="#cb189-1" aria-hidden="true" tabindex="-1"></a>df4.drop(<span class="st">"cc[1]"</span>, <span class="st">"c3"</span>).show(<span class="dv">5</span>, <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+---------+
 |cc[0]    |
@@ -2839,15 +3054,12 @@ only showing top 5 rows
 </div>
 </div>
 <div id="9e308e21" class="cell">
-<div class="sourceCode cell-code" id="cb190"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb190-1"><a href="#cb190-1" aria-hidden="true" tabindex="-1"></a><span class="co"># groupBy &amp; countDistinct</span></span>
-<span id="cb190-2"><a href="#cb190-2" aria-hidden="true" tabindex="-1"></a><span class="co">## genres기준으로, title의 Distinct값을 세서(unique)m  titleCount컬럼으로 저장</span></span>
-<span id="cb190-3"><a href="#cb190-3" aria-hidden="true" tabindex="-1"></a>df7 <span class="op">=</span> df1.groupBy(<span class="st">"genres"</span>).agg(F.countDistinct(<span class="st">"title"</span>).alias(<span class="st">"titleCount"</span>))</span>
-<span id="cb190-4"><a href="#cb190-4" aria-hidden="true" tabindex="-1"></a>df7.show(<span class="dv">5</span>, <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb191"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb191-1"><a href="#cb191-1" aria-hidden="true" tabindex="-1"></a><span class="co"># groupBy &amp; countDistinct</span></span>
+<span id="cb191-2"><a href="#cb191-2" aria-hidden="true" tabindex="-1"></a><span class="co">## genres기준으로, title의 Distinct값을 세서(unique)m  titleCount컬럼으로 저장</span></span>
+<span id="cb191-3"><a href="#cb191-3" aria-hidden="true" tabindex="-1"></a>df7 <span class="op">=</span> df1.groupBy(<span class="st">"genres"</span>).agg(F.countDistinct(<span class="st">"title"</span>).alias(<span class="st">"titleCount"</span>))</span>
+<span id="cb191-4"><a href="#cb191-4" aria-hidden="true" tabindex="-1"></a>df7.show(<span class="dv">5</span>, <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>[Stage 253:================================================&gt;    (182 + 1) / 200]
-[Stage 253:====================================================&gt;(198 + 1) / 200]
-
-                                                                                </code></pre>
+<pre><code>[Stage 253:================================================&gt;    (182 + 1) / 200]</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+------------------------------+----------+
@@ -2862,14 +3074,19 @@ only showing top 5 rows
 only showing top 5 rows
 </code></pre>
 </div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+[Stage 253:====================================================&gt;(198 + 1) / 200]
+
+                                                                                </code></pre>
+</div>
 </div>
 <div id="5e3344f4" class="cell">
-<div class="sourceCode cell-code" id="cb193"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb193-1"><a href="#cb193-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sort &amp; F.desc</span></span>
-<span id="cb193-2"><a href="#cb193-2" aria-hidden="true" tabindex="-1"></a>df8 <span class="op">=</span> df7.sort(F.desc(<span class="st">"titleCount"</span>))</span>
-<span id="cb193-3"><a href="#cb193-3" aria-hidden="true" tabindex="-1"></a>df8.show(<span class="dv">10</span>, <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb195"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb195-1"><a href="#cb195-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sort &amp; F.desc</span></span>
+<span id="cb195-2"><a href="#cb195-2" aria-hidden="true" tabindex="-1"></a>df8 <span class="op">=</span> df7.sort(F.desc(<span class="st">"titleCount"</span>))</span>
+<span id="cb195-3"><a href="#cb195-3" aria-hidden="true" tabindex="-1"></a>df8.show(<span class="dv">10</span>, <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>[Stage 260:===================================================&gt; (195 + 1) / 200]
-                                                                                </code></pre>
+<pre><code>[Stage 260:===================================================&gt; (195 + 1) / 200]</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+--------------------+----------+
@@ -2889,15 +3106,19 @@ only showing top 5 rows
 only showing top 10 rows
 </code></pre>
 </div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+                                                                                </code></pre>
+</div>
 </div>
 </section>
 <section id="udfuser-defined-function" class="level4">
 <h4 class="anchored" data-anchor-id="udfuser-defined-function">UDF(User Defined Function)</h4>
 <div id="1c8cc838" class="cell">
-<div class="sourceCode cell-code" id="cb196"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb196-1"><a href="#cb196-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyspark.sql.functions <span class="im">as</span> F</span>
-<span id="cb196-2"><a href="#cb196-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb196-3"><a href="#cb196-3" aria-hidden="true" tabindex="-1"></a>df1 <span class="op">=</span> spark.read.options(header<span class="op">=</span><span class="st">'True'</span>, inferSchema<span class="op">=</span><span class="st">'True'</span>, delimiter<span class="op">=</span><span class="st">','</span>).csv(<span class="st">"../data/movies.csv"</span>)</span>
-<span id="cb196-4"><a href="#cb196-4" aria-hidden="true" tabindex="-1"></a>df1.show(<span class="dv">3</span>, <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb199"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb199-1"><a href="#cb199-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyspark.sql.functions <span class="im">as</span> F</span>
+<span id="cb199-2"><a href="#cb199-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb199-3"><a href="#cb199-3" aria-hidden="true" tabindex="-1"></a>df1 <span class="op">=</span> spark.read.options(header<span class="op">=</span><span class="st">'True'</span>, inferSchema<span class="op">=</span><span class="st">'True'</span>, delimiter<span class="op">=</span><span class="st">','</span>).csv(<span class="st">"../data/movies.csv"</span>)</span>
+<span id="cb199-4"><a href="#cb199-4" aria-hidden="true" tabindex="-1"></a>df1.show(<span class="dv">3</span>, <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+-------+-----------------------+-------------------------------------------+
 |movieId|title                  |genres                                     |
@@ -2911,8 +3132,8 @@ only showing top 3 rows
 </div>
 </div>
 <div id="d7c30e1c" class="cell">
-<div class="sourceCode cell-code" id="cb198"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb198-1"><a href="#cb198-1" aria-hidden="true" tabindex="-1"></a>newCol <span class="op">=</span> F.udf(<span class="kw">lambda</span> v: v.upper())</span>
-<span id="cb198-2"><a href="#cb198-2" aria-hidden="true" tabindex="-1"></a>df1.select(F.col(<span class="st">"genres"</span>), newCol(F.col(<span class="st">"genres"</span>))).show(<span class="dv">1</span>, <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb201"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb201-1"><a href="#cb201-1" aria-hidden="true" tabindex="-1"></a>newCol <span class="op">=</span> F.udf(<span class="kw">lambda</span> v: v.upper())</span>
+<span id="cb201-2"><a href="#cb201-2" aria-hidden="true" tabindex="-1"></a>df1.select(F.col(<span class="st">"genres"</span>), newCol(F.col(<span class="st">"genres"</span>))).show(<span class="dv">1</span>, <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>+-------------------------------------------+-------------------------------------------+
 |genres                                     |&lt;lambda&gt;(genres)                           |
@@ -3110,18 +3331,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -3153,7 +3363,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp("https:\/\/kr9268\.github\.io\/");
@@ -3161,7 +3391,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
@@ -3263,7 +3493,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.6.41">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Kibok Park">
 <meta name="dcterms.date" content="2024-05-26">
 
-<title>Blog - [M_Study_1주차] Tensorflow / Linear Regression</title>
+<title>[M_Study_1주차] Tensorflow / Linear Regression – Blog</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -35,7 +35,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -72,12 +72,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-48ffa3e5b9d089919c6712c39e5b00f2.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-71390cc8b9bae10139428574d3aab2c6.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-f3c2ea88cadbcfb37ba28ffa2c97cfc1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-ae2d0dcda2edce4ab590422bb373b64f.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script src="../../site_libs/quarto-contrib/watermark-1.0.11/watermark.min.js"></script>
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
@@ -116,7 +116,7 @@ gtag('js', new Date());
 gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
 </script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -161,7 +161,7 @@ window.Quarto = {
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -197,7 +197,7 @@ window.Quarto = {
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
@@ -562,11 +562,49 @@ tf.Tensor(2.0, shape=(), dtype=float32)</code></pre>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 일부러 오류나게 한 코드</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>a<span class="op">+</span>b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>InvalidArgumentError: cannot compute AddV2 as input #1(zero-based) was expected to be a int32 tensor but is a float tensor [Op:AddV2] name: </code></pre>
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg ansi-bold">---------------------------------------------------------------------------</span>
+
+<span class="ansi-red-fg ansi-bold">InvalidArgumentError</span>                      Traceback (most recent call last)
+
+Cell <span class="ansi-green-fg ansi-bold">In[33], line 2</span>
+
+<span class="ansi-green-fg">      1</span> <span style="font-style:italic;color:rgb(95,135,135)"># 일부러 오류나게 한 코드</span>
+
+<span class="ansi-green-fg ansi-bold">----&gt; 2</span> <span class="ansi-yellow-bg">a</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">+</span><span class="ansi-yellow-bg">b</span>
+
+
+
+File <span class="ansi-green-fg ansi-bold">c:\Users\kibok\AppData\Local\Programs\Python\Python311\Lib\site-packages\tensorflow\python\util\traceback_utils.py:153</span>, in <span class="ansi-cyan-fg">filter_traceback.&lt;locals&gt;.error_handler</span><span class="ansi-blue-fg ansi-bold">(*args, **kwargs)</span>
+
+<span class="ansi-green-fg">    151</span> <span style="font-weight:bold;color:rgb(0,135,0)">except</span> <span style="font-weight:bold;color:rgb(215,95,95)">Exception</span> <span style="font-weight:bold;color:rgb(0,135,0)">as</span> e:
+
+<span class="ansi-green-fg">    152</span>   filtered_tb <span style="color:rgb(98,98,98)">=</span> _process_traceback_frames(e<span style="color:rgb(98,98,98)">.</span>__traceback__)
+
+<span class="ansi-green-fg ansi-bold">--&gt; 153</span>   <span style="font-weight:bold;color:rgb(0,135,0)">raise</span> e<span style="color:rgb(98,98,98)">.</span>with_traceback(filtered_tb) <span style="font-weight:bold;color:rgb(0,135,0)">from</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>
+
+<span class="ansi-green-fg">    154</span> <span style="font-weight:bold;color:rgb(0,135,0)">finally</span>:
+
+<span class="ansi-green-fg">    155</span>   <span style="font-weight:bold;color:rgb(0,135,0)">del</span> filtered_tb
+
+
+
+File <span class="ansi-green-fg ansi-bold">c:\Users\kibok\AppData\Local\Programs\Python\Python311\Lib\site-packages\tensorflow\python\framework\ops.py:5983</span>, in <span class="ansi-cyan-fg">raise_from_not_ok_status</span><span class="ansi-blue-fg ansi-bold">(e, name)</span>
+
+<span class="ansi-green-fg">   5981</span> <span style="font-weight:bold;color:rgb(0,135,0)">def</span> <span style="color:rgb(0,0,255)">raise_from_not_ok_status</span>(e, name) <span style="color:rgb(98,98,98)">-</span><span style="color:rgb(98,98,98)">&gt;</span> NoReturn:
+
+<span class="ansi-green-fg">   5982</span>   e<span style="color:rgb(98,98,98)">.</span>message <span style="color:rgb(98,98,98)">+</span><span style="color:rgb(98,98,98)">=</span> (<span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)"> name: </span><span style="color:rgb(175,0,0)">"</span> <span style="color:rgb(98,98,98)">+</span> <span style="color:rgb(0,135,0)">str</span>(name <span style="font-weight:bold;color:rgb(0,135,0)">if</span> name <span style="font-weight:bold;color:rgb(175,0,255)">is</span> <span style="font-weight:bold;color:rgb(175,0,255)">not</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span> <span style="font-weight:bold;color:rgb(0,135,0)">else</span> <span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">"</span>))
+
+<span class="ansi-green-fg ansi-bold">-&gt; 5983</span>   <span style="font-weight:bold;color:rgb(0,135,0)">raise</span> core<span style="color:rgb(98,98,98)">.</span>_status_to_exception(e) <span style="font-weight:bold;color:rgb(0,135,0)">from</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>
+
+
+
+<span class="ansi-red-fg ansi-bold">InvalidArgumentError</span>: cannot compute AddV2 as input #1(zero-based) was expected to be a int32 tensor but is a float tensor [Op:AddV2] name: </pre>
+</div>
 </div>
 </div>
 <div id="6ecafda8" class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>a<span class="op">+</span>tf.cast(b, tf.int32)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>a<span class="op">+</span>tf.cast(b, tf.int32)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>&lt;tf.Tensor: shape=(), dtype=int32, numpy=4&gt;</code></pre>
 </div>
@@ -591,14 +629,14 @@ tf.Tensor(2.0, shape=(), dtype=float32)</code></pre>
 <li><p>원본 함수가 필요하다면 <code>(tf.function).python_function()</code> <br></p></li>
 </ul>
 <div id="0629fcda" class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="at">@tf.function</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> my_function(x):</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> x<span class="op">**</span><span class="dv">2</span> <span class="op">-</span> <span class="dv">10</span><span class="op">*</span>x <span class="op">+</span> <span class="dv">3</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(my_function(<span class="dv">2</span>))</span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(my_function(tf.constant(<span class="dv">2</span>)))</span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tf.autograph.to_code(my_function.python_function))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="at">@tf.function</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> my_function(x):</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> x<span class="op">**</span><span class="dv">2</span> <span class="op">-</span> <span class="dv">10</span><span class="op">*</span>x <span class="op">+</span> <span class="dv">3</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(my_function(<span class="dv">2</span>))</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(my_function(tf.constant(<span class="dv">2</span>)))</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tf.autograph.to_code(my_function.python_function))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>tf.Tensor(-13, shape=(), dtype=int32)
 tf.Tensor(-13, shape=(), dtype=int32)
@@ -620,30 +658,30 @@ def tf__my_function(x):
 <li>텐서플로우는 계산 그래프 미리 고정 시켜 계산 등을 빠르게 하여 비용 등을 절감할 수 있다 (파이토치는 그래프고정기능 자체가 없어서 속도를 빠르게 할 수 없다)</li>
 </ul>
 <div id="5bee52d5" class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> timeit</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> SequentialModel(tf.keras.Model):</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, <span class="op">**</span>kwargs):</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">super</span>(SequentialModel, <span class="va">self</span>).<span class="fu">__init__</span>(<span class="op">**</span>kwargs)</span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.flatten <span class="op">=</span> tf.keras.layers.Flatten(input_shape<span class="op">=</span>(<span class="dv">28</span>,<span class="dv">28</span>))</span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.dense_1 <span class="op">=</span> tf.keras.layers.Dense(<span class="dv">128</span>, activation <span class="op">=</span> <span class="st">'relu'</span>)</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.dropout <span class="op">=</span> tf.keras.layers.Dropout(<span class="fl">0.2</span>)</span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.dense_2 <span class="op">=</span> tf.keras.layers.Dense(<span class="dv">10</span>)</span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> call(<span class="va">self</span>,x):</span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> <span class="va">self</span>.flatten(x)</span>
-<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> <span class="va">self</span>.dense_1(x)</span>
-<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> <span class="va">self</span>.dropout(x)</span>
-<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> <span class="va">self</span>.dense_2(x)</span>
-<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x</span>
-<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>input_data <span class="op">=</span> tf.random.uniform([<span class="dv">60</span>,<span class="dv">28</span>,<span class="dv">28</span>])</span>
-<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>eager_model <span class="op">=</span> SequentialModel()</span>
-<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>graph_model <span class="op">=</span> tf.function(eager_model)</span>
-<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Eager time: </span><span class="sc">{</span>timeit<span class="sc">.</span>timeit(<span class="kw">lambda</span>: eager_model(input_data), number <span class="op">=</span> <span class="dv">10000</span>)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Graph time: </span><span class="sc">{</span>timeit<span class="sc">.</span>timeit(<span class="kw">lambda</span>: graph_model(input_data), number <span class="op">=</span> <span class="dv">10000</span>)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> timeit</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> SequentialModel(tf.keras.Model):</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, <span class="op">**</span>kwargs):</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">super</span>(SequentialModel, <span class="va">self</span>).<span class="fu">__init__</span>(<span class="op">**</span>kwargs)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.flatten <span class="op">=</span> tf.keras.layers.Flatten(input_shape<span class="op">=</span>(<span class="dv">28</span>,<span class="dv">28</span>))</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.dense_1 <span class="op">=</span> tf.keras.layers.Dense(<span class="dv">128</span>, activation <span class="op">=</span> <span class="st">'relu'</span>)</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.dropout <span class="op">=</span> tf.keras.layers.Dropout(<span class="fl">0.2</span>)</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.dense_2 <span class="op">=</span> tf.keras.layers.Dense(<span class="dv">10</span>)</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> call(<span class="va">self</span>,x):</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> <span class="va">self</span>.flatten(x)</span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> <span class="va">self</span>.dense_1(x)</span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> <span class="va">self</span>.dropout(x)</span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> <span class="va">self</span>.dense_2(x)</span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x</span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>input_data <span class="op">=</span> tf.random.uniform([<span class="dv">60</span>,<span class="dv">28</span>,<span class="dv">28</span>])</span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>eager_model <span class="op">=</span> SequentialModel()</span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>graph_model <span class="op">=</span> tf.function(eager_model)</span>
+<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Eager time: </span><span class="sc">{</span>timeit<span class="sc">.</span>timeit(<span class="kw">lambda</span>: eager_model(input_data), number <span class="op">=</span> <span class="dv">10000</span>)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Graph time: </span><span class="sc">{</span>timeit<span class="sc">.</span>timeit(<span class="kw">lambda</span>: graph_model(input_data), number <span class="op">=</span> <span class="dv">10000</span>)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>c:\Users\kibok\AppData\Local\Programs\Python\Python311\Lib\site-packages\keras\src\layers\reshaping\flatten.py:37: UserWarning: Do not pass an `input_shape`/`input_dim` argument to a layer. When using Sequential models, prefer using an `Input(shape)` object as the first layer in the model instead.
   super().__init__(**kwargs)</code></pre>
@@ -661,9 +699,9 @@ Graph time: 4.405216699997254</code></pre>
 <li>딥러닝 모델 학습 시, 그래프 연산이 필요할 때 사용</li>
 </ul>
 <div id="03723c02" class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> tf.Variable(<span class="fl">20.</span>)</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> tf.Variable(<span class="fl">20.</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;tf.Variable 'Variable:0' shape=() dtype=float32, numpy=20.0&gt;</code></pre>
 </div>
@@ -682,33 +720,75 @@ Graph time: 4.405216699997254</code></pre>
 <li><p>ai가 많이 한다는 단순계산은 미분이며 이를 많이 하므로 자동미분은 도움이 됨 <br> cpu에서 gpu로 넘기는 것은 c++수준의 코드를 짜야하고 넘겨야하는 번거로움이 있는데, 이를 자동으로 해줘서 편함</p></li>
 </ul>
 <div id="111fbdbf" class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> tf.Variable(<span class="fl">3.</span>)</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> tf.GradientTape() <span class="im">as</span> tape: <span class="co">#with 아래 값들은 미분값 추정을 하겠다는 선언 (tape : 기록)</span></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  y <span class="op">=</span> x<span class="op">**</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> tf.Variable(<span class="fl">3.</span>)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> tf.GradientTape() <span class="im">as</span> tape: <span class="co">#with 아래 값들은 미분값 추정을 하겠다는 선언 (tape : 기록)</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  y <span class="op">=</span> x<span class="op">**</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="6ac1c6ae" class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(x))</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(x))</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'tensorflow.python.ops.resource_variable_ops.ResourceVariable'&gt;
 &lt;class 'tensorflow.python.framework.ops.EagerTensor'&gt;</code></pre>
 </div>
 </div>
 <div id="044f925b" class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>dy_dx <span class="op">=</span> tape.gradient(y,x)</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>dy_dx.numpy()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>dy_dx <span class="op">=</span> tape.gradient(y,x)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>dy_dx.numpy()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>6.0</code></pre>
 </div>
 </div>
 <div id="cc6fb239" class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tape내에 선언하지 않은 x2로 인해 에러 발생 (일부러 에러낸 코드)</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 모든 수식을 gradient(추적)하는 것은 비용이 많이 드므로 필요한 것만 with로 선언</span></span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>x2 <span class="op">=</span> tf.Variable(<span class="dv">4</span>)</span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>dy_dx <span class="op">=</span> tape.gradient(y,x2)</span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>dy_dx.numpy()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tape내에 선언하지 않은 x2로 인해 에러 발생 (일부러 에러낸 코드)</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 모든 수식을 gradient(추적)하는 것은 비용이 많이 드므로 필요한 것만 with로 선언</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>x2 <span class="op">=</span> tf.Variable(<span class="dv">4</span>)</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>dy_dx <span class="op">=</span> tape.gradient(y,x2)</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>dy_dx.numpy()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>RuntimeError: A non-persistent GradientTape can only be used to compute one set of gradients (or jacobians)</code></pre>
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg ansi-bold">---------------------------------------------------------------------------</span>
+
+<span class="ansi-red-fg ansi-bold">RuntimeError</span>                              Traceback (most recent call last)
+
+Cell <span class="ansi-green-fg ansi-bold">In[43], line 2</span>
+
+<span class="ansi-green-fg">      1</span> x2 <span style="color:rgb(98,98,98)">=</span> tf<span style="color:rgb(98,98,98)">.</span>Variable(<span style="color:rgb(98,98,98)">4</span>)
+
+<span class="ansi-green-fg ansi-bold">----&gt; 2</span> dy_dx <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">tape</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">gradient</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">y</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg">x2</span><span class="ansi-yellow-bg">)</span>
+
+<span class="ansi-green-fg">      3</span> dy_dx<span style="color:rgb(98,98,98)">.</span>numpy()
+
+
+
+File <span class="ansi-green-fg ansi-bold">c:\Users\kibok\AppData\Local\Programs\Python\Python311\Lib\site-packages\tensorflow\python\eager\backprop.py:1005</span>, in <span class="ansi-cyan-fg">GradientTape.gradient</span><span class="ansi-blue-fg ansi-bold">(self, target, sources, output_gradients, unconnected_gradients)</span>
+
+<span class="ansi-green-fg">    965</span> <span style="font-style:italic;color:rgb(175,0,0)">"""Computes the gradient using operations recorded in context of this tape.</span>
+
+<span class="ansi-green-fg">    966</span> 
+
+<span class="ansi-green-fg">    967</span> <span style="font-style:italic;color:rgb(175,0,0)">Note: Unless you set `persistent=True` a GradientTape can only be used to</span>
+
+<span class="ansi-green-fg ansi-bold">   (...)</span>
+
+<span class="ansi-green-fg">   1002</span> <span style="font-style:italic;color:rgb(175,0,0)">   called with an unknown value.</span>
+
+<span class="ansi-green-fg">   1003</span> <span style="font-style:italic;color:rgb(175,0,0)">"""</span>
+
+<span class="ansi-green-fg">   1004</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> <span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>_tape <span style="font-weight:bold;color:rgb(175,0,255)">is</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>:
+
+<span class="ansi-green-fg ansi-bold">-&gt; 1005</span>   <span style="font-weight:bold;color:rgb(0,135,0)">raise</span> <span style="font-weight:bold;color:rgb(215,95,95)">RuntimeError</span>(<span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">A non-persistent GradientTape can only be used to </span><span style="color:rgb(175,0,0)">"</span>
+
+<span class="ansi-green-fg">   1006</span>                      <span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">compute one set of gradients (or jacobians)</span><span style="color:rgb(175,0,0)">"</span>)
+
+<span class="ansi-green-fg">   1007</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> <span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>_recording:
+
+<span class="ansi-green-fg">   1008</span>   <span style="font-weight:bold;color:rgb(0,135,0)">if</span> <span style="font-weight:bold;color:rgb(175,0,255)">not</span> <span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>_persistent:
+
+
+
+<span class="ansi-red-fg ansi-bold">RuntimeError</span>: A non-persistent GradientTape can only be used to compute one set of gradients (or jacobians)</pre>
+</div>
 </div>
 </div>
 <ul>
@@ -954,18 +1034,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -997,7 +1066,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp("https:\/\/kr9268\.github\.io\/");
@@ -1005,7 +1094,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
@@ -1107,7 +1196,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
