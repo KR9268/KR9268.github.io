@@ -1,0 +1,2106 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.41">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Kibok Park">
+<meta name="dcterms.date" content="2025-01-26">
+
+<title>[DA스터디/6주차] optuna, Autogluon – Blog</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.jpg" rel="icon" type="image/jpeg">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-48ffa3e5b9d089919c6712c39e5b00f2.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-71390cc8b9bae10139428574d3aab2c6.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-c37a40b267d3139d93432c283e34c257.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-bdc1e6ac3e28299057f0fc16b5bab4ae.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/watermark-1.0.11/watermark.min.js"></script>
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-LPL499WQBH"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Blog</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index_dashboards.html"> 
+<span class="menu-text">Dashboards</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index_miniprojects.html"> 
+<span class="menu-text">Mini Projects</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About me</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/KR9268"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/%EA%B8%B0%EB%B3%B5-%EB%B0%95-573a68268/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">[DA스터디/6주차] optuna, Autogluon</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Python</div>
+                <div class="quarto-category">optuna</div>
+                <div class="quarto-category">Autogluon</div>
+                <div class="quarto-category">202412Study_DataAnalysis</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Kibok Park </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">January 26, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#개요" id="toc-개요" class="nav-link active" data-scroll-target="#개요">개요</a></li>
+  <li><a href="#주차-과제-내용정리" id="toc-주차-과제-내용정리" class="nav-link" data-scroll-target="#주차-과제-내용정리">5주차 과제 내용정리</a></li>
+  <li><a href="#추가multi-label에-대한-catboost실습" id="toc-추가multi-label에-대한-catboost실습" class="nav-link" data-scroll-target="#추가multi-label에-대한-catboost실습">(추가)Multi label에 대한 Catboost실습</a></li>
+  <li><a href="#추가vs-code-팝업이-떠서-찾아보는-tensorboard" id="toc-추가vs-code-팝업이-떠서-찾아보는-tensorboard" class="nav-link" data-scroll-target="#추가vs-code-팝업이-떠서-찾아보는-tensorboard">(추가)VS CODE 팝업이 떠서 찾아보는 Tensorboard</a></li>
+  <li><a href="#주차-수업정리" id="toc-주차-수업정리" class="nav-link" data-scroll-target="#주차-수업정리">6주차 수업정리</a>
+  <ul class="collapse">
+  <li><a href="#하이퍼-파라미터" id="toc-하이퍼-파라미터" class="nav-link" data-scroll-target="#하이퍼-파라미터">하이퍼 파라미터</a>
+  <ul class="collapse">
+  <li><a href="#하이퍼-파라미터---rfrandom-forest-bagging" id="toc-하이퍼-파라미터---rfrandom-forest-bagging" class="nav-link" data-scroll-target="#하이퍼-파라미터---rfrandom-forest-bagging">하이퍼 파라미터 - RF(Random Forest, Bagging)</a></li>
+  <li><a href="#하이퍼-파라미터---xgbxgboost-boosting" id="toc-하이퍼-파라미터---xgbxgboost-boosting" class="nav-link" data-scroll-target="#하이퍼-파라미터---xgbxgboost-boosting">하이퍼 파라미터 - XGB(XGBoost, Boosting)</a></li>
+  <li><a href="#하이퍼-파라미터---lgbmlight-gbm" id="toc-하이퍼-파라미터---lgbmlight-gbm" class="nav-link" data-scroll-target="#하이퍼-파라미터---lgbmlight-gbm">하이퍼 파라미터 - LGBM(Light GBM)</a></li>
+  <li><a href="#하이퍼-파라미터---catboost" id="toc-하이퍼-파라미터---catboost" class="nav-link" data-scroll-target="#하이퍼-파라미터---catboost">하이퍼 파라미터 - Catboost</a></li>
+  </ul></li>
+  <li><a href="#optuna" id="toc-optuna" class="nav-link" data-scroll-target="#optuna">optuna</a>
+  <ul class="collapse">
+  <li><a href="#optuna란" id="toc-optuna란" class="nav-link" data-scroll-target="#optuna란">optuna란</a></li>
+  <li><a href="#optuna-구성요소와-작동방식" id="toc-optuna-구성요소와-작동방식" class="nav-link" data-scroll-target="#optuna-구성요소와-작동방식">optuna 구성요소와 작동방식</a></li>
+  </ul></li>
+  <li><a href="#optuna-실습" id="toc-optuna-실습" class="nav-link" data-scroll-target="#optuna-실습">optuna 실습</a>
+  <ul class="collapse">
+  <li><a href="#데이터-로딩" id="toc-데이터-로딩" class="nav-link" data-scroll-target="#데이터-로딩">데이터 로딩</a></li>
+  <li><a href="#lgbm-vanila모델" id="toc-lgbm-vanila모델" class="nav-link" data-scroll-target="#lgbm-vanila모델">LGBM Vanila모델</a></li>
+  <li><a href="#lgbm-with-optuna" id="toc-lgbm-with-optuna" class="nav-link" data-scroll-target="#lgbm-with-optuna">LGBM with optuna</a></li>
+  <li><a href="#lgbm-결과비교-vanila모델-vs-optuna" id="toc-lgbm-결과비교-vanila모델-vs-optuna" class="nav-link" data-scroll-target="#lgbm-결과비교-vanila모델-vs-optuna">LGBM 결과비교 (vanila모델 vs optuna)</a></li>
+  </ul></li>
+  <li><a href="#autogluon" id="toc-autogluon" class="nav-link" data-scroll-target="#autogluon">Autogluon</a>
+  <ul class="collapse">
+  <li><a href="#autogluon이란" id="toc-autogluon이란" class="nav-link" data-scroll-target="#autogluon이란">Autogluon이란</a></li>
+  <li><a href="#autogluon구성요소와-설정값" id="toc-autogluon구성요소와-설정값" class="nav-link" data-scroll-target="#autogluon구성요소와-설정값">Autogluon구성요소와 설정값</a></li>
+  </ul></li>
+  <li><a href="#autogluon실습" id="toc-autogluon실습" class="nav-link" data-scroll-target="#autogluon실습">Autogluon실습</a>
+  <ul class="collapse">
+  <li><a href="#하단-코드의-실행내역-이해하기" id="toc-하단-코드의-실행내역-이해하기" class="nav-link" data-scroll-target="#하단-코드의-실행내역-이해하기">하단 코드의 실행내역 이해하기</a></li>
+  <li><a href="#결과-비교하기-optuna-vs-autogluon" id="toc-결과-비교하기-optuna-vs-autogluon" class="nav-link" data-scroll-target="#결과-비교하기-optuna-vs-autogluon">결과 비교하기 (optuna vs autogluon)</a></li>
+  <li><a href="#autogluon-leaderboard" id="toc-autogluon-leaderboard" class="nav-link" data-scroll-target="#autogluon-leaderboard">Autogluon leaderboard</a></li>
+  </ul></li>
+  <li><a href="#paramater를-직접-지정하기" id="toc-paramater를-직접-지정하기" class="nav-link" data-scroll-target="#paramater를-직접-지정하기">paramater를 직접 지정하기</a>
+  <ul class="collapse">
+  <li><a href="#autogluon-하이퍼파라미터-설정" id="toc-autogluon-하이퍼파라미터-설정" class="nav-link" data-scroll-target="#autogluon-하이퍼파라미터-설정">Autogluon 하이퍼파라미터 설정</a></li>
+  <li><a href="#결과-비교하기-optuna-vs-autogluon-1" id="toc-결과-비교하기-optuna-vs-autogluon-1" class="nav-link" data-scroll-target="#결과-비교하기-optuna-vs-autogluon-1">결과 비교하기 (optuna vs autogluon)</a></li>
+  <li><a href="#기타" id="toc-기타" class="nav-link" data-scroll-target="#기타">기타</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#cuml-도커에서-설치하기" id="toc-cuml-도커에서-설치하기" class="nav-link" data-scroll-target="#cuml-도커에서-설치하기">cuML 도커에서 설치하기</a></li>
+  <li><a href="#과제-최종과제-준비하기" id="toc-과제-최종과제-준비하기" class="nav-link" data-scroll-target="#과제-최종과제-준비하기">과제 : 최종과제 준비하기</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>금융권 데이터를 활용한 분석 스터디 - 6주차</p>
+<section id="개요" class="level1">
+<h1>개요</h1>
+<ul>
+<li>아래의 목적/이유로 참가한 스터디에 대한 기록
+<ul>
+<li>SQLD취득 후 장기 미사용 &amp; GPT를 통한 SQL사용 등으로 많이 잊은 SQL을 복기</li>
+<li>기존에 사용해 본 Optuna가 아닌 Autogluon이 커리큘럼에 있어 익혀보고자 함</li>
+<li>기존에 관심있던 XAI(설명가능한 AI)를 익히고자 함</li>
+</ul></li>
+<li>6주차 요약
+<ul>
+<li>모델별 주요 하이퍼 파라미터</li>
+<li>optuna</li>
+<li>Autogluon</li>
+</ul></li>
+</ul>
+</section>
+<section id="주차-과제-내용정리" class="level1">
+<h1>5주차 과제 내용정리</h1>
+<ul>
+<li>SHAP Force plot 여러개 비교 = Row(표본)별 비교</li>
+</ul>
+</section>
+<section id="추가multi-label에-대한-catboost실습" class="level1">
+<h1>(추가)Multi label에 대한 Catboost실습</h1>
+<div id="4c707081" class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># importing Libraries</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> catboost <span class="im">import</span> CatBoostClassifier</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score, classification_report</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ipywidgets <span class="im">as</span> widgets</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> joblib</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> load_iris</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="9eb347b9" class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the Iris dataset</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>iris_df <span class="op">=</span> load_iris()</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> iris_df.data</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> iris_df.target</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the data into training and testing sets</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a figure with specified dimensions (8x4)</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate a countplot to display the distribution of target classes (y_train)</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>sns.countplot(x<span class="op">=</span>y_train)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the title, x-axis label, and y-axis label for the plot</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Distribution of Target Classes'</span>)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Class'</span>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Count'</span>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the plot</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-3-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="567f18e0" class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 모델 설정 및 학습</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> CatBoostClassifier(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    iterations<span class="op">=</span><span class="dv">100</span>, depth<span class="op">=</span><span class="dv">6</span>, learning_rate<span class="op">=</span><span class="fl">0.1</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>   loss_function<span class="op">=</span><span class="st">'MultiClass'</span>, verbose<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>model.fit(X_train, y_train)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Make predictions on the test set</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> model.predict(X_test)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the model</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>accuracy <span class="op">=</span> accuracy_score(y_test, y_pred)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>report <span class="op">=</span> classification_report(y_test, y_pred)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># printing metrics</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Accuracy: </span><span class="sc">{</span>accuracy<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Classification Report:</span><span class="ch">\n</span><span class="st">"</span>, report)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Accuracy: 1.0
+Classification Report:
+               precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00        10
+           1       1.00      1.00      1.00         9
+           2       1.00      1.00      1.00        11
+
+    accuracy                           1.00        30
+   macro avg       1.00      1.00      1.00        30
+weighted avg       1.00      1.00      1.00        30
+</code></pre>
+</div>
+</div>
+</section>
+<section id="추가vs-code-팝업이-떠서-찾아보는-tensorboard" class="level1">
+<h1>(추가)VS CODE 팝업이 떠서 찾아보는 Tensorboard</h1>
+<ul>
+<li>Catboost는 지원하지 않아 타 모델로 향후 실험</li>
+</ul>
+<div id="99dbcdf3" class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow <span class="im">as</span> tf</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># TensorBoard 로그를 저장할 디렉토리 설정</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>log_dir <span class="op">=</span> <span class="st">"logs/fit"</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># SummaryWriter 설정</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>tensorboard_callback <span class="op">=</span> tf.keras.callbacks.TensorBoard(log_dir<span class="op">=</span>log_dir, histogram_freq<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 모델 학습 시 callback 추가</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>model.fit(X_train, y_train, callbacks<span class="op">=</span>[tensorboard_callback])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="0a202d44" class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>tensorboard <span class="op">--</span>logdir<span class="op">=</span>logs<span class="op">/</span>fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="주차-수업정리" class="level1">
+<h1>6주차 수업정리</h1>
+<section id="하이퍼-파라미터" class="level2">
+<h2 class="anchored" data-anchor-id="하이퍼-파라미터">하이퍼 파라미터</h2>
+<ul>
+<li>하이퍼 파라미터 튜닝 : 모델의 초기 설정값을 최적의 값으로 구하는 것</li>
+</ul>
+<section id="하이퍼-파라미터---rfrandom-forest-bagging" class="level3">
+<h3 class="anchored" data-anchor-id="하이퍼-파라미터---rfrandom-forest-bagging">하이퍼 파라미터 - RF(Random Forest, Bagging)</h3>
+<ul>
+<li>주요 설정값
+<ul>
+<li><code>n_estimators</code> : 트리의 수 (Default=100)
+<ul>
+<li>증가할수록 계산비용 &amp; 성능 증가 (일정수준부터는 크게 상승하지 않음)
+<ul>
+<li>↔︎ 감소할수록 계산비용 감소. 그러나 과소적합 발생할 가능성</li>
+</ul></li>
+<li>(경험적으로)천 단위에서 마감하는 것이 좋음(만 단위에서 유의미한 성능향상 X)</li>
+</ul></li>
+<li><code>max_depth</code> : 트리의 최대 깊이 (Default=None)
+<ul>
+<li>증가할수록 모델의 복잡도 &amp; 과적합가능성 증대(복잡한 패턴을 익힐 수 있음)
+<ul>
+<li>↔︎ 감소할수록 과소적합 발생할 수 있음</li>
+</ul></li>
+</ul></li>
+<li><code>min_samples_split</code> : 노드를 분할하기 위한 최소 샘플 수 (Default=2)
+<ul>
+<li>증가할수록 과적합 방지 &amp; 성능 감소
+<ul>
+<li>↔︎ 감소할수록 과적합 위험이 커짐(트리가 얕아짐짐)</li>
+</ul></li>
+</ul></li>
+<li><code>min_samples_leaf</code> : 분할이 모두 끝난 노드(리프노드)의 최소 샘플 크기 (Default=1)
+<ul>
+<li>증가할수록 과적합 방지 &amp; 성능 감소
+<ul>
+<li>↔︎ 감소할수록 과적합 위험이 커짐</li>
+</ul></li>
+</ul></li>
+<li><code>max_features</code> : 각 트리를 학습할 때 사용할 feature의 비율 (Default=1.0)
+<ul>
+<li>증가할수록 성능/계산비용용 향상 &amp; 과적합 확률 증가</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="하이퍼-파라미터---xgbxgboost-boosting" class="level3">
+<h3 class="anchored" data-anchor-id="하이퍼-파라미터---xgbxgboost-boosting">하이퍼 파라미터 - XGB(XGBoost, Boosting)</h3>
+<ul>
+<li>주요 설정값
+<ul>
+<li><code>n_estimators</code> : 부스팅 단계의 수 (Default=100)
+<ul>
+<li>RF와 뜻은 다르지만 양상은 비슷함
+<ul>
+<li>클수록 계산비용/성능 향상(↔︎과소적합). 천단위 마감</li>
+</ul></li>
+</ul></li>
+<li><code>max_depth</code> : 트리의 최대 깊이 (Default=6)
+<ul>
+<li>증가할수록 과적합 위험 증대</li>
+</ul></li>
+<li><code>Learning_rate(eta)</code> : 부스팅 단계에서 학습률을 조절 (Default=0.3)
+<ul>
+<li>배깅이 아닌 부스팅이므로, 학습률 개념이 있음</li>
+<li>증가할수록 학습속도가 빨라지고, 초반 데이터에 가중치(+최적해를 놓칠 위험 있음)
+<ul>
+<li>↔︎ 낮을수록 느리지만 최적해에 안정적으로 수렴</li>
+</ul></li>
+</ul></li>
+<li><code>subsample</code> : 각 단계에서 사용할 데이터 샘플[row]의 비율 (Default=1.0)
+<ul>
+<li>증가할수록 과적합방지 &amp; 성능적 단점</li>
+</ul></li>
+<li><code>colsample_bytree</code> : 각 트리를 학습할 때 사용할 feature[column]의 비율 (Default=1.0)
+<ul>
+<li>증가할수록 성능/비용 증가 &amp; 과적합 위험</li>
+</ul></li>
+<li>gamma : 노드 분할시 필요한 최소 손실 감소량 (Default=0)
+<ul>
+<li>0인 경우, Loss감소가 없더라도 성능에 부정적이지 않는다면 분할</li>
+<li>증가할수록 노드 분할을 엄격히 수행(과적합 방지, 성능 하향)</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="하이퍼-파라미터---lgbmlight-gbm" class="level3">
+<h3 class="anchored" data-anchor-id="하이퍼-파라미터---lgbmlight-gbm">하이퍼 파라미터 - LGBM(Light GBM)</h3>
+<ul>
+<li>주요 설정값
+<ul>
+<li>타 모델과 유사
+<ul>
+<li><code>n_estimators</code>[Default=100], <code>learning_rate</code>[Default=0.1], <code>subsample</code>(bagging_fraction, bagging) [Default=1.0],</li>
+<li>Feature_fraction(<code>colsample_bytree</code>)[Default=1.0], <code>max_depth</code>[Default=-1]</li>
+</ul></li>
+<li>Num_leaves : 하나의 트리가 가질 수 있는 최대의 (분할이 끝난)리프 노드 수(Default=31)
+<ul>
+<li>값이 증가할수록 트리가 복잡 &amp; 과적합 &amp; 메모리 사용 증가</li>
+</ul></li>
+<li>Min_data_in_leaf(min_child_samples) : 리프 노드의 최소 샘플 수 (Default=20)</li>
+</ul></li>
+</ul>
+</section>
+<section id="하이퍼-파라미터---catboost" class="level3">
+<h3 class="anchored" data-anchor-id="하이퍼-파라미터---catboost">하이퍼 파라미터 - Catboost</h3>
+<ul>
+<li>주요 설정값
+<ul>
+<li>타 모델과 유사
+<ul>
+<li>n_estimators[Default=100], learning_rate[Default=0.03], subsample[Default=None], Feature_fraction[Default=None]</li>
+</ul></li>
+<li><code>Depth</code> : 트리의 최대 깂이 (Default=-1)</li>
+<li><code>Bagging_temperature</code> : 샘플링의 무작위성을 제어 (Default=1.0)
+<ul>
+<li>높을수록 샘플링이 다양해지며 일반화 성능 향상 (속도 느려짐)</li>
+</ul></li>
+<li><code>L2_leaf_reg</code> : 리프 노드의 가중치에 부여하는 패널티의 정도 (Default=3)
+<ul>
+<li>클수록 과적합 방지</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="optuna" class="level2">
+<h2 class="anchored" data-anchor-id="optuna">optuna</h2>
+<section id="optuna란" class="level3">
+<h3 class="anchored" data-anchor-id="optuna란">optuna란</h3>
+<ul>
+<li>기존의 Tuning Tools
+<ul>
+<li>Grid Search : 오래걸리지만 Grid에 적절한 값이 없으면 최적값을 찾지 못함</li>
+<li>Random Search : 위의 Grid Search 문제를 해결해도 최적값을 꼭 찾지 못함</li>
+</ul></li>
+<li>optuna vs hyperopt
+<ul>
+<li>25년 1월 기준, github star 기준으로 optuna 11.3k &gt; hyperopt 7.3k</li>
+</ul></li>
+<li>optuna
+<ul>
+<li>정의한 목적함수를 기반으로 최적화를 쉽게 진행
+<ul>
+<li>베이지안 최적화와 유사한 TPE알고리즘을 사용한 탐색을 지행(그 외의 다양한 전략도 커스터마이징 가능)</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="optuna-구성요소와-작동방식" class="level3">
+<h3 class="anchored" data-anchor-id="optuna-구성요소와-작동방식">optuna 구성요소와 작동방식</h3>
+<ul>
+<li>구성요소
+<ul>
+<li>Study : 최적화 과정 전체를 관리. 각 하이퍼 파라미터 탐색(Trial)의 결과를 저장</li>
+<li>Search Space : 하이퍼 파라미터의 범위 지정</li>
+<li>Objective function : 목적함수. 모델을 학습시키고 평가지표를 반환</li>
+<li>Trial : 하이퍼파라미터의 조합을 나타내는 단위 (1번의 Trial로 목적함수를 실행)</li>
+</ul></li>
+<li>작동방식
+<ul>
+<li>Search Space(탐색공간)에서 int/float/categorical 등을 정의</li>
+<li>Objective function(목적함수)를 실행해 모델학습하고 성능지표 반환</li>
+<li>정의된 조합을 효율적으로 선택해, 반복적으로(Trial) 성능 개선</li>
+<li>최적의 하이퍼파라미터와 정보를 Study객체에 저장</li>
+</ul></li>
+<li>참고
+<ul>
+<li>Search Space에서 정의한 범위에서 조합하므로, 그 밖의 범위에서 최적해가 있으면 찾을 수 없음</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="optuna-실습" class="level2">
+<h2 class="anchored" data-anchor-id="optuna-실습">optuna 실습</h2>
+<section id="데이터-로딩" class="level3">
+<h3 class="anchored" data-anchor-id="데이터-로딩">데이터 로딩</h3>
+<div id="e39f0450" class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, log_loss</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xgboost <span class="im">as</span> xgb</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.read_csv(<span class="st">"data_preprocessed.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="lgbm-vanila모델" class="level3">
+<h3 class="anchored" data-anchor-id="lgbm-vanila모델">LGBM Vanila모델</h3>
+<div id="41a19793" class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> lightgbm <span class="im">import</span> LGBMClassifier</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> data.drop(columns<span class="op">=</span>[<span class="st">"TARGET"</span>])</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> data[<span class="st">"TARGET"</span>]</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Full Model</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>full_model <span class="op">=</span> LGBMClassifier(class_weight<span class="op">=</span><span class="st">"balanced"</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>full_model.fit(X_train, y_train)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Full Pred</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>y_pred_full <span class="op">=</span> full_model.predict(X_test)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>y_proba_full <span class="op">=</span> full_model.predict_proba(X_test)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Full Results</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>accuracy_full <span class="op">=</span> accuracy_score(y_test, y_pred_full)</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>auc_full <span class="op">=</span> roc_auc_score(y_test, y_proba_full[:, <span class="dv">1</span>])</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>cf_full <span class="op">=</span> confusion_matrix(y_test, y_pred_full)</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'정확도 : </span><span class="sc">{</span><span class="bu">round</span>(accuracy_full,<span class="dv">4</span>)<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'AUC : </span><span class="sc">{</span><span class="bu">round</span>(auc_full,<span class="dv">4</span>)<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'''Vanilla LGBM의 CF :</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>cf_full<span class="sc">}</span><span class="ss">'''</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>정확도 : 0.703
+AUC : 0.7578
+Vanilla LGBM의 CF :
+[[39914 16640]
+ [ 1629  3320]]</code></pre>
+</div>
+</div>
+</section>
+<section id="lgbm-with-optuna" class="level3">
+<h3 class="anchored" data-anchor-id="lgbm-with-optuna">LGBM with optuna</h3>
+<ul>
+<li>최적의 하이퍼파라미터 조합 찾기</li>
+</ul>
+<div id="6be8bc0c" class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> optuna</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> lightgbm <span class="im">import</span> LGBMClassifier, early_stopping</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 분할</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>X_train, X_val, y_train, y_val <span class="op">=</span> train_test_split(X_train, y_train, test_size<span class="op">=</span><span class="fl">0.1</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="4ccd9dd6" class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 목적 함수 정의</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> objective(trial):</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># LGBMClassifier 하이퍼파라미터 설정</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    param <span class="op">=</span> {</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">'learning_rate'</span>: trial.suggest_float(<span class="st">'learning_rate'</span>, <span class="fl">0.01</span>, <span class="fl">0.2</span>, log <span class="op">=</span> <span class="va">True</span>), <span class="co"># default = 0.1</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">'num_leaves'</span>: trial.suggest_int(<span class="st">'num_leaves'</span>, <span class="dv">20</span>, <span class="dv">100</span>), <span class="co"># default = 31</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 'max_depth': trial.suggest_int('max_depth', -1, 50), # default = -1</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">'n_estimators'</span> : trial.suggest_int(<span class="st">'n_estimators'</span>, <span class="dv">100</span>, <span class="dv">2000</span>), <span class="co"># default = 100</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">'subsample'</span>: trial.suggest_float(<span class="st">'subsample'</span>, <span class="fl">0.8</span>, <span class="fl">1.0</span>), <span class="co"># default = 1.0</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">'min_child_samples'</span> : trial.suggest_int(<span class="st">'min_data_in_leaf'</span>, <span class="dv">1</span>, <span class="dv">100</span>), <span class="co"># default = 20</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">'colsample_bytree'</span>: trial.suggest_float(<span class="st">'colsample_bytree'</span>, <span class="fl">0.8</span>, <span class="fl">1.0</span>), <span class="co"># default = 1.0</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># LGBMClassifier 모델 생성 및 학습</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> LGBMClassifier(<span class="op">**</span>param, n_jobs<span class="op">=-</span><span class="dv">1</span>,</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>                           class_weight<span class="op">=</span><span class="st">'balanced'</span>,</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>                           random_state<span class="op">=</span><span class="dv">42</span>,</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>                          <span class="co">#  device_type='gpu', colab환경에서 정상적으로 gpu가 활용이 안되네요...이거 해결만 온종일 할 거 같아서 일단 cpu기준으로 학습합니다.</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>                          <span class="co">#  https://stackoverflow.com/questions/75981883/can-not-use-lightgbm-gpu-in-colab-lightgbmerror-no-opencl-device-found</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>                           )</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    model.fit(X_train, y_train,</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>              eval_set<span class="op">=</span>[(X_val, y_val)],</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>              eval_metric<span class="op">=</span><span class="st">'auc'</span>,</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>              callbacks<span class="op">=</span>[early_stopping(stopping_rounds<span class="op">=</span><span class="dv">50</span>, verbose<span class="op">=</span><span class="va">False</span>)]</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 검증 데이터에 대한 예측</span></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>    proba <span class="op">=</span> model.predict(X_val)</span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 정확도 계산</span></span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>    roc_auc <span class="op">=</span> roc_auc_score(y_val, proba)</span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> roc_auc</span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Optuna 튜닝 실행</span></span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>study <span class="op">=</span> optuna.create_study(direction<span class="op">=</span><span class="st">'maximize'</span>) <span class="co"># 높아질수록 좋은 roc_auc_score에 대해 maximize</span></span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>study.optimize(objective, n_trials<span class="op">=</span><span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="9ef20e0d" class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 최적 파라미터 출력</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>best_params <span class="op">=</span> study.best_trial.params</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(best_params)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{'learning_rate': 0.02642230824686883, 'num_leaves': 34, 'n_estimators': 864, 'subsample': 0.8342595493628282, 'min_data_in_leaf': 60, 'colsample_bytree': 0.8360285193709883}</code></pre>
+</div>
+</div>
+<ul>
+<li>찾은 조합을 활용한 final model</li>
+</ul>
+<div id="55b5a6aa" class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>final_model <span class="op">=</span> LGBMClassifier(<span class="op">**</span>best_params,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>                             n_jobs<span class="op">=-</span><span class="dv">1</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>                             class_weight<span class="op">=</span><span class="st">'balanced'</span>,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>                             random_state<span class="op">=</span><span class="dv">42</span>,)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>final_model.fit(X_train, y_train)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co"># optuna Pred</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>y_pred_final <span class="op">=</span> final_model.predict(X_test)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>y_proba_final <span class="op">=</span> final_model.predict_proba(X_test)</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co"># optuna Results</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>accuracy_final <span class="op">=</span> accuracy_score(y_test, y_pred_final)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>auc_final <span class="op">=</span> roc_auc_score(y_test, y_proba_final[:, <span class="dv">1</span>])</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>cf_final <span class="op">=</span> confusion_matrix(y_test, y_pred_final)</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'정확도 : </span><span class="sc">{</span><span class="bu">round</span>(accuracy_final,<span class="dv">4</span>)<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'AUC : </span><span class="sc">{</span><span class="bu">round</span>(auc_final,<span class="dv">4</span>)<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'''Optuna LGBM의 CF :</span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>cf_final<span class="sc">}</span><span class="ss">'''</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[LightGBM] [Warning] min_data_in_leaf is set=60, min_child_samples=20 will be ignored. Current value: min_data_in_leaf=60
+[LightGBM] [Warning] min_data_in_leaf is set=60, min_child_samples=20 will be ignored. Current value: min_data_in_leaf=60
+정확도 : 0.7229
+AUC : 0.7602
+Optuna LGBM의 CF :
+[[41245 15309]
+ [ 1735  3214]]</code></pre>
+</div>
+</div>
+</section>
+<section id="lgbm-결과비교-vanila모델-vs-optuna" class="level3">
+<h3 class="anchored" data-anchor-id="lgbm-결과비교-vanila모델-vs-optuna">LGBM 결과비교 (vanila모델 vs optuna)</h3>
+<ul>
+<li>LGBM Vanila모델
+<ul>
+<li>정확도 : 0.703</li>
+<li>AUC : 0.7578</li>
+<li>Vanilla LGBM의 CF : [[39914 16640] [ 1629 3320]]</li>
+</ul></li>
+<li>LGBM with optuna
+<ul>
+<li>정확도 : 0.7229</li>
+<li>AUC : 0.7602</li>
+<li>Optuna LGBM의 CF : [[41245 15309] [ 1735 3214]]</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="autogluon" class="level2">
+<h2 class="anchored" data-anchor-id="autogluon">Autogluon</h2>
+<section id="autogluon이란" class="level3">
+<h3 class="anchored" data-anchor-id="autogluon이란">Autogluon이란</h3>
+<ul>
+<li>Autogluon : optuna와 비슷한 방식으로 최적화하며, 최소한의 코드</li>
+</ul>
+</section>
+<section id="autogluon구성요소와-설정값" class="level3">
+<h3 class="anchored" data-anchor-id="autogluon구성요소와-설정값">Autogluon구성요소와 설정값</h3>
+<ul>
+<li>구성요소
+<ul>
+<li><code>TablePredictor</code> : (분류/회귀에 사용) Tabular데이터 처리</li>
+<li><code>TimeSeriesPredictor</code> : 시계열 데이터 예측</li>
+<li><code>TextPredictor</code> : (연관성 분석 등) 자연어 처리</li>
+<li><code>ImagePredictor</code> : 이미지 처리</li>
+</ul></li>
+<li>설정값
+<ul>
+<li><code>Time_limit</code> : 학습 제한시간(Default=None)</li>
+<li><code>Presets</code> : 사전 설정된 학습 전략 (best/high/good/medium quality. medium이 기본값)</li>
+<li><code>hyperparameters</code> : (dict) 사용할 모델의 하이퍼파라미터들</li>
+<li><code>Auto_stack</code> : 배깅 및 스택 앙상블링을 자동으로 활용할지 여부(Default=False)
+<ul>
+<li>True(더 오래/정확히 학습)인 경우, <code>num_bag_fold</code> &amp; <code>num_stack_levels</code> 자동 설정
+<ul>
+<li><code>num_bag_fold</code> : 배깅에 사용되는 폴드 수. 성능을 높이고 싶다면 5~10 사이를 권장(10이하의 값을 가짐)</li>
+<li><code>num_stack_levels</code> : 스택에 사용되는 스태킹 레벨 수. 성능을 높이고 싶다면 2~3 사이를 권장(3이하의 값을 가짐)</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>Leader board</li>
+</ul>
+</section>
+</section>
+<section id="autogluon실습" class="level2">
+<h2 class="anchored" data-anchor-id="autogluon실습">Autogluon실습</h2>
+<section id="하단-코드의-실행내역-이해하기" class="level3">
+<h3 class="anchored" data-anchor-id="하단-코드의-실행내역-이해하기">하단 코드의 실행내역 이해하기</h3>
+<ul>
+<li>실행내역 중 일부만 발췌함</li>
+</ul>
+<pre><code># 0,1로 추정되는 값 bool 변환
+Stage 1 Generators:
+    Fitting AsTypeFeatureGenerator...
+        Note: Converting 48 features to boolean dtype as they only contain 2 unique values.
+
+# Null값 처리
+Stage 2 Generators:
+    Fitting FillNaFeatureGenerator...
+
+# 그대로 사용할 값 처리(변환X)
+Stage 3 Generators:
+    Fitting IdentityFeatureGenerator...
+
+# Unique값 처리
+Stage 4 Generators:
+    Fitting DropUniqueFeatureGenerator...
+
+# 중복값 처리
+Stage 5 Generators:
+    Fitting DropDuplicatesFeatureGenerator...
+
+# Feature 처리(앞서 전처리한 데이터이기는 하나, autogluon이 판단하여 추가 처리)
+Unused Original Features (Count: 4): ['FLAG_DOCUMENT_4', 'FLAG_DOCUMENT_7', 'FLAG_DOCUMENT_10', 'FLAG_DOCUMENT_12']
+    These features were not used to generate any of the output features. Add a feature generator compatible with these features to utilize them.
+    Features can also be unused if they carry very little information, such as being categorical but having almost entirely unique values or being duplicates of other features.
+    These features do not need to be present at inference time.
+    ('int', []) : 4 | ['FLAG_DOCUMENT_4', 'FLAG_DOCUMENT_7', 'FLAG_DOCUMENT_10', 'FLAG_DOCUMENT_12']
+
+# 사용할 모델
+User-specified model hyperparameters to be fit:
+{
+    'NN_TORCH': [{}],
+    'GBM': [{'extra_trees': True, 'ag_args': {'name_suffix': 'XT'}}, {}, {'learning_rate': 0.03, 'num_leaves': 128, 'feature_fraction': 0.9, 'min_data_in_leaf': 3, 'ag_args': {'name_suffix': 'Large', 'priority': 0, 'hyperparameter_tune_kwargs': None}}],
+    'CAT': [{}],
+    'XGB': [{}],
+    'FASTAI': [{}],
+    'RF': [{'criterion': 'gini', 'ag_args': {'name_suffix': 'Gini', 'problem_types': ['binary', 'multiclass']}}, {'criterion': 'entropy', 'ag_args': {'name_suffix': 'Entr', 'problem_types': ['binary', 'multiclass']}}, {'criterion': 'squared_error', 'ag_args': {'name_suffix': 'MSE', 'problem_types': ['regression', 'quantile']}}],
+    'XT': [{'criterion': 'gini', 'ag_args': {'name_suffix': 'Gini', 'problem_types': ['binary', 'multiclass']}}, {'criterion': 'entropy', 'ag_args': {'name_suffix': 'Entr', 'problem_types': ['binary', 'multiclass']}}, {'criterion': 'squared_error', 'ag_args': {'name_suffix': 'MSE', 'problem_types': ['regression', 'quantile']}}],
+    'KNN': [{'weights': 'uniform', 'ag_args': {'name_suffix': 'Unif'}}, {'weights': 'distance', 'ag_args': {'name_suffix': 'Dist'}}],
+}
+
+# sequential하게 trial 진행
+Fitting 13 L1 models, fit_strategy="sequential" ...
+Fitting model: KNeighborsUnif ... Training model for up to 3595.93s of the 3595.92s of remaining time.
+    0.5271   = Validation score   (roc_auc)
+    1.62s    = Training   runtime
+    50.83s   = Validation runtime
+Fitting model: KNeighborsDist ... Training model for up to 3543.23s of the 3543.23s of remaining time.
+    0.5298   = Validation score   (roc_auc)
+    0.63s    = Training   runtime
+    49.39s   = Validation runtime
+...
+
+# 실행시간 및 best model
+AutoGluon training complete, total runtime = 1561.52s ... Best model: WeightedEnsemble_L2 | Estimated inference throughput: 4907.4 rows/s (24601 batch size)</code></pre>
+<div id="36c13813" class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> autogluon.tabular <span class="im">import</span> TabularPredictor</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> roc_auc_score</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> <span class="st">'autogluon_results'</span> <span class="co"># 저장할 경로로</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 분할 (이전 코드에서 X_train, y_train, X_val, y_val, X_test, y_test를 준비했다고 가정)</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터프레임으로 변환</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>train_data <span class="op">=</span> X_train</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>train_data[<span class="st">'target'</span>] <span class="op">=</span> y_train</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>val_data <span class="op">=</span> X_val</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>val_data[<span class="st">'target'</span>] <span class="op">=</span> y_val</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a><span class="co"># AutoGluon 학습</span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>predictor <span class="op">=</span> TabularPredictor(label<span class="op">=</span><span class="st">'target'</span>, eval_metric<span class="op">=</span><span class="st">'roc_auc'</span>, verbosity<span class="op">=</span><span class="dv">2</span>, path<span class="op">=</span>path)</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>predictor.fit(train_data, tuning_data<span class="op">=</span>val_data, time_limit<span class="op">=</span><span class="dv">3600</span>)  <span class="co"># 시간 제한 설정 (1시간)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="1a0754be" class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 예측 및 평가</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>test_data <span class="op">=</span> X_test</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>test_data[<span class="st">'target'</span>] <span class="op">=</span> y_test</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>y_pred_proba_ag <span class="op">=</span> predictor.predict_proba(test_data)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>y_pred_ag <span class="op">=</span> predictor.predict(test_data)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co"># optuna Results</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>accuracy_ag <span class="op">=</span> accuracy_score(y_test, y_pred_ag)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>auc_ag <span class="op">=</span> roc_auc_score(y_test, y_pred_proba_ag.iloc[:, <span class="dv">1</span>])</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>cf_ag <span class="op">=</span> confusion_matrix(y_test, y_pred_ag)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'정확도 : </span><span class="sc">{</span><span class="bu">round</span>(accuracy_ag,<span class="dv">4</span>)<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'AUC : </span><span class="sc">{</span><span class="bu">round</span>(auc_ag,<span class="dv">4</span>)<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'''autogluon LGBM의 CF :</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>cf_ag<span class="sc">}</span><span class="ss">'''</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>정확도 : 0.9199
+AUC : 0.761
+autogluon LGBM의 CF : 
+[[56492    62]
+ [ 4864    85]]</code></pre>
+</div>
+</div>
+</section>
+<section id="결과-비교하기-optuna-vs-autogluon" class="level3">
+<h3 class="anchored" data-anchor-id="결과-비교하기-optuna-vs-autogluon">결과 비교하기 (optuna vs autogluon)</h3>
+<ul>
+<li>LGBM with optuna
+<ul>
+<li>정확도 : 0.7229</li>
+<li>AUC : 0.7602</li>
+<li>Optuna LGBM의 CF : [[41245 15309] [ 1735 3214]]</li>
+</ul></li>
+<li>Autogluon
+<ul>
+<li>정확도 : 0.9199</li>
+<li>AUC : 0.761</li>
+<li>autogluon LGBM의 CF : [[56492 62] [ 4864 85]]</li>
+</ul></li>
+</ul>
+</section>
+<section id="autogluon-leaderboard" class="level3">
+<h3 class="anchored" data-anchor-id="autogluon-leaderboard">Autogluon leaderboard</h3>
+<ul>
+<li>Leaderboard : Autogluon이 학습했던 모델들의 Score확인 가능
+<ul>
+<li>각 모델의 score나 time 등을 확인 가능</li>
+</ul></li>
+</ul>
+<div id="dfc43063" class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 최적 모델 요약 출력</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(predictor.leaderboard())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                  model  score_val eval_metric  pred_time_val    fit_time  \
+0   WeightedEnsemble_L2   0.754022     roc_auc       5.013031  663.924621   
+1              CatBoost   0.753185     roc_auc       0.050006  108.363011   
+2              LightGBM   0.750591     roc_auc       0.188981   20.328846   
+3               XGBoost   0.749953     roc_auc       0.238468   74.874593   
+4            LightGBMXT   0.749184     roc_auc       0.669894   49.791667   
+5         LightGBMLarge   0.748378     roc_auc       0.653803   39.147023   
+6        NeuralNetTorch   0.740312     roc_auc       0.203650  140.524567   
+7       NeuralNetFastAI   0.737314     roc_auc       0.325043  136.662297   
+8      RandomForestEntr   0.731284     roc_auc       1.649255  304.078007   
+9        ExtraTreesEntr   0.722843     roc_auc       1.512995  135.927222   
+10       ExtraTreesGini   0.722248     roc_auc       1.357874  120.171119   
+11     RandomForestGini   0.720812     roc_auc       2.502675  288.912408   
+12       KNeighborsDist   0.529842     roc_auc      49.391568    0.634750   
+13       KNeighborsUnif   0.527099     roc_auc      50.827020    1.620968   
+
+    pred_time_val_marginal  fit_time_marginal  stack_level  can_infer  \
+0                 0.005133           1.482976            2       True   
+1                 0.050006         108.363011            1       True   
+2                 0.188981          20.328846            1       True   
+3                 0.238468          74.874593            1       True   
+4                 0.669894          49.791667            1       True   
+5                 0.653803          39.147023            1       True   
+6                 0.203650         140.524567            1       True   
+7                 0.325043         136.662297            1       True   
+8                 1.649255         304.078007            1       True   
+9                 1.512995         135.927222            1       True   
+10                1.357874         120.171119            1       True   
+11                2.502675         288.912408            1       True   
+12               49.391568           0.634750            1       True   
+13               50.827020           1.620968            1       True   
+
+    fit_order  
+0          14  
+1           7  
+2           4  
+3          11  
+4           3  
+5          13  
+6          12  
+7          10  
+8           6  
+9           9  
+10          8  
+11          5  
+12          2  
+13          1  </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="paramater를-직접-지정하기" class="level2">
+<h2 class="anchored" data-anchor-id="paramater를-직접-지정하기">paramater를 직접 지정하기</h2>
+<ul>
+<li>Autogluon은 이렇게 기본으로 사용해도 훌륭한 성능을 보여줍니다. 자동으로 파라미터를 지정하고, 앙상블까지 해주죠.</li>
+<li>이런 베이스 모델을 생성한 뒤에는, 쓸모 없거나 너무 무거운 모델은 제거하고 다시 학습시킬 수도 있습니다.</li>
+<li>LGBM, XGB, CAT 세 개가 성능도 괜찮고 학습시간도 짧네요. 이거 세 개만 써봅시다.</li>
+<li>위에서 Optuna에서 찾은 파라미터를 여기서 사용하실 수도 있겠죠?</li>
+</ul>
+<section id="autogluon-하이퍼파라미터-설정" class="level3">
+<h3 class="anchored" data-anchor-id="autogluon-하이퍼파라미터-설정">Autogluon 하이퍼파라미터 설정</h3>
+<ul>
+<li>베이스 모델을 생성한 뒤, 쓸모 없거나 너무 무거운 모델을 제거하고 학습 가능(Leaderboard로 확인)</li>
+<li>위의 Leaderboard 결과에서, LGBM/XGB/CAT을 가지고 하이퍼파라미터를 설정</li>
+</ul>
+<div id="d133882c" class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> autogluon.tabular <span class="im">import</span> TabularPredictor</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> roc_auc_score</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> autogluon.tabular <span class="im">import</span> TabularPredictor</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> roc_auc_score</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> <span class="st">'drive/MyDrive/Metacode/Week6/selected_model'</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>os.makedirs(path, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>train_data <span class="op">=</span> X_train</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>train_data[<span class="st">'target'</span>] <span class="op">=</span> y_train</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>val_data <span class="op">=</span> X_val</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>val_data[<span class="st">'target'</span>] <span class="op">=</span> y_val</span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>scale_pos_weight <span class="op">=</span> <span class="bu">len</span>(y_train[y_train <span class="op">==</span> <span class="dv">0</span>]) <span class="op">/</span> <span class="bu">len</span>(y_train[y_train <span class="op">==</span> <span class="dv">1</span>])  <span class="co"># 불균형 데이터 가중치 설정</span></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a><span class="co"># 모델별 하이퍼파라미터 지정</span></span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>custom_hyperparameters <span class="op">=</span> {</span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">'GBM'</span>: {</span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">'learning_rate'</span>: <span class="fl">0.02642230824686883</span>,</span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">'num_leaves'</span>: <span class="dv">34</span>,</span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>        <span class="st">'n_estimators'</span>: <span class="dv">864</span>,</span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a>        <span class="st">'subsample'</span>: <span class="fl">0.8342595493628282</span>,</span>
+<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a>        <span class="st">'min_data_in_leaf'</span>: <span class="dv">60</span>,</span>
+<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a>        <span class="st">'colsample_bytree'</span>: <span class="fl">0.8360285193709883</span>,</span>
+<span id="cb22-32"><a href="#cb22-32" aria-hidden="true" tabindex="-1"></a>        <span class="st">'n_jobs'</span>:<span class="op">-</span><span class="dv">1</span>,</span>
+<span id="cb22-33"><a href="#cb22-33" aria-hidden="true" tabindex="-1"></a>        <span class="st">'class_weight'</span>:<span class="st">'balanced'</span></span>
+<span id="cb22-34"><a href="#cb22-34" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb22-35"><a href="#cb22-35" aria-hidden="true" tabindex="-1"></a>    <span class="st">'CAT'</span>: {</span>
+<span id="cb22-36"><a href="#cb22-36" aria-hidden="true" tabindex="-1"></a>        <span class="st">'scale_pos_weight'</span>: scale_pos_weight</span>
+<span id="cb22-37"><a href="#cb22-37" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb22-38"><a href="#cb22-38" aria-hidden="true" tabindex="-1"></a>    <span class="st">'XGB'</span>: {</span>
+<span id="cb22-39"><a href="#cb22-39" aria-hidden="true" tabindex="-1"></a>        <span class="st">'scale_pos_weight'</span>: scale_pos_weight</span>
+<span id="cb22-40"><a href="#cb22-40" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb22-41"><a href="#cb22-41" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb22-42"><a href="#cb22-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-43"><a href="#cb22-43" aria-hidden="true" tabindex="-1"></a><span class="co"># AutoGluon 학습</span></span>
+<span id="cb22-44"><a href="#cb22-44" aria-hidden="true" tabindex="-1"></a>predictor <span class="op">=</span> TabularPredictor(label<span class="op">=</span><span class="st">'target'</span>, eval_metric<span class="op">=</span><span class="st">'roc_auc'</span>, verbosity<span class="op">=</span><span class="dv">2</span>, path<span class="op">=</span>path)</span>
+<span id="cb22-45"><a href="#cb22-45" aria-hidden="true" tabindex="-1"></a>predictor.fit(</span>
+<span id="cb22-46"><a href="#cb22-46" aria-hidden="true" tabindex="-1"></a>    train_data,</span>
+<span id="cb22-47"><a href="#cb22-47" aria-hidden="true" tabindex="-1"></a>    tuning_data<span class="op">=</span>val_data,</span>
+<span id="cb22-48"><a href="#cb22-48" aria-hidden="true" tabindex="-1"></a>    time_limit<span class="op">=</span><span class="dv">3600</span>,</span>
+<span id="cb22-49"><a href="#cb22-49" aria-hidden="true" tabindex="-1"></a>    hyperparameters<span class="op">=</span>custom_hyperparameters</span>
+<span id="cb22-50"><a href="#cb22-50" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: path already exists! This predictor may overwrite an existing predictor! path="drive/MyDrive/Metacode/Week6/selected_model"
+Verbosity: 2 (Standard Logging)
+=================== System Info ===================
+AutoGluon Version:  1.2
+Python Version:     3.11.11
+Operating System:   Linux
+Platform Machine:   x86_64
+Platform Version:   #1 SMP PREEMPT_DYNAMIC Thu Jun 27 21:05:47 UTC 2024
+CPU Count:          2
+Memory Avail:       8.70 GB / 12.67 GB (68.6%)
+Disk Space Avail:   0.50 GB / 15.00 GB (3.3%)
+    WARNING: Available disk space is low and there is a risk that AutoGluon will run out of disk during fit, causing an exception. 
+    We recommend a minimum available disk space of 10 GB, and large datasets may require more.
+===================================================
+No presets specified! To achieve strong results with AutoGluon, it is recommended to use the available presets. Defaulting to `'medium'`...
+    Recommended Presets (For more details refer to https://auto.gluon.ai/stable/tutorials/tabular/tabular-essentials.html#presets):
+    presets='experimental' : New in v1.2: Pre-trained foundation model + parallel fits. The absolute best accuracy without consideration for inference speed. Does not support GPU.
+    presets='best'         : Maximize accuracy. Recommended for most users. Use in competitions and benchmarks.
+    presets='high'         : Strong accuracy with fast inference speed.
+    presets='good'         : Good accuracy with very fast inference speed.
+    presets='medium'       : Fast training time, ideal for initial prototyping.
+Beginning AutoGluon training ... Time limit = 3600s
+AutoGluon will save models to "/content/drive/MyDrive/Metacode/Week6/selected_model"
+Train Data Rows:    246008
+Train Data Columns: 131
+Tuning Data Rows:    24601
+Tuning Data Columns: 131
+Label Column:       target
+AutoGluon infers your prediction problem is: 'binary' (because only two unique label-values observed).
+    2 unique label values:  [0, 1]
+    If 'binary' is not the correct problem_type, please manually specify the problem_type parameter during Predictor init (You may specify problem_type as one of: ['binary', 'multiclass', 'regression', 'quantile'])
+Problem Type:       binary
+Preprocessing data ...
+Selected class &lt;--&gt; label mapping:  class 1 = 1, class 0 = 0
+Using Feature Generators to preprocess the data ...
+Fitting AutoMLPipelineFeatureGenerator...
+    Available Memory:                    8776.27 MB
+    Train Data (Original)  Memory Usage: 270.46 MB (3.1% of available memory)
+    Inferring data type of each feature based on column values. Set feature_metadata_in to manually specify special dtypes of the features.
+    Stage 1 Generators:
+        Fitting AsTypeFeatureGenerator...
+            Note: Converting 48 features to boolean dtype as they only contain 2 unique values.
+    Stage 2 Generators:
+        Fitting FillNaFeatureGenerator...
+    Stage 3 Generators:
+        Fitting IdentityFeatureGenerator...
+    Stage 4 Generators:
+        Fitting DropUniqueFeatureGenerator...
+    Stage 5 Generators:
+        Fitting DropDuplicatesFeatureGenerator...
+    Unused Original Features (Count: 6): ['FLAG_DOCUMENT_4', 'FLAG_DOCUMENT_7', 'FLAG_DOCUMENT_10', 'FLAG_DOCUMENT_12', 'FLAG_DOCUMENT_17', 'CODE_GENDER_XNA']
+        These features were not used to generate any of the output features. Add a feature generator compatible with these features to utilize them.
+        Features can also be unused if they carry very little information, such as being categorical but having almost entirely unique values or being duplicates of other features.
+        These features do not need to be present at inference time.
+        ('float', []) : 1 | ['CODE_GENDER_XNA']
+        ('int', [])   : 5 | ['FLAG_DOCUMENT_4', 'FLAG_DOCUMENT_7', 'FLAG_DOCUMENT_10', 'FLAG_DOCUMENT_12', 'FLAG_DOCUMENT_17']
+    Types of features in original data (raw dtype, special dtypes):
+        ('float', []) : 88 | ['AMT_INCOME_TOTAL', 'AMT_CREDIT', 'AMT_ANNUITY', 'AMT_GOODS_PRICE', 'REGION_POPULATION_RELATIVE', ...]
+        ('int', [])   : 37 | ['SK_ID_CURR', 'CNT_CHILDREN', 'DAYS_BIRTH', 'DAYS_ID_PUBLISH', 'FLAG_MOBIL', ...]
+    Types of features in processed data (raw dtype, special dtypes):
+        ('float', [])     : 69 | ['AMT_INCOME_TOTAL', 'AMT_CREDIT', 'AMT_ANNUITY', 'AMT_GOODS_PRICE', 'REGION_POPULATION_RELATIVE', ...]
+        ('int', [])       : 14 | ['SK_ID_CURR', 'CNT_CHILDREN', 'DAYS_BIRTH', 'DAYS_ID_PUBLISH', 'HOUR_APPR_PROCESS_START', ...]
+        ('int', ['bool']) : 42 | ['FLAG_MOBIL', 'FLAG_EMP_PHONE', 'FLAG_WORK_PHONE', 'FLAG_CONT_MOBILE', 'FLAG_PHONE', ...]
+    4.1s = Fit runtime
+    125 features in original data used to generate 125 features in processed data.
+    Train Data (Processed) Memory Usage: 182.20 MB (2.1% of available memory)
+Data preprocessing and feature engineering runtime = 4.62s ...
+AutoGluon will gauge predictive performance using evaluation metric: 'roc_auc'
+    This metric expects predicted probabilities rather than predicted class labels, so you'll need to use predict_proba() instead of predict()
+    To change this, specify the eval_metric parameter of Predictor()
+User-specified model hyperparameters to be fit:
+{
+    'GBM': [{'learning_rate': 0.02642230824686883, 'num_leaves': 34, 'n_estimators': 864, 'subsample': 0.8342595493628282, 'min_data_in_leaf': 60, 'colsample_bytree': 0.8360285193709883, 'n_jobs': -1, 'class_weight': 'balanced'}],
+    'CAT': [{'scale_pos_weight': 11.377138257194607}],
+    'XGB': [{'scale_pos_weight': 11.377138257194607}],
+}
+Fitting 3 L1 models, fit_strategy="sequential" ...
+Fitting model: LightGBM ... Training model for up to 3595.38s of the 3595.38s of remaining time.
+/usr/local/lib/python3.11/dist-packages/lightgbm/engine.py:204: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+    0.8437   = Validation score   (roc_auc)
+    93.76s   = Training   runtime
+    2.52s    = Validation runtime
+Fitting model: CatBoost ... Training model for up to 3498.78s of the 3498.77s of remaining time.
+    0.9877   = Validation score   (roc_auc)
+    1941.71s     = Training   runtime
+    0.38s    = Validation runtime
+Fitting model: XGBoost ... Training model for up to 1556.46s of the 1556.46s of remaining time.
+    0.9982   = Validation score   (roc_auc)
+    1556.76s     = Training   runtime
+    11.44s   = Validation runtime
+Fitting model: WeightedEnsemble_L2 ... Training model for up to 360.00s of the -11.97s of remaining time.
+    Ensemble Weights: {'XGBoost': 1.0}
+    0.9982   = Validation score   (roc_auc)
+    0.35s    = Training   runtime
+    0.0s     = Validation runtime
+AutoGluon training complete, total runtime = 3614.24s ... Best model: WeightedEnsemble_L2 | Estimated inference throughput: 2149.4 rows/s (24601 batch size)
+TabularPredictor saved. To load, use: predictor = TabularPredictor.load("/content/drive/MyDrive/Metacode/Week6/selected_model")</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;autogluon.tabular.predictor.predictor.TabularPredictor at 0x7d2f359dd250&gt;</code></pre>
+</div>
+</div>
+<div id="58b942ee" class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 예측 및 평가</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>test_data <span class="op">=</span> X_test</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>test_data[<span class="st">'target'</span>] <span class="op">=</span> y_test</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>y_pred_proba_ag <span class="op">=</span> predictor.predict_proba(test_data)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>y_pred_ag <span class="op">=</span> predictor.predict(test_data)</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="co"># optuna Results</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>accuracy_ag <span class="op">=</span> accuracy_score(y_test, y_pred_ag)</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>auc_ag <span class="op">=</span> roc_auc_score(y_test, y_pred_proba_ag.iloc[:, <span class="dv">1</span>])</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>cf_ag <span class="op">=</span> confusion_matrix(y_test, y_pred_ag)</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'정확도 : </span><span class="sc">{</span><span class="bu">round</span>(accuracy_ag,<span class="dv">4</span>)<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'AUC : </span><span class="sc">{</span><span class="bu">round</span>(auc_ag,<span class="dv">4</span>)<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'''autogluon CF :</span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>cf_ag<span class="sc">}</span><span class="ss">'''</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>정확도 : 0.8675
+AUC : 0.7107
+autogluon CF :
+[[51892  4662]
+ [ 3486  1463]]</code></pre>
+</div>
+</div>
+<div id="8025e543" class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>predictor.leaderboard()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+
+  <div id="df-eba142b3-b498-4a64-8ebc-c1b7d97a7dec" class="colab-df-container">
+    <div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">model</th>
+<th data-quarto-table-cell-role="th">score_val</th>
+<th data-quarto-table-cell-role="th">eval_metric</th>
+<th data-quarto-table-cell-role="th">pred_time_val</th>
+<th data-quarto-table-cell-role="th">fit_time</th>
+<th data-quarto-table-cell-role="th">pred_time_val_marginal</th>
+<th data-quarto-table-cell-role="th">fit_time_marginal</th>
+<th data-quarto-table-cell-role="th">stack_level</th>
+<th data-quarto-table-cell-role="th">can_infer</th>
+<th data-quarto-table-cell-role="th">fit_order</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>XGBoost</td>
+<td>0.998176</td>
+<td>roc_auc</td>
+<td>11.441149</td>
+<td>1556.763843</td>
+<td>11.441149</td>
+<td>1556.763843</td>
+<td>1</td>
+<td>True</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>WeightedEnsemble_L2</td>
+<td>0.998176</td>
+<td>roc_auc</td>
+<td>11.445685</td>
+<td>1557.111241</td>
+<td>0.004536</td>
+<td>0.347398</td>
+<td>2</td>
+<td>True</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>CatBoost</td>
+<td>0.987722</td>
+<td>roc_auc</td>
+<td>0.384950</td>
+<td>1941.707015</td>
+<td>0.384950</td>
+<td>1941.707015</td>
+<td>1</td>
+<td>True</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>LightGBM</td>
+<td>0.843690</td>
+<td>roc_auc</td>
+<td>2.519189</td>
+<td>93.759019</td>
+<td>2.519189</td>
+<td>93.759019</td>
+<td>1</td>
+<td>True</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+    <div class="colab-df-buttons">
+
+  <div class="colab-df-container">
+    <button class="colab-df-convert" onclick="convertToInteractive('df-eba142b3-b498-4a64-8ebc-c1b7d97a7dec')" title="Convert this dataframe to an interactive table." style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 -960 960 960">
+    <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"></path>
+  </svg>
+    </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    .colab-df-buttons div {
+      margin-bottom: 4px;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+    <script>
+      const buttonEl =
+        document.querySelector('#df-eba142b3-b498-4a64-8ebc-c1b7d97a7dec button.colab-df-convert');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      async function convertToInteractive(key) {
+        const element = document.querySelector('#df-eba142b3-b498-4a64-8ebc-c1b7d97a7dec');
+        const dataTable =
+          await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                    [key], {});
+        if (!dataTable) return;
+
+        const docLinkHtml = 'Like what you see? Visit the ' +
+          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+          + ' to learn more about interactive tables.';
+        element.innerHTML = '';
+        dataTable['output_type'] = 'display_data';
+        await google.colab.output.renderOutput(dataTable, element);
+        const docLink = document.createElement('div');
+        docLink.innerHTML = docLinkHtml;
+        element.appendChild(docLink);
+      }
+    </script>
+  </div>
+
+
+<div id="df-fac15474-9891-44c0-bbd3-e266e669a597">
+  <button class="colab-df-quickchart" onclick="quickchart('df-fac15474-9891-44c0-bbd3-e266e669a597')" title="Suggest charts" style="display:none;">
+
+<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 0 24 24" width="24px">
+    <g>
+        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"></path>
+    </g>
+</svg>
+  </button>
+
+<style>
+  .colab-df-quickchart {
+      --bg-color: #E8F0FE;
+      --fill-color: #1967D2;
+      --hover-bg-color: #E2EBFA;
+      --hover-fill-color: #174EA6;
+      --disabled-fill-color: #AAA;
+      --disabled-bg-color: #DDD;
+  }
+
+  [theme=dark] .colab-df-quickchart {
+      --bg-color: #3B4455;
+      --fill-color: #D2E3FC;
+      --hover-bg-color: #434B5C;
+      --hover-fill-color: #FFFFFF;
+      --disabled-bg-color: #3B4455;
+      --disabled-fill-color: #666;
+  }
+
+  .colab-df-quickchart {
+    background-color: var(--bg-color);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    fill: var(--fill-color);
+    height: 32px;
+    padding: 0;
+    width: 32px;
+  }
+
+  .colab-df-quickchart:hover {
+    background-color: var(--hover-bg-color);
+    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+    fill: var(--button-hover-fill-color);
+  }
+
+  .colab-df-quickchart-complete:disabled,
+  .colab-df-quickchart-complete:disabled:hover {
+    background-color: var(--disabled-bg-color);
+    fill: var(--disabled-fill-color);
+    box-shadow: none;
+  }
+
+  .colab-df-spinner {
+    border: 2px solid var(--fill-color);
+    border-color: transparent;
+    border-bottom-color: var(--fill-color);
+    animation:
+      spin 1s steps(1) infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+      border-left-color: var(--fill-color);
+    }
+    20% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    30% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+      border-right-color: var(--fill-color);
+    }
+    40% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    60% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+    }
+    80% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-bottom-color: var(--fill-color);
+    }
+    90% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+    }
+  }
+</style>
+
+  <script>
+    async function quickchart(key) {
+      const quickchartButtonEl =
+        document.querySelector('#' + key + ' button');
+      quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
+      quickchartButtonEl.classList.add('colab-df-spinner');
+      try {
+        const charts = await google.colab.kernel.invokeFunction(
+            'suggestCharts', [key], {});
+      } catch (error) {
+        console.error('Error during call to suggestCharts:', error);
+      }
+      quickchartButtonEl.classList.remove('colab-df-spinner');
+      quickchartButtonEl.classList.add('colab-df-quickchart-complete');
+    }
+    (() => {
+      let quickchartButtonEl =
+        document.querySelector('#df-fac15474-9891-44c0-bbd3-e266e669a597 button');
+      quickchartButtonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+    })();
+  </script>
+</div>
+
+    </div>
+  </div>
+</div>
+</div>
+</section>
+<section id="결과-비교하기-optuna-vs-autogluon-1" class="level3">
+<h3 class="anchored" data-anchor-id="결과-비교하기-optuna-vs-autogluon-1">결과 비교하기 (optuna vs autogluon)</h3>
+<ul>
+<li>Autogluon기본
+<ul>
+<li>정확도 : 0.9199</li>
+<li>AUC : 0.761</li>
+<li>autogluon LGBM의 CF : [[56492 62] [ 4864 85]]</li>
+</ul></li>
+<li>Autogluon 일부 모델만 추려낸 것 (낮아짐)
+<ul>
+<li>정확도 : 0.8675</li>
+<li>AUC : 0.7107</li>
+<li>autogluon CF : [[51892 4662] [ 3486 1463]]</li>
+</ul></li>
+</ul>
+</section>
+<section id="기타" class="level3">
+<h3 class="anchored" data-anchor-id="기타">기타</h3>
+<ul>
+<li>다른 AutoML로 pycaret도 있으나, Autogluon이 더 좋음
+<ul>
+<li>코드 한줄정도로 구현이 가능하지만, Autogluon성능이 더 좋았음</li>
+</ul></li>
+<li>실무적으로는, <strong>medium quality세팅으로 리더보드를 보면서, feature engineering(파생변수 생성 등)을 진행하게 됨</strong>
+<ul>
+<li>성능의 영향은 데이터(GIGO). 하이퍼파라미터 튜닝 등 보다는 <strong>데이터에 집중</strong></li>
+<li>EDA를 하다보면, 추가 할법한 (파생)변수가 보이기도 함</li>
+<li>SHAP를 확인하다보면 넣으면 좋을 것 같은 변수가 보이기도 함</li>
+</ul></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="cuml-도커에서-설치하기" class="level1">
+<h1>cuML 도커에서 설치하기</h1>
+<ul>
+<li>https://rapids.ai/#quick-start</li>
+</ul>
+</section>
+<section id="과제-최종과제-준비하기" class="level1">
+<h1>과제 : 최종과제 준비하기</h1>
+<ul>
+<li>구성 샘플
+<ul>
+<li>과제 목표</li>
+<li>학습데이터</li>
+<li>EDA</li>
+<li>SHAP</li>
+<li>학습모델</li>
+<li>메트릭</li>
+<li>리더보드</li>
+<li>appendix(hyper)</li>
+</ul></li>
+<li>인당 15분 발표 + 5분 질문</li>
+<li>데이콘에 결과 제출해보기 (+private score공유)</li>
+<li>데이콘 우승자 발표 참고하면 좋음</li>
+</ul>
+
+
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/kr9268\.github\.io\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="kr9268/giscus_for_blog" data-repo-id="R_kgDOL0Sthw" data-category="General" data-category-id="DIC_kwDOL0Sth84Ce_5h" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+</div> <!-- /content -->
+<script>
+    const baseFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    const watermark = new XWatermark.XWatermark();
+    watermark.init("Kibok Park", {
+      parentSelector: "body",
+      prevent: true,
+      observer: true,
+      mode: "normal",
+      font: "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', 'Liberation Sans', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
+      fontsize: baseFontSize * 1.000000,
+      angle: -15.000000,
+      color: "#000000",
+      alpha: 0.100000,
+      cols: 10,
+      rows: 50,
+      xSpace: baseFontSize * 4.000000,
+      ySpace: baseFontSize * 4.000000,
+      zIndex: -1
+    });
+    </script>
+
+
+
+
+</body></html>
