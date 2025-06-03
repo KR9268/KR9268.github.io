@@ -1,0 +1,2948 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Kibok Park">
+<meta name="dcterms.date" content="2025-06-01">
+
+<title>[GPT활용강의/자유과제] 연금저축계좌 ETF 투자판단 보조 – Blog</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../profile.jpg" rel="icon" type="image/jpeg">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-6a4c75c897c7090e25337f92bebeec5a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-53290a7a9d457538af1dff41dbf92c81.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-6a4c75c897c7090e25337f92bebeec5a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/watermark-1.0.11/watermark.min.js"></script>
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-LPL499WQBH"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-LPL499WQBH', { 'anonymize_ip': true});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Blog</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index_dashboards.html"> 
+<span class="menu-text">Dashboards</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index_miniprojects.html"> 
+<span class="menu-text">Mini Projects</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About me</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/KR9268"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/%EA%B8%B0%EB%B3%B5-%EB%B0%95-573a68268/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">[GPT활용강의/자유과제] 연금저축계좌 ETF 투자판단 보조</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">ChatGPT</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Kibok Park </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">June 1, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#개요" id="toc-개요" class="nav-link active" data-scroll-target="#개요">개요</a></li>
+  <li><a href="#제출내용-요약" id="toc-제출내용-요약" class="nav-link" data-scroll-target="#제출내용-요약">제출내용 요약</a>
+  <ul class="collapse">
+  <li><a href="#주제-선정-및-문제-정의" id="toc-주제-선정-및-문제-정의" class="nav-link" data-scroll-target="#주제-선정-및-문제-정의">1. 주제 선정 및 문제 정의</a></li>
+  <li><a href="#적용-도구-및-기법" id="toc-적용-도구-및-기법" class="nav-link" data-scroll-target="#적용-도구-및-기법">2. 적용 도구 및 기법</a></li>
+  <li><a href="#적용-시나리오-구성" id="toc-적용-시나리오-구성" class="nav-link" data-scroll-target="#적용-시나리오-구성">3. 적용 시나리오 구성</a>
+  <ul class="collapse">
+  <li><a href="#예시-시나리오" id="toc-예시-시나리오" class="nav-link" data-scroll-target="#예시-시나리오">예시 시나리오</a></li>
+  </ul></li>
+  <li><a href="#실행-결과-정리-한계점-및-gpt-실행결과-요약" id="toc-실행-결과-정리-한계점-및-gpt-실행결과-요약" class="nav-link" data-scroll-target="#실행-결과-정리-한계점-및-gpt-실행결과-요약">4. 실행 결과 정리 (한계점 및 GPT 실행결과 요약)</a></li>
+  <li><a href="#회고-및-개선-방향" id="toc-회고-및-개선-방향" class="nav-link" data-scroll-target="#회고-및-개선-방향">5. 회고 및 개선 방향</a></li>
+  </ul></li>
+  <li><a href="#과제-구현내용-일부" id="toc-과제-구현내용-일부" class="nav-link" data-scroll-target="#과제-구현내용-일부">과제 구현내용 일부</a>
+  <ul class="collapse">
+  <li><a href="#종목선정-보유현황-데이터프레임으로-1차-정리" id="toc-종목선정-보유현황-데이터프레임으로-1차-정리" class="nav-link" data-scroll-target="#종목선정-보유현황-데이터프레임으로-1차-정리">종목선정 : 보유현황 데이터프레임으로 1차 정리</a></li>
+  <li><a href="#종목선정-etf-상위-10개-종목-가져오기tiger-etf" id="toc-종목선정-etf-상위-10개-종목-가져오기tiger-etf" class="nav-link" data-scroll-target="#종목선정-etf-상위-10개-종목-가져오기tiger-etf">종목선정 : ETF 상위 10개 종목 가져오기(TIGER ETF)</a></li>
+  <li><a href="#종목선정-etf-상위-10개-종목-가져오기kodex-etf" id="toc-종목선정-etf-상위-10개-종목-가져오기kodex-etf" class="nav-link" data-scroll-target="#종목선정-etf-상위-10개-종목-가져오기kodex-etf">종목선정 : ETF 상위 10개 종목 가져오기(KODEX ETF)</a></li>
+  <li><a href="#감성분석-데이터-대상종목-증권사리포트-추출-1종목-추출샘플" id="toc-감성분석-데이터-대상종목-증권사리포트-추출-1종목-추출샘플" class="nav-link" data-scroll-target="#감성분석-데이터-대상종목-증권사리포트-추출-1종목-추출샘플">감성분석 데이터 : 대상종목 증권사리포트 추출 (1종목 추출샘플)</a></li>
+  <li><a href="#감성분석-데이터-대상종목-증권사리포트-추출-상위-10개" id="toc-감성분석-데이터-대상종목-증권사리포트-추출-상위-10개" class="nav-link" data-scroll-target="#감성분석-데이터-대상종목-증권사리포트-추출-상위-10개">감성분석 데이터 : 대상종목 증권사리포트 추출 (상위 10개)</a></li>
+  <li><a href="#감성분석-데이터-리포트-다운로드" id="toc-감성분석-데이터-리포트-다운로드" class="nav-link" data-scroll-target="#감성분석-데이터-리포트-다운로드">감성분석 데이터 : 리포트 다운로드</a></li>
+  <li><a href="#감성분석-데이터-조사한-내용으로-openai-api로-리포트-요약" id="toc-감성분석-데이터-조사한-내용으로-openai-api로-리포트-요약" class="nav-link" data-scroll-target="#감성분석-데이터-조사한-내용으로-openai-api로-리포트-요약">감성분석 데이터 : 조사한 내용으로 OPENAI API로 리포트 요약</a></li>
+  <li><a href="#감성분석-진행-openai-api로-감성분석-진행" id="toc-감성분석-진행-openai-api로-감성분석-진행" class="nav-link" data-scroll-target="#감성분석-진행-openai-api로-감성분석-진행">감성분석 진행 : Openai API로 감성분석 진행</a></li>
+  <li><a href="#감성분석-진행-gpt제안에-따른-etf비중별-감성분석-적용" id="toc-감성분석-진행-gpt제안에-따른-etf비중별-감성분석-적용" class="nav-link" data-scroll-target="#감성분석-진행-gpt제안에-따른-etf비중별-감성분석-적용">감성분석 진행 : GPT제안에 따른 ETF비중별 감성분석 적용</a></li>
+  <li><a href="#감성분석-적용-예상-평가금액을-조정합산하여-etf예상가치-산출" id="toc-감성분석-적용-예상-평가금액을-조정합산하여-etf예상가치-산출" class="nav-link" data-scroll-target="#감성분석-적용-예상-평가금액을-조정합산하여-etf예상가치-산출">감성분석 적용 : 예상 평가금액을 조정/합산하여 ETF예상가치 산출</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+
+<p>GPT활용강의 내용정리 - 자유과제 진행(연금저축계좌 ETF 투자판단 보조)</p>
+<section id="개요" class="level1">
+<h1>개요</h1>
+<ul>
+<li>GPT활용교육을 들은 내용을 별도로 정리
+<ul>
+<li>1일차 : 네이버API 활용 : GPT를 활용한 변수 분석 등</li>
+<li>2일차 : beautifulsoup활용한 뉴스 및 증권사리포트 크롤링</li>
+<li>3일차 : 뉴스 및 증권사리포트 데이터 전처리</li>
+<li>4일차 : 감성점수 변환 및 시각화</li>
+<li>5일차 : 백테스팅 실습</li>
+</ul></li>
+<li>자유과제 진행으로 일부만 구현한 내용 정리</li>
+</ul>
+</section>
+<section id="제출내용-요약" class="level1">
+<h1>제출내용 요약</h1>
+<ul>
+<li>과제명 : 연금저축계좌에 보유중인 ETF에 대한 상위 10개 종목의 감성분석 및 투자판단 보조</li>
+</ul>
+<section id="주제-선정-및-문제-정의" class="level2">
+<h2 class="anchored" data-anchor-id="주제-선정-및-문제-정의">1. 주제 선정 및 문제 정의</h2>
+<ul>
+<li>연금저축계좌에 보유중인 ETF에 대한 상위 10개 종목의 감성분석 및 투자판단 보조</li>
+</ul>
+<hr>
+</section>
+<section id="적용-도구-및-기법" class="level2">
+<h2 class="anchored" data-anchor-id="적용-도구-및-기법">2. 적용 도구 및 기법</h2>
+<ul>
+<li>ChatGPT 활용</li>
+<li>프롬프트 예시는 다음 페이지 참조</li>
+</ul>
+<hr>
+</section>
+<section id="적용-시나리오-구성" class="level2">
+<h2 class="anchored" data-anchor-id="적용-시나리오-구성">3. 적용 시나리오 구성</h2>
+<ul>
+<li><p>연금저축계좌에 보유중인 ETF종목에 대한 구성종목 확인<br>
+(예: KODEX 코스닥 ETF는 알테오젠 등 보유)</p></li>
+<li><p>각 ETF종목의 상위 10개 항목 추출 (상위 10개 항목에 대한 감성분석 예정)</p>
+<ul>
+<li>ETF운용사 홈페이지에서 크롤링하여 상위 10개 항목 추출</li>
+<li>강의 내용처럼 GPT URL 분석 요청 후 변수 확인<br>
+(예: TIGER → ISIN / KODEX → 고유번호)</li>
+</ul></li>
+<li><p>모든 상위 10개 항목을 모은 후, 증권사 리포트 확보 및 리포트별 감성분석 진행</p></li>
+<li><p>긍정/부정 지표 추이를 ETF 비중(평가금액)에 반영하여 평가금액 변동 예상치 산출</p></li>
+</ul>
+<hr>
+<section id="예시-시나리오" class="level3">
+<h3 class="anchored" data-anchor-id="예시-시나리오">예시 시나리오</h3>
+<ol type="1">
+<li>KODEX 코스닥150의 상위 10개 종목(알테오젠, HLB 등)의 증권사 리포트를 크롤링<br>
+</li>
+<li>존재하는 리포트에 대해 감성분석을 진행하여 구성종목별 평가금액 조정을 진행
+<ul>
+<li>알테오젠 유지 판단 → 그대로<br>
+</li>
+<li>HLB 상승 판단 → 평가금액에 조정배율 곱함<br>
+</li>
+</ul></li>
+<li>각 구성종목의 예상 평가금액을 합산하여 기존 평가금액합보다 크면 매수, 아니면 매도
+<ul>
+<li>예상 평가금액이 커지면 향후 가격 상승 가능성 → 매수 진행</li>
+</ul></li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="실행-결과-정리-한계점-및-gpt-실행결과-요약" class="level2">
+<h2 class="anchored" data-anchor-id="실행-결과-정리-한계점-및-gpt-실행결과-요약">4. 실행 결과 정리 (한계점 및 GPT 실행결과 요약)</h2>
+<ul>
+<li>ETF 운용사에 따라 웹사이트에 데이터가 없거나, 채권형 ETF 등은 분석 적용이 어려움</li>
+</ul>
+<hr>
+</section>
+<section id="회고-및-개선-방향" class="level2">
+<h2 class="anchored" data-anchor-id="회고-및-개선-방향">5. 회고 및 개선 방향</h2>
+<ul>
+<li><p>원래는 네이버증권을 통해 단일 크롤링 코드를 구현하려 했으나,<br>
+로딩 방식 이슈로 어려움을 겪음 → 각 운용사별 URL 분석 방식으로 대체</p></li>
+<li><p>향후 네이버증권 한 페이지에서 구성종목 및 여론(토론방) 정보까지<br>
+통합 분석할 수 있다면 효율적인 프로젝트 운영 가능</p></li>
+<li><p>현재는 국내종목 위주로 구현했으나, 향후 해외종목에도 적용되도록 확장 예정</p></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="과제-구현내용-일부" class="level1">
+<h1>과제 구현내용 일부</h1>
+<section id="종목선정-보유현황-데이터프레임으로-1차-정리" class="level2">
+<h2 class="anchored" data-anchor-id="종목선정-보유현황-데이터프레임으로-1차-정리">종목선정 : 보유현황 데이터프레임으로 1차 정리</h2>
+<ul>
+<li>ETF운용사에 따라 크롤링 방법이 다르므로, Crawl파라메터를 별도로 기입</li>
+</ul>
+<div id="bfdcd2ea" class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pykrx <span class="im">import</span> stock</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="8be91e40" class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pykrx <span class="im">import</span> stock</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>etf_in_account <span class="op">=</span> [<span class="st">'251350'</span>,<span class="st">'360750'</span>,<span class="st">'245340'</span>,<span class="st">'319640'</span>,<span class="st">'219480'</span>,<span class="st">'214980'</span>,<span class="st">'157450'</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                  <span class="st">'195980'</span>,<span class="st">'305080'</span>,<span class="st">'182480'</span>,<span class="st">'310970'</span>,<span class="st">'148070'</span>,<span class="st">'329200'</span>,<span class="st">'069500'</span>,<span class="st">'229200'</span>]</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> []</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ticker <span class="kw">in</span> etf_in_account:</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    etf_name <span class="op">=</span> stock.get_etf_ticker_name(ticker)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    etf_isin <span class="op">=</span> stock.get_etf_isin(ticker)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    words <span class="op">=</span> etf_name.split()</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># crawl_param 조건 지정</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> words[<span class="dv">0</span>] <span class="op">==</span> <span class="st">"KODEX"</span>:</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        crawl_param <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> words[<span class="dv">0</span>] <span class="op">==</span> <span class="st">"TIGER"</span>:</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        crawl_param <span class="op">=</span> etf_isin</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> words[<span class="dv">0</span>] <span class="op">==</span> <span class="st">"KIWOOM"</span>:</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>        crawl_param <span class="op">=</span> ticker</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        crawl_param <span class="op">=</span> <span class="va">None</span>  <span class="co"># 기타 매니저는 None 처리</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    data.append({</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Ticker"</span>: ticker,</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">"ETF_Name"</span>: etf_name,</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">"ETF_ISIN"</span>: etf_isin,</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>        <span class="st">"ETF_Manager"</span>: words[<span class="dv">0</span>],</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>        <span class="st">"ETF_crawl_param"</span>: crawl_param</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>df_etf <span class="op">=</span> pd.DataFrame(data)</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>df_etf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Ticker</th>
+<th data-quarto-table-cell-role="th">ETF_Name</th>
+<th data-quarto-table-cell-role="th">ETF_ISIN</th>
+<th data-quarto-table-cell-role="th">ETF_Manager</th>
+<th data-quarto-table-cell-role="th">ETF_crawl_param</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>251350</td>
+<td>KODEX 선진국MSCI World</td>
+<td>KR7251350005</td>
+<td>KODEX</td>
+<td>None</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>360750</td>
+<td>TIGER 미국S&amp;P500</td>
+<td>KR7360750004</td>
+<td>TIGER</td>
+<td>KR7360750004</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>245340</td>
+<td>TIGER 미국다우존스30</td>
+<td>KR7245340005</td>
+<td>TIGER</td>
+<td>KR7245340005</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>319640</td>
+<td>TIGER 골드선물(H)</td>
+<td>KR7319640009</td>
+<td>TIGER</td>
+<td>KR7319640009</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>219480</td>
+<td>KODEX 미국S&amp;P500선물(H)</td>
+<td>KR7219480001</td>
+<td>KODEX</td>
+<td>None</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>214980</td>
+<td>KODEX 단기채권PLUS</td>
+<td>KR7214980005</td>
+<td>KODEX</td>
+<td>None</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>157450</td>
+<td>TIGER 단기통안채</td>
+<td>KR7157450008</td>
+<td>TIGER</td>
+<td>KR7157450008</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>195980</td>
+<td>PLUS 신흥국MSCI(합성 H)</td>
+<td>KR7195980008</td>
+<td>PLUS</td>
+<td>None</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>305080</td>
+<td>TIGER 미국채10년선물</td>
+<td>KR7305080004</td>
+<td>TIGER</td>
+<td>KR7305080004</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>182480</td>
+<td>TIGER 미국MSCI리츠(합성 H)</td>
+<td>KR7182480004</td>
+<td>TIGER</td>
+<td>KR7182480004</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>310970</td>
+<td>TIGER MSCI Korea TR</td>
+<td>KR7310970009</td>
+<td>TIGER</td>
+<td>KR7310970009</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11</td>
+<td>148070</td>
+<td>KIWOOM 국고채10년</td>
+<td>KR7148070006</td>
+<td>KIWOOM</td>
+<td>148070</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">12</td>
+<td>329200</td>
+<td>TIGER 리츠부동산인프라</td>
+<td>KR7329200000</td>
+<td>TIGER</td>
+<td>KR7329200000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
+<td>069500</td>
+<td>KODEX 200</td>
+<td>KR7069500007</td>
+<td>KODEX</td>
+<td>None</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">14</td>
+<td>229200</td>
+<td>KODEX 코스닥150</td>
+<td>KR7229200001</td>
+<td>KODEX</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<ul>
+<li>KODEX는 고유코드를 사용하므로 업데이트</li>
+</ul>
+<div id="dbe37721" class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>kodex_code <span class="op">=</span> {<span class="st">'251350'</span>:<span class="st">'2ETF68'</span>,</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>              <span class="st">'219480'</span>:<span class="st">'2ETF50'</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>              <span class="st">'214980'</span>:<span class="st">'2ETF48'</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>              <span class="st">'069500'</span>:<span class="st">'2ETF01'</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>              <span class="st">'229200'</span>:<span class="st">'2ETF54'</span>}</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># ETF_Manager가 KODEX인 경우에만 kodex_code를 참고하여 ETF_crawl_param을 업데이트</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>df_etf[<span class="st">'ETF_crawl_param'</span>] <span class="op">=</span> df_etf.<span class="bu">apply</span>(</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> row: kodex_code.get(row[<span class="st">'Ticker'</span>], <span class="va">None</span>) <span class="cf">if</span> row[<span class="st">'ETF_Manager'</span>] <span class="op">==</span> <span class="st">'KODEX'</span> <span class="cf">else</span> row[<span class="st">'ETF_crawl_param'</span>],</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    axis<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>df_etf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Ticker</th>
+<th data-quarto-table-cell-role="th">ETF_Name</th>
+<th data-quarto-table-cell-role="th">ETF_ISIN</th>
+<th data-quarto-table-cell-role="th">ETF_Manager</th>
+<th data-quarto-table-cell-role="th">ETF_crawl_param</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>251350</td>
+<td>KODEX 선진국MSCI World</td>
+<td>KR7251350005</td>
+<td>KODEX</td>
+<td>2ETF68</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>360750</td>
+<td>TIGER 미국S&amp;P500</td>
+<td>KR7360750004</td>
+<td>TIGER</td>
+<td>KR7360750004</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>245340</td>
+<td>TIGER 미국다우존스30</td>
+<td>KR7245340005</td>
+<td>TIGER</td>
+<td>KR7245340005</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>319640</td>
+<td>TIGER 골드선물(H)</td>
+<td>KR7319640009</td>
+<td>TIGER</td>
+<td>KR7319640009</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>219480</td>
+<td>KODEX 미국S&amp;P500선물(H)</td>
+<td>KR7219480001</td>
+<td>KODEX</td>
+<td>2ETF50</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>214980</td>
+<td>KODEX 단기채권PLUS</td>
+<td>KR7214980005</td>
+<td>KODEX</td>
+<td>2ETF48</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>157450</td>
+<td>TIGER 단기통안채</td>
+<td>KR7157450008</td>
+<td>TIGER</td>
+<td>KR7157450008</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>195980</td>
+<td>PLUS 신흥국MSCI(합성 H)</td>
+<td>KR7195980008</td>
+<td>PLUS</td>
+<td>None</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>305080</td>
+<td>TIGER 미국채10년선물</td>
+<td>KR7305080004</td>
+<td>TIGER</td>
+<td>KR7305080004</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>182480</td>
+<td>TIGER 미국MSCI리츠(합성 H)</td>
+<td>KR7182480004</td>
+<td>TIGER</td>
+<td>KR7182480004</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>310970</td>
+<td>TIGER MSCI Korea TR</td>
+<td>KR7310970009</td>
+<td>TIGER</td>
+<td>KR7310970009</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11</td>
+<td>148070</td>
+<td>KIWOOM 국고채10년</td>
+<td>KR7148070006</td>
+<td>KIWOOM</td>
+<td>148070</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">12</td>
+<td>329200</td>
+<td>TIGER 리츠부동산인프라</td>
+<td>KR7329200000</td>
+<td>TIGER</td>
+<td>KR7329200000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
+<td>069500</td>
+<td>KODEX 200</td>
+<td>KR7069500007</td>
+<td>KODEX</td>
+<td>2ETF01</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">14</td>
+<td>229200</td>
+<td>KODEX 코스닥150</td>
+<td>KR7229200001</td>
+<td>KODEX</td>
+<td>2ETF54</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="종목선정-etf-상위-10개-종목-가져오기tiger-etf" class="level2">
+<h2 class="anchored" data-anchor-id="종목선정-etf-상위-10개-종목-가져오기tiger-etf">종목선정 : ETF 상위 10개 종목 가져오기(TIGER ETF)</h2>
+<div id="113a9c0e" class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_tiger_top10_constituents(ksd_fund_code: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">list</span>:</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    url <span class="op">=</span> <span class="ss">f"https://www.tigeretf.com/ko/product/search/detail/index.do?ksdFund=</span><span class="sc">{</span>ksd_fund_code<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    headers <span class="op">=</span> {<span class="st">"User-Agent"</span>: <span class="st">"Mozilla/5.0"</span>}</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>headers)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    response.encoding <span class="op">=</span> <span class="st">"utf-8"</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    soup <span class="op">=</span> BeautifulSoup(response.text, <span class="st">'html.parser'</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    top10_list_div <span class="op">=</span> soup.find(<span class="st">'div'</span>, class_<span class="op">=</span><span class="st">'box-list-div'</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> top10_list_div:</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"[</span><span class="sc">{</span>ksd_fund_code<span class="sc">}</span><span class="ss">] TOP10 구성종목 박스를 찾을 수 없습니다."</span>)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> []</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    top10_names <span class="op">=</span> []</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> box <span class="kw">in</span> top10_list_div.find_all(<span class="st">'div'</span>, class_<span class="op">=</span><span class="st">'box-list'</span>):</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        name_tag <span class="op">=</span> box.find(<span class="st">'p'</span>)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> name_tag:</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>            top10_names.append(name_tag.get_text(strip<span class="op">=</span><span class="va">True</span>))</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> top10_names[:<span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="b9981179" class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ksd_fund_code <span class="op">=</span> <span class="st">"KR7360750004"</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>top10 <span class="op">=</span> get_tiger_top10_constituents(ksd_fund_code)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(top10)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>['Microsoft Corp', 'NVIDIA Corp', 'Apple Inc', 'Amazon.com Inc', 'Meta Platforms Inc', 'Broadcom Inc', 'Alphabet Inc', 'Tesla Inc', 'Berkshire Hathaway Inc', 'Alphabet Inc']</code></pre>
+</div>
+</div>
+</section>
+<section id="종목선정-etf-상위-10개-종목-가져오기kodex-etf" class="level2">
+<h2 class="anchored" data-anchor-id="종목선정-etf-상위-10개-종목-가져오기kodex-etf">종목선정 : ETF 상위 10개 종목 가져오기(KODEX ETF)</h2>
+<ul>
+<li>직접 크롤링은 불가하여 엑셀을 읽는 형태로 구현</li>
+</ul>
+<div id="0c5a1d5b" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> io <span class="im">import</span> BytesIO</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_kodex_top10_constituents(etf_code):</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 다운로드 URL (모바일 버전)</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    url <span class="op">=</span> <span class="ss">f"https://m.samsungfund.com/excel_pdf.do?fId=</span><span class="sc">{</span>etf_code<span class="sc">}</span><span class="ss">&amp;gijunYMD=20250528"</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 헤더 설정 (브라우저처럼 위장)</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    headers <span class="op">=</span> {</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"User-Agent"</span>: <span class="st">"Mozilla/5.0"</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 요청 보내기</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>headers)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 응답이 성공적인 경우 (200 OK)</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> response.status_code <span class="op">==</span> <span class="dv">200</span>:</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 바이너리 응답을 메모리 버퍼로 감싸서 pandas로 읽기</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>        excel_data <span class="op">=</span> BytesIO(response.content)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>        df <span class="op">=</span> pd.read_excel(excel_data, skiprows<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 수량이 양수이고 종목명이 '원화예금'이 아닌 행만 필터링</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>        df <span class="op">=</span> df[(df[<span class="st">'수량'</span>] <span class="op">&gt;</span> <span class="dv">0</span>) <span class="op">&amp;</span> (df[<span class="st">'종목명'</span>] <span class="op">!=</span> <span class="st">'원화예금'</span>)]</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 비중(%) 기준 상위 10개 종목 정렬</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>        df_top10 <span class="op">=</span> df.sort_values(by<span class="op">=</span><span class="st">'비중(%)'</span>, ascending<span class="op">=</span><span class="va">False</span>).head(<span class="dv">10</span>)</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"요청 실패:"</span>, response.status_code)</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df_top10</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="d6fa1920" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>etf_code <span class="op">=</span> <span class="st">'2ETF54'</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>df_kodex150 <span class="op">=</span> get_kodex_top10_constituents(etf_code) <span class="co"># KODEX 코스닥150</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>df_kodex150</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">번호</th>
+<th data-quarto-table-cell-role="th">종목명</th>
+<th data-quarto-table-cell-role="th">ISIN</th>
+<th data-quarto-table-cell-role="th">종목코드</th>
+<th data-quarto-table-cell-role="th">수량</th>
+<th data-quarto-table-cell-role="th">비중(%)</th>
+<th data-quarto-table-cell-role="th">평가금액(원)</th>
+<th data-quarto-table-cell-role="th">현재가(원)</th>
+<th data-quarto-table-cell-role="th">등락(원)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2</td>
+<td>알테오젠</td>
+<td>KR7196170005</td>
+<td>196170</td>
+<td>207</td>
+<td>0.120936</td>
+<td>71208000</td>
+<td>350000</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2</td>
+<td>3</td>
+<td>HLB</td>
+<td>KR7028300002</td>
+<td>028300</td>
+<td>591</td>
+<td>0.052896</td>
+<td>31145700</td>
+<td>52900</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">3</td>
+<td>4</td>
+<td>펩트론</td>
+<td>KR7087010005</td>
+<td>087010</td>
+<td>109</td>
+<td>0.042578</td>
+<td>25070000</td>
+<td>230000</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">4</td>
+<td>5</td>
+<td>에코프로</td>
+<td>KR7086520004</td>
+<td>086520</td>
+<td>501</td>
+<td>0.032631</td>
+<td>19213350</td>
+<td>42100</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">5</td>
+<td>6</td>
+<td>에코프로비엠</td>
+<td>KR7247540008</td>
+<td>247540</td>
+<td>230</td>
+<td>0.031718</td>
+<td>18676000</td>
+<td>89000</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">6</td>
+<td>7</td>
+<td>리가켐바이오</td>
+<td>KR7141080002</td>
+<td>141080</td>
+<td>131</td>
+<td>0.025808</td>
+<td>15196000</td>
+<td>114700</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">7</td>
+<td>8</td>
+<td>파마리서치</td>
+<td>KR7214450009</td>
+<td>214450</td>
+<td>32</td>
+<td>0.024402</td>
+<td>14368000</td>
+<td>473500</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">8</td>
+<td>9</td>
+<td>에이비엘바이오</td>
+<td>KR7298380007</td>
+<td>298380</td>
+<td>168</td>
+<td>0.023568</td>
+<td>13876800</td>
+<td>80700</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">9</td>
+<td>10</td>
+<td>삼천당제약</td>
+<td>KR7000250001</td>
+<td>000250</td>
+<td>71</td>
+<td>0.018546</td>
+<td>10919800</td>
+<td>146000</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">10</td>
+<td>11</td>
+<td>레인보우로보틱스</td>
+<td>KR7277810008</td>
+<td>277810</td>
+<td>40</td>
+<td>0.018104</td>
+<td>10660000</td>
+<td>269000</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="감성분석-데이터-대상종목-증권사리포트-추출-1종목-추출샘플" class="level2">
+<h2 class="anchored" data-anchor-id="감성분석-데이터-대상종목-증권사리포트-추출-1종목-추출샘플">감성분석 데이터 : 대상종목 증권사리포트 추출 (1종목 추출샘플)</h2>
+<div id="2c988418" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 작성된 코드</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.max_colwidth'</span>, <span class="dv">50</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> crawl_naver_reports(write_from, write_to, ticker, page<span class="op">=</span><span class="dv">1</span>):</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    url <span class="op">=</span> <span class="st">"https://finance.naver.com/research/company_list.naver"</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    params <span class="op">=</span> {</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"keyword"</span>: <span class="st">""</span>,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brokerCode"</span>: <span class="st">""</span>,</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"searchType"</span>: <span class="st">"itemCode"</span>, <span class="co">#"writeDate",</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">"writeFromDate"</span>: write_from,</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">"writeToDate"</span>: write_to,</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">"itemName"</span>: <span class="st">""</span>,</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">"itemCode"</span>: ticker,</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">"page"</span>: page</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    headers <span class="op">=</span> {</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">"User-Agent"</span>: <span class="st">"Mozilla/5.0"</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> requests.get(url, params<span class="op">=</span>params, headers<span class="op">=</span>headers)</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    soup <span class="op">=</span> BeautifulSoup(response.text, <span class="st">"html.parser"</span>)</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>    table <span class="op">=</span> soup.select_one(<span class="st">"table.type_1"</span>)</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>    rows <span class="op">=</span> table.select(<span class="st">"tr"</span>)[<span class="dv">2</span>:]  <span class="co"># 헤더와 빈줄 제외</span></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>    results <span class="op">=</span> []</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> row <span class="kw">in</span> rows:</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>        cols <span class="op">=</span> row.find_all(<span class="st">"td"</span>)</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">len</span>(cols) <span class="op">!=</span> <span class="dv">6</span>:</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>            <span class="cf">continue</span>  <span class="co"># 유효하지 않은 데이터 줄 무시</span></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 종목명 및 코드</span></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>        stock_tag <span class="op">=</span> cols[<span class="dv">0</span>].find(<span class="st">"a"</span>)</span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>        stock_name <span class="op">=</span> stock_tag.text.strip()</span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>        stock_code <span class="op">=</span> stock_tag[<span class="st">"href"</span>].split(<span class="st">"code="</span>)[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 제목 및 상세 링크</span></span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>        title_tag <span class="op">=</span> cols[<span class="dv">1</span>].find(<span class="st">"a"</span>)</span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>        title <span class="op">=</span> title_tag.text.strip()</span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>        detail_link <span class="op">=</span> <span class="st">"https://finance.naver.com/research/"</span> <span class="op">+</span> title_tag[<span class="st">"href"</span>]</span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 증권사</span></span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>        broker <span class="op">=</span> cols[<span class="dv">2</span>].text.strip()</span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 첨부파일 링크 (없을 수도 있음)</span></span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a>        file_tag <span class="op">=</span> cols[<span class="dv">3</span>].find(<span class="st">"a"</span>)</span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a>        pdf_link <span class="op">=</span> file_tag[<span class="st">"href"</span>] <span class="cf">if</span> file_tag <span class="cf">else</span> <span class="st">""</span></span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 작성일, 조회수</span></span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a>        date <span class="op">=</span> cols[<span class="dv">4</span>].text.strip()</span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>        views <span class="op">=</span> cols[<span class="dv">5</span>].text.strip()</span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a>        results.append({</span>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a>            <span class="st">"종목명"</span>: stock_name,</span>
+<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a>            <span class="st">"종목코드"</span>: stock_code,</span>
+<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a>            <span class="st">"제목"</span>: title,</span>
+<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a>            <span class="st">"리포트링크"</span>: detail_link,</span>
+<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a>            <span class="st">"PDF링크"</span>: pdf_link,</span>
+<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a>            <span class="st">"증권사"</span>: broker,</span>
+<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a>            <span class="st">"작성일"</span>: date,</span>
+<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a>            <span class="st">"조회수"</span>: views</span>
+<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a>        })</span>
+<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.DataFrame(results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="5de39b43" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>ticker <span class="op">=</span> <span class="st">'087010'</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>temp_df <span class="op">=</span> crawl_naver_reports(<span class="st">"2025-05-01"</span>, <span class="st">"2025-05-31"</span>, ticker, page<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>temp_df.head(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">종목명</th>
+<th data-quarto-table-cell-role="th">종목코드</th>
+<th data-quarto-table-cell-role="th">제목</th>
+<th data-quarto-table-cell-role="th">리포트링크</th>
+<th data-quarto-table-cell-role="th">PDF링크</th>
+<th data-quarto-table-cell-role="th">증권사</th>
+<th data-quarto-table-cell-role="th">작성일</th>
+<th data-quarto-table-cell-role="th">조회수</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>펩트론</td>
+<td>087010</td>
+<td>부정적 시각에 매몰된 기업설명회의 가치</td>
+<td>https://finance.naver.com/research/company_rea...</td>
+<td></td>
+<td>신한투자증권</td>
+<td>24.11.26</td>
+<td>11581</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>펩트론</td>
+<td>087010</td>
+<td>릴리다. 실패는 없다</td>
+<td>https://finance.naver.com/research/company_rea...</td>
+<td></td>
+<td>신한투자증권</td>
+<td>24.10.08</td>
+<td>16780</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>펩트론</td>
+<td>087010</td>
+<td>GLP-1 전쟁의 캐스팅보트</td>
+<td>https://finance.naver.com/research/company_rea...</td>
+<td>https://ssl.pstatic.net/imgstock/upload/resear...</td>
+<td>키움증권</td>
+<td>23.07.18</td>
+<td>19902</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>펩트론</td>
+<td>087010</td>
+<td>나를 다시 보게 될 거야</td>
+<td>https://finance.naver.com/research/company_rea...</td>
+<td>https://ssl.pstatic.net/imgstock/upload/resear...</td>
+<td>키움증권</td>
+<td>23.06.22</td>
+<td>11820</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>펩트론</td>
+<td>087010</td>
+<td>독자적인 펩타이드 기반 플랫폼 기술을 보유..</td>
+<td>https://finance.naver.com/research/company_rea...</td>
+<td>https://ssl.pstatic.net/imgstock/upload/resear...</td>
+<td>나이스디앤비</td>
+<td>22.03.03</td>
+<td>9006</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="감성분석-데이터-대상종목-증권사리포트-추출-상위-10개" class="level2">
+<h2 class="anchored" data-anchor-id="감성분석-데이터-대상종목-증권사리포트-추출-상위-10개">감성분석 데이터 : 대상종목 증권사리포트 추출 (상위 10개)</h2>
+<div id="eba78342" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>list_ticker <span class="op">=</span> df_kodex150[<span class="st">'종목코드'</span>].tolist()</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>list_ticker</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<pre><code>['196170',
+ '028300',
+ '087010',
+ '086520',
+ '247540',
+ '141080',
+ '214450',
+ '298380',
+ '000250',
+ '277810']</code></pre>
+</div>
+</div>
+<div id="987ebd0e" class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>ticker <span class="op">=</span> <span class="st">'229200'</span> <span class="co"># ETF티커</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>df_concat <span class="op">=</span> pd.DataFrame() <span class="co"># 전체내용 취합용 빈 데이터프레임</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> each_ticker <span class="kw">in</span> list_ticker:</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    temp_df <span class="op">=</span> crawl_naver_reports(<span class="st">"2025-05-01"</span>, <span class="st">"2025-05-31"</span>, each_ticker, page<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    df_date_filtered <span class="op">=</span> temp_df[temp_df[<span class="st">'작성일'</span>].<span class="bu">str</span>.contains(<span class="st">'25.05'</span>)]</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(df_date_filtered)<span class="op">==</span><span class="dv">0</span>:</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">pass</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>        df_date_filtered[<span class="st">'ETF_name'</span>] <span class="op">=</span> stock.get_etf_ticker_name(ticker)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>        df_date_filtered[<span class="st">'ETF_ticker'</span>] <span class="op">=</span> ticker</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>        df_concat <span class="op">=</span> pd.concat([df_concat, df_date_filtered])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="d342c92d" class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>df_concat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="32">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">종목명</th>
+<th data-quarto-table-cell-role="th">종목코드</th>
+<th data-quarto-table-cell-role="th">제목</th>
+<th data-quarto-table-cell-role="th">리포트링크</th>
+<th data-quarto-table-cell-role="th">PDF링크</th>
+<th data-quarto-table-cell-role="th">증권사</th>
+<th data-quarto-table-cell-role="th">작성일</th>
+<th data-quarto-table-cell-role="th">조회수</th>
+<th data-quarto-table-cell-role="th">ETF_name</th>
+<th data-quarto-table-cell-role="th">ETF_ticker</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>알테오젠</td>
+<td>196170</td>
+<td>IRA 약가 인하, 특허 이슈 종합 분석</td>
+<td>https://finance.naver.com/research/company_rea...</td>
+<td></td>
+<td>신한투자증권</td>
+<td>25.05.27</td>
+<td>4130</td>
+<td>KODEX 코스닥150</td>
+<td>229200</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">0</td>
+<td>리가켐바이오</td>
+<td>141080</td>
+<td>돋보이는 ADC 기업</td>
+<td>https://finance.naver.com/research/company_rea...</td>
+<td>https://stock.pstatic.net/stock-research/compa...</td>
+<td>미래에셋증권</td>
+<td>25.05.23</td>
+<td>2921</td>
+<td>KODEX 코스닥150</td>
+<td>229200</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1</td>
+<td>리가켐바이오</td>
+<td>141080</td>
+<td>페이로드 강자로 도약중</td>
+<td>https://finance.naver.com/research/company_rea...</td>
+<td>https://stock.pstatic.net/stock-research/compa...</td>
+<td>유안타증권</td>
+<td>25.05.22</td>
+<td>2259</td>
+<td>KODEX 코스닥150</td>
+<td>229200</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2</td>
+<td>리가켐바이오</td>
+<td>141080</td>
+<td>LCB39: Cold to Hot</td>
+<td>https://finance.naver.com/research/company_rea...</td>
+<td>https://stock.pstatic.net/stock-research/compa...</td>
+<td>유진투자증권</td>
+<td>25.05.07</td>
+<td>2951</td>
+<td>KODEX 코스닥150</td>
+<td>229200</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>파마리서치</td>
+<td>214450</td>
+<td>브레이크가 고장나버린 리쥬란 트럭</td>
+<td>https://finance.naver.com/research/company_rea...</td>
+<td>https://stock.pstatic.net/stock-research/compa...</td>
+<td>미래에셋증권</td>
+<td>25.05.21</td>
+<td>3419</td>
+<td>KODEX 코스닥150</td>
+<td>229200</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>파마리서치</td>
+<td>214450</td>
+<td>인바운드와 브랜드 파워, 환상의 선순환</td>
+<td>https://finance.naver.com/research/company_rea...</td>
+<td>https://stock.pstatic.net/stock-research/compa...</td>
+<td>교보증권</td>
+<td>25.05.14</td>
+<td>2176</td>
+<td>KODEX 코스닥150</td>
+<td>229200</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>파마리서치</td>
+<td>214450</td>
+<td>멈추지 않는 실적 성장, 다만 주가는 트레이..</td>
+<td>https://finance.naver.com/research/company_rea...</td>
+<td>https://stock.pstatic.net/stock-research/compa...</td>
+<td>대신증권</td>
+<td>25.05.14</td>
+<td>1316</td>
+<td>KODEX 코스닥150</td>
+<td>229200</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>파마리서치</td>
+<td>214450</td>
+<td>늦었다고 생각할 때가 진짜 늦었다, 그러니 ..</td>
+<td>https://finance.naver.com/research/company_rea...</td>
+<td>https://stock.pstatic.net/stock-research/compa...</td>
+<td>키움증권</td>
+<td>25.05.14</td>
+<td>1407</td>
+<td>KODEX 코스닥150</td>
+<td>229200</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>레인보우로보틱스</td>
+<td>277810</td>
+<td>K-Humanoid, 제가 해보겠습니다</td>
+<td>https://finance.naver.com/research/company_rea...</td>
+<td>https://stock.pstatic.net/stock-research/compa...</td>
+<td>SK증권</td>
+<td>25.05.30</td>
+<td>1381</td>
+<td>KODEX 코스닥150</td>
+<td>229200</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="5695ecac" class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df_concat[<span class="st">'PDF링크'</span>].iloc[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>'https://stock.pstatic.net/stock-research/company/29/20250523_company_875723000.pdf'</code></pre>
+</div>
+</div>
+</section>
+<section id="감성분석-데이터-리포트-다운로드" class="level2">
+<h2 class="anchored" data-anchor-id="감성분석-데이터-리포트-다운로드">감성분석 데이터 : 리포트 다운로드</h2>
+<div id="3b508d5f" class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sanitize_filename(text):</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 파일명에 사용할 수 없는 문자 제거</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> re.sub(<span class="vs">r'</span><span class="pp">[</span><span class="ch">\\</span><span class="pp">/:*?"&lt;&gt;|]</span><span class="vs">'</span>, <span class="st">''</span>, text)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> download_pdfs(df, save_folder<span class="op">=</span><span class="st">"pdf_reports"</span>):</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    os.makedirs(save_folder, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> idx, row <span class="kw">in</span> df.iterrows():</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>        url <span class="op">=</span> row[<span class="st">'PDF링크'</span>]</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> url:</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">continue</span>  <span class="co"># PDF 링크 없으면 스킵</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>        date <span class="op">=</span> row[<span class="st">'작성일'</span>].replace(<span class="st">'.'</span>, <span class="st">'-'</span>)  <span class="co"># 예: 23.03.27 → 23-03-27</span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>        stock <span class="op">=</span> sanitize_filename(row[<span class="st">'종목명'</span>])</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>        title <span class="op">=</span> sanitize_filename(row[<span class="st">'제목'</span>])[:<span class="dv">50</span>]  <span class="co"># 너무 긴 제목 잘라내기</span></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>        filename <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>date<span class="sc">}</span><span class="ss">_</span><span class="sc">{</span>stock<span class="sc">}</span><span class="ss">_</span><span class="sc">{</span>title<span class="sc">}</span><span class="ss">.pdf"</span></span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>        filepath <span class="op">=</span> os.path.join(save_folder, filename)</span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>            response <span class="op">=</span> requests.get(url, stream<span class="op">=</span><span class="va">True</span>, timeout<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> response.status_code <span class="op">==</span> <span class="dv">200</span>:</span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>                <span class="cf">with</span> <span class="bu">open</span>(filepath, <span class="st">"wb"</span>) <span class="im">as</span> f:</span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">for</span> chunk <span class="kw">in</span> response.iter_content(chunk_size<span class="op">=</span><span class="dv">8192</span>):</span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>                        f.write(chunk)</span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="ss">f"[✔] 저장됨: </span><span class="sc">{</span>filename<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
+<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="ss">f"[✖] 실패: </span><span class="sc">{</span>filename<span class="sc">}</span><span class="ss"> - 상태코드 </span><span class="sc">{</span>response<span class="sc">.</span>status_code<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"[⚠️] 오류 발생 (</span><span class="sc">{</span>filename<span class="sc">}</span><span class="ss">): </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a>        </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="0e8553f5" class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>download_pdfs(df_concat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[✔] 저장됨: 25-05-23_리가켐바이오_돋보이는 ADC 기업.pdf
+[✔] 저장됨: 25-05-22_리가켐바이오_페이로드 강자로 도약중.pdf
+[✔] 저장됨: 25-05-07_리가켐바이오_LCB39 Cold to Hot.pdf
+[✔] 저장됨: 25-05-21_파마리서치_브레이크가 고장나버린 리쥬란 트럭.pdf
+[✔] 저장됨: 25-05-14_파마리서치_인바운드와 브랜드 파워, 환상의 선순환.pdf
+[✔] 저장됨: 25-05-14_파마리서치_멈추지 않는 실적 성장, 다만 주가는 트레이...pdf
+[✔] 저장됨: 25-05-14_파마리서치_늦었다고 생각할 때가 진짜 늦었다, 그러니 ...pdf
+[✔] 저장됨: 25-05-30_레인보우로보틱스_K-Humanoid, 제가 해보겠습니다.pdf</code></pre>
+</div>
+</div>
+</section>
+<section id="감성분석-데이터-조사한-내용으로-openai-api로-리포트-요약" class="level2">
+<h2 class="anchored" data-anchor-id="감성분석-데이터-조사한-내용으로-openai-api로-리포트-요약">감성분석 데이터 : 조사한 내용으로 OPENAI API로 리포트 요약</h2>
+<div id="d7862976" class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pandas apply에 활용할 OpenAI로 요약해주는 함수 작성</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> PyPDF2 <span class="im">import</span> PdfReader</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> openai <span class="im">import</span> OpenAI</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># OpenAI API key</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"keys.json"</span>, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> json.load(f)</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>open_ai_key <span class="op">=</span> data.get(<span class="st">"open_ai_key"</span>)</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_summary(row):</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># pdf 파일을 가져와서 이를 PyPDF2에 넣어서 text를 추출</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>    date <span class="op">=</span> row[<span class="st">'작성일'</span>].replace(<span class="st">'.'</span>, <span class="st">'-'</span>)  <span class="co"># 예: 23.03.27 → 23-03-27</span></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    stock <span class="op">=</span> sanitize_filename(row[<span class="st">'종목명'</span>])</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>    title <span class="op">=</span> sanitize_filename(row[<span class="st">'제목'</span>])[:<span class="dv">50</span>]  <span class="co"># 너무 긴 제목 잘라내기</span></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>    file_name <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>date<span class="sc">}</span><span class="ss">_</span><span class="sc">{</span>stock<span class="sc">}</span><span class="ss">_</span><span class="sc">{</span>title<span class="sc">}</span><span class="ss">.pdf"</span></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>        reader <span class="op">=</span> PdfReader(<span class="ss">f"pdf_reports/</span><span class="sc">{</span>file_name<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>        text <span class="op">=</span> reader.pages[<span class="dv">0</span>].extract_text()</span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span>:</span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>    prompt <span class="op">=</span> <span class="ss">f"""</span></span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a><span class="ss">    아래의 증권사 리포트 내용을 바탕으로 간단하고 명확한 요약을 생성해주세요.</span></span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a><span class="ss">    요약은 다음과 같은 요건을 충족해야 합니다:</span></span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a><span class="ss">    1. 증권사 리포트에 담긴 주요 정보와 메시지를 간결하게 포함할 것.</span></span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a><span class="ss">    2. 긍정적, 부정적 또는 중립적인 뉘앙스를 명확히 드러낼 것. 감정이 모호하지 않도록 작성해주세요.</span></span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a><span class="ss">    3. 독자가 감성 분석을 하기 쉽도록 명료한 문장으로 작성할 것.</span></span>
+<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a><span class="ss">    내용: </span><span class="sc">{</span>text<span class="sc">}</span></span>
+<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a><span class="ss">    아래에 간결한 요약을 작성해주세요:</span></span>
+<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a><span class="ss">    """</span></span>
+<span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-39"><a href="#cb20-39" aria-hidden="true" tabindex="-1"></a>    client <span class="op">=</span> OpenAI(api_key<span class="op">=</span>open_ai_key)</span>
+<span id="cb20-40"><a href="#cb20-40" aria-hidden="true" tabindex="-1"></a>    completion <span class="op">=</span> client.chat.completions.create(</span>
+<span id="cb20-41"><a href="#cb20-41" aria-hidden="true" tabindex="-1"></a>        model<span class="op">=</span><span class="st">"gpt-4o-mini"</span>,</span>
+<span id="cb20-42"><a href="#cb20-42" aria-hidden="true" tabindex="-1"></a>        messages<span class="op">=</span>[{<span class="st">"role"</span>: <span class="st">"user"</span>,<span class="st">"content"</span>: prompt}]</span>
+<span id="cb20-43"><a href="#cb20-43" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb20-44"><a href="#cb20-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-45"><a href="#cb20-45" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(completion.choices[<span class="dv">0</span>].message.content)</span>
+<span id="cb20-46"><a href="#cb20-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-47"><a href="#cb20-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> completion.choices[<span class="dv">0</span>].message.content</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="861c3879" class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df_concat[<span class="st">'generated_summary'</span>] <span class="op">=</span> df_concat.<span class="bu">apply</span>(generate_summary, axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>리가켐바이오는 KOSDAQ에서 주가 상승세를 보이며 2023년 24.5에서 25.5로 오름세를 기록했습니다. 이러한 긍정적인 변화는 투자자들에게 희망적인 신호를 주고 있으며, 앞으로의 성장을 기대할 수 있는 상황입니다.
+**요약:**  
+금융투자분석사는 리가켐바이오(141080)에 대해 긍정적으로 평가하며, "BUY" 의견과 함께 목표주가를 15만원으로 설정했습니다. 현재주가는 10만9300원으로, 상승 여력은 37%로 판단합니다. 리가켐바이오는 pPBD 및 LCB39로 강력한 페이로드 기술을 보유하고 있으며, 안전성과 성과가 개선될 것으로 기대됩니다. 향후 AVANZAR 임상 결과에 따라 LCB84의 가치 또한 상승할 것으로 전망됩니다. 향후 실적 예측에 따르면, 2024년에는 영업적자가 줄어들고 2025년에는 지배순이익이 흑자로 전환될 것으로 예상됩니다. 전체적으로 이 회사는 강력한 성장 가능성을 지니고 있습니다.
+리가켐바이오의 LCB39에 대한 최근 리포트는 이 후보 물질이 기존 치료법에 비해 혁신적인 가능성을 보여주고 있음을 강조하고 있습니다. 연구 결과에 따르면 LCB39는 종양에 대한 효과적인 반응을 나타내며, 앞으로의 임상 결과에 대한 기대가 큽니다. 이러한 긍정적인 발전에도 불구하고, 추가 연구와 임상이 필요하다는 점을 주의 깊게 언급하고 있습니다. 전반적으로 본 리포트는 리가켐바이오의 가능성에 대한 긍정적인 전망을 제시하고 있습니다.
+파마리서치(KOSDAQ)의 주가는 최근 24.5에서 25.5 사이에서 변동하고 있으며, 전반적으로 상승세를 보이고 있습니다. 이러한 경향은 긍정적이며, 투자자들에게 희망적인 신호로 해석될 수 있습니다.
+**파마리서치 분석 요약**
+
+파마리서치의 투자 의견은 **BUY**로 유지되며 목표 주가는 **450,000원**으로 상향 조정되었습니다. 1분기 실적은 매출 1,169억원(전년 대비 56.5% 증가)과 영업이익 447억원(전년 대비 67.6% 증가)으로 컨센서스를 초과 달성했습니다. 의료기기 부문이 81% 성장하며, 외국인 의료 관광의 호조로 내수 매출도 증가하였습니다. 또한 화장품 부문도 해외 매출이 81.6% 성장하며 긍정적인 신호를 보이고 있습니다. 
+
+앞으로도 외국인 환자 증가와 함께 내수 시장에서의 성장성이 지속될 것으로 전망되며, 화장품 사업부의 성장 잠재력도 확인되었습니다. 전반적으로 긍정적인 실적 발전이 예상되며, 2025년 순이익은 **1,475억원**으로 상향 조정되었습니다.
+파마리서치의 1분기 실적이 전년 대비 56% 증가하며 고성장을 이어갔습니다. 매출 1,169억원, 영업이익 447억원을 기록하며 수익성도 견조했습니다. 유럽 시장 진출이 예상되는 하반기에도 지속적인 성장세가 기대됩니다. 목표주가는 430,000원으로 26% 상향 조정되었으나, 단기적인 밸류 부담을 고려하여 투자의견은 '시장수익률 유지'로 설정되었습니다. 전반적으로 긍정적인 실적 전망이지만, 단기 과열 우려가 있는 상황입니다.
+**요약:**
+
+파마리서치의 2025년 1분기 실적이 양호하며, 매출액 1,169억 원(예상 대비 +11.3%)과 영업이익 447억 원(예상 대비 +8.2%)을 기록했습니다. 리쥬란 제품에 대한 수요가 지속적으로 증가하고 있으며, 특히 외국인 의료 관광객 수익이 크게 상승하여 전망이 밝습니다. 목표주가는 기존 400,000원에서 490,000원으로 +22.5% 상향 조정되었습니다. 전반적으로 긍정적인 실적과 성장 가능성을 보여주고あります. 
+레인보우로보틱스(KQ/277810)는 인간형 이족보행 로봇 'HUBO' 개발을 바탕으로 협동로봇 사업을 본격화한 로봇 전문 기업이다. 2024년 예상 매출은 193억원으로 전년 대비 26.8% 증가하나, 영업이익은 -29억원으로 적자를 기록할 전망이다. 협동로봇은 주요 매출원이며, 국내외 다양한 산업군에 진출하고 있다. 삼성전자가 최대주주로서 기술력과 성장성을 지원하고 있다. 레인보우로보틱스는 국내 시가총액 1위 로보틱스 업체로, 테슬라의 생산 가이던스를 기반으로 향후 성장 가능성이 엿보인다. 그러나 양산 계획이 발표되기 전까지는 확실한 밸류에이션 논의가 어렵다. 전반적으로, 회복 가능성이 있으나 불확실성이 여전히 존재하는 상황이다.</code></pre>
+</div>
+</div>
+<div id="1084fe64" class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>df_concat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">종목명</th>
+<th data-quarto-table-cell-role="th">종목코드</th>
+<th data-quarto-table-cell-role="th">제목</th>
+<th data-quarto-table-cell-role="th">리포트링크</th>
+<th data-quarto-table-cell-role="th">PDF링크</th>
+<th data-quarto-table-cell-role="th">증권사</th>
+<th data-quarto-table-cell-role="th">작성일</th>
+<th data-quarto-table-cell-role="th">조회수</th>
+<th data-quarto-table-cell-role="th">ETF_name</th>
+<th data-quarto-table-cell-role="th">ETF_ticker</th>
+<th data-quarto-table-cell-role="th">generated_summary</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>알테오젠</td>
+<td>196170</td>
+<td>IRA 약가 인하, 특허 이슈 종합 분석</td>
+<td>https://finance.naver.com/research/company_rea...</td>
+<td></td>
+<td>신한투자증권</td>
+<td>25.05.27</td>
+<td>3457</td>
+<td>KODEX 코스닥150</td>
+<td>229200</td>
+<td>None</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">0</td>
+<td>리가켐바이오</td>
+<td>141080</td>
+<td>돋보이는 ADC 기업</td>
+<td>https://finance.naver.com/research/company_rea...</td>
+<td>https://stock.pstatic.net/stock-research/compa...</td>
+<td>미래에셋증권</td>
+<td>25.05.23</td>
+<td>2798</td>
+<td>KODEX 코스닥150</td>
+<td>229200</td>
+<td>리가켐바이오는 KOSDAQ에서 주가 상승세를 보이며 2023년 24.5에서 25.5...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1</td>
+<td>리가켐바이오</td>
+<td>141080</td>
+<td>페이로드 강자로 도약중</td>
+<td>https://finance.naver.com/research/company_rea...</td>
+<td>https://stock.pstatic.net/stock-research/compa...</td>
+<td>유안타증권</td>
+<td>25.05.22</td>
+<td>2205</td>
+<td>KODEX 코스닥150</td>
+<td>229200</td>
+<td>**요약:** \n금융투자분석사는 리가켐바이오(141080)에 대해 긍정적으로 평...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2</td>
+<td>리가켐바이오</td>
+<td>141080</td>
+<td>LCB39: Cold to Hot</td>
+<td>https://finance.naver.com/research/company_rea...</td>
+<td>https://stock.pstatic.net/stock-research/compa...</td>
+<td>유진투자증권</td>
+<td>25.05.07</td>
+<td>2917</td>
+<td>KODEX 코스닥150</td>
+<td>229200</td>
+<td>리가켐바이오의 LCB39에 대한 최근 리포트는 이 후보 물질이 기존 치료법에 비해 ...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>파마리서치</td>
+<td>214450</td>
+<td>브레이크가 고장나버린 리쥬란 트럭</td>
+<td>https://finance.naver.com/research/company_rea...</td>
+<td>https://stock.pstatic.net/stock-research/compa...</td>
+<td>미래에셋증권</td>
+<td>25.05.21</td>
+<td>2990</td>
+<td>KODEX 코스닥150</td>
+<td>229200</td>
+<td>파마리서치(KOSDAQ)의 주가는 최근 24.5에서 25.5 사이에서 변동하고 있으...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>파마리서치</td>
+<td>214450</td>
+<td>인바운드와 브랜드 파워, 환상의 선순환</td>
+<td>https://finance.naver.com/research/company_rea...</td>
+<td>https://stock.pstatic.net/stock-research/compa...</td>
+<td>교보증권</td>
+<td>25.05.14</td>
+<td>2073</td>
+<td>KODEX 코스닥150</td>
+<td>229200</td>
+<td>**파마리서치 분석 요약**\n\n파마리서치의 투자 의견은 **BUY**로 유지되며...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>파마리서치</td>
+<td>214450</td>
+<td>멈추지 않는 실적 성장, 다만 주가는 트레이..</td>
+<td>https://finance.naver.com/research/company_rea...</td>
+<td>https://stock.pstatic.net/stock-research/compa...</td>
+<td>대신증권</td>
+<td>25.05.14</td>
+<td>1238</td>
+<td>KODEX 코스닥150</td>
+<td>229200</td>
+<td>파마리서치의 1분기 실적이 전년 대비 56% 증가하며 고성장을 이어갔습니다. 매출 ...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>파마리서치</td>
+<td>214450</td>
+<td>늦었다고 생각할 때가 진짜 늦었다, 그러니 ..</td>
+<td>https://finance.naver.com/research/company_rea...</td>
+<td>https://stock.pstatic.net/stock-research/compa...</td>
+<td>키움증권</td>
+<td>25.05.14</td>
+<td>1327</td>
+<td>KODEX 코스닥150</td>
+<td>229200</td>
+<td>**요약:**\n\n파마리서치의 2025년 1분기 실적이 양호하며, 매출액 1,16...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>레인보우로보틱스</td>
+<td>277810</td>
+<td>K-Humanoid, 제가 해보겠습니다</td>
+<td>https://finance.naver.com/research/company_rea...</td>
+<td>https://stock.pstatic.net/stock-research/compa...</td>
+<td>SK증권</td>
+<td>25.05.30</td>
+<td>936</td>
+<td>KODEX 코스닥150</td>
+<td>229200</td>
+<td>레인보우로보틱스(KQ/277810)는 인간형 이족보행 로봇 'HUBO' 개발을 바탕...</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="감성분석-진행-openai-api로-감성분석-진행" class="level2">
+<h2 class="anchored" data-anchor-id="감성분석-진행-openai-api로-감성분석-진행">감성분석 진행 : Openai API로 감성분석 진행</h2>
+<div id="37a4bdea" class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pandas apply에 활용할 OpenAI로 요약해주는 함수 작성</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> openai <span class="im">import</span> OpenAI</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co"># OpenAI API key</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"keys.json"</span>, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> json.load(f)</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>open_ai_key <span class="op">=</span> data.get(<span class="st">"open_ai_key"</span>)</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 함수 작성</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_sentiment_score(row):</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>    prompt <span class="op">=</span> <span class="ss">f"""</span></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a><span class="ss">            당신은 주식과 관련된 뉴스 또는 증권사 리포트에서 감성 점수를 추출하는 전문가입니다.</span></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="ss">            주어진 텍스트를 분석하여 감성 점수를 다음의 기준에 따라 평가하세요.</span></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a><span class="ss">            - 긍정 (Positive): 해당 텍스트가 주식의 긍정적인 영향을 암시하는 경우</span></span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a><span class="ss">            - 중립 (Neutral): 해당 텍스트가 중립적이거나 영향을 판단하기 어려운 경우</span></span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a><span class="ss">            - 부정 (Negative): 해당 텍스트가 주식에 부정적인 영향을 암시하는 경우</span></span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a><span class="ss">            각 긍정, 중립, 부정 점수의 합이 1이 되게 해주세요.</span></span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a><span class="ss">            다음은 입력 데이터와 기대하는 출력 데이터의 예시입니다.</span></span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a><span class="ss">            예시 1:</span></span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a><span class="ss">            입력: 해당 회사의 매출이 25% 증가하며 시장 기대치를 초과했습니다.</span></span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a><span class="ss">            출력: 긍정 0.83 중립 0.13 부정 0.04</span></span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a><span class="ss">            예시 2:</span></span>
+<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a><span class="ss">            입력: 글로벌 경제 둔화로 인해 매출 감소가 예상됩니다.</span></span>
+<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a><span class="ss">            출력: 긍정 0.03 중립 0.23 부정 0.74</span></span>
+<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a><span class="ss">            예시 3:</span></span>
+<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a><span class="ss">            입력: 회사는 안정적인 성장을 유지하고 있으며, 큰 변화가 없습니다.</span></span>
+<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a><span class="ss">            출력: 긍정 0.13 중립 0.83 부정 0.04</span></span>
+<span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a><span class="ss">            아래에 주어진 텍스트를 분석하고, 감성 점수를 출력 형식에 맞춰 응답하세요.</span></span>
+<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a><span class="ss">            </span><span class="sc">{</span>row[<span class="st">'generated_summary'</span>]<span class="sc">}</span></span>
+<span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a><span class="ss">            """</span></span>
+<span id="cb24-38"><a href="#cb24-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-39"><a href="#cb24-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-40"><a href="#cb24-40" aria-hidden="true" tabindex="-1"></a>    client <span class="op">=</span> OpenAI(api_key <span class="op">=</span>open_ai_key</span>
+<span id="cb24-41"><a href="#cb24-41" aria-hidden="true" tabindex="-1"></a>                    )</span>
+<span id="cb24-42"><a href="#cb24-42" aria-hidden="true" tabindex="-1"></a>    completion <span class="op">=</span> client.chat.completions.create(</span>
+<span id="cb24-43"><a href="#cb24-43" aria-hidden="true" tabindex="-1"></a>        model<span class="op">=</span><span class="st">"gpt-4o-mini"</span>,</span>
+<span id="cb24-44"><a href="#cb24-44" aria-hidden="true" tabindex="-1"></a>        messages<span class="op">=</span>[{<span class="st">"role"</span>: <span class="st">"user"</span>,<span class="st">"content"</span>: prompt}]</span>
+<span id="cb24-45"><a href="#cb24-45" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb24-46"><a href="#cb24-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-47"><a href="#cb24-47" aria-hidden="true" tabindex="-1"></a>    <span class="co"># print(completion.choices[0].message.content)</span></span>
+<span id="cb24-48"><a href="#cb24-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-49"><a href="#cb24-49" aria-hidden="true" tabindex="-1"></a>    results <span class="op">=</span> completion.choices[<span class="dv">0</span>].message.content</span>
+<span id="cb24-50"><a href="#cb24-50" aria-hidden="true" tabindex="-1"></a>    positive <span class="op">=</span> <span class="bu">float</span>(results.split(<span class="st">"긍정 "</span>)[<span class="dv">1</span>].split(<span class="st">' '</span>)[<span class="dv">0</span>].strip())</span>
+<span id="cb24-51"><a href="#cb24-51" aria-hidden="true" tabindex="-1"></a>    neutral <span class="op">=</span> <span class="bu">float</span>(results.split(<span class="st">"중립 "</span>)[<span class="dv">1</span>].split(<span class="st">' '</span>)[<span class="dv">0</span>].strip())</span>
+<span id="cb24-52"><a href="#cb24-52" aria-hidden="true" tabindex="-1"></a>    negative <span class="op">=</span> <span class="bu">float</span>(results.split(<span class="st">"부정 "</span>)[<span class="dv">1</span>].split(<span class="st">' '</span>)[<span class="dv">0</span>].strip())</span>
+<span id="cb24-53"><a href="#cb24-53" aria-hidden="true" tabindex="-1"></a>    <span class="co"># print(f"{positive} {neutral} {negative}")</span></span>
+<span id="cb24-54"><a href="#cb24-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-55"><a href="#cb24-55" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> positive, neutral, negative</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="ed799ca0" class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>df_concat[[<span class="st">'positive_score'</span>, <span class="st">'neutral_score'</span>, <span class="st">'negative_score'</span>]] <span class="op">=</span> df_concat.<span class="bu">apply</span>(<span class="kw">lambda</span> row: pd.Series(get_sentiment_score(row)), axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="4af4b851" class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>df_concat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">종목명</th>
+<th data-quarto-table-cell-role="th">종목코드</th>
+<th data-quarto-table-cell-role="th">제목</th>
+<th data-quarto-table-cell-role="th">리포트링크</th>
+<th data-quarto-table-cell-role="th">PDF링크</th>
+<th data-quarto-table-cell-role="th">증권사</th>
+<th data-quarto-table-cell-role="th">작성일</th>
+<th data-quarto-table-cell-role="th">조회수</th>
+<th data-quarto-table-cell-role="th">ETF_name</th>
+<th data-quarto-table-cell-role="th">ETF_ticker</th>
+<th data-quarto-table-cell-role="th">generated_summary</th>
+<th data-quarto-table-cell-role="th">positive_score</th>
+<th data-quarto-table-cell-role="th">neutral_score</th>
+<th data-quarto-table-cell-role="th">negative_score</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>알테오젠</td>
+<td>196170</td>
+<td>IRA 약가 인하, 특허 이슈 종합 분석</td>
+<td>https://finance.naver.com/research/company_rea...</td>
+<td></td>
+<td>신한투자증권</td>
+<td>25.05.27</td>
+<td>3457</td>
+<td>KODEX 코스닥150</td>
+<td>229200</td>
+<td>None</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">0</td>
+<td>리가켐바이오</td>
+<td>141080</td>
+<td>돋보이는 ADC 기업</td>
+<td>https://finance.naver.com/research/company_rea...</td>
+<td>https://stock.pstatic.net/stock-research/compa...</td>
+<td>미래에셋증권</td>
+<td>25.05.23</td>
+<td>2798</td>
+<td>KODEX 코스닥150</td>
+<td>229200</td>
+<td>리가켐바이오는 KOSDAQ에서 주가 상승세를 보이며 2023년 24.5에서 25.5...</td>
+<td>0.75</td>
+<td>0.15</td>
+<td>0.10</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1</td>
+<td>리가켐바이오</td>
+<td>141080</td>
+<td>페이로드 강자로 도약중</td>
+<td>https://finance.naver.com/research/company_rea...</td>
+<td>https://stock.pstatic.net/stock-research/compa...</td>
+<td>유안타증권</td>
+<td>25.05.22</td>
+<td>2205</td>
+<td>KODEX 코스닥150</td>
+<td>229200</td>
+<td>**요약:** \n금융투자분석사는 리가켐바이오(141080)에 대해 긍정적으로 평...</td>
+<td>0.85</td>
+<td>0.10</td>
+<td>0.05</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2</td>
+<td>리가켐바이오</td>
+<td>141080</td>
+<td>LCB39: Cold to Hot</td>
+<td>https://finance.naver.com/research/company_rea...</td>
+<td>https://stock.pstatic.net/stock-research/compa...</td>
+<td>유진투자증권</td>
+<td>25.05.07</td>
+<td>2917</td>
+<td>KODEX 코스닥150</td>
+<td>229200</td>
+<td>리가켐바이오의 LCB39에 대한 최근 리포트는 이 후보 물질이 기존 치료법에 비해 ...</td>
+<td>0.75</td>
+<td>0.20</td>
+<td>0.05</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>파마리서치</td>
+<td>214450</td>
+<td>브레이크가 고장나버린 리쥬란 트럭</td>
+<td>https://finance.naver.com/research/company_rea...</td>
+<td>https://stock.pstatic.net/stock-research/compa...</td>
+<td>미래에셋증권</td>
+<td>25.05.21</td>
+<td>2990</td>
+<td>KODEX 코스닥150</td>
+<td>229200</td>
+<td>파마리서치(KOSDAQ)의 주가는 최근 24.5에서 25.5 사이에서 변동하고 있으...</td>
+<td>0.75</td>
+<td>0.20</td>
+<td>0.05</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>파마리서치</td>
+<td>214450</td>
+<td>인바운드와 브랜드 파워, 환상의 선순환</td>
+<td>https://finance.naver.com/research/company_rea...</td>
+<td>https://stock.pstatic.net/stock-research/compa...</td>
+<td>교보증권</td>
+<td>25.05.14</td>
+<td>2073</td>
+<td>KODEX 코스닥150</td>
+<td>229200</td>
+<td>**파마리서치 분석 요약**\n\n파마리서치의 투자 의견은 **BUY**로 유지되며...</td>
+<td>0.88</td>
+<td>0.09</td>
+<td>0.03</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>파마리서치</td>
+<td>214450</td>
+<td>멈추지 않는 실적 성장, 다만 주가는 트레이..</td>
+<td>https://finance.naver.com/research/company_rea...</td>
+<td>https://stock.pstatic.net/stock-research/compa...</td>
+<td>대신증권</td>
+<td>25.05.14</td>
+<td>1238</td>
+<td>KODEX 코스닥150</td>
+<td>229200</td>
+<td>파마리서치의 1분기 실적이 전년 대비 56% 증가하며 고성장을 이어갔습니다. 매출 ...</td>
+<td>0.75</td>
+<td>0.15</td>
+<td>0.10</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>파마리서치</td>
+<td>214450</td>
+<td>늦었다고 생각할 때가 진짜 늦었다, 그러니 ..</td>
+<td>https://finance.naver.com/research/company_rea...</td>
+<td>https://stock.pstatic.net/stock-research/compa...</td>
+<td>키움증권</td>
+<td>25.05.14</td>
+<td>1327</td>
+<td>KODEX 코스닥150</td>
+<td>229200</td>
+<td>**요약:**\n\n파마리서치의 2025년 1분기 실적이 양호하며, 매출액 1,16...</td>
+<td>0.90</td>
+<td>0.07</td>
+<td>0.03</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>레인보우로보틱스</td>
+<td>277810</td>
+<td>K-Humanoid, 제가 해보겠습니다</td>
+<td>https://finance.naver.com/research/company_rea...</td>
+<td>https://stock.pstatic.net/stock-research/compa...</td>
+<td>SK증권</td>
+<td>25.05.30</td>
+<td>936</td>
+<td>KODEX 코스닥150</td>
+<td>229200</td>
+<td>레인보우로보틱스(KQ/277810)는 인간형 이족보행 로봇 'HUBO' 개발을 바탕...</td>
+<td>0.55</td>
+<td>0.35</td>
+<td>0.10</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="감성분석-진행-gpt제안에-따른-etf비중별-감성분석-적용" class="level2">
+<h2 class="anchored" data-anchor-id="감성분석-진행-gpt제안에-따른-etf비중별-감성분석-적용">감성분석 진행 : GPT제안에 따른 ETF비중별 감성분석 적용</h2>
+<ul>
+<li>GPT에게 퀀트가 감성분석 적용하는 일반적인 경우를 요청하는 프롬프트
+<ul>
+<li>아래 표는 구성종목의 감성분석을 진행한 결과야. 감성분석 결과를 비중(금액기준)을 기준으로 반영해 매도/매수할지 판단에 보조를 하고싶을때, 퀀트업무를 하는사람은 보통 어떤 식으로 구성할까?</li>
+</ul></li>
+<li>GPT답변</li>
+</ul>
+<p>아래는 이미지 내용을 마크다운으로 변환한 결과입니다:</p>
+<p>🎯 <strong>가장 많이 쓰이는 3가지 방식</strong></p>
+<hr>
+<p>📌 A. 선형 가중 조정 (Linear Reweighting)</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>adjusted_weight <span class="op">=</span> 기존비중 × (<span class="dv">1</span> <span class="op">+</span> 감성점수)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="op">*</span> 감성 점수에 따라 비중을 직접적으로 조정</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="op">*</span> 비중 총합이 <span class="dv">1</span><span class="er">이</span> 되도록 정규화 필요</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+<p>📌 B. 분류 기반 조정 (Categorical)</p>
+<ul>
+<li>점수에 따라 3~5개 등급 구분 후, 비중을 고정 비율로 재분배</li>
+</ul>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>감성 점수</th>
+<th>조정 방식</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>&gt; 0.5</td>
+<td>기존 비중의 1.2배</td>
+</tr>
+<tr class="even">
+<td>-0.5 ~ 0.5</td>
+<td>그대로</td>
+</tr>
+<tr class="odd">
+<td>&lt; -0.5</td>
+<td>기존 비중의 0.8배</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>📌 C. Z-score 기반 이상치 판단</p>
+<ul>
+<li>전체 감성 점수의 분포를 표준화한 후 ±1σ 이상인 종목만 비중 조정</li>
+</ul>
+<div id="c54f8bfb" class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. 감성 점수 계산</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>df_concat[<span class="st">"sentiment_score"</span>] <span class="op">=</span> df_concat[<span class="st">"positive_score"</span>] <span class="op">-</span> df_concat[<span class="st">"negative_score"</span>]</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. 종목코드를 기준으로 merge</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>df_merged <span class="op">=</span> pd.merge(df_kodex150, df_concat, how<span class="op">=</span><span class="st">"left"</span>, on<span class="op">=</span><span class="st">"종목코드"</span>)</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. 분류 기반 조정 비율 계산 함수</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_weight_multiplier(score):</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> score <span class="op">&gt;</span> <span class="fl">0.5</span>:</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="fl">1.2</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> score <span class="op">&lt;</span> <span class="op">-</span><span class="fl">0.5</span>:</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="fl">0.8</span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="fl">1.0</span></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. 적용</span></span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>df_merged[<span class="st">"비중(%)"</span>] <span class="op">=</span> df_merged[<span class="st">"비중(%)"</span>].astype(<span class="bu">float</span>)</span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>df_merged[<span class="st">"조정배율"</span>] <span class="op">=</span> df_merged[<span class="st">"sentiment_score"</span>].<span class="bu">apply</span>(get_weight_multiplier)</span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>df_merged[<span class="st">"조정비중(%)"</span>] <span class="op">=</span> df_merged[<span class="st">"비중(%)"</span>] <span class="op">*</span> df_merged[<span class="st">"조정배율"</span>]</span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. 비중 변화 및 매수/매도 판단</span></span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a>df_merged[<span class="st">"비중차이(%)"</span>] <span class="op">=</span> df_merged[<span class="st">"조정비중(%)"</span>] <span class="op">-</span> df_merged[<span class="st">"비중(%)"</span>]</span>
+<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a>df_merged[<span class="st">"판단"</span>] <span class="op">=</span> df_merged[<span class="st">"조정배율"</span>].<span class="bu">map</span>({<span class="fl">1.2</span>: <span class="st">"매수"</span>, <span class="fl">1.0</span>: <span class="st">"유지"</span>, <span class="fl">0.8</span>: <span class="st">"매도"</span>})</span>
+<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a><span class="co"># 결과 확인</span></span>
+<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a>df_merged</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">번호</th>
+<th data-quarto-table-cell-role="th">종목명_x</th>
+<th data-quarto-table-cell-role="th">ISIN</th>
+<th data-quarto-table-cell-role="th">종목코드</th>
+<th data-quarto-table-cell-role="th">수량</th>
+<th data-quarto-table-cell-role="th">비중(%)</th>
+<th data-quarto-table-cell-role="th">평가금액(원)</th>
+<th data-quarto-table-cell-role="th">현재가(원)</th>
+<th data-quarto-table-cell-role="th">등락(원)</th>
+<th data-quarto-table-cell-role="th">종목명_y</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">ETF_ticker</th>
+<th data-quarto-table-cell-role="th">generated_summary</th>
+<th data-quarto-table-cell-role="th">positive_score</th>
+<th data-quarto-table-cell-role="th">neutral_score</th>
+<th data-quarto-table-cell-role="th">negative_score</th>
+<th data-quarto-table-cell-role="th">sentiment_score</th>
+<th data-quarto-table-cell-role="th">조정배율</th>
+<th data-quarto-table-cell-role="th">조정비중(%)</th>
+<th data-quarto-table-cell-role="th">비중차이(%)</th>
+<th data-quarto-table-cell-role="th">판단</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2</td>
+<td>알테오젠</td>
+<td>KR7196170005</td>
+<td>196170</td>
+<td>207</td>
+<td>0.120936</td>
+<td>71208000</td>
+<td>330000</td>
+<td>-4500</td>
+<td>알테오젠</td>
+<td>...</td>
+<td>229200</td>
+<td>None</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>1.0</td>
+<td>0.120936</td>
+<td>0.000000</td>
+<td>유지</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>3</td>
+<td>HLB</td>
+<td>KR7028300002</td>
+<td>028300</td>
+<td>591</td>
+<td>0.052896</td>
+<td>31145700</td>
+<td>54600</td>
+<td>-100</td>
+<td>NaN</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1.0</td>
+<td>0.052896</td>
+<td>0.000000</td>
+<td>유지</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>4</td>
+<td>펩트론</td>
+<td>KR7087010005</td>
+<td>087010</td>
+<td>109</td>
+<td>0.042578</td>
+<td>25070000</td>
+<td>232500</td>
+<td>7500</td>
+<td>NaN</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1.0</td>
+<td>0.042578</td>
+<td>0.000000</td>
+<td>유지</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>5</td>
+<td>에코프로</td>
+<td>KR7086520004</td>
+<td>086520</td>
+<td>501</td>
+<td>0.032631</td>
+<td>19213350</td>
+<td>42800</td>
+<td>-250</td>
+<td>NaN</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1.0</td>
+<td>0.032631</td>
+<td>0.000000</td>
+<td>유지</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>6</td>
+<td>에코프로비엠</td>
+<td>KR7247540008</td>
+<td>247540</td>
+<td>230</td>
+<td>0.031718</td>
+<td>18676000</td>
+<td>89700</td>
+<td>-300</td>
+<td>NaN</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1.0</td>
+<td>0.031718</td>
+<td>0.000000</td>
+<td>유지</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>7</td>
+<td>리가켐바이오</td>
+<td>KR7141080002</td>
+<td>141080</td>
+<td>131</td>
+<td>0.025808</td>
+<td>15196000</td>
+<td>114900</td>
+<td>400</td>
+<td>리가켐바이오</td>
+<td>...</td>
+<td>229200</td>
+<td>리가켐바이오는 KOSDAQ에서 주가 상승세를 보이며 2023년 24.5에서 25.5...</td>
+<td>0.75</td>
+<td>0.15</td>
+<td>0.10</td>
+<td>0.65</td>
+<td>1.2</td>
+<td>0.030970</td>
+<td>0.005162</td>
+<td>매수</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>7</td>
+<td>리가켐바이오</td>
+<td>KR7141080002</td>
+<td>141080</td>
+<td>131</td>
+<td>0.025808</td>
+<td>15196000</td>
+<td>114900</td>
+<td>400</td>
+<td>리가켐바이오</td>
+<td>...</td>
+<td>229200</td>
+<td>**요약:** \n금융투자분석사는 리가켐바이오(141080)에 대해 긍정적으로 평...</td>
+<td>0.85</td>
+<td>0.10</td>
+<td>0.05</td>
+<td>0.80</td>
+<td>1.2</td>
+<td>0.030970</td>
+<td>0.005162</td>
+<td>매수</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>7</td>
+<td>리가켐바이오</td>
+<td>KR7141080002</td>
+<td>141080</td>
+<td>131</td>
+<td>0.025808</td>
+<td>15196000</td>
+<td>114900</td>
+<td>400</td>
+<td>리가켐바이오</td>
+<td>...</td>
+<td>229200</td>
+<td>리가켐바이오의 LCB39에 대한 최근 리포트는 이 후보 물질이 기존 치료법에 비해 ...</td>
+<td>0.75</td>
+<td>0.20</td>
+<td>0.05</td>
+<td>0.70</td>
+<td>1.2</td>
+<td>0.030970</td>
+<td>0.005162</td>
+<td>매수</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>8</td>
+<td>파마리서치</td>
+<td>KR7214450009</td>
+<td>214450</td>
+<td>32</td>
+<td>0.024402</td>
+<td>14368000</td>
+<td>451000</td>
+<td>8000</td>
+<td>파마리서치</td>
+<td>...</td>
+<td>229200</td>
+<td>파마리서치(KOSDAQ)의 주가는 최근 24.5에서 25.5 사이에서 변동하고 있으...</td>
+<td>0.75</td>
+<td>0.20</td>
+<td>0.05</td>
+<td>0.70</td>
+<td>1.2</td>
+<td>0.029282</td>
+<td>0.004880</td>
+<td>매수</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>8</td>
+<td>파마리서치</td>
+<td>KR7214450009</td>
+<td>214450</td>
+<td>32</td>
+<td>0.024402</td>
+<td>14368000</td>
+<td>451000</td>
+<td>8000</td>
+<td>파마리서치</td>
+<td>...</td>
+<td>229200</td>
+<td>**파마리서치 분석 요약**\n\n파마리서치의 투자 의견은 **BUY**로 유지되며...</td>
+<td>0.88</td>
+<td>0.09</td>
+<td>0.03</td>
+<td>0.85</td>
+<td>1.2</td>
+<td>0.029282</td>
+<td>0.004880</td>
+<td>매수</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>8</td>
+<td>파마리서치</td>
+<td>KR7214450009</td>
+<td>214450</td>
+<td>32</td>
+<td>0.024402</td>
+<td>14368000</td>
+<td>451000</td>
+<td>8000</td>
+<td>파마리서치</td>
+<td>...</td>
+<td>229200</td>
+<td>파마리서치의 1분기 실적이 전년 대비 56% 증가하며 고성장을 이어갔습니다. 매출 ...</td>
+<td>0.75</td>
+<td>0.15</td>
+<td>0.10</td>
+<td>0.65</td>
+<td>1.2</td>
+<td>0.029282</td>
+<td>0.004880</td>
+<td>매수</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11</td>
+<td>8</td>
+<td>파마리서치</td>
+<td>KR7214450009</td>
+<td>214450</td>
+<td>32</td>
+<td>0.024402</td>
+<td>14368000</td>
+<td>451000</td>
+<td>8000</td>
+<td>파마리서치</td>
+<td>...</td>
+<td>229200</td>
+<td>**요약:**\n\n파마리서치의 2025년 1분기 실적이 양호하며, 매출액 1,16...</td>
+<td>0.90</td>
+<td>0.07</td>
+<td>0.03</td>
+<td>0.87</td>
+<td>1.2</td>
+<td>0.029282</td>
+<td>0.004880</td>
+<td>매수</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">12</td>
+<td>9</td>
+<td>에이비엘바이오</td>
+<td>KR7298380007</td>
+<td>298380</td>
+<td>168</td>
+<td>0.023568</td>
+<td>13876800</td>
+<td>80600</td>
+<td>2800</td>
+<td>NaN</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1.0</td>
+<td>0.023568</td>
+<td>0.000000</td>
+<td>유지</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
+<td>10</td>
+<td>삼천당제약</td>
+<td>KR7000250001</td>
+<td>000250</td>
+<td>71</td>
+<td>0.018546</td>
+<td>10919800</td>
+<td>146500</td>
+<td>-600</td>
+<td>NaN</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1.0</td>
+<td>0.018546</td>
+<td>0.000000</td>
+<td>유지</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">14</td>
+<td>11</td>
+<td>레인보우로보틱스</td>
+<td>KR7277810008</td>
+<td>277810</td>
+<td>40</td>
+<td>0.018104</td>
+<td>10660000</td>
+<td>264500</td>
+<td>-5000</td>
+<td>레인보우로보틱스</td>
+<td>...</td>
+<td>229200</td>
+<td>레인보우로보틱스(KQ/277810)는 인간형 이족보행 로봇 'HUBO' 개발을 바탕...</td>
+<td>0.55</td>
+<td>0.35</td>
+<td>0.10</td>
+<td>0.45</td>
+<td>1.0</td>
+<td>0.018104</td>
+<td>0.000000</td>
+<td>유지</td>
+</tr>
+</tbody>
+</table>
+
+<p>15 rows × 27 columns</p>
+</div>
+</div>
+</div>
+</section>
+<section id="감성분석-적용-예상-평가금액을-조정합산하여-etf예상가치-산출" class="level2">
+<h2 class="anchored" data-anchor-id="감성분석-적용-예상-평가금액을-조정합산하여-etf예상가치-산출">감성분석 적용 : 예상 평가금액을 조정/합산하여 ETF예상가치 산출</h2>
+<ul>
+<li>위에서 계산한 조정비율을 종목별 평가금액에 반영, 합산하여 미래 ETF가치를 산출
+<ul>
+<li>기존보다 총합산액(ETF내 모든 종목의 평가금액 합)이 커지면 가치상승으로 예상하여 매수</li>
+<li>기존보다 총합산액(ETF내 모든 종목의 평가금액 합)이 작아지면 가치하락으로 예상하여 매도</li>
+</ul></li>
+<li>아래 케이스로는 상승으로 예상되어 매수 진행함</li>
+</ul>
+<div id="9aee2883" class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 평가금액 문자열이라면 숫자로 변환</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>df_merged[<span class="st">"평가금액(원)"</span>] <span class="op">=</span> df_merged[<span class="st">"평가금액(원)"</span>].astype(<span class="bu">int</span>)</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 조정된 평가금액 계산</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>df_merged[<span class="st">"조정평가금액(원)"</span>] <span class="op">=</span> df_merged[<span class="st">"평가금액(원)"</span>] <span class="op">*</span> df_merged[<span class="st">"조정배율"</span>]</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="co"># ETF 총액 계산</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>total_eval_before <span class="op">=</span> df_merged[<span class="st">"평가금액(원)"</span>].<span class="bu">sum</span>()</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>total_eval_after <span class="op">=</span> df_merged[<span class="st">"조정평가금액(원)"</span>].<span class="bu">sum</span>()</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>change_ratio <span class="op">=</span> (total_eval_after <span class="op">/</span> total_eval_before <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 결과 출력</span></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"✅ 원래 ETF 총 평가금액: </span><span class="sc">{</span>total_eval_before<span class="sc">:,.0f}</span><span class="ss"> 원"</span>)</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"✅ 조정된 ETF 총 평가금액: </span><span class="sc">{</span>total_eval_after<span class="sc">:,.0f}</span><span class="ss"> 원"</span>)</span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"📊 변화율: </span><span class="sc">{</span>change_ratio<span class="sc">:.2f}</span><span class="ss">%"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>✅ 원래 ETF 총 평가금액: 303,829,650 원
+✅ 조정된 ETF 총 평가금액: 324,441,650 원
+📊 변화율: 6.78%</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/kr9268\.github\.io\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+<script>
+  function loadGiscus() {
+    // Function to get the theme based on body class
+    const getTheme = () => {
+      let baseTheme = document.getElementById('giscus-base-theme').value;
+      let altTheme = document.getElementById('giscus-alt-theme').value;
+      if (authorPrefersDark) {
+          [baseTheme, altTheme] = [altTheme, baseTheme];
+      }
+      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+    };
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "kr9268/giscus_for_blog";
+    script.dataset.repoId = "R_kgDOL0Sthw";
+    script.dataset.category = "General";
+    script.dataset.categoryId = "DIC_kwDOL0Sth84Ce_5h";
+    script.dataset.mapping = "title";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "top";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "en";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  }
+  loadGiscus();
+</script>
+</div> <!-- /content -->
+<script>
+    const baseFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    const watermark = new XWatermark.XWatermark();
+    watermark.init("Kibok Park", {
+      parentSelector: "body",
+      prevent: true,
+      observer: true,
+      mode: "normal",
+      font: "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', 'Liberation Sans', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
+      fontsize: baseFontSize * 1.000000,
+      angle: -15.000000,
+      color: "#000000",
+      alpha: 0.100000,
+      cols: 10,
+      rows: 50,
+      xSpace: baseFontSize * 4.000000,
+      ySpace: baseFontSize * 4.000000,
+      zIndex: -1
+    });
+    </script>
+
+
+
+
+</body></html>
