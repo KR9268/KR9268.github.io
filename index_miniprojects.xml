@@ -9,13 +9,14 @@
 <link>https://kr9268.github.io/index_miniprojects.html</link>
 <atom:link href="https://kr9268.github.io/index_miniprojects.xml" rel="self" type="application/rss+xml"/>
 <description></description>
-<generator>quarto-1.6.41</generator>
+<generator>quarto-1.7.31</generator>
 <lastBuildDate>Thu, 01 Aug 2024 00:00:00 GMT</lastBuildDate>
 <item>
   <title>[Python] AIR/VESSEL 예측을 위한 머신러닝 모델(진행중)</title>
   <dc:creator>Kibok Park</dc:creator>
   <link>https://kr9268.github.io/posts_miniprojects/sel-py-ml_predict_shiptype-20240801/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -1870,6 +1871,7 @@ font-style: inherit;">'UNKNOWN'</span>))</span></code></pre></div>
 
 
 
+
 <section id="추진배경" class="level2">
 <h2 class="anchored" data-anchor-id="추진배경">추진배경</h2>
 <ul>
@@ -2605,6 +2607,7 @@ font-style: inherit;"># 업데이트 내역과 파일 git push</span></span>
 
 
 
+
 <section id="추진배경" class="level2">
 <h2 class="anchored" data-anchor-id="추진배경">추진배경</h2>
 <ul>
@@ -2663,6 +2666,7 @@ font-style: inherit;"># 업데이트 내역과 파일 git push</span></span>
   <dc:creator>Kibok Park</dc:creator>
   <link>https://kr9268.github.io/posts_miniprojects/sel-py-monitoringCOO-20240220/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -2760,6 +2764,7 @@ font-style: inherit;"># 업데이트 내역과 파일 git push</span></span>
   <dc:creator>Kibok Park</dc:creator>
   <link>https://kr9268.github.io/posts_miniprojects/sel-py-local-20240122/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -2894,6 +2899,7 @@ font-style: inherit;"># 업데이트 내역과 파일 git push</span></span>
 
 
 
+
 <section id="추진배경" class="level2">
 <h2 class="anchored" data-anchor-id="추진배경">추진배경</h2>
 <ul>
@@ -2974,6 +2980,7 @@ font-style: inherit;"># 업데이트 내역과 파일 git push</span></span>
   <dc:creator>Kibok Park</dc:creator>
   <link>https://kr9268.github.io/posts_miniprojects/sel-py-readPIAR-20231102/</link>
   <description><![CDATA[ 
+
 
 
 

@@ -9,13 +9,14 @@
 <link>https://kr9268.github.io/</link>
 <atom:link href="https://kr9268.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
-<generator>quarto-1.6.41</generator>
+<generator>quarto-1.7.31</generator>
 <lastBuildDate>Sun, 02 Feb 2025 00:00:00 GMT</lastBuildDate>
 <item>
   <title>[DA스터디/최종과제] Autogluon활용한 베이스모델 생성 및 고도화 실험</title>
   <dc:creator>Kibok Park</dc:creator>
   <link>https://kr9268.github.io/posts/meta-cm-sql_and_ml_xai-20250202/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -5195,6 +5196,7 @@ nvcr.io/nvidia/rapidsai/base:24.12-cuda12.0-py3.12</li>
 
 
 
+
 <p>금융권 데이터를 활용한 분석 스터디 - 6주차</p>
 <section id="개요" class="level1">
 <h1>개요</h1>
@@ -6952,8 +6954,7 @@ autogluon CF :
 <div id="8025e543" class="cell">
 <div class="sourceCode cell-code" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1">predictor.leaderboard()</span></code></pre></div>
 <div class="cell-output cell-output-display">
-
-  <div id="df-eba142b3-b498-4a64-8ebc-c1b7d97a7dec" class="colab-df-container">
+<div id="df-eba142b3-b498-4a64-8ebc-c1b7d97a7dec" class="colab-df-container">
     <div>
 
 
@@ -7312,6 +7313,7 @@ autogluon CF :
   <dc:creator>Kibok Park</dc:creator>
   <link>https://kr9268.github.io/posts/meta-cm-sql_and_ml_xai-20250121/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -8402,6 +8404,7 @@ font-style: inherit;">True</span>)</span></code></pre></div>
   <dc:creator>Kibok Park</dc:creator>
   <link>https://kr9268.github.io/posts/meta-cm-sql_and_ml_xai-20250119/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -11591,6 +11594,7 @@ font-style: inherit;">print</span>(cf_filtered)</span></code></pre></div>
 
 
 
+
 <p>금융권 데이터를 활용한 분석 스터디 - 4주차</p>
 <section id="개요" class="level1">
 <h1>개요</h1>
@@ -13706,6 +13710,7 @@ font-style: inherit;">'logloss'</span>)</span></code></pre></div>
   <dc:creator>Kibok Park</dc:creator>
   <link>https://kr9268.github.io/posts/meta-cm-sql_and_ml_xai-20250112/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -17839,6 +17844,7 @@ CF of LGBM With Class Weight
   <dc:creator>Kibok Park</dc:creator>
   <link>https://kr9268.github.io/posts/meta-cm-sql_and_ml_xai-20250107/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -22868,6 +22874,7 @@ font-style: inherit;"># DB연결해제</span></span>
   <dc:creator>Kibok Park</dc:creator>
   <link>https://kr9268.github.io/posts/meta-cm-sql_and_ml_xai-20250105/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -34070,6 +34077,7 @@ Accuracy with binning: 0.9567</code></pre>
 
 
 
+
 <p>금융권 데이터를 활용한 분석 스터디 - 2주차</p>
 <section id="개요" class="level1">
 <h1>개요</h1>
@@ -38969,6 +38977,7 @@ font-style: inherit;">DESC</span></span></code></pre></div>
 
 
 
+
 <p>인프콘에서 들었던 ‘혹시 당신은 데이터를 모르는 백엔드 개발자인가요’ 세션 내용정리</p>
 <section id="개요" class="level1">
 <h1>개요</h1>
@@ -39118,6 +39127,7 @@ font-style: inherit;">DESC</span></span></code></pre></div>
   <dc:creator>Kibok Park</dc:creator>
   <link>https://kr9268.github.io/posts/meta-cm-sql_and_ml_xai-20241222/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -41667,23 +41677,10 @@ font-style: inherit;">=</span> pd.read_sql_query(q2, conn)</span>
 
   (2021. 01. 08 업데이트)</code></pre>
 <ul>
-<li><p>https://school.programmers.co.kr/learn/courses/30/lessons/59040 <img src="https://kr9268.github.io/posts/meta-cm-sql_and_ml_xai-20241222/index_files/figure-html/0f388070-1-Note_week1_1.jpg" class="img-fluid" alt="Note_week1_1.jpg"></p>
-<pre class="{sql}"><code>SELECT ANIMAL_TYPE, COUNT(*)
-FROM ANIMAL_INS
-GROUP BY ANIMAL_TYPE
-ORDER BY ANIMAL_TYPE</code></pre></li>
-<li><p>https://school.programmers.co.kr/learn/courses/30/lessons/133024<br> <img src="https://kr9268.github.io/posts/meta-cm-sql_and_ml_xai-20241222/index_files/figure-html/efaef9b8-1-Note_week1_2.jpg" class="img-fluid" alt="Note_week1_2.jpg"></p>
-<pre class="{sql}"><code>SELECT FLAVOR
-FROM FIRST_HALF 
-ORDER BY TOTAL_ORDER DESC, SHIPMENT_ID</code></pre></li>
-<li><p>https://school.programmers.co.kr/learn/courses/30/lessons/59405<br> <img src="https://kr9268.github.io/posts/meta-cm-sql_and_ml_xai-20241222/index_files/figure-html/3c71f171-1-Note_week1_3.jpg" class="img-fluid" alt="Note_week1_3.jpg"></p>
-<pre class="{sql}"><code>SELECT NAME
-FROM ANIMAL_INS 
-ORDER BY DATETIME
-LIMIT 1</code></pre></li>
-<li><p>https://school.programmers.co.kr/learn/courses/30/lessons/131697<br> <img src="https://kr9268.github.io/posts/meta-cm-sql_and_ml_xai-20241222/index_files/figure-html/dad5cd0f-1-Note_week1_4.jpg" class="img-fluid" alt="Note_week1_4.jpg"></p>
-<pre class="{sql}"><code>SELECT MAX(PRICE) AS MAX_PRICE
-FROM PRODUCT</code></pre></li>
+<li><p>https://school.programmers.co.kr/learn/courses/30/lessons/59040 <img src="https://kr9268.github.io/posts/meta-cm-sql_and_ml_xai-20241222/index_files/figure-html/0f388070-1-Note_week1_1.jpg" class="img-fluid" alt="Note_week1_1.jpg"> <code>bahzo     SELECT ANIMAL_TYPE, COUNT(*)     FROM ANIMAL_INS     GROUP BY ANIMAL_TYPE     ORDER BY ANIMAL_TYPE</code></p></li>
+<li><p>https://school.programmers.co.kr/learn/courses/30/lessons/133024<br> <img src="https://kr9268.github.io/posts/meta-cm-sql_and_ml_xai-20241222/index_files/figure-html/efaef9b8-1-Note_week1_2.jpg" class="img-fluid" alt="Note_week1_2.jpg"> <code>bahzo     SELECT FLAVOR     FROM FIRST_HALF      ORDER BY TOTAL_ORDER DESC, SHIPMENT_ID</code></p></li>
+<li><p>https://school.programmers.co.kr/learn/courses/30/lessons/59405<br> <img src="https://kr9268.github.io/posts/meta-cm-sql_and_ml_xai-20241222/index_files/figure-html/3c71f171-1-Note_week1_3.jpg" class="img-fluid" alt="Note_week1_3.jpg"> <code>bahzo     SELECT NAME     FROM ANIMAL_INS      ORDER BY DATETIME     LIMIT 1</code></p></li>
+<li><p>https://school.programmers.co.kr/learn/courses/30/lessons/131697<br> <img src="https://kr9268.github.io/posts/meta-cm-sql_and_ml_xai-20241222/index_files/figure-html/dad5cd0f-1-Note_week1_4.jpg" class="img-fluid" alt="Note_week1_4.jpg"> <code>bahzo     SELECT MAX(PRICE) AS MAX_PRICE     FROM PRODUCT</code></p></li>
 </ul>
 
 
@@ -41702,6 +41699,7 @@ FROM PRODUCT</code></pre></li>
   <dc:creator>Kibok Park</dc:creator>
   <link>https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240924/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -41815,57 +41813,11 @@ FROM PRODUCT</code></pre></li>
   <pubDate>Tue, 24 Sep 2024 00:00:00 GMT</pubDate>
 </item>
 <item>
-  <title>[DE스터디/최종과제1-gharchive] 다양한 데이터처리 플랫폼을 사용한 데이터 수집~모니터링</title>
-  <dc:creator>Kibok Park</dc:creator>
-  <link>https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>데이터 엔지니어링 스터디 - 최종과제에 대한 ppt (gharchive 데이터파이프라인 만들기)</p>
-<section id="개요" class="level1">
-<h1>개요</h1>
-<ul>
-<li><p>참여중인 데이터 엔지니어링 스터디에서 배우는 내용 정리</p>
-<ul>
-<li>데이터 수집, 정제 : pyspark, airflow</li>
-<li>저장 : elasticsearch</li>
-<li>시각화 : kibana</li>
-</ul></li>
-<li><p>최종과제 : 배운 Pyspark, Airflow, Elasticsearch, Kibana로 데이터 파이프라인 만들어보기</p></li>
-<li><p>만들다보니 시각화에 대한 부분을 좀 더 해보고 싶어, 과제2를 추가로 진행함</p>
-<ul>
-<li>과제 1 : gharchive 데이터파이프라인 + 대시보드 약간</li>
-<li>과제 2 : 4차산업 핵심광물(Un comtrade) 데이터파이프라인 + 대시보드</li>
-<li>git repo (과제 1, 2 모두 여기에 보관)
-<ul>
-<li><a href="https://github.com/KR9268/metacode_de-2024">https://github.com/KR9268/metacode_de-2024</a></li>
-</ul></li>
-</ul></li>
-</ul>
-</section>
-<section id="최종과제1-gharchive-데이터파이프라인-대시보드" class="level1">
-<h1>최종과제1 : gharchive 데이터파이프라인 + 대시보드</h1>
-<p><img src="https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/index_files/figure-html/3f37439c-1-슬라이드1.PNG" class="img-fluid" alt="슬라이드1.PNG"> <img src="https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/index_files/figure-html/3f37439c-10-슬라이드2.PNG" class="img-fluid" alt="슬라이드2.PNG"> <img src="https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/index_files/figure-html/3f37439c-11-슬라이드3.PNG" class="img-fluid" alt="슬라이드3.PNG"> <img src="https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/index_files/figure-html/3f37439c-12-슬라이드4.PNG" class="img-fluid" alt="슬라이드4.PNG"> <img src="https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/index_files/figure-html/3f37439c-13-슬라이드5.PNG" class="img-fluid" alt="슬라이드5.PNG"> <img src="https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/index_files/figure-html/3f37439c-14-슬라이드6.PNG" class="img-fluid" alt="슬라이드6.PNG"> <img src="https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/index_files/figure-html/3f37439c-15-슬라이드7.PNG" class="img-fluid" alt="슬라이드7.PNG"> <img src="https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/index_files/figure-html/3f37439c-16-슬라이드8.PNG" class="img-fluid" alt="슬라이드8.PNG"> <img src="https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/index_files/figure-html/3f37439c-17-슬라이드9.PNG" class="img-fluid" alt="슬라이드9.PNG"> <img src="https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/index_files/figure-html/3f37439c-2-슬라이드10.PNG" class="img-fluid" alt="슬라이드10.PNG"> <img src="https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/index_files/figure-html/3f37439c-3-슬라이드11.PNG" class="img-fluid" alt="슬라이드11.PNG"> <img src="https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/index_files/figure-html/3f37439c-4-슬라이드12.PNG" class="img-fluid" alt="슬라이드12.PNG"> <img src="https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/index_files/figure-html/3f37439c-5-슬라이드13.PNG" class="img-fluid" alt="슬라이드13.PNG"> <img src="https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/index_files/figure-html/3f37439c-6-슬라이드14.PNG" class="img-fluid" alt="슬라이드14.PNG"> <img src="https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/index_files/figure-html/3f37439c-7-슬라이드15.PNG" class="img-fluid" alt="슬라이드15.PNG"> <img src="https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/index_files/figure-html/3f37439c-8-슬라이드16.PNG" class="img-fluid" alt="슬라이드16.PNG"> <img src="https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/index_files/figure-html/3f37439c-9-슬라이드17.PNG" class="img-fluid" alt="슬라이드17.PNG"></p>
-
-
-</section>
-
-<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
-  <category>Spark</category>
-  <category>PySpark</category>
-  <category>airflow</category>
-  <category>202408Study_DataEngineering</category>
-  <guid>https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/</guid>
-  <pubDate>Mon, 23 Sep 2024 00:00:00 GMT</pubDate>
-</item>
-<item>
   <title>[DE스터디/최종과제2] 다양한 데이터처리 플랫폼을 사용한 데이터 수집~모니터링</title>
   <dc:creator>Kibok Park</dc:creator>
   <link>https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_2/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -41909,10 +41861,59 @@ FROM PRODUCT</code></pre></li>
   <pubDate>Mon, 23 Sep 2024 00:00:00 GMT</pubDate>
 </item>
 <item>
+  <title>[DE스터디/최종과제1-gharchive] 다양한 데이터처리 플랫폼을 사용한 데이터 수집~모니터링</title>
+  <dc:creator>Kibok Park</dc:creator>
+  <link>https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+
+<p>데이터 엔지니어링 스터디 - 최종과제에 대한 ppt (gharchive 데이터파이프라인 만들기)</p>
+<section id="개요" class="level1">
+<h1>개요</h1>
+<ul>
+<li><p>참여중인 데이터 엔지니어링 스터디에서 배우는 내용 정리</p>
+<ul>
+<li>데이터 수집, 정제 : pyspark, airflow</li>
+<li>저장 : elasticsearch</li>
+<li>시각화 : kibana</li>
+</ul></li>
+<li><p>최종과제 : 배운 Pyspark, Airflow, Elasticsearch, Kibana로 데이터 파이프라인 만들어보기</p></li>
+<li><p>만들다보니 시각화에 대한 부분을 좀 더 해보고 싶어, 과제2를 추가로 진행함</p>
+<ul>
+<li>과제 1 : gharchive 데이터파이프라인 + 대시보드 약간</li>
+<li>과제 2 : 4차산업 핵심광물(Un comtrade) 데이터파이프라인 + 대시보드</li>
+<li>git repo (과제 1, 2 모두 여기에 보관)
+<ul>
+<li><a href="https://github.com/KR9268/metacode_de-2024">https://github.com/KR9268/metacode_de-2024</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="최종과제1-gharchive-데이터파이프라인-대시보드" class="level1">
+<h1>최종과제1 : gharchive 데이터파이프라인 + 대시보드</h1>
+<p><img src="https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/index_files/figure-html/3f37439c-1-슬라이드1.PNG" class="img-fluid" alt="슬라이드1.PNG"> <img src="https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/index_files/figure-html/3f37439c-10-슬라이드2.PNG" class="img-fluid" alt="슬라이드2.PNG"> <img src="https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/index_files/figure-html/3f37439c-11-슬라이드3.PNG" class="img-fluid" alt="슬라이드3.PNG"> <img src="https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/index_files/figure-html/3f37439c-12-슬라이드4.PNG" class="img-fluid" alt="슬라이드4.PNG"> <img src="https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/index_files/figure-html/3f37439c-13-슬라이드5.PNG" class="img-fluid" alt="슬라이드5.PNG"> <img src="https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/index_files/figure-html/3f37439c-14-슬라이드6.PNG" class="img-fluid" alt="슬라이드6.PNG"> <img src="https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/index_files/figure-html/3f37439c-15-슬라이드7.PNG" class="img-fluid" alt="슬라이드7.PNG"> <img src="https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/index_files/figure-html/3f37439c-16-슬라이드8.PNG" class="img-fluid" alt="슬라이드8.PNG"> <img src="https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/index_files/figure-html/3f37439c-17-슬라이드9.PNG" class="img-fluid" alt="슬라이드9.PNG"> <img src="https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/index_files/figure-html/3f37439c-2-슬라이드10.PNG" class="img-fluid" alt="슬라이드10.PNG"> <img src="https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/index_files/figure-html/3f37439c-3-슬라이드11.PNG" class="img-fluid" alt="슬라이드11.PNG"> <img src="https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/index_files/figure-html/3f37439c-4-슬라이드12.PNG" class="img-fluid" alt="슬라이드12.PNG"> <img src="https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/index_files/figure-html/3f37439c-5-슬라이드13.PNG" class="img-fluid" alt="슬라이드13.PNG"> <img src="https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/index_files/figure-html/3f37439c-6-슬라이드14.PNG" class="img-fluid" alt="슬라이드14.PNG"> <img src="https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/index_files/figure-html/3f37439c-7-슬라이드15.PNG" class="img-fluid" alt="슬라이드15.PNG"> <img src="https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/index_files/figure-html/3f37439c-8-슬라이드16.PNG" class="img-fluid" alt="슬라이드16.PNG"> <img src="https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/index_files/figure-html/3f37439c-9-슬라이드17.PNG" class="img-fluid" alt="슬라이드17.PNG"></p>
+
+
+</section>
+
+<p><br><strong>Copyright © 2024 Kibok Park All rights reserved.</strong><br></p> ]]></description>
+  <category>Spark</category>
+  <category>PySpark</category>
+  <category>airflow</category>
+  <category>202408Study_DataEngineering</category>
+  <guid>https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240923_1/</guid>
+  <pubDate>Mon, 23 Sep 2024 00:00:00 GMT</pubDate>
+</item>
+<item>
   <title>[DE스터디/6주차강의] 다양한 데이터처리 플랫폼을 사용한 데이터 수집~모니터링</title>
   <dc:creator>Kibok Park</dc:creator>
   <link>https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240909/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -42351,6 +42352,7 @@ percentile(system.network.in.bytes, percentile=99, shift='1w')</code></pre></li>
   <dc:creator>Kibok Park</dc:creator>
   <link>https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240908/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -43252,6 +43254,7 @@ font-style: inherit;">#[down_date_calculate, delete_date_calculate] &gt;&gt; [do
   <dc:creator>Kibok Park</dc:creator>
   <link>https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240906/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -44712,6 +44715,7 @@ font-style: inherit;">&gt;&gt;</span> end</span></code></pre></div>
 
 
 
+
 <p>데이터 엔지니어링 스터디 내용정리 - Spark, Elasticsearch</p>
 <section id="개요" class="level1">
 <h1>개요</h1>
@@ -45740,6 +45744,7 @@ font-style: inherit;">'_source'</span>])</span></code></pre></div>
   <dc:creator>Kibok Park</dc:creator>
   <link>https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240902/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -46888,6 +46893,7 @@ font-style: inherit;">9200</span></span></code></pre></div></li>
   <dc:creator>Kibok Park</dc:creator>
   <link>https://kr9268.github.io/posts/meta-de-spark_and_airflow-20240830/</link>
   <description><![CDATA[ 
+
 
 
 
